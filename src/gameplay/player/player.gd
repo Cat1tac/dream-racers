@@ -22,7 +22,6 @@ func _ready() -> void:
 	center.add_child(kart_model_instance)
 	
 	for i in range(len(kart_model_instance.charge_markers)):
-		print(i)
 		boostChargeArray[i].reparent(kart_model_instance.charge_markers[i])
 		boostChargeArray[i].global_position = kart_model_instance.charge_markers[i].global_position
 

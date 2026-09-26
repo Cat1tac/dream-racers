@@ -499,10 +499,10 @@ func apply_slowdown_force(slowdown_factor : float) -> void:
 	apply_central_impulse(force_vector)
 	
 ##Bounces car back when hitting a shortcut wall
-func apply_shortcut_stop_force() -> void:
+func apply_bounce_force(bounce) -> void:
 	var forward := -center.global_basis.z
 	var vel := forward.dot(linear_velocity)
-	var force_vector : Vector3 = -forward * (vel + 8) * mass
+	var force_vector : Vector3 = -forward * (vel + bounce) * mass
 	apply_central_impulse(force_vector)
 	
 func apply_clash_force(collision_point : Vector3, knockback : float = 0) ->  void:

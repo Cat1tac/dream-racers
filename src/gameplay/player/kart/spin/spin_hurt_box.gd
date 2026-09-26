@@ -50,11 +50,11 @@ func call_spin_hit_slowdown(drift_stage : int, opposing_weight : float) -> void:
 	kart_sphere.apply_slowdown_force(kart_sphere.spin_hit_slowdown_amounts[drift_stage] + (kart_sphere.kartCharacter.weight - opposing_weight))
 	kart_sphere.remove_drift_charge()
 	
-func call_slowdown() -> void:
-	kart_sphere.apply_slowdown_force(0.5)
+func call_slowdown(multiplier : float = 0.5) -> void:
+	kart_sphere.apply_slowdown_force(multiplier)
 
-func call_stop() -> void:
-	kart_sphere.apply_shortcut_stop_force()
+func call_bounce(bounce : float = 8) -> void:
+	kart_sphere.apply_bounce_force(bounce)
 
 func apply_boost_panel_boost(boost_speed_multiplier : float, boost_time_multiplier : float) -> void: ## Applies speed boost and from boost panel
 	kart_sphere.set_boost(boost_speed_multiplier, boost_time_multiplier)
