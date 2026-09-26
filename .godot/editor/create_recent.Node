@@ -1,3 +1,4 @@
+Marker3D
 TextureRect
 OmniLight3D
 CollisionShape3D
@@ -8,8 +9,6 @@ Node
 CSGCylinder3D
 CSGMesh3D
 ShapeCast3D
-Marker3D
 Node3D
 MeshInstance3D
 RayCast3D
-RigidBody3D

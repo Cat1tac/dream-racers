@@ -1,16 +1,19 @@
 class_name Kart_Sphere extends RigidBody3D
 ## Handles all movement and phsyics interaction dealing with the kart
+@export var player : Player
 @export var ground_cast : RayCast3D
 @export var snap_cast : RayCast3D
 @export var wall_cast : ShapeCast3D
 @export var particlesManager : Array[KartParticlesManager]
 #@onready var kart_model: Node3D = $Kart_Model
 @onready var center: Node3D = %Center
-@onready var kart_model: Node3D = %KartModel
 @onready var spin_hitbox: SpinHitbox = %SpinHitbox
 @onready var spin_hurt_box: SpinHurtBox = %SpinHurtBox
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var trail_spawner: Trail_Spawner = %TrailSpawner
+
+
+var kart_model : Node3D
 
 #Inputs
 var input_acceleration : float
@@ -421,12 +424,13 @@ func set_up_kart_stats() -> void:
 
 #region imbedded functions
 func _ready() -> void:
-	if self.get_parent() is Player:
-		var player : Player = self.get_parent()
-		controls = player.playerControls
-		kartCharacter = player.character
-		if kartCharacter:
-			set_up_kart_stats()
+	await player.ready
+	controls = player.playerControls
+	kart_model = player.kart_model_instance
+	print(kart_model)
+	kartCharacter = player.character
+	if kartCharacter:
+		set_up_kart_stats()
 		
 	state = states.DRIVE
 	kart_scale = kart_model.scale

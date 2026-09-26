@@ -31,22 +31,26 @@ bounce = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uia4o"]
 
-[node name="Player" type="Node3D" unique_id=648418637]
+[node name="Player" type="Node3D" unique_id=648418637 node_paths=PackedStringArray("boostChargeArray")]
 script = ExtResource("1_qlg0r")
 playerControls = ExtResource("2_sjr3t")
 character = ExtResource("3_xdbtd")
+kart_model_scene = ExtResource("4_nem4e")
+boostChargeArray = [NodePath("Center/BoostCharge"), NodePath("Center/BoostCharge2")]
 
 [node name="Center" type="Node3D" parent="." unique_id=989855784]
 unique_name_in_owner = true
 
 [node name="KartModel" parent="Center" unique_id=2060035001 instance=ExtResource("4_nem4e")]
 unique_name_in_owner = true
+process_mode = 4
+visible = false
 
-[node name="BoostCharge" parent="Center/KartModel" unique_id=1439352013 instance=ExtResource("5_d3trc")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.69650006, -0.3531069, -0.7013999)
+[node name="BoostCharge" parent="Center" unique_id=1439352013 instance=ExtResource("5_d3trc")]
+transform = Transform3D(1.15, 0, 7.310897e-08, 0, 1.15, 0, -7.310897e-08, 0, 1.15, -0.80097497, -0.4060729, 0.80661)
 
-[node name="BoostCharge2" parent="Center/KartModel" unique_id=2022985605 instance=ExtResource("5_d3trc")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.69649994, -0.39510688, -0.70140004)
+[node name="BoostCharge2" parent="Center" unique_id=2022985605 instance=ExtResource("5_d3trc")]
+transform = Transform3D(1.15, 0, 7.310897e-08, 0, 1.15, 0, -7.310897e-08, 0, 1.15, 0.800975, -0.4543729, 0.8066099)
 
 [node name="GroundRay" type="RayCast3D" parent="Center" unique_id=1613552836]
 target_position = Vector3(0, -1.5, 0)
@@ -114,17 +118,18 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6859641, 4.8363237)
 current = true
 
-[node name="Kart_Sphere" type="RigidBody3D" parent="." unique_id=1517078465 node_paths=PackedStringArray("ground_cast", "snap_cast", "wall_cast", "particlesManager")]
+[node name="Kart_Sphere" type="RigidBody3D" parent="." unique_id=1517078465 node_paths=PackedStringArray("player", "ground_cast", "snap_cast", "wall_cast", "particlesManager")]
 unique_name_in_owner = true
 collision_mask = 31
 mass = 50.0
 physics_material_override = SubResource("PhysicsMaterial_kjyqo")
 gravity_scale = 1.5
 script = ExtResource("6_dxsvo")
+player = NodePath("..")
 ground_cast = NodePath("../Center/GroundRay")
 snap_cast = NodePath("../Center/SnapRay")
 wall_cast = NodePath("../Center/WallRay")
-particlesManager = [NodePath("../Center/KartModel/BoostCharge"), NodePath("../Center/KartModel/BoostCharge2")]
+particlesManager = [NodePath("../Center/BoostCharge"), NodePath("../Center/BoostCharge2")]
 top_speed = 25.0
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")

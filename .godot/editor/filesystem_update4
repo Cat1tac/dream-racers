@@ -1,22 +1,15 @@
-res://src/tracks/testtrack_3.tscn
-res://src/shaders/kart_shader_material.tres
-res://src/gameplay/player/kart/basekart.tscn
-res://src/gameplay/player/character/seraphim.tscn
-res://src/tracks/testtrack1.tscn
-res://src/gameplay/objects/shortcutblock.gd
 res://src/gameplay/player/player.tscn
-res://src/gameplay/player/kart/kart_rigidbody_sphere.gd
-res://src/gameplay/player/kart/spin/spin_hitbox.gd
+res://src/shaders/kart_shader_material.tres
 res://src/shaders/changeGradientColor.gdshader
-res://assets/ui/main menu/gradients/night_gradient.tres
 res://assets/ui/main menu/gradients/sunset_gradient.tres
-res://src/debug/test.tscn
-res://assets/ui/main menu/gradients/twilight_gradient.tres
-res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres
+res://assets/ui/main menu/gradients/night_gradient.tres
 res://assets/ui/main menu/gradients/bg_noise_tex.tres
+res://assets/ui/main menu/gradients/twilight_gradient.tres
 res://assets/ui/main menu/gradients/cloud_noise_tex.tres
-res://src/core/main_game/main_game.tscn
-res://src/core/autoload/scene_paths.gd
-res://src/gameplay/player/kart/trailing/trail_spawner.tscn
-res://src/gameplay/player/kart/trailing/trail_spawner.gd
-res://src/core/main_game/main_game.gd
+res://assets/ui/main menu/gradients/clouds_night_gradient.tres
+res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres
+res://assets/ui/main menu/gradients/clouds_sunset_gradient.tres
+res://src/gameplay/player/kart/kart_rigidbody_sphere.gd
+res://src/gameplay/player/player.gd
+res://src/gameplay/player/kart/basekart.tscn
+res://src/gameplay/player/kart/basekart.gd
