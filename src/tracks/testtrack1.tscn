@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://o8gbnp303uhr" path="res://src/gameplay/objects/boost_panel.tscn" id="4_nlngb"]
 [ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/dreamcatcher_obsatcle.tscn" id="5_2jewj"]
 [ext_resource type="PackedScene" uid="uid://d3hgqbv7npk6k" path="res://src/gameplay/objects/shortcutblock.tscn" id="6_hb8bm"]
+[ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="7_wvh85"]
+[ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
 panorama = ExtResource("2_6hken")
@@ -18,6 +20,9 @@ sky_material = SubResource("PanoramaSkyMaterial_0xm2m")
 background_mode = 2
 background_energy_multiplier = 0.5
 sky = SubResource("Sky_h2yge")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
+size = Vector3(1, 8.7300415, 22.593689)
 
 [node name="Testtrack1" type="Node3D" unique_id=1971607976 node_paths=PackedStringArray("player_spawners")]
 script = ExtResource("1_02b3g")
@@ -98,3 +103,32 @@ drift_required = 3
 
 [node name="Shortcutblock3" parent="ShortcutBlocks" unique_id=119300142 instance=ExtResource("6_hb8bm")]
 transform = Transform3D(0.96576536, 0.033023592, -0.25730643, -0.032351438, 0.9994529, 0.0068464186, 0.25739175, 0.0017121988, 0.9663054, 100.0221, 1.862361, 76.384964)
+
+[node name="LapLogic" type="Node" parent="." unique_id=521955060]
+script = ExtResource("7_wvh85")
+
+[node name="StartLine" type="Area3D" parent="LapLogic" unique_id=1788113332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.23478, 3.6727114, -0.3268199)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/StartLine" unique_id=1815141403]
+shape = SubResource("BoxShape3D_skbuk")
+
+[node name="Checkpoints" type="Node" parent="LapLogic" unique_id=2003503696]
+
+[node name="Checkpoint" parent="LapLogic/Checkpoints" unique_id=1706071241 instance=ExtResource("8_5ryjy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.551612, 0)
+
+[node name="Checkpoint2" parent="LapLogic/Checkpoints" unique_id=180271530 instance=ExtResource("8_5ryjy")]
+transform = Transform3D(0.75671023, 0, -0.6537504, 0, 1, 0, 0.6537504, 0, 0.75671023, 26.933882, 11.160031, -66.81247)
+
+[node name="Checkpoint3" parent="LapLogic/Checkpoints" unique_id=829538045 instance=ExtResource("8_5ryjy")]
+transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, 182.12831, 3.718027, -48.74948)
+
+[node name="Checkpoint4" parent="LapLogic/Checkpoints" unique_id=1063339194 instance=ExtResource("8_5ryjy")]
+transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, 131.6447, 0.34304714, 60.55488)
+
+[node name="Checkpoint5" parent="LapLogic/Checkpoints" unique_id=20632048 instance=ExtResource("8_5ryjy")]
+transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, -57.290894, 2.4219437, 104.632484)
+
+[connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]

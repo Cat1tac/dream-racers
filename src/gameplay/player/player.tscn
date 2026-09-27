@@ -9,7 +9,9 @@
 [ext_resource type="Script" uid="uid://blm7ue11w2hyr" path="res://src/gameplay/player/spin_hitbox.gd" id="6_rdc6l"]
 [ext_resource type="Script" uid="uid://jxikcugtw0ye" path="res://src/gameplay/player/spin_hurt_box.gd" id="6_xdbtd"]
 [ext_resource type="Curve" uid="uid://dxngmn0p8jwfa" path="res://src/gameplay/player/kart/curves/drift_charge_curve.tres" id="7_uia4o"]
+[ext_resource type="Script" uid="uid://diukun3gskvpu" path="res://src/gameplay/player/local_lap_logic.gd" id="8_hmrcn"]
 [ext_resource type="Curve" uid="uid://c7dw4nbq13umj" path="res://src/gameplay/player/kart/curves/spin_curve.tres" id="8_rdc6l"]
+[ext_resource type="Script" uid="uid://ecfx1n5360f0" path="res://src/gameplay/player/lap_manager.gd" id="9_en18r"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xdbtd"]
 height = 0.2
@@ -23,6 +25,9 @@ size = Vector3(2, 0.5, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rdc6l"]
 size = Vector3(1.2, 0.4, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
+size = Vector3(1.394165, 0.45404053, 0.63500977)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kjyqo"]
 friction = 0.0
@@ -95,6 +100,14 @@ script = ExtResource("6_xdbtd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, -0.2498169, 0)
 shape = SubResource("BoxShape3D_rdc6l")
 debug_color = Color(0.12897891, 0.05193083, 0.9997565, 0.41960785)
+
+[node name="LocalLapLogic" type="Area3D" parent="Center" unique_id=1608002342]
+script = ExtResource("8_hmrcn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Center/LocalLapLogic" unique_id=1104453581]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0022583008, 0.081451416, -0.7767334)
+shape = SubResource("BoxShape3D_skbuk")
+script = ExtResource("9_en18r")
 
 [node name="SecondCamera" type="Marker3D" parent="." unique_id=1667103743]
 unique_name_in_owner = true

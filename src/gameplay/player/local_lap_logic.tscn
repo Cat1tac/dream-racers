@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cyqurrxts27ql"]
+
+[ext_resource type="Script" uid="uid://cwe57uytgf030" path="res://local_lap_logic.gd" id="1_4v2ai"]
+
+[node name="LocalLapLogic" type="Node" unique_id=1204157281]
+script = ExtResource("1_4v2ai")

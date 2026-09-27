@@ -253,7 +253,7 @@ func remove_drift_charge() -> void:
 	new_drift_timer_base = 0.0
 	boost_panels_drifted_over = 0
 #endregion
-	
+
 #region Spin
 ## Executes spin and controls spin cooldown
 func _do_spin(delta : float) -> void:
