@@ -1369,6 +1369,78 @@ tracks/12/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_position_ratio")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_enabled")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_position_ratio")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_enabled")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_ri2wq"]
 resource_name = "enter_right"
@@ -1529,6 +1601,78 @@ tracks/12/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_position_ratio")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.46666667, 0.6666666),
+"transitions": PackedFloat32Array(0.61557215, 1),
+"update": 0,
+"values": [Vector2(6, 0), Vector2(0, 0)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0.46666667, 0.6333333),
+"transitions": PackedFloat32Array(0.53588665, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_enabled")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_position_ratio")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.5, 0.6999999),
+"transitions": PackedFloat32Array(0.61557215, 1),
+"update": 0,
+"values": [Vector2(6, 0), Vector2(0, 0)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.5, 0.6666666),
+"transitions": PackedFloat32Array(0.53588665, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_enabled")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.03333336),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_idipi"]
 resource_name = "exit_right"
@@ -1623,7 +1767,7 @@ tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.22862507, 0.42862508),
+"times": PackedFloat32Array(0.22862507, 0.43333334),
 "transitions": PackedFloat32Array(0.4061261, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -1688,6 +1832,78 @@ tracks/12/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_position_ratio")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.13333334, 0.4333334),
+"transitions": PackedFloat32Array(0.61557215, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(6, 0)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0.13333334, 0.4000001),
+"transitions": PackedFloat32Array(0.4061261, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_enabled")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_position_ratio")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.1, 0.39999992),
+"transitions": PackedFloat32Array(0.61557215, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(6, 0)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.1, 0.36666662),
+"transitions": PackedFloat32Array(0.4061261, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_enabled")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.03333336),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_idipi"]
 _data = {
@@ -1723,13 +1939,14 @@ script = ExtResource("1_qemve")
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=515055114]
 
 [node name="CloudsPlaceholder" type="ColorRect" parent="UILayer" unique_id=1634525891]
-custom_minimum_size = Vector2(0, 300)
+custom_minimum_size = Vector2(0, 500)
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+size_flags_horizontal = 4
 size_flags_vertical = 3
 mouse_filter = 2
 color = Color(0.9529412, 0.7529412, 0.78039217, 1)
@@ -1771,6 +1988,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8wxmc")
 
 [node name="MarginContainer" type="MarginContainer" parent="UILayer/MainMenu/VBoxContainer/(PLACEHOLDER)TitleFrame" unique_id=896040176]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
@@ -1780,19 +1999,20 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 90
 text = "Dream 
     Racers"
 
 [node name="ButtonMargin" type="MarginContainer" parent="UILayer/MainMenu/VBoxContainer" unique_id=1874748348]
 layout_mode = 2
-size_flags_vertical = 10
-theme_override_constants/margin_left = 350
-theme_override_constants/margin_right = 350
+size_flags_vertical = 6
+theme_override_constants/margin_left = 700
+theme_override_constants/margin_right = 700
 theme_override_constants/margin_bottom = 55
 
 [node name="ButtonVBox" type="VBoxContainer" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin" unique_id=307193461]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_constants/separation = 20
 
 [node name="RaceButton" type="Button" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=933511100]
@@ -1800,7 +2020,7 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_next = NodePath("../HowToPlayButton")
 theme = ExtResource("1_jlntk")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 70
 button_mask = 5
 text = "Race"
 
@@ -1810,7 +2030,7 @@ size_flags_vertical = 3
 focus_next = NodePath("../ExitButton")
 focus_previous = NodePath("../RaceButton")
 theme = ExtResource("1_jlntk")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 70
 text = "How to Play"
 
 [node name="ExitButton" type="Button" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=699455541]
@@ -1818,7 +2038,7 @@ layout_mode = 2
 size_flags_vertical = 3
 offset_transform_enabled = true
 theme = ExtResource("1_jlntk")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 70
 text = "Exit"
 
 [node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("transition_animations", "next_state", "previous_state")]
@@ -1846,6 +2066,7 @@ theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 
 [node name="BackButton" type="Button" parent="UILayer/CharacterSelect/BackButtonMargin" unique_id=772965871]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -1867,12 +2088,13 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 60
 text = "Character Select"
 horizontal_alignment = 1
 
 [node name="CharacterPortraitMargin" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer" unique_id=357168198]
 modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(500, 300)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
@@ -1882,77 +2104,97 @@ theme_override_constants/margin_top = 12
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/separation = 32
 
 [node name="CharFrame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1298681276]
-custom_minimum_size = Vector2(135, 135)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 color = Color(0.80784315, 0.45490196, 0.7294118, 1)
 
 [node name="Character1" type="TextureButton" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1" unique_id=654674172]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025925925
-anchor_top = 0.025925925
-anchor_right = 0.97407407
-anchor_bottom = 0.97407407
+anchor_left = -0.24074075
+anchor_top = -0.24074075
+anchor_right = 1.2407408
+anchor_bottom = 1.2407408
+offset_left = 36.0
+offset_top = 36.0
+offset_right = -36.0
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("1_sp1ie")
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="CharFrame2" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=102421327]
-custom_minimum_size = Vector2(135, 135)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 color = Color(0.80784315, 0.45490196, 0.7294118, 1)
 
 [node name="Character2" type="TextureButton" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2" unique_id=305995628]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025925925
-anchor_top = 0.025925925
-anchor_right = 0.97407407
-anchor_bottom = 0.97407407
+anchor_left = -0.24074075
+anchor_top = -0.24074075
+anchor_right = 1.2407408
+anchor_bottom = 1.2407408
+offset_left = 36.0
+offset_top = 36.0
+offset_right = -36.0
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("1_sp1ie")
+stretch_mode = 6
 metadata/_edit_use_anchors_ = true
 
 [node name="CharFrame3" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1465976800]
-custom_minimum_size = Vector2(135, 135)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 color = Color(0.80784315, 0.45490196, 0.7294118, 1)
 
 [node name="Character3" type="TextureButton" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3" unique_id=1712271581]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025925925
-anchor_top = 0.025925925
-anchor_right = 0.97407407
-anchor_bottom = 0.97407407
+anchor_left = -0.24074075
+anchor_top = -0.24074075
+anchor_right = 1.2407408
+anchor_bottom = 1.2407408
+offset_left = 32.5
+offset_top = 32.5
+offset_right = -32.5
+offset_bottom = -32.5
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("1_sp1ie")
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="CharacterViewMargin" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer" unique_id=2033354532]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 3
 theme_override_constants/margin_bottom = 25
 
 [node name="CharacterViewHBox" type="HBoxContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin" unique_id=430839112]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_constants/separation = 48
+size_flags_vertical = 4
+theme_override_constants/separation = 72
 
 [node name="CharacterView1" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=26445656]
-custom_minimum_size = Vector2(225, 225)
+custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 0
 
 [node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterView1" unique_id=508633824]
 custom_minimum_size = Vector2(0, 60)
@@ -1960,7 +2202,7 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="CharacterView2" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=875719395]
-custom_minimum_size = Vector2(225, 225)
+custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -1970,7 +2212,7 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="CharacterView3" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1495012233]
-custom_minimum_size = Vector2(225, 225)
+custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -1980,7 +2222,7 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="CharacterView4" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=442354950]
-custom_minimum_size = Vector2(225, 225)
+custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -1991,20 +2233,22 @@ size_flags_vertical = 8
 
 [node name="NextButtonMargin" type="MarginContainer" parent="UILayer/CharacterSelect" unique_id=1005794077]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
+anchors_preset = -1
+anchor_left = 0.9447917
+anchor_top = 0.44814816
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -63.0
-offset_top = -21.0
-offset_bottom = 21.0
+anchor_bottom = 0.55185187
+offset_left = 43.0
+offset_top = 35.0
+offset_bottom = -35.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 30
+metadata/_edit_use_anchors_ = true
 
 [node name="NextButton" type="Button" parent="UILayer/CharacterSelect/NextButtonMargin" unique_id=503467714]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -2044,6 +2288,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="BackButton" type="Button" parent="UILayer/TrackSelect/BackButtonMargin" unique_id=1163927883]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -2066,13 +2311,13 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 60
 text = "Track Select"
 horizontal_alignment = 1
 
 [node name="SelectedTrackView" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer" unique_id=1643635451]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(500, 250)
+custom_minimum_size = Vector2(700, 450)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
@@ -2080,39 +2325,39 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qemve")
 
 [node name="TrackViewMargin" type="MarginContainer" parent="UILayer/TrackSelect/VBoxContainer" unique_id=1889994990]
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 3
 theme_override_constants/margin_bottom = 25
 
 [node name="CharacterViewHBox" type="HBoxContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin" unique_id=1461557336]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_constants/separation = 60
+size_flags_vertical = 4
+theme_override_constants/separation = 72
 
 [node name="Track1" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=900318843]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(150, 150)
+custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
 [node name="Track2" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=449278947]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(150, 150)
+custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
 [node name="Track3" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=1773307534]
-visible = false
-custom_minimum_size = Vector2(150, 150)
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
 [node name="Track4" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=270231830]
-visible = false
-custom_minimum_size = Vector2(150, 150)
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
