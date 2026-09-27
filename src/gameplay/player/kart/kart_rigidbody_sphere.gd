@@ -11,6 +11,7 @@ class_name Kart_Sphere extends RigidBody3D
 @onready var spin_hurt_box: SpinHurtBox = %SpinHurtBox
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var trail_spawner: Trail_Spawner = %TrailSpawner
+@onready var camera_pivot: Marker3D = %CameraPivot
 
 
 var kart_model : Node3D
@@ -32,6 +33,7 @@ var drift_direction : float
 
 @export var brake_resistance := 10 ## How much resistance there is to forward movement when pressing in the opposite direction of the velocity
 @export var ground_resistance := 3 ## How mcuh resistance there is to forward movement when coasting
+@export var air_resistance := 5 ## How fast you lose speed in the air 
 
 @export_group("Steering")
 @export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_slow := 10.0 # will be stat adjustable
@@ -76,7 +78,7 @@ var drift_direction : float
 var drift_just_released : bool #bool for if the kart just released drift button
 var drift_buffer_timer : float # increment timer for drift
 var snake_buffer_timer : float # increment timer for snaking
-var snake_penalty_amt : float # penalty for snaking
+var snake_penalty_amt : float = 0.5 # penalty for snaking
 var just_started_drift : bool # check whether the kart should start the drift buffer
 var drift_stage : int #level of drift
 var drift_timer : float #increament timer for drift
@@ -406,6 +408,10 @@ func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	
 	spin_hurt_box.global_basis = new_basis.orthonormalized()
 	
+	#camera_pivot.global_basis = new_basis.orthonormalized()
+	#camera_pivot.global_basis.x = -right
+	#camera_pivot.global_basis.z = -forward
+	
 	kart_model.global_basis = new_basis
 	kart_model.rotation += new_kart_rotation
 	kart_model.scale = kart_scale
@@ -478,6 +484,8 @@ func _physics_process(delta: float) -> void:
 			_apply_stop(delta)
 		else:
 			_apply_forward_force(delta)
+	else:
+		apply_air_resistance(delta)
 
 	_apply_traction(delta)
 	_apply_steering(delta)
@@ -528,6 +536,15 @@ func _apply_forward_force(_delta : float) -> void:
 	apply_central_force(60 * _calculate_force_vector(forward, vel) * _delta)
 	#print(force_vector)
 	DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
+	Events.on_get_speed.emit(vel, drift_timer)
+
+func apply_air_resistance(_delta: float) -> void:
+	var forward := -center.global_basis.z
+	var vel := forward.dot(linear_velocity)
+	var force_vector : Vector3
+	if vel > 0.5:
+		force_vector = -forward * air_resistance * mass
+	apply_central_force(60 * force_vector * _delta)
 	Events.on_get_speed.emit(vel, drift_timer)
 
 func _calculate_force_vector(forward : Vector3, vel : float) -> Vector3:

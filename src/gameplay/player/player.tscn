@@ -34,7 +34,7 @@ size = Vector3(1.394165, 0.45404053, 0.63500977)
 friction = 0.0
 bounce = 0.2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_uia4o"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_nor3r"]
 
 [node name="Player" type="Node3D" unique_id=648418637 node_paths=PackedStringArray("boostChargeArray")]
 script = ExtResource("1_qlg0r")
@@ -144,12 +144,14 @@ snap_cast = NodePath("../Center/SnapRay")
 wall_cast = NodePath("../Center/WallRay")
 particlesManager = [NodePath("../Center/BoostCharge"), NodePath("../Center/BoostCharge2")]
 top_speed = 25.0
+air_resistance = 2
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
 boost_max_time = 1.7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Kart_Sphere" unique_id=199179411]
-shape = SubResource("SphereShape3D_uia4o")
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.0052971863, -0.048706055)
+shape = SubResource("SphereShape3D_nor3r")
 debug_color = Color(0, 0.6149741, 0.6062328, 0.41960785)
 
 [connection signal="area_entered" from="Center/SpinHitbox" to="Center/SpinHitbox" method="_on_area_entered"]

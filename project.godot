@@ -144,4 +144,5 @@ p2_store_charge={
 
 [rendering]
 
+rendering_device/driver="d3d12"
 rendering_device/driver.windows="d3d12"
