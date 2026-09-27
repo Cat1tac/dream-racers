@@ -5,6 +5,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2mjgn"]
 albedo_texture = ExtResource("1_p323g")
+emission_enabled = true
 
 [node name="Kart" unique_id=1581300003 instance=ExtResource("1_nq5q0")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)

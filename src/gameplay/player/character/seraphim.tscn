@@ -1,0 +1,414 @@
+[gd_scene format=3 uid="uid://bgxs7la26ajpr"]
+
+[ext_resource type="PackedScene" uid="uid://bmnkxudigxc8i" path="res://assets/models/characters/Seraphim/Seraphim.glb" id="1_84gts"]
+[ext_resource type="Texture2D" uid="uid://civ3k51gr8fif" path="res://assets/models/characters/Seraphim/BaseColor.png" id="2_5waya"]
+[ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="2_rbgkn"]
+[ext_resource type="Texture2D" uid="uid://b8bmrjgywntr3" path="res://assets/models/characters/Seraphim/BaseColorUpdated.png" id="3_n7qul"]
+[ext_resource type="Texture2D" uid="uid://etfqx70246xe" path="res://assets/models/characters/Seraphim/HaloEmission.png" id="3_rbgkn"]
+[ext_resource type="Texture2D" uid="uid://cf65igkko80ac" path="res://assets/models/characters/Seraphim/Seraphim_CoolShoe.png" id="4_n7qul"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gq25g"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.01
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Shader" id="Shader_nh4bs"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float emission_multiplier : hint_range(0.0, 100.0, 1);
+uniform vec4 emission_color : source_color; 
+uniform sampler2D texture_emission;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform sampler2D color_gradient;
+uniform sampler2D fresnel_gradient;
+uniform bool fresnel_on;
+uniform float fresnel_amount : hint_range(0.0, 100.0, 0.01);
+
+float fresnel(float amount, vec3 normal, vec3 view){
+	//highlights the pixels that are more perpendicular to camera
+	// amount determines how much of an effect it has
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	float basic_fresnel = fresnel(fresnel_amount, NORMAL, VIEW);
+	
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	if (fresnel_on){
+		ALBEDO += (basic_fresnel * texture(fresnel_gradient, vec2(basic_fresnel, 0.0)).rgb * 1.0);
+	}
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+	
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	
+	vec4 emission_tex = texture(texture_emission, base_uv) * emission_color;
+	EMISSION += emission_tex.rgb * emission_multiplier;
+}
+
+void light(){
+	float dotproduct = clamp(dot(NORMAL, LIGHT), -1.0, 1.0);
+	float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.0, 0.05, 0.95);
+	vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+	DIFFUSE_LIGHT += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_y1pk1"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wlm1t"]
+gradient = SubResource("Gradient_y1pk1")
+
+[sub_resource type="Gradient" id="Gradient_gqhgw"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6qkjk"]
+gradient = SubResource("Gradient_gqhgw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i05pn"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_gq25g")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("3_n7qul")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0.9851801, 0.67274034, 0.36264747, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_wlm1t")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_6qkjk")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv5ff"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.01
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Gradient" id="Gradient_c6msy"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jrsqp"]
+gradient = SubResource("Gradient_c6msy")
+
+[sub_resource type="Gradient" id="Gradient_0o48m"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_v4e8c"]
+gradient = SubResource("Gradient_0o48m")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f0mi7"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_bv5ff")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(0.9821753, 0.9821753, 0.9821753, 1)
+shader_parameter/texture_albedo = ExtResource("3_n7qul")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0.9851801, 0.67274034, 0.36264747, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_jrsqp")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_v4e8c")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t677u"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.01
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Gradient" id="Gradient_nh1j8"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d75fi"]
+gradient = SubResource("Gradient_nh1j8")
+
+[sub_resource type="Gradient" id="Gradient_skxy4"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cak7g"]
+gradient = SubResource("Gradient_skxy4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lesy5"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_t677u")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("3_n7qul")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0.9851801, 0.67274034, 0.36264747, 1)
+shader_parameter/texture_emission = ExtResource("3_rbgkn")
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_d75fi")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_cak7g")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pbqu7"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.02
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Gradient" id="Gradient_tsa8w"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mfbxj"]
+gradient = SubResource("Gradient_tsa8w")
+
+[sub_resource type="Gradient" id="Gradient_e5hov"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qlwdn"]
+gradient = SubResource("Gradient_e5hov")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1x352"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_pbqu7")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("3_n7qul")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0.9851801, 0.67274034, 0.36264747, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_mfbxj")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_qlwdn")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c43es"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.02
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Gradient" id="Gradient_ipvhb"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0wfdt"]
+gradient = SubResource("Gradient_ipvhb")
+
+[sub_resource type="Gradient" id="Gradient_vgngf"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3e8qy"]
+gradient = SubResource("Gradient_vgngf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckdt2"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_c43es")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_5waya")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_0wfdt")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_3e8qy")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qj6iw"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.01
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Gradient" id="Gradient_wih3d"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8kiuj"]
+gradient = SubResource("Gradient_wih3d")
+
+[sub_resource type="Gradient" id="Gradient_7k7q3"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wsgn2"]
+gradient = SubResource("Gradient_7k7q3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4bx31"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_qj6iw")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("4_n7qul")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0.9851801, 0.67274034, 0.36264747, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_8kiuj")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_wsgn2")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
+[node name="Seraphim" unique_id=1624741116 instance=ExtResource("1_84gts")]
+transform = Transform3D(0.93859786, 0.34501305, 0, -0.34501305, 0.93859786, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="kart" parent="." index="0" unique_id=2060035001 instance=ExtResource("2_rbgkn")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0.15254214, -0.028191343)
+
+[node name="Armature" parent="." index="1" unique_id=371242896]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.011041164)
+
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=745863128]
+transform = Transform3D(1.0000006, 1.4901161e-07, 0, -1.4901161e-07, 1.0000006, 0, 0, 0, 1, 0, 0, 0)
+bones/1/rotation = Quaternion(0.34216377, 0.6934352, -0.50143933, 0.3881111)
+bones/1/scale = Vector3(0.99999994, 0.9999999, 1)
+bones/2/rotation = Quaternion(0.6573828, 0.1455672, 0.13152447, 0.7275709)
+bones/2/scale = Vector3(1.0000002, 0.99999976, 1)
+bones/3/position = Vector3(-0.100145005, 0.1653399, 1.0142685e-08)
+bones/3/rotation = Quaternion(-0.5990678, -1.1264932e-08, 8.3459675e-08, 0.80069834)
+bones/3/scale = Vector3(1.0000001, 0.99999994, 1)
+bones/4/rotation = Quaternion(0.58739144, 0.2788599, -0.23474239, 0.722568)
+bones/4/scale = Vector3(0.9999998, 1, 1.0000001)
+bones/5/rotation = Quaternion(0.2691711, 4.231635e-10, 1.5353937e-08, 0.9630924)
+bones/5/scale = Vector3(0.99999994, 0.99999994, 1.0000001)
+bones/6/position = Vector3(0.20157036, 0.20455287, 0.028011624)
+bones/6/rotation = Quaternion(-0.42950115, -0.11684776, -0.29668307, 0.8448991)
+bones/6/scale = Vector3(0.99999994, 0.9999998, 0.99999976)
+bones/7/rotation = Quaternion(0, -0.28161055, 0, 0.9595288)
+bones/7/scale = Vector3(0.99999994, 1, 0.99999994)
+
+[node name="Blush" parent="Armature/Skeleton3D" index="0" unique_id=1637776994]
+surface_material_override/0 = SubResource("ShaderMaterial_i05pn")
+
+[node name="Body" parent="Armature/Skeleton3D" index="1" unique_id=336408131]
+surface_material_override/0 = SubResource("ShaderMaterial_f0mi7")
+
+[node name="Eyeball" parent="Armature/Skeleton3D" index="2" unique_id=714767031]
+surface_material_override/0 = SubResource("ShaderMaterial_i05pn")
+
+[node name="Halo" parent="Armature/Skeleton3D" index="3" unique_id=1011147773]
+surface_material_override/0 = SubResource("ShaderMaterial_lesy5")
+
+[node name="Pupil & Shine" parent="Armature/Skeleton3D" index="4" unique_id=473382940]
+surface_material_override/0 = SubResource("ShaderMaterial_1x352")
+surface_material_override/1 = SubResource("ShaderMaterial_ckdt2")
+
+[node name="ShoeL" parent="Armature/Skeleton3D" index="5" unique_id=1345268130]
+transform = Transform3D(0.9022284, 0, 0.43125847, 0, 1, 0, -0.43125847, 0, 0.9022284, 0, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_4bx31")
+
+[node name="ShoeR" parent="Armature/Skeleton3D" index="6" unique_id=1271349176]
+transform = Transform3D(0.93283004, 0, -0.36031672, 0, 1, 0, 0.36031672, 0, 0.93283004, 0, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_4bx31")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2" unique_id=371308503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9682285, 0.2635615, 0.18013954)

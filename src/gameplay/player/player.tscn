@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://2c0qneayskpq"]
 
-[ext_resource type="PackedScene" uid="uid://bwlpp3533f8mt" path="res://src/gameplay/player/kart/Kart.tscn" id="1_7822p"]
 [ext_resource type="Script" uid="uid://daofdpvljdd2n" path="res://src/gameplay/player/player.gd" id="1_qlg0r"]
 [ext_resource type="Resource" uid="uid://dlkv4ebximllc" path="res://src/resources/player_controls/p1_controls.tres" id="2_sjr3t"]
 [ext_resource type="Resource" uid="uid://d3eq8jfnvx35g" path="res://src/resources/character_definitions/balanced_character.tres" id="3_xdbtd"]
+[ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="4_nem4e"]
 [ext_resource type="PackedScene" uid="uid://b55vp0yk7kpjj" path="res://src/gameplay/player/kart/effects/boost_charge.tscn" id="5_d3trc"]
 [ext_resource type="Script" uid="uid://deyrmyjok4yx7" path="res://src/gameplay/player/kart/kart_rigidbody_sphere.gd" id="6_dxsvo"]
-[ext_resource type="Script" uid="uid://blm7ue11w2hyr" path="res://src/gameplay/player/spin_hitbox.gd" id="6_rdc6l"]
-[ext_resource type="Script" uid="uid://jxikcugtw0ye" path="res://src/gameplay/player/spin_hurt_box.gd" id="6_xdbtd"]
+[ext_resource type="Script" uid="uid://blm7ue11w2hyr" path="res://src/gameplay/player/kart/spin/spin_hitbox.gd" id="6_rdc6l"]
+[ext_resource type="Script" uid="uid://jxikcugtw0ye" path="res://src/gameplay/player/kart/spin/spin_hurt_box.gd" id="6_xdbtd"]
 [ext_resource type="Curve" uid="uid://dxngmn0p8jwfa" path="res://src/gameplay/player/kart/curves/drift_charge_curve.tres" id="7_uia4o"]
 [ext_resource type="Script" uid="uid://diukun3gskvpu" path="res://src/gameplay/player/local_lap_logic.gd" id="8_hmrcn"]
+[ext_resource type="PackedScene" uid="uid://c0gmqfmhqhure" path="res://src/gameplay/player/kart/trailing/trail_spawner.tscn" id="8_nem4e"]
 [ext_resource type="Curve" uid="uid://c7dw4nbq13umj" path="res://src/gameplay/player/kart/curves/spin_curve.tres" id="8_rdc6l"]
 [ext_resource type="Script" uid="uid://ecfx1n5360f0" path="res://src/gameplay/player/lap_manager.gd" id="9_en18r"]
 
@@ -24,7 +25,7 @@ size = Vector3(2, 0.5, 2)
 size = Vector3(2, 0.5, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rdc6l"]
-size = Vector3(1.2, 0.4, 1.2)
+size = Vector3(1.2, 0.38391113, 1.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 size = Vector3(1.394165, 0.45404053, 0.63500977)
@@ -35,23 +36,26 @@ bounce = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uia4o"]
 
-[node name="Player" type="Node3D" unique_id=648418637]
+[node name="Player" type="Node3D" unique_id=648418637 node_paths=PackedStringArray("boostChargeArray")]
 script = ExtResource("1_qlg0r")
 playerControls = ExtResource("2_sjr3t")
 character = ExtResource("3_xdbtd")
+kart_model_scene = ExtResource("4_nem4e")
+boostChargeArray = [NodePath("Center/BoostCharge"), NodePath("Center/BoostCharge2")]
 
 [node name="Center" type="Node3D" parent="." unique_id=989855784]
 unique_name_in_owner = true
 
-[node name="KartModel" parent="Center" unique_id=14283131 instance=ExtResource("1_7822p")]
+[node name="KartModel" parent="Center" unique_id=2060035001 instance=ExtResource("4_nem4e")]
 unique_name_in_owner = true
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, -0.37410688, 0)
+process_mode = 4
+visible = false
 
-[node name="BoostCharge" parent="Center/KartModel" unique_id=1439352013 instance=ExtResource("5_d3trc")]
-transform = Transform3D(1.4285715, 0, 0, 0, 1.4285715, 0, 0, 0, 1.4285715, -0.995, 0.03, 1.002)
+[node name="BoostCharge" parent="Center" unique_id=1439352013 instance=ExtResource("5_d3trc")]
+transform = Transform3D(1.15, 0, 7.310897e-08, 0, 1.15, 0, -7.310897e-08, 0, 1.15, -0.80097497, -0.4060729, 0.80661)
 
-[node name="BoostCharge2" parent="Center/KartModel" unique_id=2022985605 instance=ExtResource("5_d3trc")]
-transform = Transform3D(1.4285715, 0, 0, 0, 1.4285715, 0, 0, 0, 1.4285715, 0.995, -0.03, 1.002)
+[node name="BoostCharge2" parent="Center" unique_id=2022985605 instance=ExtResource("5_d3trc")]
+transform = Transform3D(1.15, 0, 7.310897e-08, 0, 1.15, 0, -7.310897e-08, 0, 1.15, 0.800975, -0.4543729, 0.8066099)
 
 [node name="GroundRay" type="RayCast3D" parent="Center" unique_id=1613552836]
 target_position = Vector3(0, -1.5, 0)
@@ -70,34 +74,33 @@ collision_mask = 6
 
 [node name="SpinHitbox" type="Area3D" parent="Center" unique_id=1189610687 node_paths=PackedStringArray("spinhurtbox")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15245509, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05111462, 0)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("6_rdc6l")
 spinhurtbox = NodePath("../SpinHurtBox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Center/SpinHitbox" unique_id=232898665]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, -0.2498169, 0)
 shape = SubResource("BoxShape3D_uia4o")
 debug_color = Color(0.7, 0, 0, 0.41960785)
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="Center/SpinHitbox" unique_id=2052466550]
 unique_name_in_owner = true
 shape = SubResource("BoxShape3D_xdbtd")
-target_position = Vector3(0, -0.25, 0)
+target_position = Vector3(0, 0, 0)
 collision_mask = 32
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="SpinHurtBox" type="Area3D" parent="Center" unique_id=10026521]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15245509, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05111462, 0)
 collision_layer = 64
-collision_mask = 32
+collision_mask = 160
 script = ExtResource("6_xdbtd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Center/SpinHurtBox" unique_id=588596396]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, -0.2498169, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028445438, 0)
 shape = SubResource("BoxShape3D_rdc6l")
 debug_color = Color(0.12897891, 0.05193083, 0.9997565, 0.41960785)
 
@@ -108,6 +111,11 @@ script = ExtResource("8_hmrcn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0022583008, 0.081451416, -0.7767334)
 shape = SubResource("BoxShape3D_skbuk")
 script = ExtResource("9_en18r")
+
+[node name="TrailSpawner" parent="Center" unique_id=445046220 node_paths=PackedStringArray("player") instance=ExtResource("8_nem4e")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1163908)
+player = NodePath("../..")
 
 [node name="SecondCamera" type="Marker3D" parent="." unique_id=1667103743]
 unique_name_in_owner = true
@@ -123,17 +131,18 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6859641, 4.8363237)
 current = true
 
-[node name="Kart_Sphere" type="RigidBody3D" parent="." unique_id=1517078465 node_paths=PackedStringArray("ground_cast", "snap_cast", "wall_cast", "particlesManager")]
+[node name="Kart_Sphere" type="RigidBody3D" parent="." unique_id=1517078465 node_paths=PackedStringArray("player", "ground_cast", "snap_cast", "wall_cast", "particlesManager")]
 unique_name_in_owner = true
 collision_mask = 31
 mass = 50.0
 physics_material_override = SubResource("PhysicsMaterial_kjyqo")
 gravity_scale = 1.5
 script = ExtResource("6_dxsvo")
+player = NodePath("..")
 ground_cast = NodePath("../Center/GroundRay")
 snap_cast = NodePath("../Center/SnapRay")
 wall_cast = NodePath("../Center/WallRay")
-particlesManager = [NodePath("../Center/KartModel/BoostCharge"), NodePath("../Center/KartModel/BoostCharge2")]
+particlesManager = [NodePath("../Center/BoostCharge"), NodePath("../Center/BoostCharge2")]
 top_speed = 25.0
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
@@ -145,3 +154,6 @@ debug_color = Color(0, 0.6149741, 0.6062328, 0.41960785)
 
 [connection signal="area_entered" from="Center/SpinHitbox" to="Center/SpinHitbox" method="_on_area_entered"]
 [connection signal="area_entered" from="Center/SpinHurtBox" to="Center/SpinHurtBox" method="_on_area_entered"]
+[connection signal="area_exited" from="Center/SpinHurtBox" to="Center/SpinHurtBox" method="_on_area_exited"]
+
+[editable path="Center/KartModel"]

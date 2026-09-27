@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bkkig4wlxtftd"]
+
+[ext_resource type="Material" uid="uid://7lan714pvou7" path="res://src/shaders/cel_shader.tres" id="1_v15gc"]
+[ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="2_t1dfh"]
+
+[node name="Node3D" type="Node3D" unique_id=1882522624]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1008744241]
+transform = Transform3D(0.9999852, 0.0011571953, -0.0053107776, -0.0012575688, 0.99981993, -0.018935718, 0.0052879085, 0.018942116, 0.9998066, 0.3531441, 1.032589, -1.1525314)
+light_color = Color(0.25714317, 0.5390351, 0.87952507, 1)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="." unique_id=1988498554]
+visible = false
+radial_segments = 100
+rings = 100
+material = ExtResource("1_v15gc")
+
+[node name="kart" parent="." unique_id=2060035001 instance=ExtResource("2_t1dfh")]
+
+[editable path="kart"]

@@ -9,8 +9,9 @@ class_name SpinHitbox extends Area3D
 
 var parent : Player
 var hitbox_active := false
-var drift_stage : int
+var charge_level : int
 var hit_dreamcatcher := false
+var hit_shortcut := false
 
 var collision_point : Vector3
 
@@ -24,15 +25,12 @@ func set_active(state : bool) -> void:
 	
 #called by dreamcatcher
 func call_spin_boost() -> void:
+	print(charge_level)
 	kart_sphere.dreamcatcher_spin_boost()
 
 #called by dreamcatcher
-func call_stop() -> void:
-	kart_sphere.apply_shortcut_stop_force()
-
-func _call_spin_clash() -> void:
-	pass
-	#will call a function that send both players in oppsite directions when both of them touch spins
+func call_bounce(bounce : float = 8) -> void:
+	kart_sphere.apply_bounce_force(bounce)
 
 func _process(delta: float) -> void:
 	DebugDraw.draw_line(global_position, to_global(Vector3(-collision_point.x, collision_point.y, -collision_point.z)), Color(177.84, 24.316, 93.229, 1.0))

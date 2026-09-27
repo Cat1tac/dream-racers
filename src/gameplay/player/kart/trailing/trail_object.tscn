@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://do8jj30l3084f"]
+
+[ext_resource type="Script" uid="uid://biwv5p2rne2dv" path="res://src/gameplay/player/kart/trailing/trail_object.gd" id="1_s85td"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uujsa"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Trail_Object" type="Node3D" unique_id=2123921834]
+script = ExtResource("1_s85td")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="." unique_id=860923547]
+radius = 0.11
+
+[node name="Timer" type="Timer" parent="." unique_id=1691341881]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="." unique_id=68111772]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=112202793]
+shape = SubResource("BoxShape3D_uujsa")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

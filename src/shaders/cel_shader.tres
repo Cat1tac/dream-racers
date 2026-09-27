@@ -1,0 +1,118 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://7lan714pvou7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qa4xb"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.019
+
+[sub_resource type="Shader" id="Shader_nh4bs"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float emission_multiplier : hint_range(0.0, 100.0, 1);
+uniform vec4 emission_color : source_color; 
+uniform sampler2D texture_emission;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform sampler2D color_gradient;
+uniform sampler2D fresnel_gradient;
+uniform bool fresnel_on;
+uniform float fresnel_amount : hint_range(0.0, 100.0, 0.01);
+
+float fresnel(float amount, vec3 normal, vec3 view){
+	//highlights the pixels that are more perpendicular to camera
+	// amount determines how much of an effect it has
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	float basic_fresnel = fresnel(fresnel_amount, NORMAL, VIEW);
+	
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	if (fresnel_on){
+		ALBEDO += (basic_fresnel * texture(fresnel_gradient, vec2(basic_fresnel, 0.0)).rgb * 1.0);
+	}
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+	
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	
+	vec4 emission_tex = texture(texture_emission, base_uv) * emission_color;
+	EMISSION += emission_tex.rgb * emission_multiplier;
+}
+
+void light(){
+	float dotproduct = clamp(dot(NORMAL, LIGHT), -1.0, 1.0);
+	float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.0, 0.05, 0.95);
+	vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+	DIFFUSE_LIGHT += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_nh4bs"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nr37y"]
+gradient = SubResource("Gradient_nh4bs")
+
+[sub_resource type="Gradient" id="Gradient_nr37y"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qe7ll"]
+gradient = SubResource("Gradient_nr37y")
+
+[resource]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_qa4xb")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_nr37y")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_qe7ll")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648

@@ -6,7 +6,7 @@ class_name MainGame extends Node
 #test
 # Future (main menu): Load test level for prototype
 const TESTING_SCENE : String = "uid://c0i43c0ijhpqa"
-const PLAYER_SCENE_UID : String = "uid://2c0qneayskpq"
+const PLAYER_SCENE_UID : String = ScenePaths.PLAYER.player
 const PLAYER_VIEW_UID : String = "uid://bqy6omuyhur8a"
 const DEBUG_MENU : String = "uid://csverqobfpghe"
 const TEST_TRACK_1 :String = "uid://c2q2o1k875cs4"

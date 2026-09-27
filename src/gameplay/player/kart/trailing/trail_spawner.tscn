@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c0gmqfmhqhure"]
+
+[ext_resource type="Script" uid="uid://dh087600u3ov" path="res://src/gameplay/player/kart/trailing/trail_spawner.gd" id="1_5ic0s"]
+
+[node name="TrailSpawner" type="Node3D" unique_id=445046220]
+script = ExtResource("1_5ic0s")

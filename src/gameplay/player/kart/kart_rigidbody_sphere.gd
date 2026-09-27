@@ -1,15 +1,19 @@
 class_name Kart_Sphere extends RigidBody3D
 ## Handles all movement and phsyics interaction dealing with the kart
+@export var player : Player
 @export var ground_cast : RayCast3D
 @export var snap_cast : RayCast3D
 @export var wall_cast : ShapeCast3D
 @export var particlesManager : Array[KartParticlesManager]
 #@onready var kart_model: Node3D = $Kart_Model
 @onready var center: Node3D = %Center
-@onready var kart_model: Node3D = %KartModel
 @onready var spin_hitbox: SpinHitbox = %SpinHitbox
 @onready var spin_hurt_box: SpinHurtBox = %SpinHurtBox
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+@onready var trail_spawner: Trail_Spawner = %TrailSpawner
+
+
+var kart_model : Node3D
 
 #Inputs
 var input_acceleration : float
@@ -23,6 +27,8 @@ var drift_direction : float
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var top_speed := 20.0 # Will be stat adjustable
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var reverse_top_speed := 7.5
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var acceleration := 5.0 # Will be stat adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var trailing_speed := 10.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var trailing_acceleration := 5.0
 
 @export var brake_resistance := 10 ## How much resistance there is to forward movement when pressing in the opposite direction of the velocity
 @export var ground_resistance := 3 ## How mcuh resistance there is to forward movement when coasting
@@ -66,9 +72,11 @@ var drift_direction : float
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var boost_max_time := 1.5 # will be state adjustable
 #TODO Implement a boost curve
 
+#region variables
 var drift_just_released : bool #bool for if the kart just released drift button
 var drift_buffer_timer : float # increment timer for drift
 var snake_buffer_timer : float # increment timer for snaking
+var snake_penalty_amt : float # penalty for snaking
 var just_started_drift : bool # check whether the kart should start the drift buffer
 var drift_stage : int #level of drift
 var drift_timer : float #increament timer for drift
@@ -76,6 +84,16 @@ var new_drift_timer_base : float #new base timer to start from after snaking
 var boost_timer : float #increament timer for boost
 var boost_actual_speed : float #actual speed of boost
 var boost_panels_drifted_over : int = 0
+
+var stored_charge_level : int = 0
+var boost_panels_driven_over_store : int = 0
+var boost_panels_driven_over_timer : float = 0.2
+var boost_panels_driven_over_increment : float
+
+var charge_level : int
+#make varaiable called charge level that takes whatever the current highest num is between the drift_stage and stored charge and boosting and spinning logic will use that instead of drift stage
+
+var is_trailing : bool
 
 var spin_timer : float
 var spin_top_speed_multiplicand : float
@@ -117,6 +135,7 @@ enum states {
 	CRASH
 }
 var state : states
+#endregion
 
 #region raycast funcs
 func on_ground() -> bool:
@@ -161,14 +180,46 @@ func _handle_input() -> void:
 	if Input.is_action_just_pressed(controls.spin):
 		if spin_cooldown_timer <= 0:
 			spin_hitbox.hit_dreamcatcher = false
+			spin_hitbox.hit_shortcut = false
 			spin_hurt_box.setIntangiblility(true)
 			var forward := -center.global_basis.z
 			speed_right_before_spin = forward.dot(linear_velocity) if forward.dot(linear_velocity) < top_speed else top_speed
 			#apply_slowdown_force(0.25)
 			input_spin = true
+			
+	if Input.is_action_just_pressed(controls.store):
+		if stored_charge_level == 0: # Put charge in store
+			stored_charge_level = drift_stage if drift_stage >= 3 else 0
+			
+			if stored_charge_level == 4:
+				boost_panels_driven_over_store = 1
+			elif stored_charge_level == 5:
+				boost_panels_driven_over_store = 3
+			elif stored_charge_level == 6:
+				boost_panels_driven_over_store = 6
+				
+		elif boost_panels_driven_over_increment > 0 and stored_charge_level >= 3: # increase stored charge
+			boost_panels_driven_over_store += 1
+			
+			if boost_panels_driven_over_store == 1 and stored_charge_level < 4:
+				stored_charge_level = 4
+			elif boost_panels_driven_over_store == 3 and stored_charge_level < 5:
+				stored_charge_level = 5
+			elif boost_panels_driven_over_store == 6 and stored_charge_level < 6:
+				stored_charge_level = 6
+				
+		elif stored_charge_level >= 3 and boost_panels_driven_over_increment <= 0: # use stored charge
+			_execute_boost(stored_charge_level)
+			_remove_stored_charge()
+		print(stored_charge_level)
+			
+	# if store is just pressed
+	# if store is 0 set store to current drift stage if it is above 2
+	# if store is not 0 then check if store increase timer is active. if it is then increase the "panels drifted over while stored" var by one
+	# otherwise use stored charge  
 
 
-#region Drift / Boost
+#region Drift / Boost / Store Charge
 func _drift_boost_control(delta : float) -> void:
 	if drift_just_released: #Controls Drift Boost release and snaking
 		
@@ -177,12 +228,13 @@ func _drift_boost_control(delta : float) -> void:
 				drift_direction = sign(input_steering)
 				
 				if drift_direction != 0:
-					drift_timer = new_drift_timer_base if drift_timer - 0.3 < new_drift_timer_base else drift_timer - 0.35 
+					# Subtracts from drift timer if you change directions while mid-drift
+					drift_timer = new_drift_timer_base if drift_timer - 0.3 < new_drift_timer_base else drift_timer - snake_penalty_amt 
 					drift_just_released = false 
 					snake_buffer_timer = 0.0
 			snake_buffer_timer += delta
 		else:
-			_execute_drift_boost()
+			_execute_boost(drift_stage)
 	else: #Controls Initial Drift buffer
 		if input_drift and drift_direction == 0: # start drift buffer
 			if drift_buffer_timer < drift_buffer:
@@ -201,25 +253,39 @@ func _drift_boost_control(delta : float) -> void:
 	#Controls Drift Charge
 	if input_drift and on_ground():
 		drift_timer += abs(angular_speed + kartCharacter.drift_charge_speed) * delta
-		#Base boost
-		if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
-			new_drift_timer_base = drift_charge_curve.get_point_position(1).x
-			_set_drifting_stage(1)
-		elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
-			new_drift_timer_base = drift_charge_curve.get_point_position(2).x
-			_set_drifting_stage(2)
-		elif drift_timer > drift_charge_curve.max_value and drift_stage < 3:
-			new_drift_timer_base = drift_charge_curve.max_value
-			_set_drifting_stage(3)
 		
-		#Boost panel boost
-		if drift_stage >= 3:
-			if boost_panels_drifted_over == 1 and drift_stage < 4:
-				_set_drifting_stage(4)
-			elif boost_panels_drifted_over == 3 and drift_stage < 5:
-				_set_drifting_stage(5)
-			elif boost_panels_drifted_over == 6 and drift_stage < 6:
-				_set_drifting_stage(6)
+		if stored_charge_level > 0:
+			if drift_stage > 2:
+				drift_timer = 0
+				_set_drifting_stage(-1)
+			
+			if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
+				new_drift_timer_base = drift_charge_curve.get_point_position(1).x
+				_set_drifting_stage(1)
+			elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
+				new_drift_timer_base = drift_charge_curve.get_point_position(2).x
+				_set_drifting_stage(2)
+				
+		else:
+			#Base boost
+			if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
+				new_drift_timer_base = drift_charge_curve.get_point_position(1).x
+				_set_drifting_stage(1)
+			elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
+				new_drift_timer_base = drift_charge_curve.get_point_position(2).x
+				_set_drifting_stage(2)
+			elif drift_timer > drift_charge_curve.max_value and drift_stage < 3:
+				new_drift_timer_base = drift_charge_curve.max_value
+				_set_drifting_stage(3)
+			
+			#Boost panel boost
+			if drift_stage >= 3:
+				if boost_panels_drifted_over == 1 and drift_stage < 4:
+					_set_drifting_stage(4)
+				elif boost_panels_drifted_over == 3 and drift_stage < 5:
+					_set_drifting_stage(5)
+				elif boost_panels_drifted_over == 6 and drift_stage < 6:
+					_set_drifting_stage(6)
 		
 	#Boost timer Countdown
 	if boost_timer > 0:
@@ -229,11 +295,11 @@ func _set_drifting_stage(stage : int) -> void:
 	for particle in particlesManager:
 		particle.set_drifting_stage(stage)
 	drift_stage = stage
-	spin_hitbox.drift_stage = stage
+	
 	#print(boost_panels_drifted_over)
 
-func _execute_drift_boost() -> void: 
-	var boostlevel : int = drift_stage
+func _execute_boost(charge_to_use : int) -> void: 
+	var boostlevel : int = charge_to_use
 	if boostlevel > 0:
 		var speedMultiplier : float = boosts[boostlevel]["dftSpdFactor"]
 		var timeMultiplier : float = boosts[boostlevel]["dftTimeFactor"]
@@ -252,6 +318,27 @@ func remove_drift_charge() -> void:
 	drift_timer = 0.0
 	new_drift_timer_base = 0.0
 	boost_panels_drifted_over = 0
+
+#Stored Charge
+func start_store_charge_boost_panel_timer() -> void:
+	boost_panels_driven_over_increment = boost_panels_driven_over_timer
+
+func _decrement_boost_panel_store_charge_timer(delta : float) -> void:
+	if boost_panels_driven_over_increment > 0.0:
+		boost_panels_driven_over_increment -= delta
+
+func _remove_stored_charge() -> void:
+	stored_charge_level = 0
+	boost_panels_driven_over_store = 0
+	boost_panels_driven_over_increment = 0
+
+func _get_charge_level() -> void:
+	if drift_stage >= stored_charge_level:
+		charge_level = drift_stage
+	else:
+		charge_level = stored_charge_level
+		
+	spin_hitbox.charge_level = charge_level
 #endregion
 
 #region Spin
@@ -269,9 +356,11 @@ func _do_spin(delta : float) -> void:
 			spin_timer = 0.0
 			input_spin = false
 			spin_hurt_box.setIntangiblility(false)
-			if !spin_hitbox.hit_dreamcatcher:
+			if !spin_hitbox.hit_dreamcatcher: # if hitbox did not hit dreamcatcher remove all charge
 				spin_cooldown_timer = spin_cooldown
 				remove_drift_charge()
+				_remove_stored_charge()
+				
 				
 	spin_hitbox.set_active(input_spin)
 			
@@ -282,7 +371,7 @@ func _do_spin(delta : float) -> void:
 		dreamcatcher_acceleration = 0
 		
 func dreamcatcher_spin_boost() -> void:
-	var boostlevel : int = drift_stage
+	var boostlevel : int = charge_level
 	if boostlevel < 1:
 		boostlevel = 1
 		
@@ -298,7 +387,7 @@ func _set_dreamcatcher_boost(speedMultiplier : float, timeMultiplier : float) ->
 
 func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	var up := normal.normalized() # gets normal of new up
-	var forward := center.global_basis.z # gets forward direction of kart
+	var forward := -center.global_basis.z # gets forward direction of kart
 	forward = (forward - up * forward.dot(up)).normalized()
 	
 	var right := up.cross(forward).normalized() #get the right
@@ -335,12 +424,13 @@ func set_up_kart_stats() -> void:
 
 #region imbedded functions
 func _ready() -> void:
-	if self.get_parent() is Player:
-		var player : Player = self.get_parent()
-		controls = player.playerControls
-		kartCharacter = player.character
-		if kartCharacter:
-			set_up_kart_stats()
+	await player.ready
+	controls = player.playerControls
+	kart_model = player.kart_model_instance
+	print(kart_model)
+	kartCharacter = player.character
+	if kartCharacter:
+		set_up_kart_stats()
 		
 	state = states.DRIVE
 	kart_scale = kart_model.scale
@@ -369,16 +459,21 @@ func _process(delta: float) -> void:
 	
 	_handle_input()
 	_drift_boost_control(delta)
+	_decrement_boost_panel_store_charge_timer(delta)
+	_get_charge_level()
 	#Events.on_get_speed.emit(velocity.length(), drift_timer)
 	
 func _physics_process(delta: float) -> void:
+	#If the kart is going 80% or more of speed then it will drop planes behind it that give any kart that drives in it a boost of speed
+	# they will despawn after about 1 - 2 seconds 
 	if on_ground():
 		apply_central_force(-get_gravity() * mass)
 		if !body_colliding_with_ground():
 			_apply_grounded_snap_force(delta)
-			print("snapping")
+			#print("snapping")
 		else:
-			print("not snapping")
+			pass
+			#print("not snapping")
 		if !input_acceleration and linear_velocity.length() < 0.5:
 			_apply_stop(delta)
 		else:
@@ -387,6 +482,11 @@ func _physics_process(delta: float) -> void:
 	_apply_traction(delta)
 	_apply_steering(delta)
 	_do_spin(delta)
+	
+	if -center.global_basis.z.dot(linear_velocity) > top_speed * 0.5:
+		trail_spawner.active = true
+	else:
+		trail_spawner.active = false
 	
 #endregion
 	
@@ -399,10 +499,10 @@ func apply_slowdown_force(slowdown_factor : float) -> void:
 	apply_central_impulse(force_vector)
 	
 ##Bounces car back when hitting a shortcut wall
-func apply_shortcut_stop_force() -> void:
+func apply_bounce_force(bounce) -> void:
 	var forward := -center.global_basis.z
 	var vel := forward.dot(linear_velocity)
-	var force_vector : Vector3 = -forward * (vel + 8) * mass
+	var force_vector : Vector3 = -forward * (vel + bounce) * mass
 	apply_central_impulse(force_vector)
 	
 func apply_clash_force(collision_point : Vector3, knockback : float = 0) ->  void:
@@ -424,35 +524,59 @@ func _apply_forward_force(_delta : float) -> void:
 	var vel := forward.dot(linear_velocity)
 	var force_vector : Vector3
 	
-	if sign(input_acceleration) != sign(vel) and input_acceleration != 0 and sign(vel) != 0:
-		#brake
-		force_vector = -forward * brake_resistance * signf(vel) * mass
-	elif boost_timer + dreamcatcher_boost_timer > 0 and abs(vel) < boost_actual_speed + dreamcatcher_boost:
-		#boost
-		force_vector = boost_acceleration * forward * mass
-	elif input_spin and !dreamcatcher_boost and boost_timer <= 0:
-		#spin
-		if abs(vel) < speed_right_before_spin * 0.8:
-			force_vector = input_acceleration * acceleration * forward * mass
-		else:
-			force_vector = -forward * ground_resistance * 1.3 * signf(vel) * mass
-	elif input_acceleration > 0 && abs(vel) < top_speed + dreamcatcher_boost:
-		#forward
-		force_vector = input_acceleration * (acceleration + dreamcatcher_acceleration) * forward * mass
-	elif input_acceleration < 0 && abs(vel) < reverse_top_speed:
-		#backward
-		force_vector = input_acceleration * acceleration * forward * mass
-	elif abs(vel) > 0.05:
+	
+	apply_central_force(60 * _calculate_force_vector(forward, vel) * _delta)
+	#print(force_vector)
+	DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
+	Events.on_get_speed.emit(vel, drift_timer)
+
+func _calculate_force_vector(forward : Vector3, vel : float) -> Vector3:
+	var force_vector : Vector3
+	var final_top_speed : float = top_speed
+	var final_acceleration : float = acceleration
+	
+	if abs(vel) > 0.05 and input_acceleration == 0: # no input
 		#drag
 		if input_drift:
 			#don't lose as much speed while drifting and not accelerating
 			force_vector = -forward * (ground_resistance/2.0) * signf(vel) * mass
 		else:
 			force_vector = -forward * ground_resistance * signf(vel) * mass
-	apply_central_force(60 * ((force_vector) * _delta))
-	print(force_vector)
-	DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
-	Events.on_get_speed.emit(vel, drift_timer)
+		return force_vector
+	
+	if sign(input_acceleration) != sign(vel) and input_acceleration != 0 and sign(vel) != 0: # input and vel are opposite signs
+		#brake
+		force_vector = -forward * brake_resistance * signf(vel) * mass
+		return force_vector
+		
+	if input_spin and !dreamcatcher_boost and boost_timer <= 0: # Spin but did not hit anything
+		#spin
+		if abs(vel) < speed_right_before_spin * 0.8:
+			force_vector = input_acceleration * acceleration * forward * mass
+		else:
+			force_vector = -forward * ground_resistance * 1.3 * signf(vel) * mass
+		return force_vector
+			
+	if input_acceleration > 0: #forward
+		if boost_timer > 0: 
+			final_acceleration = boost_acceleration
+			final_top_speed = boost_actual_speed
+			
+		if dreamcatcher_boost_timer > 0:
+			final_acceleration += dreamcatcher_acceleration
+			final_top_speed += dreamcatcher_boost
+		
+		if is_trailing:
+			final_acceleration += trailing_acceleration
+			final_top_speed += trailing_speed
+		
+	if input_acceleration < 0: #backwards
+		final_top_speed = reverse_top_speed
+	
+	if abs(vel) < final_top_speed:
+		force_vector = input_acceleration * forward * final_acceleration * mass
+		
+	return force_vector
 
 func _apply_steering(delta : float) -> void:
 	#center.rotate_y(0.1 * input_steering)
@@ -499,7 +623,7 @@ func _apply_steering(delta : float) -> void:
 	
 	#Model animations
 	if !input_spin:
-		var final_kart_rotation := Vector3(0, -y_kart_rotation, steering * 2 * deg_to_rad(avg_steering_angle))
+		var final_kart_rotation := Vector3(0, -y_kart_rotation, steering * 6 * deg_to_rad(avg_steering_angle))
 		new_kart_rotation = new_kart_rotation.lerp(final_kart_rotation, 1 - pow(0.8, 60 * delta)) #smoothly transition to new rotation
 	#TODO Move kart body z seperately from wheels and have wheels rotate in direction of turn
 	#Debug numbers

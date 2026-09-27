@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://c2q2o1k875cs4"]
 
-[ext_resource type="Script" uid="uid://cprhmbxvp1y2i" path="res://src/tracks/track.gd" id="1_02b3g"]
-[ext_resource type="Texture2D" uid="uid://ddf583pk46ddn" path="res://assets/world/backgrounds/citrus_orchard_road_puresky_4k.hdr" id="2_6hken"]
-[ext_resource type="PackedScene" uid="uid://rtbn8cgsje6q" path="res://src/tracks/testtrack_3.tscn" id="4_2jewj"]
-[ext_resource type="PackedScene" uid="uid://o8gbnp303uhr" path="res://src/gameplay/objects/boost_panel.tscn" id="4_nlngb"]
-[ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/dreamcatcher_obsatcle.tscn" id="5_2jewj"]
-[ext_resource type="PackedScene" uid="uid://d3hgqbv7npk6k" path="res://src/gameplay/objects/shortcutblock.tscn" id="6_hb8bm"]
+[ext_resource type="Script" uid="uid://cprhmbxvp1y2i" path="res://src/tracks/track.gd" id="1_xgnfn"]
+[ext_resource type="Texture2D" uid="uid://ddf583pk46ddn" path="res://assets/world/backgrounds/citrus_orchard_road_puresky_4k.hdr" id="2_wvh85"]
+[ext_resource type="PackedScene" uid="uid://rtbn8cgsje6q" path="res://src/tracks/testtrack_3.tscn" id="3_5ryjy"]
+[ext_resource type="PackedScene" uid="uid://o8gbnp303uhr" path="res://src/gameplay/objects/boost_panel.tscn" id="4_mvbxg"]
+[ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/dreamcatcher_obsatcle.tscn" id="5_gj6qf"]
+[ext_resource type="PackedScene" uid="uid://d3hgqbv7npk6k" path="res://src/gameplay/objects/shortcutblock.tscn" id="6_4osdo"]
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="7_wvh85"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
-panorama = ExtResource("2_6hken")
+panorama = ExtResource("2_wvh85")
 energy_multiplier = 0.1
 
 [sub_resource type="Sky" id="Sky_h2yge"]
@@ -25,7 +25,7 @@ sky = SubResource("Sky_h2yge")
 size = Vector3(1, 8.7300415, 22.593689)
 
 [node name="Testtrack1" type="Node3D" unique_id=1971607976 node_paths=PackedStringArray("player_spawners")]
-script = ExtResource("1_02b3g")
+script = ExtResource("1_xgnfn")
 player_spawners = [NodePath("PlayerSpawn1"), NodePath("PlayerSpawn2")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=331994150]
@@ -36,6 +36,7 @@ shadow_enabled = true
 shadow_bias = 0.0
 shadow_normal_bias = 4.043
 shadow_reverse_cull_face = true
+shadow_blur = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=141252406]
 environment = SubResource("Environment_1bvp3")
@@ -46,7 +47,7 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 [node name="PlayerSpawn2" type="Marker3D" parent="." unique_id=1645730136]
 transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, 3.8834085)
 
-[node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("4_2jewj")]
+[node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("3_5ryjy")]
 
 [node name="@StaticBody3D@19974" parent="testtrack3" index="1" unique_id=836140442]
 collision_layer = 6
@@ -57,57 +58,57 @@ collision_layer = 6
 [node name="Boost_Panels" type="Node3D" parent="." unique_id=1827261410]
 transform = Transform3D(0.965459, 0.14834361, -0.21420336, -1.2948174e-08, 0.8221043, 0.569337, 0.26055497, -0.54967153, 0.79370797, 288.66183, 210.33945, 38.24308)
 
-[node name="Boost_Panel" parent="Boost_Panels" unique_id=1231130700 instance=ExtResource("4_nlngb")]
+[node name="Boost_Panel" parent="Boost_Panels" unique_id=1231130700 instance=ExtResource("4_mvbxg")]
 transform = Transform3D(-0.6539932, -3.7401914e-08, 2.4233022, 1.3796755, 2.0634818, 0.37234253, -1.9922069, 1.4290358, -0.53765047, -307.2537, -196.51248, -85.62562)
 
-[node name="Boost_Panel6" parent="Boost_Panels" unique_id=341811522 instance=ExtResource("4_nlngb")]
+[node name="Boost_Panel6" parent="Boost_Panels" unique_id=341811522 instance=ExtResource("4_mvbxg")]
 transform = Transform3D(-0.6539932, -3.7401914e-08, 2.4233022, 1.3796755, 2.0634818, 0.37234253, -1.9922069, 1.4290358, -0.53765047, -376.30914, -210.77695, -64.93788)
 
-[node name="Boost_Panel2" parent="Boost_Panels" unique_id=1127577529 instance=ExtResource("4_nlngb")]
+[node name="Boost_Panel2" parent="Boost_Panels" unique_id=1127577529 instance=ExtResource("4_mvbxg")]
 transform = Transform3D(2.3162894, -0.07496945, 0.96399534, 0.60285485, 2.0684702, -1.2876737, -0.7559602, 1.4198294, 1.9268389, -70.853775, -151.40488, -155.83963)
 
-[node name="Boost_Panel3" parent="Boost_Panels" unique_id=41988640 instance=ExtResource("4_nlngb")]
+[node name="Boost_Panel3" parent="Boost_Panels" unique_id=41988640 instance=ExtResource("4_mvbxg")]
 transform = Transform3D(-0.26739773, 0.10215311, 2.4936237, 1.4657239, 2.0362506, 0.073756605, -2.019963, 1.4640176, -0.2765801, -100.92917, -137.16518, -173.19443)
 
-[node name="Boost_Panel4" parent="Boost_Panels" unique_id=894100974 instance=ExtResource("4_nlngb")]
+[node name="Boost_Panel4" parent="Boost_Panels" unique_id=894100974 instance=ExtResource("4_mvbxg")]
 transform = Transform3D(1.3960756, -0.12675941, -2.0820668, -1.090545, 2.0913355, -0.85856056, 1.7781382, 1.3821545, 1.1081364, -81.4993, -176.87352, -122.21886)
 
-[node name="Boost_Panel5" parent="Boost_Panels" unique_id=1862427341 instance=ExtResource("4_nlngb")]
+[node name="Boost_Panel5" parent="Boost_Panels" unique_id=1862427341 instance=ExtResource("4_mvbxg")]
 transform = Transform3D(2.5072238, 0.04189057, 0.110298395, 0.026670635, 2.0845034, -1.39794, -0.11493155, 1.3975679, 2.081751, -113.653275, -186.26726, -109.9869)
 
 [node name="Dreamcatchers" type="Node3D" parent="." unique_id=2019943175]
 transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, -0.65953064)
 
-[node name="DreamcatcherObsatcle" parent="Dreamcatchers" unique_id=186652371 instance=ExtResource("5_2jewj")]
+[node name="DreamcatcherObsatcle" parent="Dreamcatchers" unique_id=186652371 instance=ExtResource("5_gj6qf")]
 transform = Transform3D(-0.7535063, 0, -0.657441, 0, 1, 0, 0.6574411, 0, -0.7535059, 74.77063, -3.4546058, 18.968147)
 
-[node name="DreamcatcherObsatcle2" parent="Dreamcatchers" unique_id=426449918 instance=ExtResource("5_2jewj")]
+[node name="DreamcatcherObsatcle2" parent="Dreamcatchers" unique_id=426449918 instance=ExtResource("5_gj6qf")]
 transform = Transform3D(-0.80050206, 0, -0.59933114, 0, 1, 0, 0.5993311, 0, -0.8005012, 34.827656, -3.4546058, 52.759636)
 
-[node name="DreamcatcherObsatcle3" parent="Dreamcatchers" unique_id=304458101 instance=ExtResource("5_2jewj")]
+[node name="DreamcatcherObsatcle3" parent="Dreamcatchers" unique_id=304458101 instance=ExtResource("5_gj6qf")]
 transform = Transform3D(-0.088668935, 0, -0.99606144, 0, 1, 0, 0.9960619, 0, -0.08866812, -56.325974, -2.5510094, -196.14113)
 
-[node name="DreamcatcherObsatcle4" parent="Dreamcatchers" unique_id=146601715 instance=ExtResource("5_2jewj")]
+[node name="DreamcatcherObsatcle4" parent="Dreamcatchers" unique_id=146601715 instance=ExtResource("5_gj6qf")]
 transform = Transform3D(-0.088668935, 0, -0.9960618, 0, 1, 0, 0.9960619, 0, -0.08866812, -1.2336822, -2.360773, -24.56614)
 
-[node name="DreamcatcherObsatcle6" parent="Dreamcatchers" unique_id=1867853276 instance=ExtResource("5_2jewj")]
+[node name="DreamcatcherObsatcle6" parent="Dreamcatchers" unique_id=1867853276 instance=ExtResource("5_gj6qf")]
 transform = Transform3D(-0.088668935, 0, -0.9960623, 0, 1, 0, 0.9960619, 0, -0.08866812, 53.62729, -3.4972267, -100.37213)
 
-[node name="DreamcatcherObsatcle5" parent="Dreamcatchers" unique_id=1802664388 instance=ExtResource("5_2jewj")]
+[node name="DreamcatcherObsatcle5" parent="Dreamcatchers" unique_id=1802664388 instance=ExtResource("5_gj6qf")]
 transform = Transform3D(-0.088668935, 0, -0.9960622, 0, 1, 0, 0.9960619, 0, -0.08866812, 97.35169, -3.4363308, -158.67172)
 
 [node name="ShortcutBlocks" type="Node3D" parent="." unique_id=1477365980]
 
-[node name="Shortcutblock" parent="ShortcutBlocks" unique_id=238529897 instance=ExtResource("6_hb8bm")]
+[node name="Shortcutblock" parent="ShortcutBlocks" unique_id=238529897 instance=ExtResource("6_4osdo")]
 process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.152203, 2.0855236, 0)
 visible = false
 
-[node name="Shortcutblock2" parent="ShortcutBlocks" unique_id=2008190022 instance=ExtResource("6_hb8bm")]
+[node name="Shortcutblock2" parent="ShortcutBlocks" unique_id=2008190022 instance=ExtResource("6_4osdo")]
 transform = Transform3D(0.7454528, 0, 0.6665586, 0, 1, 0, -0.6665586, 0, 0.7454528, 9.21219, 6.355823, -12.52895)
 drift_required = 3
 
-[node name="Shortcutblock3" parent="ShortcutBlocks" unique_id=119300142 instance=ExtResource("6_hb8bm")]
+[node name="Shortcutblock3" parent="ShortcutBlocks" unique_id=119300142 instance=ExtResource("6_4osdo")]
 transform = Transform3D(0.96576536, 0.033023592, -0.25730643, -0.032351438, 0.9994529, 0.0068464186, 0.25739175, 0.0017121988, 0.9663054, 100.0221, 1.862361, 76.384964)
 
 [node name="LapLogic" type="Node" parent="." unique_id=521955060]

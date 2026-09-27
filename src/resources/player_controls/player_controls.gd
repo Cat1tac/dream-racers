@@ -7,3 +7,4 @@ class_name PlayerControls extends Resource
 @export var turn_left : String
 @export var spin : String
 @export var drift : String
+@export var store : String
