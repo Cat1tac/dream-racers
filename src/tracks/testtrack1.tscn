@@ -48,6 +48,12 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 
 [node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("4_2jewj")]
 
+[node name="@StaticBody3D@19974" parent="testtrack3" index="1" unique_id=836140442]
+collision_layer = 6
+
+[node name="@StaticBody3D@19975" parent="testtrack3" index="3" unique_id=347619819]
+collision_layer = 6
+
 [node name="Boost_Panels" type="Node3D" parent="." unique_id=1827261410]
 transform = Transform3D(0.965459, 0.14834361, -0.21420336, -1.2948174e-08, 0.8221043, 0.569337, 0.26055497, -0.54967153, 0.79370797, 288.66183, 210.33945, 38.24308)
 
@@ -132,3 +138,5 @@ transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0,
 transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, -57.290894, 2.4219437, 104.632484)
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
+
+[editable path="testtrack3"]
