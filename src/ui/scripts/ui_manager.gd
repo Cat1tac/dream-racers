@@ -39,3 +39,6 @@ func _on_track_back_button_pressed() -> void:
 	track_select.transition_to_state(character_select)
 	
 #endregion
+
+func _on_exit_button_pressed() -> void:
+	get_tree().quit()
