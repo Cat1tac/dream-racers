@@ -3,3 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://lnny5suiwxyn" path="res://src/tracks/DreamyYggdrasil1.glb" id="1_mnde0"]
 
 [node name="DreamyYggdrasil1" unique_id=1683156197 instance=ExtResource("1_mnde0")]
+
+[node name="@StaticBody3D@19879" parent="." index="1" unique_id=1896130066]
+collision_layer = 6

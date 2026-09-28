@@ -4,13 +4,13 @@ var checks_needed : int = 5 # How many checkpoints are in the track (not countin
 var laps_done: int
 var progress: Array
 var check_order: Array
-var isRacing: bool = true
+var isRacing: bool = false
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
 # Adds 1 to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
-	if len(progress) == checks_needed:
+	if len(progress) == checks_needed and isRacing:
 		progress.clear()
 		laps_done += 1
 		print("LapLogic: lap #" + str(laps_done) + " completed!! yay!!")
