@@ -17,6 +17,8 @@ corner_detail = 20
 
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0.7316425, 9.62615e-08, 0.4086803, 1)
+Button/constants/outline_size = 5
 Button/styles/focus = SubResource("StyleBoxFlat_jlntk")
 Button/styles/hover = SubResource("StyleBoxFlat_jlntk")
 Button/styles/normal = SubResource("StyleBoxEmpty_sp1ie")

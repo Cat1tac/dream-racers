@@ -9,35 +9,35 @@ transform = Transform3D(-1.15, 0, -1.7364516e-07, 0, 1.15, 0, 1.7364516e-07, 0, 
 script = ExtResource("2_82rc2")
 charge_markers = [NodePath("ChargeRMarker"), NodePath("ChargeLMarker")]
 
-[node name="Seat" parent="." index="0" unique_id=1751863716]
+[node name="Seat" parent="." index="0" unique_id=219112830]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Base" parent="." index="1" unique_id=1110677608]
+[node name="Base" parent="." index="1" unique_id=656648283]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Front" parent="." index="2" unique_id=172453357]
+[node name="Front" parent="." index="2" unique_id=898201212]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="FrontHover" parent="." index="3" unique_id=1981592070]
+[node name="FrontHover" parent="." index="3" unique_id=569609928]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="BackHover" parent="." index="4" unique_id=2001200289]
+[node name="BackHover" parent="." index="4" unique_id=59688549]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Thrusters" parent="." index="5" unique_id=540054934]
+[node name="Thrusters" parent="." index="5" unique_id=597554124]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Pedals" parent="." index="6" unique_id=1335522354]
+[node name="Pedals" parent="." index="6" unique_id=1408979988]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Side Panels" parent="." index="7" unique_id=1057144547]
+[node name="Side Panels" parent="." index="7" unique_id=83969351]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Skeleton3D" parent="Armature_002" parent_id_path=PackedInt32Array(1165826936) index="0" unique_id=1467787233]
+[node name="Skeleton3D" parent="Armature_002" parent_id_path=PackedInt32Array(240981543) index="0" unique_id=1314406872]
 transform = Transform3D(1, 1.4210855e-14, -7.1054274e-14, 0, 0.99999976, 2.9802322e-08, 0, -2.9802322e-08, 0.99999976, 0, 0, 0)
 bones/1/scale = Vector3(1, 1, 1)
 
-[node name="Steering wheel" parent="Armature_002/Skeleton3D" index="0" unique_id=1094644855]
+[node name="Steering wheel" parent="Armature_002/Skeleton3D" index="0" unique_id=97025120]
 transform = Transform3D(1, -1.4210855e-14, -5.703374e-21, 2.842171e-14, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, 0)
 surface_material_override/0 = ExtResource("2_qa4xb")
 
