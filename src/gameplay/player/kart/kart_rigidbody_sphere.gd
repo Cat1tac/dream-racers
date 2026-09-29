@@ -59,7 +59,9 @@ var drift_direction : float
 	5: 0.35,
 	6: 0.15
 }
-@export var knockback : float = 10 ## Hoow much the player is knocked back when hit by a spin
+@export var knockback : float = 10 ## How much the player is knocked back when hit by a spin
+
+@export var trick_window : float = 0.2 ## How long player has to trick after going into air
 
 @export_group("Boost")
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var boost_acceleration := 21.0
@@ -124,7 +126,6 @@ var air_y_rotation : float
 
 #region tricking
 var tricked : bool # tells whether player has tricked yet or not
-var trick_window : float = 0.5 # Max amt of time for player to trick
 var trick_window_increment : float # timer that countdown
 #endregion
 
@@ -299,6 +300,8 @@ func _drift_boost_control(delta : float) -> void:
 	#Boost timer Countdown
 	if boost_timer > 0:
 		boost_timer -= delta
+	else:
+		boost_actual_speed = 0
 
 func _set_drifting_stage(stage : int) -> void:
 	for particle in particlesManager:
@@ -306,7 +309,15 @@ func _set_drifting_stage(stage : int) -> void:
 	drift_stage = stage
 	
 	#print(boost_panels_drifted_over)
-
+	
+func remove_drift_charge() -> void:
+	_set_drifting_stage(-1)
+	drift_just_released = false
+	snake_buffer_timer = 0.0
+	drift_timer = 0.0
+	new_drift_timer_base = 0.0
+	boost_panels_drifted_over = 0
+	
 func _execute_boost(charge_to_use : int) -> void: 
 	var boostlevel : int = charge_to_use
 	if boostlevel > 0:
@@ -316,17 +327,12 @@ func _execute_boost(charge_to_use : int) -> void:
 	
 	remove_drift_charge()
 
+## Applies the boost stat. The more boosts a player gets, the longer they can extend their boost timer and keep their "actual boost" high. The "actual boost" stat won't restart until the timer reaches zero
 func set_boost(speedMultiplier : float, timeMultiplier : float) -> void:
-	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier)
-	boost_timer = boost_max_time * timeMultiplier
+	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
+	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
+	boost_timer = boost_max_time * timeMultiplier 
 	
-func remove_drift_charge() -> void:
-	_set_drifting_stage(-1)
-	drift_just_released = false
-	snake_buffer_timer = 0.0
-	drift_timer = 0.0
-	new_drift_timer_base = 0.0
-	boost_panels_drifted_over = 0
 
 #Stored Charge
 func start_store_charge_boost_panel_timer() -> void:
@@ -398,6 +404,9 @@ func _set_dreamcatcher_boost(speedMultiplier : float, timeMultiplier : float) ->
 func _do_trick() -> void:
 	kart_model.do_trick_anim()
 	
+func reset_trick() -> void:
+	tricked = false
+	trick_window_increment = trick_window
 #endregion
 
 func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
@@ -420,10 +429,6 @@ func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	spin_hitbox.global_basis= new_basis.orthonormalized()
 	
 	spin_hurt_box.global_basis = new_basis.orthonormalized()
-	
-	#camera_pivot.global_basis = new_basis.orthonormalized()
-	#camera_pivot.global_basis.x = -right
-	#camera_pivot.global_basis.z = -forward
 	
 	kart_model.new_basis = new_basis
 	kart_model.global_basis = new_basis
@@ -484,8 +489,9 @@ func _process(delta: float) -> void:
 	
 func _physics_process(delta: float) -> void: 
 	if on_ground():
-		tricked = false
-		trick_window_increment = trick_window
+		if tricked:
+			set_boost(boosts[1]["dftSpdFactor"], boosts[1]["dftTimeFactor"])
+		reset_trick()
 		
 		apply_central_force(-get_gravity() * mass) # cancels out gravity
 		if !body_colliding_with_ground(): # forces kart to stay "grounded" using raycast
@@ -538,16 +544,16 @@ func apply_vertical_force(magnitude : float) -> void:
 	print("Touched")
 	apply_central_impulse(force_vector)
 	
-func apply_clash_force(collision_point : Vector3, knockback : float = 0) ->  void:
+func apply_clash_force(collision_point : Vector3, pushback : float = 0) ->  void:
 	var forward := -center.global_basis.z
 	var fwd_vel := forward.dot(linear_velocity)
 	
 	var side := center.global_basis.x
 
-	if knockback == 0:
-		knockback = fwd_vel
+	if pushback == 0:
+		pushback = fwd_vel
 		 
-	var force_vector : Vector3 = side * min(collision_point.x * knockback, top_speed) * mass
+	var force_vector : Vector3 = side * min(collision_point.x * pushback, top_speed) * mass
 	apply_central_impulse(force_vector)
 	
 func _apply_forward_force(_delta : float) -> void:

@@ -25,15 +25,9 @@ func _on_area_exited(area: Area3D) -> void:
 	if area.get_collision_layer_value(8):
 		kart_sphere.is_trailing = false
 	
-#func _physics_process(_delta: float) -> void:
-	#if shape_cast_3d.is_colliding():
-		#print("Colliding")
-		#var area : Area3D = shape_cast_3d.get_collider(0)
-		#print(area)
-		#if area.get_collision_layer_value(8): # gets trailing object
-			#kart_sphere.is_trailing = true
-	#else:
-		#kart_sphere.is_trailing = false
+## Calls function in kart sphere body to reset trick so player can trick again
+func reset_trick() -> void:
+	kart_sphere.reset_trick()
 
 func call_knockback(opposing_knockback : float) -> void:
 	shape_cast_3d.force_shapecast_update()

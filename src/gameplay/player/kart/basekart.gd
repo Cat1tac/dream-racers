@@ -32,4 +32,3 @@ func do_trick_anim() -> void:
 	
 func set_model_global_rotation(current_rotation : Vector3) -> void:
 	kart.global_rotation = current_rotation
-	print(kart.global_rotation)

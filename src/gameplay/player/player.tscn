@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c0gmqfmhqhure" path="res://src/gameplay/player/kart/trailing/trail_spawner.tscn" id="8_nem4e"]
 [ext_resource type="Curve" uid="uid://c7dw4nbq13umj" path="res://src/gameplay/player/kart/curves/spin_curve.tres" id="8_rdc6l"]
 [ext_resource type="Script" uid="uid://ecfx1n5360f0" path="res://src/gameplay/player/lap_manager.gd" id="9_en18r"]
+[ext_resource type="Script" uid="uid://dswf8nw7ww6va" path="res://src/gameplay/player/tween_camera.gd" id="12_6eivh"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xdbtd"]
 height = 0.2
@@ -30,6 +31,8 @@ size = Vector3(1.2, 0.38391113, 1.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 size = Vector3(1.394165, 0.45404053, 0.63500977)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uujsa"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kjyqo"]
 friction = 0.0
@@ -127,10 +130,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8558605e-07, 0.48744822, 1
 
 [node name="CameraPivot" type="Marker3D" parent="." unique_id=1814688564]
 unique_name_in_owner = true
+script = ExtResource("12_6eivh")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=541525602]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6859641, 4.8363237)
 current = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraPivot/Camera3D" unique_id=230758092]
+mesh = SubResource("BoxMesh_uujsa")
 
 [node name="Kart_Sphere" type="RigidBody3D" parent="." unique_id=1517078465 node_paths=PackedStringArray("player", "ground_cast", "snap_cast", "wall_cast", "particlesManager")]
 unique_name_in_owner = true
