@@ -76,7 +76,7 @@ shader_parameter/y_position = -2.2352000028647012e-08
 shader_parameter/wave = SubResource("CurveTexture_tc86p")
 shader_parameter/wave_spd = 0.30000000447036
 
-[node name="Control" type="Control" unique_id=1665049764]
+[node name="BackgroundLayers" type="Control" unique_id=1665049764]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,19 +87,28 @@ grow_vertical = 2
 [node name="Background" type="TextureRect" parent="." unique_id=1876432076]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_sjquj")
-layout_mode = 0
-offset_right = 3840.0
-offset_bottom = 2160.0
-scale = Vector2(0.3, 0.3)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 texture = SubResource("CompressedTexture2D_01sja")
 
 [node name="Sun" type="TextureRect" parent="." unique_id=533300918]
 texture_repeat = 1
 material = SubResource("ShaderMaterial_sr8db")
-layout_mode = 0
-offset_right = 3840.0
-offset_bottom = 2160.0
-scale = Vector2(0.3, 0.3)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(1920, 1080)
 texture = ExtResource("4_wlasd")
 
 [node name="Clouds" type="TextureRect" parent="." unique_id=1379269482]
@@ -107,6 +116,6 @@ texture_repeat = 2
 material = SubResource("ShaderMaterial_lge3s")
 layout_mode = 0
 offset_right = 3840.0
-offset_bottom = 2193.3333
-scale = Vector2(0.3, 0.3)
+offset_bottom = 2190.0
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_sjquj")

@@ -6,6 +6,16 @@
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
+[ext_resource type="PackedScene" uid="uid://c7hrqc4lwuvyo" path="res://src/ui/MenuBackgrounds.tscn" id="7_gucsq"]
+[ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
+[ext_resource type="Texture2D" uid="uid://b5terhl54jqyw" path="res://assets/ui/main menu/gradients/night_gradient.tres" id="9_yo02o"]
+[ext_resource type="Texture2D" uid="uid://dwr06xauwjiie" path="res://assets/ui/main menu/gradients/twilight_gradient.tres" id="10_eofyr"]
+[ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
+[ext_resource type="Texture2D" uid="uid://5c7g1b2beiti" path="res://assets/ui/main menu/gradients/sunset_gradient.tres" id="12_5kva4"]
+[ext_resource type="Texture2D" uid="uid://cwx2m4gn17vf5" path="res://assets/ui/main menu/gradients/clouds_night_gradient.tres" id="13_2auc3"]
+[ext_resource type="Texture2D" uid="uid://d4fc7uh24338m" path="res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres" id="14_ba7qp"]
+[ext_resource type="Texture2D" uid="uid://07uowprv713g" path="res://assets/ui/main menu/gradients/cloud_noise_tex.tres" id="15_tlfe1"]
+[ext_resource type="Texture2D" uid="uid://b146ox7oemdoq" path="res://assets/ui/main menu/gradients/clouds_sunset_gradient.tres" id="16_gq7f2"]
 
 [sub_resource type="Animation" id="Animation_7abqo"]
 length = 0.001
@@ -1933,24 +1943,71 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g1bnb"]
+shader = ExtResource("8_6s7ef")
+shader_parameter/start_gradient = ExtResource("12_5kva4")
+shader_parameter/middle_gradient = ExtResource("10_eofyr")
+shader_parameter/end_gradient = ExtResource("9_yo02o")
+shader_parameter/use_noise = true
+shader_parameter/noise_spd_x = 0.33999997004832005
+shader_parameter/noise_spd_y = 0.2199999727305599
+shader_parameter/noise_brightness = 0.0999999977648
+shader_parameter/noise_tex = ExtResource("11_1kq2p")
+shader_parameter/gradient_control = 0.0
+shader_parameter/scroll_speed = 0.13999997451871993
+shader_parameter/x_position = -2.2352000028647012e-08
+shader_parameter/y_position = -2.2352000028647012e-08
+shader_parameter/wave_spd = 0.0
+
+[sub_resource type="Gradient" id="Gradient_gn68n"]
+colors = PackedColorArray(1, 0.84783334, 0.17000002, 1, 0.83, 0.7636, 0.78684, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p6ath"]
+gradient = SubResource("Gradient_gn68n")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5m051"]
+shader = ExtResource("8_6s7ef")
+shader_parameter/start_gradient = SubResource("GradientTexture2D_p6ath")
+shader_parameter/use_noise = false
+shader_parameter/noise_spd_x = 0.0
+shader_parameter/noise_spd_y = 0.0
+shader_parameter/noise_brightness = 0.0
+shader_parameter/gradient_control = 0.0
+shader_parameter/scroll_speed = -6.7056e-08
+shader_parameter/x_position = -2.2352000028647012e-08
+shader_parameter/y_position = 0.0
+shader_parameter/wave_spd = 0.0
+
+[sub_resource type="Curve" id="Curve_86u7o"]
+_data = [Vector2(0, 0.09900987), 0.0, 0.0, 0, 0, Vector2(0.49802375, 1), -0.13183945, -0.13183945, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tc86p"]
+width = 258
+curve = SubResource("Curve_86u7o")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lp5l8"]
+shader = ExtResource("8_6s7ef")
+shader_parameter/start_gradient = ExtResource("16_gq7f2")
+shader_parameter/middle_gradient = ExtResource("14_ba7qp")
+shader_parameter/end_gradient = ExtResource("13_2auc3")
+shader_parameter/use_noise = true
+shader_parameter/noise_spd_x = 0.53999996557792
+shader_parameter/noise_spd_y = 0.28999997116592
+shader_parameter/noise_brightness = 0.28999999351792
+shader_parameter/noise_tex = ExtResource("15_tlfe1")
+shader_parameter/gradient_control = 0.0
+shader_parameter/scroll_speed = 0.01999993249695997
+shader_parameter/x_position = -2.2352000028647012e-08
+shader_parameter/y_position = -2.2352000028647012e-08
+shader_parameter/wave = SubResource("CurveTexture_tc86p")
+shader_parameter/wave_spd = 0.30000000447036
+
 [node name="UI" type="Node" unique_id=270345837]
 script = ExtResource("1_qemve")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=515055114]
-
-[node name="CloudsPlaceholder" type="ColorRect" parent="UILayer" unique_id=1634525891]
-custom_minimum_size = Vector2(0, 500)
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 3
-mouse_filter = 2
-color = Color(0.9529412, 0.7529412, 0.78039217, 1)
-metadata/_edit_lock_ = true
 
 [node name="MainMenu" type="Control" parent="UILayer" unique_id=426220796 node_paths=PackedStringArray("transition_animations", "next_state")]
 unique_name_in_owner = true
@@ -2008,7 +2065,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 700
 theme_override_constants/margin_right = 700
-theme_override_constants/margin_bottom = 55
+theme_override_constants/margin_bottom = 95
 
 [node name="ButtonVBox" type="VBoxContainer" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin" unique_id=307193461]
 layout_mode = 2
@@ -2362,8 +2419,21 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
+[node name="BackgroundLayers" parent="." unique_id=1665049764 instance=ExtResource("7_gucsq")]
+
+[node name="Background" parent="BackgroundLayers" index="0" unique_id=1876432076]
+material = SubResource("ShaderMaterial_g1bnb")
+
+[node name="Sun" parent="BackgroundLayers" index="1" unique_id=533300918]
+material = SubResource("ShaderMaterial_5m051")
+
+[node name="Clouds" parent="BackgroundLayers" index="2" unique_id=1379269482]
+material = SubResource("ShaderMaterial_lp5l8")
+
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton" to="." method="_on_race_button_pressed"]
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_on_char_back_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/NextButtonMargin/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="." method="_on_track_back_button_pressed"]
+
+[editable path="BackgroundLayers"]
