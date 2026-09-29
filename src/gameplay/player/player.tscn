@@ -157,5 +157,6 @@ debug_color = Color(0, 0.6149741, 0.6062328, 0.41960785)
 [connection signal="area_entered" from="Center/SpinHitbox" to="Center/SpinHitbox" method="_on_area_entered"]
 [connection signal="area_entered" from="Center/SpinHurtBox" to="Center/SpinHurtBox" method="_on_area_entered"]
 [connection signal="area_exited" from="Center/SpinHurtBox" to="Center/SpinHurtBox" method="_on_area_exited"]
+[connection signal="tree_entered" from="Center/LocalLapLogic" to="Center/LocalLapLogic" method="_on_tree_entered"]
 
 [editable path="Center/KartModel"]

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bv76rh57kvc2i"]
+
+[ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="1_aebr8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bndaq"]
+size = Vector3(1, 8.7300415, 22.593689)
+
+[node name="LapLogic" type="Node" unique_id=1408138115]
+script = ExtResource("1_aebr8")
+
+[node name="StartLine" type="Area3D" parent="." unique_id=1502361059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.23478, 3.6727114, -0.3268199)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartLine" unique_id=1426673816]
+shape = SubResource("BoxShape3D_bndaq")
+
+[connection signal="area_entered" from="StartLine" to="." method="_on_start_line_area_entered"]

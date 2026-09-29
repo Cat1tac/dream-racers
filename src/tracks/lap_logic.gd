@@ -23,3 +23,13 @@ func print_checks() -> void:
 	for id in check_list:
 		count += 1
 		print("LapLogic: check #" + str(count) + " " + str(id))
+
+func countdown(time: float, message: String) -> void:
+	for n in range(time, 0, -1):
+		print("LapLogic: " + str(n))
+		await get_tree().create_timer(1).timeout
+	print("LapLogic: " + message)
+
+func _on_tree_entered() -> void:
+	print("LapLogic: entered tree")
+	await countdown(3, "race starting")

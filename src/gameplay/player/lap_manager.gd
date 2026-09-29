@@ -13,6 +13,3 @@ func complete_lap() -> void:
 
 func add_checkpoint(cp_id: int) -> void:
 	checkpoint_crossed.emit(cp_id, progress)
-
-func race_started() -> bool:
-	return true

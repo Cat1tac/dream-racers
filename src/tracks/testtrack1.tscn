@@ -21,7 +21,7 @@ background_mode = 2
 background_energy_multiplier = 0.5
 sky = SubResource("Sky_h2yge")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_bndaq"]
 size = Vector3(1, 8.7300415, 22.593689)
 
 [node name="Testtrack1" type="Node3D" unique_id=1971607976 node_paths=PackedStringArray("player_spawners")]
@@ -48,12 +48,6 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, 3.8834085)
 
 [node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("3_5ryjy")]
-
-[node name="@StaticBody3D@19975" parent="testtrack3" index="1" unique_id=356739658]
-collision_layer = 6
-
-[node name="@StaticBody3D@19976" parent="testtrack3" index="3" unique_id=1999244470]
-collision_layer = 6
 
 [node name="Boost_Panels" type="Node3D" parent="." unique_id=1827261410]
 transform = Transform3D(0.965459, 0.14834361, -0.21420336, -1.2948174e-08, 0.8221043, 0.569337, 0.26055497, -0.54967153, 0.79370797, 288.66183, 210.33945, 38.24308)
@@ -111,15 +105,15 @@ drift_required = 3
 [node name="Shortcutblock3" parent="ShortcutBlocks" unique_id=119300142 instance=ExtResource("6_4osdo")]
 transform = Transform3D(0.96576536, 0.033023592, -0.25730643, -0.032351438, 0.9994529, 0.0068464186, 0.25739175, 0.0017121988, 0.9663054, 100.0221, 1.862361, 76.384964)
 
-[node name="LapLogic" type="Node" parent="." unique_id=521955060]
+[node name="LapLogic" type="Node" parent="." unique_id=757669497]
 script = ExtResource("7_wvh85")
 
-[node name="StartLine" type="Area3D" parent="LapLogic" unique_id=1788113332]
+[node name="StartLine" type="Area3D" parent="LapLogic" unique_id=240927927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.23478, 3.6727114, -0.3268199)
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/StartLine" unique_id=1815141403]
-shape = SubResource("BoxShape3D_skbuk")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/StartLine" unique_id=1268133585]
+shape = SubResource("BoxShape3D_bndaq")
 
 [node name="Checkpoints" type="Node" parent="LapLogic" unique_id=2003503696]
 

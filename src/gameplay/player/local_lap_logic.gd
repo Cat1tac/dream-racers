@@ -6,6 +6,8 @@ var progress: Array
 var check_order: Array
 var isRacing: bool = false
 
+signal entered_race
+
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
 # Adds 1 to the laps_done variable if player crossed every checkpoint
@@ -48,3 +50,7 @@ func get_check_order(order: Array) -> void:
 	if len(check_order) == 0:
 		print("LapLogic: kart has recieved order of checkpoints")
 		check_order = order
+
+func _on_tree_entered() -> void:
+	entered_race.emit()
+	pass # Replace with function body.
