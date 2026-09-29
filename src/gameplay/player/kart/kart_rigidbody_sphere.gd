@@ -5,14 +5,11 @@ class_name Kart_Sphere extends RigidBody3D
 @export var snap_cast : RayCast3D
 @export var wall_cast : ShapeCast3D
 @export var particlesManager : Array[KartParticlesManager]
-#@onready var kart_model: Node3D = $Kart_Model
 @onready var center: Node3D = %Center
 @onready var spin_hitbox: SpinHitbox = %SpinHitbox
 @onready var spin_hurt_box: SpinHurtBox = %SpinHurtBox
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var trail_spawner: Trail_Spawner = %TrailSpawner
-@onready var camera_pivot: Marker3D = %CameraPivot
-
 
 var kart_model : Model
 
@@ -421,14 +418,11 @@ func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	new_basis.y = up
 	new_basis.z = forward
 	
-	
 	snap_cast.global_basis = new_basis.orthonormalized()
-	
 	wall_cast.global_basis = new_basis.orthonormalized()
-	
 	spin_hitbox.global_basis= new_basis.orthonormalized()
-	
 	spin_hurt_box.global_basis = new_basis.orthonormalized()
+	trail_spawner.global_basis = new_basis.orthonormalized()
 	
 	kart_model.new_basis = new_basis
 	kart_model.global_basis = new_basis
