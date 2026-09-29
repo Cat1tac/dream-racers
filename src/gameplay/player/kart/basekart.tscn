@@ -1,43 +1,40 @@
 [gd_scene format=3 uid="uid://cmw4ypmksqpsy"]
 
 [ext_resource type="PackedScene" uid="uid://clab6nmempnsp" path="res://assets/models/karts/BaseKart/kart.glb" id="1_82rc2"]
-[ext_resource type="Script" uid="uid://dvqjg8mckctmn" path="res://src/gameplay/player/kart/basekart.gd" id="2_82rc2"]
 [ext_resource type="Material" uid="uid://4t6wr7ytl4fm" path="res://src/shaders/kart_shader_material.tres" id="2_qa4xb"]
 
-[node name="kart" unique_id=2060035001 node_paths=PackedStringArray("charge_markers") instance=ExtResource("1_82rc2")]
-transform = Transform3D(-1.15, 0, -1.7364516e-07, 0, 1.15, 0, 1.7364516e-07, 0, -1.15, 0, 0, 0)
-script = ExtResource("2_82rc2")
-charge_markers = [NodePath("ChargeRMarker"), NodePath("ChargeLMarker")]
+[node name="kart" unique_id=2060035001 instance=ExtResource("1_82rc2")]
+transform = Transform3D(1.15, 0, 0, 0, 1.15, 0, 0, 0, 1.15, 0, 0, 0)
 
-[node name="Seat" parent="." index="0" unique_id=1751863716]
+[node name="Seat" parent="." index="0" unique_id=640990874]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Base" parent="." index="1" unique_id=1110677608]
+[node name="Base" parent="." index="1" unique_id=1469732125]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Front" parent="." index="2" unique_id=172453357]
+[node name="Front" parent="." index="2" unique_id=1076451586]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="FrontHover" parent="." index="3" unique_id=1981592070]
+[node name="FrontHover" parent="." index="3" unique_id=1885635568]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="BackHover" parent="." index="4" unique_id=2001200289]
+[node name="BackHover" parent="." index="4" unique_id=626634695]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Thrusters" parent="." index="5" unique_id=540054934]
+[node name="Thrusters" parent="." index="5" unique_id=1532517019]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Pedals" parent="." index="6" unique_id=1335522354]
+[node name="Pedals" parent="." index="6" unique_id=1349420408]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Side Panels" parent="." index="7" unique_id=1057144547]
+[node name="Side Panels" parent="." index="7" unique_id=1990708747]
 surface_material_override/0 = ExtResource("2_qa4xb")
 
-[node name="Skeleton3D" parent="Armature_002" parent_id_path=PackedInt32Array(1165826936) index="0" unique_id=1467787233]
+[node name="Skeleton3D" parent="Armature_002" parent_id_path=PackedInt32Array(726061753) index="0" unique_id=1103918706]
 transform = Transform3D(1, 1.4210855e-14, -7.1054274e-14, 0, 0.99999976, 2.9802322e-08, 0, -2.9802322e-08, 0.99999976, 0, 0, 0)
 bones/1/scale = Vector3(1, 1, 1)
 
-[node name="Steering wheel" parent="Armature_002/Skeleton3D" index="0" unique_id=1094644855]
+[node name="Steering wheel" parent="Armature_002/Skeleton3D" index="0" unique_id=1811957422]
 transform = Transform3D(1, -1.4210855e-14, -5.703374e-21, 2.842171e-14, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, 0)
 surface_material_override/0 = ExtResource("2_qa4xb")
 

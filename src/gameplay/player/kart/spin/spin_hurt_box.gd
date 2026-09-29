@@ -53,6 +53,7 @@ func call_spin_hit_slowdown(drift_stage : int, opposing_weight : float) -> void:
 func call_slowdown(multiplier : float = 0.5) -> void:
 	kart_sphere.apply_slowdown_force(multiplier)
 
+## Connecting function that calls a function in player rigidbody that bounces player in back opposite to their forward direction
 func call_bounce(bounce : float = 8) -> void:
 	kart_sphere.apply_bounce_force(bounce)
 
@@ -61,6 +62,10 @@ func apply_boost_panel_boost(boost_speed_multiplier : float, boost_time_multipli
 	kart_sphere.start_store_charge_boost_panel_timer()
 	if kart_sphere.drift_stage >= 3:
 		kart_sphere.boost_panels_drifted_over += 1
+
+## Connecting function that calls a vertical force function in player rigidbody
+func call_vertical_bounce(bounce : float = 10) -> void:
+	kart_sphere.apply_vertical_force(bounce)
 
 #called by kartsphere
 func setIntangiblility(state : bool) -> void:

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dlybic2qqanel"]
+
+[ext_resource type="Script" uid="uid://cg3du8vxbg2ef" path="res://src/gameplay/objects/cloud.gd" id="1_0jiu0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uujsa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uujsa"]
+size = Vector3(1.119751, 0.24835205, 1.0951538)
+
+[node name="Cloud" type="Node3D" unique_id=2108663503]
+script = ExtResource("1_0jiu0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1999422445]
+mesh = SubResource("BoxMesh_uujsa")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1277876516]
+collision_layer = 256
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1427310591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0056762695, 0.45535278, -0.0105896)
+shape = SubResource("BoxShape3D_uujsa")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

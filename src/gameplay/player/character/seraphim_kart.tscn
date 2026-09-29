@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b7iut7u3n03vi"]
+
+[ext_resource type="Script" uid="uid://dvqjg8mckctmn" path="res://src/gameplay/player/kart/basekart.gd" id="1_fk4wy"]
+[ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="2_bp5gl"]
+
+[node name="Seraphim Kart" type="Node3D" unique_id=322080802 node_paths=PackedStringArray("charge_markers")]
+script = ExtResource("1_fk4wy")
+charge_markers = [NodePath("kart/ChargeRMarker"), NodePath("kart/ChargeLMarker")]
+
+[node name="kart" parent="." unique_id=2060035001 instance=ExtResource("2_bp5gl")]
+unique_name_in_owner = true
+script = null
+
+[editable path="kart"]
