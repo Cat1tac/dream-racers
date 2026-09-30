@@ -1,12 +1,11 @@
 class_name LocalLapLogic extends Area3D
 
-var checks_needed : int = 5 # How many checkpoints are in the track (not counting StartLine)
+var checks_needed : int # How many checkpoints are in the track (not counting StartLine)
 var laps_done: int
 var progress: Array
 var check_order: Array
 var isRacing: bool = false
-
-signal entered_race
+@onready var player_controller: Node = %Kart_Sphere
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
@@ -15,13 +14,13 @@ func complete_lap() -> void:
 	if len(progress) == checks_needed and isRacing:
 		progress.clear()
 		laps_done += 1
-		print("LapLogic: lap #" + str(laps_done) + " completed!! yay!!")
+		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:
-		print("LapLogic: Player does not have enough progress")
+		print("LocalLapLogic: Player does not have enough progress")
 	
 	#does *something* when 3 laps have been done
 	if laps_done == 3:
-		print("LapLogic: Three laps have been completed! This player is out of the race!")
+		print("LocalLapLogic: Three laps have been completed! This player is out of the race!")
 		isRacing = false
 
 # Adds the given id to the progress array if it is the proper id
@@ -32,10 +31,10 @@ func add_checkpoint(check_id: int) -> void:
 	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))
 	if check_id == _needed_check:
 		progress.append(check_id)
-		print("LapLogic: Checkpoint ID: " + str(check_id) + " is a valid checkpoint!")
-		print("LapLogic: Checkpoint #" + str(progress.size()) + " was crossed.")
+		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is a valid checkpoint!")
+		print("LocalLapLogic: Checkpoint #" + str(progress.size()) + " was crossed.")
 	else:
-		print("LapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
+		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
 
 # Checks if the race has "started" by seeing if any progress has been made
 # lwk bandage fix but we rock w/ it right?
@@ -48,9 +47,12 @@ func race_started() -> bool:
 # Used by BIG LapLogic to tell each instance what the IDs of the checkpoints are
 func get_check_order(order: Array) -> void:
 	if len(check_order) == 0:
-		print("LapLogic: kart has recieved order of checkpoints")
 		check_order = order
+		checks_needed = len(order)
+		print("LocalLapLogic: kart has recieved checkpoint info")
 
 func _on_tree_entered() -> void:
-	entered_race.emit()
-	pass # Replace with function body.
+	await get_tree().create_timer(1).timeout
+	get_check_order(TrackInfo.checkpoint_list)
+	await get_tree().create_timer(4).timeout
+	player_controller.isRacing = true

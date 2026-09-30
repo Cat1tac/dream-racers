@@ -4,8 +4,8 @@
 
 [node name="testtrack3" unique_id=255077636 instance=ExtResource("1_k5ble")]
 
-[node name="@StaticBody3D@19866" parent="." index="1" unique_id=877477812]
+[node name="@StaticBody3D@19886" parent="." index="1" unique_id=1692939988]
 collision_layer = 6
 
-[node name="@StaticBody3D@19867" parent="." index="3" unique_id=1409530313]
+[node name="@StaticBody3D@19887" parent="." index="3" unique_id=1580078890]
 collision_layer = 6

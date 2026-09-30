@@ -116,6 +116,8 @@ var air_y_rotation : float
 var floor_angle : float
 var capped_air_speed : float
 
+#Start Stop Race Boolean
+var isRacing: bool = false
 
 #Crash Physics
 var previous_velocity : Vector3
@@ -463,7 +465,8 @@ func _process(delta: float) -> void:
 	current_model_up = current_model_up.lerp(new_up, 1 - pow(t, 2 * delta)) #Smoothly transition to new up
 	_align_mesh_with_normal(delta, current_model_up)
 	
-	_handle_input()
+	if isRacing:
+		_handle_input()
 	_drift_boost_control(delta)
 	_decrement_boost_panel_store_charge_timer(delta)
 	_get_charge_level()

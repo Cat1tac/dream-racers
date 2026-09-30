@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Events="*uid://mecg2e26jov8"
 DebugDraw="*uid://5h3n3kvnlr7n"
+TrackInfo="*uid://chk87dgbr551t"
 
 [debug]
 
