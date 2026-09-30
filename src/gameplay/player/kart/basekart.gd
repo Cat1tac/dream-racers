@@ -1,8 +1,11 @@
 class_name Model extends Node3D
 
 @onready var kart: Node3D = %kart
-
 @export var charge_markers : Array[Marker3D]
+
+@export var animation_tree : AnimationTree
+@export var in_character_select : bool
+@export var in_race : bool
 
 var tween : Tween
 var num_spins : int = 2
@@ -19,6 +22,7 @@ func _process(_delta: float) -> void:
 			kart.global_rotation = kart.global_rotation.slerp(global_rotation, 1 - pow(0.025, 2 * _delta))
 		else:
 			kart.global_rotation = global_rotation
+			
 
 func _reset_tween() -> void:
 	if tween:

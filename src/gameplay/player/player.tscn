@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://dlkv4ebximllc" path="res://src/resources/player_controls/p1_controls.tres" id="2_sjr3t"]
 [ext_resource type="Resource" uid="uid://d3eq8jfnvx35g" path="res://src/resources/character_definitions/balanced_character.tres" id="3_xdbtd"]
 [ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="4_nem4e"]
-[ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim_kart.tscn" id="4_nor3r"]
+[ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim.tscn" id="4_nor3r"]
 [ext_resource type="PackedScene" uid="uid://b55vp0yk7kpjj" path="res://src/gameplay/player/kart/effects/boost_charge.tscn" id="5_d3trc"]
 [ext_resource type="Script" uid="uid://deyrmyjok4yx7" path="res://src/gameplay/player/kart/kart_rigidbody_sphere.gd" id="6_dxsvo"]
 [ext_resource type="Script" uid="uid://blm7ue11w2hyr" path="res://src/gameplay/player/kart/spin/spin_hitbox.gd" id="6_rdc6l"]
