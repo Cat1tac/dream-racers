@@ -121,10 +121,10 @@ shape = SubResource("BoxShape3D_bndaq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.551612, 0)
 
 [node name="Checkpoint2" parent="LapLogic/Checkpoints" unique_id=180271530 instance=ExtResource("8_5ryjy")]
-transform = Transform3D(0.75671023, 0, -0.6537504, 0, 1, 0, 0.6537504, 0, 0.75671023, 26.933882, 11.160031, -66.81247)
+transform = Transform3D(-0.75808567, 0, 0.652155, 0, 1, 0, -0.652155, 0, -0.75808567, 26.933882, 11.160031, -66.81247)
 
 [node name="Checkpoint3" parent="LapLogic/Checkpoints" unique_id=829538045 instance=ExtResource("8_5ryjy")]
-transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, 182.12831, 3.718027, -48.74948)
+transform = Transform3D(0.99997604, 0, -0.0069180317, 0, 1, 0, 0.0069180317, 0, 0.99997604, 182.12831, 3.718027, -48.74948)
 
 [node name="Checkpoint4" parent="LapLogic/Checkpoints" unique_id=1063339194 instance=ExtResource("8_5ryjy")]
 transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, 131.6447, 0.34304714, 60.55488)

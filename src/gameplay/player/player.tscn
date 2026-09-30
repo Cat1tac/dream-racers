@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://diukun3gskvpu" path="res://src/gameplay/player/local_lap_logic.gd" id="8_hmrcn"]
 [ext_resource type="PackedScene" uid="uid://c0gmqfmhqhure" path="res://src/gameplay/player/kart/trailing/trail_spawner.tscn" id="8_nem4e"]
 [ext_resource type="Curve" uid="uid://c7dw4nbq13umj" path="res://src/gameplay/player/kart/curves/spin_curve.tres" id="8_rdc6l"]
-[ext_resource type="Script" uid="uid://ecfx1n5360f0" path="res://src/gameplay/player/lap_manager.gd" id="9_en18r"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xdbtd"]
 height = 0.2
@@ -29,6 +28,24 @@ size = Vector3(1.2, 0.38391113, 1.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 size = Vector3(1.394165, 0.45404053, 0.63500977)
+
+[sub_resource type="GDScript" id="GDScript_hmrcn"]
+script/source = "extends CollisionShape3D
+
+#Progress Manager
+# signal lap_completed
+# signal checkpoint_crossed
+# var progress : Array[int] #Stores each checkpoint instance ID the player has passed
+
+# When player crosses the start line, the lap count will be increased if enough progress has been made
+# Nothing will happen if the player has not made enough progress
+# func complete_lap() -> void:
+	# lap_completed.emit(progress)
+	#print(\"LapLogic: crossed start line\")
+
+# func add_checkpoint(cp_id: int) -> void:
+	# checkpoint_crossed.emit(cp_id, progress)
+"
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kjyqo"]
 friction = 0.0
@@ -110,7 +127,7 @@ script = ExtResource("8_hmrcn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Center/LocalLapLogic" unique_id=1104453581]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0022583008, 0.081451416, -0.7767334)
 shape = SubResource("BoxShape3D_skbuk")
-script = ExtResource("9_en18r")
+script = SubResource("GDScript_hmrcn")
 
 [node name="TrailSpawner" parent="Center" unique_id=445046220 node_paths=PackedStringArray("player") instance=ExtResource("8_nem4e")]
 unique_name_in_owner = true

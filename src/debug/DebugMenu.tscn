@@ -79,3 +79,13 @@ text = "Angular Velocity: "
 
 [node name="angular_velocity_num" type="Label" parent="CanvasLayer/VBoxContainer/angular_velocity" unique_id=1717806552]
 layout_mode = 2
+
+[node name="time_elapsed" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=244304611]
+layout_mode = 2
+
+[node name="time_elapsed_Label" type="Label" parent="CanvasLayer/VBoxContainer/time_elapsed" unique_id=1336906856]
+layout_mode = 2
+text = "Time Elapsed: "
+
+[node name="time_elapsed_Num" type="Label" parent="CanvasLayer/VBoxContainer/time_elapsed" unique_id=378068633]
+layout_mode = 2

@@ -4,24 +4,29 @@ var checks_needed : int # How many checkpoints are in the track (not counting St
 var laps_done: int
 var progress: Array
 var check_order: Array
+var race_timer: float = 0.0
+var respawn_location: Vector3
+var respawn_rotation: Vector3
 @onready var player_controller: Node = %Kart_Sphere
+@onready var player: Node = %Center
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
-# Adds 1 to the laps_done variable if player crossed every checkpoint
+# Adds [3] to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
 	if len(progress) == checks_needed and player_controller.isRacing:
 		progress.clear()
-		laps_done += 1
+		laps_done += 3
 		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:
 		progress.clear()
 		print("LocalLapLogic: Player does not have enough progress")
 	
 	#does *something* when 3 laps have been done
-	if laps_done == 3:
+	if laps_done == TrackInfo.lap_count:
 		print("LocalLapLogic: Three laps have been completed! This player is out of the race!")
 		player_controller.isRacing = false
+		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
 # Adds the given id to the progress array if it is the proper id
 func add_checkpoint(check_id: int) -> void:
@@ -36,14 +41,6 @@ func add_checkpoint(check_id: int) -> void:
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
 
-# Checks if the race has "started" by seeing if any progress has been made
-# lwk bandage fix but we rock w/ it right?
-func race_started() -> bool:
-	if laps_done == 0 and len(progress) == 0: 
-		return false
-	else: 
-		return true
-
 # Used by BIG LapLogic to tell each instance what the IDs of the checkpoints are
 func get_check_order(order: Array) -> void:
 	if len(check_order) == 0:
@@ -53,7 +50,20 @@ func get_check_order(order: Array) -> void:
 		print("LocalLapLogic: checkpoints needed = " + str(checks_needed))
 
 func _on_tree_entered() -> void:
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.2).timeout
 	get_check_order(TrackInfo.checkpoint_list)
-	await get_tree().create_timer(4).timeout
-	player_controller.isRacing = true
+	if TrackInfo.willCountdown:
+		await get_tree().create_timer(4.8).timeout
+		player_controller.isRacing = true
+	else:
+		player_controller.isRacing = true
+
+
+func _process(delta: float) -> void:
+	if player_controller.isRacing:
+		race_timer += delta
+		Events.on_get_time.emit(snapped(race_timer, 0.001))
+
+func respawn() -> void:
+	player.global_position = respawn_location
+	player.global_rotation = respawn_rotation

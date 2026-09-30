@@ -467,6 +467,11 @@ func _process(delta: float) -> void:
 	
 	if isRacing:
 		_handle_input()
+	else:
+		input_acceleration = 0.0
+		input_steering = 0.0
+		input_drift = false
+		drift_just_released = true
 	_drift_boost_control(delta)
 	_decrement_boost_panel_store_charge_timer(delta)
 	_get_charge_level()
