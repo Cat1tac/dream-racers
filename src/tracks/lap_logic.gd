@@ -9,6 +9,7 @@ var check_list: Array[int]
 #TEMP NAME I'LL CHANGE IT BEFORE NEXT MEETING
 func talk_with_papa() -> void:
 	await get_tree().create_timer(0.1).timeout
+	print("LapLogic: hi")
 	TrackInfo.update(3, check_list)
 
 # recieves the instance id of each checkpoint in tree order (top to bottom)
@@ -28,7 +29,7 @@ func print_checks() -> void:
 		count += 1
 		print("LapLogic: check #" + str(count) + " " + str(id))
 
-func _on_tree_entered() -> void:
+func _ready() -> void:
 	print("LapLogic: loading checkpoints. please wait 2 seconds")
 	talk_with_papa()
 	await get_tree().create_timer(2).timeout

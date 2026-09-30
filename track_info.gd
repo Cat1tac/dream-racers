@@ -4,6 +4,9 @@ var lap_count: int
 var checkpoint_list: Array
 signal countdown_finished
 
+func _ready() -> void:
+	print("GlobalLapLogic: hi")
+
 func update(laps: int, c_list: Array) -> void:
 	lap_count = laps
 	checkpoint_list = c_list

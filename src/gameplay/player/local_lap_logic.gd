@@ -4,24 +4,24 @@ var checks_needed : int # How many checkpoints are in the track (not counting St
 var laps_done: int
 var progress: Array
 var check_order: Array
-var isRacing: bool = false
 @onready var player_controller: Node = %Kart_Sphere
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
 # Adds 1 to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
-	if len(progress) == checks_needed and isRacing:
+	if len(progress) == checks_needed and player_controller.isRacing:
 		progress.clear()
 		laps_done += 1
 		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:
+		progress.clear()
 		print("LocalLapLogic: Player does not have enough progress")
 	
 	#does *something* when 3 laps have been done
 	if laps_done == 3:
 		print("LocalLapLogic: Three laps have been completed! This player is out of the race!")
-		isRacing = false
+		player_controller.isRacing = false
 
 # Adds the given id to the progress array if it is the proper id
 func add_checkpoint(check_id: int) -> void:
@@ -50,6 +50,7 @@ func get_check_order(order: Array) -> void:
 		check_order = order
 		checks_needed = len(order)
 		print("LocalLapLogic: kart has recieved checkpoint info")
+		print("LocalLapLogic: checkpoints needed = " + str(checks_needed))
 
 func _on_tree_entered() -> void:
 	await get_tree().create_timer(1).timeout
