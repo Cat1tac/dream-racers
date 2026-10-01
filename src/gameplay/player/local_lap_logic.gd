@@ -12,11 +12,11 @@ var respawn_rotation: Vector3
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
-# Adds [3] to the laps_done variable if player crossed every checkpoint
+# Adds 1 to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
 	if len(progress) == checks_needed and player_controller.isRacing:
 		progress.clear()
-		laps_done += 3
+		laps_done += 1
 		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:
 		progress.clear()
@@ -36,34 +36,34 @@ func add_checkpoint(check_id: int) -> void:
 	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))
 	if check_id == _needed_check:
 		progress.append(check_id)
-		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is a valid checkpoint!")
 		print("LocalLapLogic: Checkpoint #" + str(progress.size()) + " was crossed.")
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
 
-# Used by BIG LapLogic to tell each instance what the IDs of the checkpoints are
+# Tells each Player instance what the IDs of the checkpoints are
 func get_check_order(order: Array) -> void:
 	if len(check_order) == 0:
 		check_order = order
 		checks_needed = len(order)
 		print("LocalLapLogic: kart has recieved checkpoint info")
-		print("LocalLapLogic: checkpoints needed = " + str(checks_needed))
 
 func _on_tree_entered() -> void:
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.2).timeout # Gives time for TrackInfo to update
 	get_check_order(TrackInfo.checkpoint_list)
 	if TrackInfo.willCountdown:
-		await get_tree().create_timer(4.8).timeout
+		await get_tree().create_timer(4.8).timeout # Total of a 5 second wait from Scene Start
 		player_controller.isRacing = true
 	else:
 		player_controller.isRacing = true
 
-
+# Manages Timer
 func _process(delta: float) -> void:
 	if player_controller.isRacing:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 
+# Sets player position to the last checkpoint
+# DysFUNCtional (haha get it) since I have yet to figure out positions
 func respawn() -> void:
 	player.global_position = respawn_location
 	player.global_rotation = respawn_rotation

@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://d0qafquu1y2j"]
 
-[ext_resource type="Script" uid="uid://bt2wshrjxrpvr" path="res://out_out_bounds.gd" id="1_gjq2t"]
+[ext_resource type="Script" uid="uid://bt2wshrjxrpvr" path="res://out_of_bounds.gd" id="1_wg36c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 size = Vector3(1, 3.079956, 1)
 
-[node name="OutOutBounds" type="Area3D" unique_id=2017124765]
-script = ExtResource("1_gjq2t")
+[node name="OutOfBounds" type="Area3D" unique_id=2017124765]
+script = ExtResource("1_wg36c")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1150197033]
 transform = Transform3D(6, 0, 0, 0, 0.324, 0, 0, 0, 6, 0, 0.3369529, 0)

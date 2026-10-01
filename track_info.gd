@@ -5,9 +5,6 @@ var checkpoint_list: Array
 var willCountdown: bool = true # set to false to disable race countdown
 signal countdown_finished
 
-func _ready() -> void:
-	print("GlobalLapLogic: hi")
-
 func update(laps: int, c_list: Array) -> void:
 	lap_count = laps
 	checkpoint_list = c_list
