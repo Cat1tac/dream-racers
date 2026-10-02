@@ -19,8 +19,7 @@ var selected_camera : Camera3D
 func _ready() -> void:
 	_change_camera($CameraPivot/Camera3D)
 	kart_model_instance = kart_model_scene.instantiate()
-	kart_model_instance.in_character_select = false
-	kart_model_instance.in_race = true
+	kart_model_instance.current_state = kart_model_instance.STATE.IN_RACE
 	center.add_child(kart_model_instance)
 	
 	for i in range(len(kart_model_instance.charge_markers)):

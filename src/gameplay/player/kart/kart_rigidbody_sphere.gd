@@ -424,7 +424,6 @@ func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	spin_hurt_box.global_basis = new_basis.orthonormalized()
 	trail_spawner.global_basis = new_basis.orthonormalized()
 	
-	kart_model.new_basis = new_basis
 	kart_model.global_basis = new_basis
 	kart_model.rotation += new_kart_rotation
 	kart_model.scale = kart_scale
@@ -667,7 +666,8 @@ func _apply_steering(delta : float) -> void:
 	if !input_spin:
 		var final_kart_rotation := Vector3(0, -y_kart_rotation, steering * 6 * deg_to_rad(avg_steering_angle))
 		new_kart_rotation = new_kart_rotation.lerp(final_kart_rotation, 1 - pow(0.8, 60 * delta)) #smoothly transition to new rotation
-	#TODO Move kart body z seperately from wheels and have wheels rotate in direction of turn
+		kart_model.steer_character(input_steering, input_drift, delta)
+	
 	#Debug numbers
 	Events.on_get_steer.emit(steering_angle, max_steering_angle, angular_speed)
 

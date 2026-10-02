@@ -42,7 +42,10 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 
 [node name="DreamyYggdrasil1" parent="." unique_id=1683156197 instance=ExtResource("3_g18f6")]
 
-[node name="@StaticBody3D@19975" parent="DreamyYggdrasil1" index="1" unique_id=1321940069]
+[node name="@StaticBody3D@214838" parent="DreamyYggdrasil1" index="2" unique_id=1257472503]
+collision_layer = 6
+
+[node name="@StaticBody3D@214839" parent="DreamyYggdrasil1" index="3" unique_id=184321170]
 collision_layer = 6
 
 [node name="Boost Panels" type="Node" parent="." unique_id=169729817]
@@ -72,9 +75,13 @@ transform = Transform3D(-0.92625487, 0, -0.37689775, 0, 1, 0, 0.37689775, 0, -0.
 transform = Transform3D(-0.8590162, 0, -0.5119485, 0, 1, 0, 0.5119485, 0, -0.8590162, 23.011112, 34.246815, -40.546234)
 
 [node name="Boost_Panel3" parent="Boost Panels" unique_id=665476914 instance=ExtResource("4_0hupc")]
-transform = Transform3D(-4.13035e-07, 0.408992, 2.5916078, 2.0684392e-07, 0.912538, -1.1615372, -11.57, 1.7134774e-09, -1.1328277e-07, 45.833397, 11.51661, 88.19569)
+transform = Transform3D(-4.5948735e-07, 0.05998522, 2.8348858, 4.7472852e-08, 0.9981993, -0.17035788, -11.57, 1.7134774e-09, -1.1328277e-07, 69.47454, 10.139194, 88.19569)
 
 [node name="Cloud" parent="." unique_id=2108663503 instance=ExtResource("5_51vje")]
 transform = Transform3D(15.673302, 0, 7.276402, 0, 17.28, 0, -7.276402, 0, 15.673302, 38.790733, 20.252026, -113.55677)
+
+[node name="Cloud2" parent="." unique_id=928792250 instance=ExtResource("5_51vje")]
+transform = Transform3D(25.21562, 0, -1.1091005, 0, 25.24, 0, 1.1091005, 0, 25.21562, 99.50914, 31.325352, -32.81957)
+charge_need_for_super_bounce = 3.0
 
 [editable path="DreamyYggdrasil1"]
