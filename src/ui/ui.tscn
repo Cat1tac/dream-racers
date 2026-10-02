@@ -5,10 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://cc8ck4keppajc" path="res://icon.svg" id="1_sp1ie"]
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
+[ext_resource type="Script" uid="uid://csuot5gwwxxsw" path="res://src/ui/scripts/seraphim_portrait.gd" id="6_eofyr"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
-[ext_resource type="PackedScene" uid="uid://5s5djic3ljby" path="res://src/ui/character_view.tscn" id="6_yo02o"]
+[ext_resource type="PackedScene" uid="uid://5s5djic3ljby" path="res://src/ui/components/character_view.tscn" id="6_yo02o"]
 [ext_resource type="PackedScene" uid="uid://c7hrqc4lwuvyo" path="res://src/ui/MenuBackgrounds.tscn" id="7_gucsq"]
 [ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
+[ext_resource type="Script" uid="uid://dpbqhyrga6c0c" path="res://src/ui/scripts/track_view_buttons.gd" id="9_1kq2p"]
 [ext_resource type="Texture2D" uid="uid://b5terhl54jqyw" path="res://assets/ui/main menu/gradients/night_gradient.tres" id="9_yo02o"]
 [ext_resource type="Texture2D" uid="uid://dwr06xauwjiie" path="res://assets/ui/main menu/gradients/twilight_gradient.tres" id="10_eofyr"]
 [ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
@@ -1431,7 +1433,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:offset_transform_position_ratio")
+tracks/2/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_position_ratio")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1443,7 +1445,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:offset_transform_position_ratio")
+tracks/3/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_position_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1503,7 +1505,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:modulate")
+tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -1515,7 +1517,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:offset_transform_enabled")
+tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_enabled")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -1527,7 +1529,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:modulate")
+tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -1539,7 +1541,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -1563,7 +1565,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_position_ratio")
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_position_ratio")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -1575,7 +1577,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:modulate")
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:modulate")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -1587,7 +1589,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_enabled")
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_enabled")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
@@ -1599,7 +1601,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_position_ratio")
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_position_ratio")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -1611,7 +1613,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:modulate")
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:modulate")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -1623,7 +1625,7 @@ tracks/17/keys = {
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_enabled")
+tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_enabled")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
@@ -1711,7 +1713,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:offset_transform_position_ratio")
+tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_position_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -1723,7 +1725,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:modulate")
+tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -1735,7 +1737,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:offset_transform_enabled")
+tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_enabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -1747,7 +1749,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:offset_transform_position_ratio")
+tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_position_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -1759,7 +1761,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:modulate")
+tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -1771,7 +1773,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -1795,7 +1797,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_position_ratio")
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_position_ratio")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -1807,7 +1809,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:modulate")
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:modulate")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -1819,7 +1821,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_enabled")
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_enabled")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
@@ -1831,7 +1833,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_position_ratio")
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_position_ratio")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -1843,7 +1845,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:modulate")
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:modulate")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -1855,7 +1857,7 @@ tracks/17/keys = {
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_enabled")
+tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_enabled")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
@@ -1978,7 +1980,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:offset_transform_position_ratio")
+tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_position_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -1990,7 +1992,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:modulate")
+tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -2002,7 +2004,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track1:offset_transform_enabled")
+tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_enabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -2014,7 +2016,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:offset_transform_position_ratio")
+tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_position_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -2026,7 +2028,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:modulate")
+tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -2038,7 +2040,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track2:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -2062,7 +2064,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_position_ratio")
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_position_ratio")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -2074,7 +2076,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:modulate")
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:modulate")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -2086,7 +2088,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track3:offset_transform_enabled")
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_enabled")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
@@ -2098,7 +2100,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_position_ratio")
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_position_ratio")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -2110,7 +2112,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:modulate")
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:modulate")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -2122,7 +2124,7 @@ tracks/17/keys = {
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/CharacterViewHBox/Track4:offset_transform_enabled")
+tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_enabled")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
@@ -2396,18 +2398,15 @@ color = Color(0.80784315, 0.45490196, 0.7294118, 1)
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.24074075
-anchor_top = -0.24074075
-anchor_right = 1.2407408
-anchor_bottom = 1.2407408
-offset_left = 36.0
-offset_top = 36.0
-offset_right = -36.0
-offset_bottom = -36.0
+anchor_left = -0.06074074
+anchor_top = -0.06074074
+anchor_right = 1.0607408
+anchor_bottom = 1.0607408
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("1_sp1ie")
 stretch_mode = 5
+script = ExtResource("6_eofyr")
 metadata/_edit_use_anchors_ = true
 
 [node name="CharFrame2" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=102421327]
@@ -2600,39 +2599,52 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_bottom = 25
 
-[node name="CharacterViewHBox" type="HBoxContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin" unique_id=1461557336]
+[node name="TrackViewHBox" type="HBoxContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin" unique_id=1461557336]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 72
+script = ExtResource("9_1kq2p")
 
-[node name="Track1" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=900318843]
+[node name="Track1" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=900318843]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
-[node name="Track2" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=449278947]
+[node name="Track1Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track1" unique_id=1753988692]
+layout_mode = 2
+
+[node name="Track2" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=449278947]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
-[node name="Track3" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=1773307534]
+[node name="Track2Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track2" unique_id=441718402]
+layout_mode = 2
+
+[node name="Track3" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=1773307534]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
-[node name="Track4" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/CharacterViewHBox" unique_id=270231830]
+[node name="Track3Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track3" unique_id=191107945]
+layout_mode = 2
+
+[node name="Track4" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=270231830]
 modulate = Color(0, 0, 0, 0)
 custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
+
+[node name="Track4Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track4" unique_id=62370896]
+layout_mode = 2
 
 [node name="BackgroundLayers" parent="." unique_id=1665049764 instance=ExtResource("7_gucsq")]
 unique_name_in_owner = true
@@ -2651,5 +2663,9 @@ material = SubResource("ShaderMaterial_lp5l8")
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_on_char_back_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/NextButtonMargin/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="." method="_on_track_back_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track1/Track1Button" to="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" method="_on_track_1_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track2/Track2Button" to="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" method="_on_track_2_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track3/Track3Button" to="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" method="_on_track_3_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track4/Track4Button" to="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" method="_on_track_4_button_pressed"]
 
 [editable path="BackgroundLayers"]

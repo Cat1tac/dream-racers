@@ -68,7 +68,7 @@ size = 3.0
 [node name="kart" parent="SubViewportContainer/SubViewport" unique_id=2060035001 instance=ExtResource("1_txy2v")]
 transform = Transform3D(-1.1500001, 0, 1.005362e-07, 0, 1.15, 0, -1.005362e-07, 0, -1.1500001, 0, 0, 0)
 
-[node name="PlayerAnimations" type="AnimationPlayer" parent="SubViewportContainer/SubViewport" unique_id=1771373129]
+[node name="PlayerViewAnimations" type="AnimationPlayer" parent="SubViewportContainer/SubViewport" unique_id=1771373129]
 libraries/ = SubResource("AnimationLibrary_5pf0t")
 autoplay = &"idle_spin"
 
