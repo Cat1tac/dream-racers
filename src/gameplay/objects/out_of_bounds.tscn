@@ -6,6 +6,7 @@
 size = Vector3(1, 3.079956, 1)
 
 [node name="OutOfBounds" type="Area3D" unique_id=2017124765]
+transform = Transform3D(1, 0, 0, 0, 0.05, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_wg36c")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1150197033]

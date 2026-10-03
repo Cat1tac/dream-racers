@@ -4,8 +4,6 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_aenle"]
-
 [node name="Checkpoint" type="Area3D" unique_id=1706071241]
 collision_layer = 0
 script = ExtResource("1_aiwk1")
@@ -15,10 +13,6 @@ transform = Transform3D(1, 0, 0, 0, 10, 0, 0, 0, 26.8, 0, 0.49, 0)
 shape = SubResource("BoxShape3D_skbuk")
 debug_color = Color(0.65427727, 0.3171586, 1, 1)
 
-[node name="RespawnPoint" type="CollisionShape3D" parent="." unique_id=1195269531]
-transform = Transform3D(3.01, 0, 0, 0, 3.01, 0, 0, 0, 3.01, 1.1691093, 0, 0)
-shape = SubResource("BoxShape3D_aenle")
-
-[node name="Marker3D" type="Marker3D" parent="." unique_id=446360075]
+[node name="RespawnPoint" type="Marker3D" parent="." unique_id=446360075]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

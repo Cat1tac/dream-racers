@@ -134,7 +134,7 @@ transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0,
 transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, -57.290894, 2.4219437, 104.632484)
 
 [node name="OutOfBounds" parent="." unique_id=2017124765 instance=ExtResource("9_mvbxg")]
-transform = Transform3D(20.56, 0, 0, 0, 6.005, 0, 0, 0, 20.56, 0, -29.245155, 0)
+transform = Transform3D(50, 0, 0, 0, 14.644, 0, 0, 0, 50, 48.053802, -29.245155, 36.661545)
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 

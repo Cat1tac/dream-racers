@@ -8,7 +8,7 @@ var race_timer: float = 0.0
 var respawn_location: Vector3
 var respawn_rotation: Vector3
 @onready var player_controller: Node = %Kart_Sphere
-@onready var player: Node = %Center
+@onready var player: Node = %Kart_Sphere
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
@@ -61,9 +61,11 @@ func _process(delta: float) -> void:
 	if player_controller.isRacing:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
+	print("LalLogic: " + str(self.global_rotation_degrees))
 
 # Sets player position to the last checkpoint
-# DysFUNCtional (haha get it) since I have yet to figure out positions
+# DysFUNCtional (haha get it) since I have yet to figure out rotations
 func respawn() -> void:
-	player.global_position = respawn_location
-	player.global_rotation = respawn_rotation
+	player_controller.global_position = respawn_location
+	player_controller.global_rotation = respawn_rotation
+	player_controller.linear_velocity = Vector3(0.0, 0.0, 0.0)

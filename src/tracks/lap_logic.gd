@@ -21,8 +21,9 @@ func log_checkpoints(check_id) -> void:
 func _on_start_line_area_entered(area: Area3D) -> void:
 		if area is LocalLapLogic:
 			area.complete_lap()
-			#area.respawn_location = starting_line.global_position
-			#area.respawn_rotation = starting_line.global_rotation
+			area.respawn_location = starting_line.global_position
+			area.respawn_rotation = starting_line.global_rotation
+			print("LapLogic: Start Coords: " + str(starting_line.global_position))
 
 # Debug function, prints instance id of each checkpoint in order
 func print_checks() -> void:

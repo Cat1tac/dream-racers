@@ -2,7 +2,7 @@ extends Node
 
 var lap_count: int
 var checkpoint_list: Array
-var willCountdown: bool = true # set to false to disable race countdown
+var willCountdown: bool = false # set to false to disable race countdown
 signal countdown_finished
 
 func update(laps: int, c_list: Array) -> void:
