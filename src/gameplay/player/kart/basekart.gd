@@ -18,6 +18,8 @@ var num_spins : int = 2
 
 var kart_scale : Vector3
 var _turning_position : float = 0.0 #For turning the character
+@export var _tricking : bool #for determinin if character is tricking 
+
 
 func _ready() -> void:
 	kart_scale = scale
@@ -52,6 +54,9 @@ func do_trick_anim() -> void:
 	_reset_tween()
 	tween.set_trans(Tween.TRANS_LINEAR)
 	tween.tween_method(set_model_global_rotation, kart.global_rotation, Vector3(global_rotation.x + (TAU * num_spins), global_rotation.y, global_rotation.z + (TAU * (num_spins - 1))) , 0.8)
+	_tricking = true
+	await tween.finished
+	_tricking = false
 	
 func set_model_global_rotation(current_rotation : Vector3) -> void:
 	kart.global_rotation = current_rotation
@@ -60,6 +65,6 @@ func steer_character(direction : float, drifting : bool, delta : float) -> void:
 	var drifting_amt := 0.0 if !drifting else 0.5
 	var max_steer := direction * (0.5 + drifting_amt)
 	_turning_position = lerp(_turning_position, max_steer, 1 - pow(0.5, 60 * delta)) 
-	animation_tree["parameters/Driving/Turning/blend_position"] = _turning_position
+	animation_tree["parameters/In Race/Driving/Turning/blend_position"] = _turning_position
 	
 #endregion
