@@ -2215,6 +2215,15 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
+[sub_resource type="Gradient" id="Gradient_2auc3"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1kq2p"]
+gradient = SubResource("Gradient_2auc3")
+width = 225
+height = 225
+fill_from = Vector2(0.5165094, 0)
+fill_to = Vector2(0.4764151, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g1bnb"]
 shader = ExtResource("8_6s7ef")
 shader_parameter/start_gradient = ExtResource("12_5kva4")
@@ -2393,7 +2402,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_7abqo")
 character_buttons = [NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1/Character1"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2/Character2"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3/Character3")]
-charater_models = Array[PackedScene]([ExtResource("5_1kq2p")])
+character_models = Array[PackedScene]([ExtResource("5_1kq2p")])
 character_views = [NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1")]
 transition_animations = NodePath("CharacterSelectAnimations")
 next_state = NodePath("../TrackSelect")
@@ -2694,6 +2703,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
 [node name="Track1Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track1" unique_id=1753988692]
 layout_mode = 2
+texture_focused = SubResource("GradientTexture2D_1kq2p")
 
 [node name="Track2" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=449278947]
 modulate = Color(1, 1, 1, 0)
@@ -2704,6 +2714,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
 [node name="Track2Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track2" unique_id=441718402]
 layout_mode = 2
+texture_focused = SubResource("GradientTexture2D_1kq2p")
 
 [node name="Track3" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=1773307534]
 modulate = Color(1, 1, 1, 0)
@@ -2714,6 +2725,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
 [node name="Track3Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track3" unique_id=191107945]
 layout_mode = 2
+texture_focused = SubResource("GradientTexture2D_1kq2p")
 
 [node name="Track4" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=270231830]
 modulate = Color(0, 0, 0, 0)
@@ -2724,6 +2736,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
 
 [node name="Track4Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track4" unique_id=62370896]
 layout_mode = 2
+texture_focused = SubResource("GradientTexture2D_1kq2p")
 
 [node name="NextButtonMargin" type="MarginContainer" parent="UILayer/TrackSelect" unique_id=1112518091]
 layout_mode = 1
