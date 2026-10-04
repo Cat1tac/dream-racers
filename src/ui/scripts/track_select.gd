@@ -3,18 +3,18 @@ extends UIState
 @export var next_button: Button
 
 func _ready() -> void:
-	if GameManager.current_track == GameManager.Track.NONE:
+	if GameManager.current_track == GameManager.SelectedTrack.NONE:
 		next_button.hide()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func _track_1_button_pressed() -> void:
-	GameManager.set_track(GameManager.Track.TREE)
+	GameManager.set_track(GameManager.SelectedTrack.TREE)
 	_show_next_button()
 
 func _track_2_button_pressed() -> void:
-	GameManager.set_track(GameManager.Track.SHIP)
+	GameManager.set_track(GameManager.SelectedTrack.SHIP)
 	_show_next_button()
 
 func _track_3_button_pressed() -> void:
@@ -26,7 +26,7 @@ func _track_4_button_pressed() -> void:
 #region transitions
 func _back_button_pressed() -> void:
 	next_button.hide()
-	GameManager.set_track(GameManager.Track.NONE)
+	GameManager.set_track(GameManager.SelectedTrack.NONE)
 	
 #endregion
 func _show_next_button() -> void:

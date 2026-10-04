@@ -10,6 +10,7 @@ class_name Player extends Node3D
 @onready var kart_sphere: Kart_Sphere = $Kart_Sphere
 @onready var center: Node3D = %Center
 
+var current_track : Track
 var playerId : int
 var sphere_offset := 0.5
 var kart_model_instance : Model

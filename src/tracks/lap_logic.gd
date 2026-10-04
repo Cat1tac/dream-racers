@@ -1,7 +1,8 @@
-extends Node
+class_name LapLogic extends Node
 
+@export var track : Track
 @onready var checkpoints: Node = $Checkpoints
-@onready var starting_line: Node = $StartLine/CollisionShape3D
+@onready var starting_line: CollisionShape3D = $StartLine/CollisionShape3D
 
 var check_list: Array[int]
 
@@ -11,23 +12,24 @@ var check_list: Array[int]
 # I've grown quite fond of this name
 func talk_with_papa() -> void:
 	await get_tree().create_timer(0.1).timeout # Lets checkpoints give info to this scripts before sending it to TrackInfo
-	TrackInfo.update(3, check_list) # (Number of laps, list of checkpoints)
+	track.update(3, check_list) # (Number of laps, list of checkpoints)
 
 # recieves the instance id of each checkpoint in tree order (top to bottom)
-func log_checkpoints(check_id) -> void:
+func log_checkpoints(check_id : int) -> void:
 	check_list.append(check_id)
 
 # Tells LocalLapLogic to check for lap completion
 func _on_start_line_area_entered(area: Area3D) -> void:
 		if area is LocalLapLogic:
-			area.complete_lap()
-			area.respawn_location = starting_line.global_position
-			area.respawn_rotation = starting_line.global_rotation
+			var local_lap_logic : LocalLapLogic = area
+			local_lap_logic.complete_lap()
+			local_lap_logic.respawn_location = starting_line.global_position
+			local_lap_logic.respawn_rotation = starting_line.global_rotation
 			print("LapLogic: Start Coords: " + str(starting_line.global_position))
 
 # Debug function, prints instance id of each checkpoint in order
 func print_checks() -> void:
-	var count: int
+	var count := 0
 	for id in check_list:
 		count += 1
 		print("LapLogic: check #" + str(count) + " " + str(id))
@@ -35,6 +37,6 @@ func print_checks() -> void:
 func _ready() -> void:
 	print("LapLogic: loading checkpoints...")
 	talk_with_papa()
-	if TrackInfo.willCountdown:
+	if track.willCountdown:
 		await get_tree().create_timer(2).timeout
-		await TrackInfo.countdown(3, "race starting")
+		await track.countdown(3, "race starting")

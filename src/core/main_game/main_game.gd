@@ -116,6 +116,7 @@ func _place_player_at_level_spawn(player : Player) -> void:
 	var playerLevelSetup : Array[Marker3D] = _current_level.get_default_player_spawn()
 	player.global_position = playerLevelSetup[player.playerId].global_position
 	player.rotation = playerLevelSetup[player.playerId].rotation
+	player.current_track = _current_level
 
 func _load_debug() -> void:
 	var debug_menu : PackedScene =\
@@ -124,7 +125,7 @@ func _load_debug() -> void:
 		push_error("debug menu does not exist")
 		return
 		
-	var debug_menu_instance = debug_menu.instantiate() as Control
+	var debug_menu_instance := debug_menu.instantiate() as Control
 	if debug_menu_instance == null:
 		push_error("debug_menu_instance does not exist")
 		return

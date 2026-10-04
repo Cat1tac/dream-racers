@@ -7,8 +7,11 @@ var check_order: Array
 var race_timer: float = 0.0
 var respawn_location: Vector3
 var respawn_rotation: Vector3
-@onready var player_controller: Node = %Kart_Sphere
-@onready var player: Node = %Center
+
+@onready var parent: Player = $"../.."
+@onready var player_controller: Kart_Sphere = %Kart_Sphere
+@onready var player: Node3D = %Center
+
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
@@ -23,7 +26,7 @@ func complete_lap() -> void:
 		print("LocalLapLogic: Player does not have enough progress")
 	
 	#does *something* when 3 laps have been done
-	if laps_done == TrackInfo.lap_count:
+	if laps_done == parent.current_track.lap_count:
 		print("LocalLapLogic: Three laps have been completed! This player is out of the race!")
 		player_controller.isRacing = false
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
@@ -31,7 +34,7 @@ func complete_lap() -> void:
 # Adds the given id to the progress array if it is the proper id
 func add_checkpoint(check_id: int) -> void:
 	
-	var _needed_check = check_order[progress.size()] # This is the value that we are looking for
+	var _needed_check : int = check_order[progress.size()] # This is the value that we are looking for
 	
 	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))
 	if check_id == _needed_check:
@@ -49,8 +52,8 @@ func get_check_order(order: Array) -> void:
 
 func _on_tree_entered() -> void:
 	await get_tree().create_timer(0.2).timeout # Gives time for TrackInfo to update
-	get_check_order(TrackInfo.checkpoint_list)
-	if TrackInfo.willCountdown:
+	get_check_order(parent.current_track.checkpoint_list)
+	if parent.current_track.willCountdown:
 		await get_tree().create_timer(4.8).timeout # Total of a 5 second wait from Scene Start
 		player_controller.isRacing = true
 	else:
@@ -61,7 +64,7 @@ func _process(delta: float) -> void:
 	if player_controller.isRacing:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
-	print("LalLogic: " + str(self.global_rotation_degrees))
+	#print("LalLogic: " + str(self.global_rotation_degrees))
 
 # Sets player position to the last checkpoint
 # DysFUNCtional (haha get it) since I have yet to figure out rotations

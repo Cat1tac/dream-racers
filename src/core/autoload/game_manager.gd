@@ -6,7 +6,7 @@ signal all_players_selected_character
 
 var main_game_scene: PackedScene = preload("res://src/core/main_game/main_game.tscn")
 ## updates whenever a player is added
-var players_connected = 0
+var players_connected := 0
 
 #region enums
 enum SelectedCharacter {
@@ -16,7 +16,7 @@ enum SelectedCharacter {
 	MUFFIN,
 }
 
-enum Track {
+enum SelectedTrack {
 	NONE, ## No track is selected
 	TREE, ## Yggdrasil Tree
 	SHIP, ## Baa Baa Battleship
@@ -24,10 +24,10 @@ enum Track {
 #endregion
 
 ## updates when track is selected from track select
-var current_track: Track = Track.NONE
+var current_track: SelectedTrack = SelectedTrack.NONE
 
 ## an array containing all players
-var player_list: Array = []
+var player_list: Array[Dictionary] = []
 
 func _init() -> void:
 	add_player()
@@ -47,9 +47,9 @@ func remove_player() -> void:
 func set_character(character: SelectedCharacter) -> void:
 	player_list[0]["SelectedCharacter"] = character
 
-func set_track(given_track: Track) -> void:
+func set_track(given_track: SelectedTrack) -> void:
 	current_track = given_track
-	print(Track.keys()[given_track] + " selected!")
+	print(SelectedTrack.keys()[given_track] + " selected!")
 
 ## check if all players have selected a character
 func validate_character_select() -> bool:
