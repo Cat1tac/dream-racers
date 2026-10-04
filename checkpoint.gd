@@ -13,7 +13,7 @@ func _ready() -> void:
 func _on_area_entered(area: Area3D) -> void:
 	if area is LocalLapLogic:
 		area.add_checkpoint(get_instance_id())
-		area.respawn_location = self.global_position
-		area.respawn_rotation = self.global_rotation
+		area.respawn_location = res_point.global_position
+		area.respawn_rotation = res_point.global_rotation
 		print("CheckLapLogic: Respawn Rotation is " + str(area.respawn_rotation))
 		print("CheckLapLogic: Respawn Rotation should be " + str(self.global_rotation_degrees))

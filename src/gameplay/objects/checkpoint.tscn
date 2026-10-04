@@ -14,5 +14,6 @@ shape = SubResource("BoxShape3D_skbuk")
 debug_color = Color(0.65427727, 0.3171586, 1, 1)
 
 [node name="RespawnPoint" type="Marker3D" parent="." unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
