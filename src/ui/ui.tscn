@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cc8ck4keppajc" path="res://icon.svg" id="1_sp1ie"]
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
+[ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim.tscn" id="5_1kq2p"]
 [ext_resource type="Animation" uid="uid://dif08814ovmqm" path="res://src/ui/animations/next_button_pop_in.res" id="5_eofyr"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
 [ext_resource type="PackedScene" uid="uid://5s5djic3ljby" path="res://src/ui/components/character_view.tscn" id="6_yo02o"]
@@ -1404,6 +1405,21 @@ _data = {
 &"next_button_pop_in": ExtResource("5_eofyr")
 }
 
+[sub_resource type="Gradient" id="Gradient_eofyr"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_q8x0m"]
+gradient = SubResource("Gradient_eofyr")
+
+[sub_resource type="Gradient" id="Gradient_1kq2p"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fc2dq"]
+gradient = SubResource("Gradient_1kq2p")
+
+[sub_resource type="Gradient" id="Gradient_5kva4"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yhtw2"]
+gradient = SubResource("Gradient_5kva4")
+
 [sub_resource type="Animation" id="Animation_wwjrv"]
 length = 0.001
 tracks/0/type = "value"
@@ -2337,6 +2353,8 @@ theme_override_constants/separation = 20
 [node name="RaceButton" type="Button" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=933511100]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../ExitButton")
+focus_neighbor_bottom = NodePath("../HowToPlayButton")
 focus_next = NodePath("../HowToPlayButton")
 theme = ExtResource("1_jlntk")
 theme_override_font_sizes/font_size = 70
@@ -2346,6 +2364,8 @@ text = "Race"
 [node name="HowToPlayButton" type="Button" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=294773205]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../RaceButton")
+focus_neighbor_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
 focus_previous = NodePath("../RaceButton")
 theme = ExtResource("1_jlntk")
@@ -2356,11 +2376,13 @@ text = "How to Play"
 layout_mode = 2
 size_flags_vertical = 3
 offset_transform_enabled = true
+focus_neighbor_top = NodePath("../HowToPlayButton")
+focus_neighbor_bottom = NodePath("../RaceButton")
 theme = ExtResource("1_jlntk")
 theme_override_font_sizes/font_size = 70
 text = "Exit"
 
-[node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("transition_animations", "next_state", "previous_state")]
+[node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("character_buttons", "character_views", "transition_animations", "next_state", "previous_state")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -2370,6 +2392,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_7abqo")
+character_buttons = [NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1/Character1"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2/Character2"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3/Character3")]
+charater_models = Array[PackedScene]([ExtResource("5_1kq2p")])
+character_views = [NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1")]
 transition_animations = NodePath("CharacterSelectAnimations")
 next_state = NodePath("../TrackSelect")
 previous_state = NodePath("../MainMenu")
@@ -2441,7 +2466,12 @@ anchor_right = 1.0607408
 anchor_bottom = 1.0607408
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_left = NodePath("../../CharFrame3/Character3")
+focus_neighbor_top = NodePath("../../../../../BackButtonMargin/BackButton")
+focus_neighbor_right = NodePath("../../CharFrame2/Character2")
+focus_neighbor_bottom = NodePath("../../../../../NextButtonMargin/NextButton")
 texture_normal = ExtResource("1_sp1ie")
+texture_focused = SubResource("GradientTexture1D_q8x0m")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
@@ -2465,7 +2495,12 @@ offset_right = -36.0
 offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_left = NodePath("../../CharFrame1/Character1")
+focus_neighbor_top = NodePath("../../../../../BackButtonMargin/BackButton")
+focus_neighbor_right = NodePath("../../CharFrame3/Character3")
+focus_neighbor_bottom = NodePath("../../../../../NextButtonMargin/NextButton")
 texture_normal = ExtResource("1_sp1ie")
+texture_focused = SubResource("GradientTexture1D_fc2dq")
 stretch_mode = 6
 metadata/_edit_use_anchors_ = true
 
@@ -2489,7 +2524,12 @@ offset_right = -32.5
 offset_bottom = -32.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_left = NodePath("../../CharFrame2/Character2")
+focus_neighbor_top = NodePath("../../../../../BackButtonMargin/BackButton")
+focus_neighbor_right = NodePath("../../CharFrame1/Character1")
+focus_neighbor_bottom = NodePath("../../../../../NextButtonMargin/NextButton")
 texture_normal = ExtResource("1_sp1ie")
+texture_focused = SubResource("GradientTexture1D_yhtw2")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
@@ -2505,10 +2545,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 72
 
-[node name="CharacterView11" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504 instance=ExtResource("6_yo02o")]
+[node name="CharacterViewP1" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504 instance=ExtResource("6_yo02o")]
 layout_mode = 2
 
 [node name="CharacterView2" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=875719395]
+visible = false
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -2519,6 +2560,7 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="CharacterView3" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1495012233]
+visible = false
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -2529,6 +2571,7 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="CharacterView4" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=442354950]
+visible = false
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4

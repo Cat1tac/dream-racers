@@ -39,3 +39,7 @@ func transition_to_state(newState: UIState) -> void:
 	# hide old screen
 	await transition_animations.animation_finished
 	hide()
+
+##Sets focus to first button
+func set_initial_focus(button : Control) -> void:
+	button.grab_focus()

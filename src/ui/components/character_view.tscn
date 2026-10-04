@@ -1,53 +1,19 @@
 [gd_scene format=3 uid="uid://5s5djic3ljby"]
 
-[ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="1_txy2v"]
+[ext_resource type="Script" uid="uid://du4i8k5okij7w" path="res://src/ui/components/character_view.gd" id="1_v0axc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pqyqd"]
 
 [sub_resource type="Environment" id="Environment_txy2v"]
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 0.48235294)
 
-[sub_resource type="Animation" id="Animation_txy2v"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("kart:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, -3.1415927, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_p5isw"]
-resource_name = "idle_spin"
-length = 5.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("kart:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 3.1415927, 0), Vector3(0, -3.1415927, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_5pf0t"]
-_data = {
-&"RESET": SubResource("Animation_txy2v"),
-&"idle_spin": SubResource("Animation_p5isw")
-}
-
 [node name="CharacterView" type="PanelContainer" unique_id=1897565504]
-custom_minimum_size = Vector2(300, 300)
+custom_minimum_size = Vector2(500, 500)
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
+script = ExtResource("1_v0axc")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=2054640353]
 layout_mode = 2
@@ -55,22 +21,21 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=528571801]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(300, 300)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport" unique_id=330135955]
-transform = Transform3D(-0.8527606, -0.09934454, 0.5127671, -0.009998513, 0.9846695, 0.17414379, -0.5222063, 0.14337605, -0.84068066, 1.1204315, 0.7896238, -1.823624)
+transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -0.5876154, 0.849, 1.055)
 environment = SubResource("Environment_txy2v")
 projection = 1
 current = true
-size = 3.0
+size = 2.234
 
-[node name="kart" parent="SubViewportContainer/SubViewport" unique_id=2060035001 instance=ExtResource("1_txy2v")]
-transform = Transform3D(-1.1500001, 0, 1.005362e-07, 0, 1.15, 0, -1.005362e-07, 0, -1.1500001, 0, 0, 0)
-
-[node name="PlayerViewAnimations" type="AnimationPlayer" parent="SubViewportContainer/SubViewport" unique_id=1771373129]
-libraries/ = SubResource("AnimationLibrary_5pf0t")
-autoplay = &"idle_spin"
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport" unique_id=1645097559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5543127, 1.9989603, -0.48814106)
+light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
+light_energy = 1.481
+omni_range = 12.599
+omni_attenuation = 0.444
 
 [node name="Frame1" type="ColorRect" parent="." unique_id=1878547767]
 custom_minimum_size = Vector2(0, 60)

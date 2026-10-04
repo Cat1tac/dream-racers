@@ -1,5 +1,8 @@
 extends UIState
 
+@export var character_buttons : Array[TextureButton]
+@export var charater_models : Array[PackedScene]
+@export var character_views : Array[CharacterView]
 @onready var next_button: Button = $NextButtonMargin/NextButton
 
 func _ready() -> void:
@@ -23,3 +26,38 @@ func _show_next_button() -> void:
 		return
 	next_button.show()
 	transition_animations.play("next_button_pop_in")
+
+func _input(event: InputEvent) -> void:
+	#TODO make it work with multiple players by checking which player is hovered over x character 
+	# Could probably wwork by reading each individual players input and using that to over n stuff  like have p1_right and p2_right
+	if !visible:
+		return
+		
+	if event.is_action("ui_right") or event.is_action("ui_left") or event.is_action("ui_accept"):
+		pass
+	else:
+		return 
+		
+	for i in range(len(character_buttons)):
+		# For hovering
+		if character_buttons[i].has_focus() and !character_buttons[i].button_pressed:
+			if i > len(charater_models) - 1: # Checks to make sure game isn't trying to access a out of bounds element
+				character_views[0].remove_model_in_viewport()
+				break
+			if charater_models[i] == character_views[0].current_model_packed_scene: # Makes sure game doesnt load the model a second time
+				continue
+			var model_instance := charater_models[i].instantiate() as Model
+			character_views[0].set_model_in_viewport(model_instance)
+			character_views[0].current_model_packed_scene = charater_models[i]
+			model_instance.current_state = model_instance.STATE.IN_CHARACTER_SELECT
+			model_instance.selected = false
+		# For Pressed
+		elif character_buttons[i].button_pressed:
+			if i > len(charater_models) - 1:
+				continue
+			character_views[0].model_instance.selected = true
+			
+		
+
+	
+	

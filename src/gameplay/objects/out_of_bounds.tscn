@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d0qafquu1y2j"]
 
-[ext_resource type="Script" uid="uid://bt2wshrjxrpvr" path="res://out_of_bounds.gd" id="1_wg36c"]
+[ext_resource type="Script" uid="uid://bt2wshrjxrpvr" path="res://src/tracks/out_of_bounds.gd" id="1_wg36c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 size = Vector3(16, 0.185, 16)

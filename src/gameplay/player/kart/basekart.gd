@@ -13,13 +13,18 @@ enum STATE {
 
 @export var current_state : STATE
 
+#region in-race
 var tween : Tween
 var num_spins : int = 2
 
 var kart_scale : Vector3
 var _turning_position : float = 0.0 #For turning the character
 @export var _tricking : bool #for determinin if character is tricking 
+#endregion
 
+#region character select
+var selected : bool
+#endregion
 
 func _ready() -> void:
 	kart_scale = scale
