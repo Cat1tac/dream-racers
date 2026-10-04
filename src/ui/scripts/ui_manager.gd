@@ -19,23 +19,29 @@ func _ready() -> void:
 		current_state = State.MAIN_MENU
 
 #region forward transitions
-func _on_race_button_pressed() -> void:
+func _race_button_pressed() -> void:
 	current_state = State.CHAR_SELECT
 	main_menu.transition_to_state(character_select)
 
-func _on_next_button_pressed() -> void:
+func _character_next_button_pressed() -> void:
 	current_state = State.TRACK_SELECT
 	character_select.transition_to_state(track_select)
+	
+func _track_next_button_pressed() -> void:
+	GameManager.load_into_main_game()
 
 #endregion
 
 #region back transitions
-func _on_char_back_button_pressed() -> void:
+func _char_back_button_pressed() -> void:
 	current_state = State.MAIN_MENU
 	character_select.transition_to_state(main_menu)
 
-func _on_track_back_button_pressed() -> void:
+func _track_back_button_pressed() -> void:
 	current_state = State.CHAR_SELECT
 	track_select.transition_to_state(character_select)
 	
 #endregion
+
+func _exit_button_pressed() -> void:
+	get_tree().quit()

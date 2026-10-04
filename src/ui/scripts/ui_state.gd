@@ -4,6 +4,7 @@ extends Control
 ## an abstract class for UI states with functions to transition between
 ## and signal transitions.
 
+signal transition_state_to(newState: UIState)
 signal transition_finished
 
 # NOTE each UIState node must have "exit_left" "enter_left"

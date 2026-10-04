@@ -19,10 +19,10 @@ shader_parameter/middle_gradient = ExtResource("3_fq8t8")
 shader_parameter/end_gradient = ExtResource("2_p6ath")
 shader_parameter/use_noise = true
 shader_parameter/noise_spd_x = 0.33999997004832005
-shader_parameter/noise_spd_y = 0.21999997273055993
+shader_parameter/noise_spd_y = 0.2199999727305599
 shader_parameter/noise_brightness = 0.0999999977648
 shader_parameter/noise_tex = ExtResource("2_uyggb")
-shader_parameter/gradient_control = 0.9999999747
+shader_parameter/gradient_control = 0.0
 shader_parameter/scroll_speed = 0.13999997451871993
 shader_parameter/x_position = -2.2352000028647012e-08
 shader_parameter/y_position = -2.2352000028647012e-08
@@ -69,14 +69,14 @@ shader_parameter/noise_spd_x = 0.53999996557792
 shader_parameter/noise_spd_y = 0.28999997116592
 shader_parameter/noise_brightness = 0.28999999351792
 shader_parameter/noise_tex = ExtResource("4_sjquj")
-shader_parameter/gradient_control = 0.9999999747
+shader_parameter/gradient_control = 0.0
 shader_parameter/scroll_speed = 0.01999993249695997
 shader_parameter/x_position = -2.2352000028647012e-08
 shader_parameter/y_position = -2.2352000028647012e-08
 shader_parameter/wave = SubResource("CurveTexture_tc86p")
 shader_parameter/wave_spd = 0.30000000447036
 
-[node name="Control" type="Control" unique_id=1665049764]
+[node name="BackgroundLayers" type="Control" unique_id=1665049764]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,19 +87,28 @@ grow_vertical = 2
 [node name="Background" type="TextureRect" parent="." unique_id=1876432076]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_sjquj")
-layout_mode = 0
-offset_right = 3840.0
-offset_bottom = 2160.0
-scale = Vector2(0.3, 0.3)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 texture = SubResource("CompressedTexture2D_01sja")
 
 [node name="Sun" type="TextureRect" parent="." unique_id=533300918]
 texture_repeat = 1
 material = SubResource("ShaderMaterial_sr8db")
-layout_mode = 0
-offset_right = 3840.0
-offset_bottom = 2160.0
-scale = Vector2(0.3, 0.3)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(1920, 1080)
 texture = ExtResource("4_wlasd")
 
 [node name="Clouds" type="TextureRect" parent="." unique_id=1379269482]
@@ -107,6 +116,6 @@ texture_repeat = 2
 material = SubResource("ShaderMaterial_lge3s")
 layout_mode = 0
 offset_right = 3840.0
-offset_bottom = 2193.3333
-scale = Vector2(0.3, 0.3)
+offset_bottom = 2190.0
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_sjquj")
