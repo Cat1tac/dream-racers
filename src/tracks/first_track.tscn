@@ -18,6 +18,170 @@ background_mode = 2
 background_energy_multiplier = 0.5
 sky = SubResource("Sky_h2yge")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_51vje"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.02
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Shader" id="Shader_nh4bs"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float emission_multiplier : hint_range(0.0, 100.0, 1);
+uniform vec4 emission_color : source_color; 
+uniform sampler2D texture_emission;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform sampler2D color_gradient;
+uniform sampler2D fresnel_gradient;
+uniform bool fresnel_on;
+uniform float fresnel_amount : hint_range(0.0, 100.0, 0.01);
+
+float fresnel(float amount, vec3 normal, vec3 view){
+	//highlights the pixels that are more perpendicular to camera
+	// amount determines how much of an effect it has
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	float basic_fresnel = fresnel(fresnel_amount, NORMAL, VIEW);
+	
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	if (fresnel_on){
+		ALBEDO += (basic_fresnel * texture(fresnel_gradient, vec2(basic_fresnel, 0.0)).rgb * 1.0);
+	}
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+	
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	
+	vec4 emission_tex = texture(texture_emission, base_uv) * emission_color;
+	EMISSION += emission_tex.rgb * emission_multiplier;
+}
+
+void light(){
+	float dotproduct = clamp(dot(NORMAL, LIGHT), -1.0, 1.0);
+	float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.0, 0.05, 0.95);
+	vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+	DIFFUSE_LIGHT += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_v5rdi"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dcqlp"]
+gradient = SubResource("Gradient_v5rdi")
+
+[sub_resource type="Gradient" id="Gradient_68d07"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_geksv"]
+gradient = SubResource("Gradient_68d07")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1nnxe"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_51vje")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(0.38903686, 0.26580814, 0.038295425, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_dcqlp")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_geksv")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2k6g"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.02
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Gradient" id="Gradient_fhuj2"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r1fal"]
+gradient = SubResource("Gradient_fhuj2")
+
+[sub_resource type="Gradient" id="Gradient_a4do3"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qlywc"]
+gradient = SubResource("Gradient_a4do3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adhmk"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_f2k6g")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(0.14110154, 0.10673229, 0.088390775, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_r1fal")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_qlywc")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
+
 [node name="FirstTrack" type="Node3D" unique_id=631633037 node_paths=PackedStringArray("player_spawners")]
 script = ExtResource("1_g18f6")
 player_spawners = [NodePath("PlayerSpawn1"), NodePath("PlayerSpawn2")]
@@ -42,10 +206,16 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 
 [node name="DreamyYggdrasil1" parent="." unique_id=1683156197 instance=ExtResource("3_g18f6")]
 
-[node name="@StaticBody3D@214838" parent="DreamyYggdrasil1" index="2" unique_id=1257472503]
+[node name="Plane" parent="DreamyYggdrasil1" index="0" unique_id=2096973568]
+surface_material_override/0 = SubResource("ShaderMaterial_1nnxe")
+
+[node name="Cylinder" parent="DreamyYggdrasil1" index="1" unique_id=156546323]
+surface_material_override/0 = SubResource("ShaderMaterial_adhmk")
+
+[node name="@StaticBody3D@383750" parent="DreamyYggdrasil1" index="2" unique_id=1623296895]
 collision_layer = 6
 
-[node name="@StaticBody3D@214839" parent="DreamyYggdrasil1" index="3" unique_id=184321170]
+[node name="@StaticBody3D@383751" parent="DreamyYggdrasil1" index="3" unique_id=357184834]
 collision_layer = 6
 
 [node name="Boost Panels" type="Node" parent="." unique_id=169729817]
@@ -78,10 +248,11 @@ transform = Transform3D(-0.8590162, 0, -0.5119485, 0, 1, 0, 0.5119485, 0, -0.859
 transform = Transform3D(-4.5948735e-07, 0.05998522, 2.8348858, 4.7472852e-08, 0.9981993, -0.17035788, -11.57, 1.7134774e-09, -1.1328277e-07, 69.47454, 10.139194, 88.19569)
 
 [node name="Cloud" parent="." unique_id=2108663503 instance=ExtResource("5_51vje")]
-transform = Transform3D(15.673302, 0, 7.276402, 0, 17.28, 0, -7.276402, 0, 15.673302, 38.790733, 20.252026, -113.55677)
+transform = Transform3D(16.835629, 0, 3.8935869, 0, 17.280003, 0, -3.8935869, 0, 16.835629, 44.662266, 20.252026, -117.35749)
 
 [node name="Cloud2" parent="." unique_id=928792250 instance=ExtResource("5_51vje")]
 transform = Transform3D(25.21562, 0, -1.1091005, 0, 25.24, 0, 1.1091005, 0, 25.21562, 99.50914, 31.325352, -32.81957)
+super_bounce = 22.0
 charge_need_for_super_bounce = 3.0
 
 [editable path="DreamyYggdrasil1"]
