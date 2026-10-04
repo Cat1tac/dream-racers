@@ -25,15 +25,9 @@ func _on_area_exited(area: Area3D) -> void:
 	if area.get_collision_layer_value(8):
 		kart_sphere.is_trailing = false
 	
-#func _physics_process(_delta: float) -> void:
-	#if shape_cast_3d.is_colliding():
-		#print("Colliding")
-		#var area : Area3D = shape_cast_3d.get_collider(0)
-		#print(area)
-		#if area.get_collision_layer_value(8): # gets trailing object
-			#kart_sphere.is_trailing = true
-	#else:
-		#kart_sphere.is_trailing = false
+## Calls function in kart sphere body to reset trick so player can trick again
+func reset_trick() -> void:
+	kart_sphere.reset_trick()
 
 func call_knockback(opposing_knockback : float) -> void:
 	shape_cast_3d.force_shapecast_update()
@@ -53,6 +47,7 @@ func call_spin_hit_slowdown(drift_stage : int, opposing_weight : float) -> void:
 func call_slowdown(multiplier : float = 0.5) -> void:
 	kart_sphere.apply_slowdown_force(multiplier)
 
+## Connecting function that calls a function in player rigidbody that bounces player in back opposite to their forward direction
 func call_bounce(bounce : float = 8) -> void:
 	kart_sphere.apply_bounce_force(bounce)
 
@@ -61,6 +56,10 @@ func apply_boost_panel_boost(boost_speed_multiplier : float, boost_time_multipli
 	kart_sphere.start_store_charge_boost_panel_timer()
 	if kart_sphere.drift_stage >= 3:
 		kart_sphere.boost_panels_drifted_over += 1
+
+## Connecting function that calls a vertical force function in player rigidbody
+func call_vertical_bounce(bounce : float = 10) -> void:
+	kart_sphere.apply_vertical_force(bounce)
 
 #called by kartsphere
 func setIntangiblility(state : bool) -> void:

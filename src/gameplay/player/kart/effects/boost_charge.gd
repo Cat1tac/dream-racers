@@ -23,7 +23,7 @@ func _disable_all_drift_effects() -> void:
 
 func _enable_drift_effect(stage : int) -> void:
 	if stage >= 0:
-		print()
+		#print()
 		drift_particles[stage].restart()
 		drift_particles[stage].emitting = true
 		drift_particles[stage].visible = true
