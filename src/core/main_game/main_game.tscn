@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d1mgh844d72qw" path="res://src/resources/player_controls/player_controls.gd" id="2_ibp4d"]
 [ext_resource type="Resource" uid="uid://dlkv4ebximllc" path="res://src/resources/player_controls/p1_controls.tres" id="3_tk58t"]
 [ext_resource type="Resource" uid="uid://y1u6uypijo1n" path="res://src/resources/player_controls/p2_controls.tres" id="4_n4iq1"]
+[ext_resource type="PackedScene" uid="uid://cebpjaeco7bpy" path="res://src/ui/components/speedometer.tscn" id="5_tk58t"]
 
 [node name="MainGame" type="Node" unique_id=2114321724]
 script = ExtResource("1_3fed5")
@@ -30,9 +31,17 @@ layer = 10
 [node name="HudRoot" type="Control" parent="HudLayer" unique_id=998062991]
 unique_name_in_owner = true
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Speedometer" parent="HudLayer/HudRoot" unique_id=740574730 instance=ExtResource("5_tk58t")]
+layout_mode = 1
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 1.2)
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=1586343594]
 process_mode = 2
