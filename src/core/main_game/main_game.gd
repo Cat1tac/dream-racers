@@ -118,6 +118,9 @@ func _place_player_at_level_spawn(player : Player) -> void:
 	player.rotation = playerLevelSetup[player.playerId].rotation
 	player.current_track = _current_level
 
+func _load_hud() -> void:
+	pass
+
 func _load_debug() -> void:
 	var debug_menu : PackedScene =\
 		ResourceLoader.load(DEBUG_MENU, "PackedScene") as PackedScene

@@ -41,7 +41,6 @@ mouse_filter = 2
 [node name="Speedometer" parent="HudLayer/HudRoot" unique_id=740574730 instance=ExtResource("5_tk58t")]
 layout_mode = 1
 offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(0, 1.2)
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=1586343594]
 process_mode = 2
