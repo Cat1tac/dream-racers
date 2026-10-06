@@ -27,11 +27,15 @@ var _current_level : BaseLevel = null
 @onready var transition_root: Control = %TransitionRoot
 @onready var debug_root: Control = %DebugRoot
 
+# HUD element nodes
+@onready var speedometer_uid: String = "uid://cebpjaeco7bpy"
+
 func _ready() -> void:
 	_init_players(1)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 
 	load_level(TEST_TRACK_1)
+	_load_hud()
 	_load_debug()
 	
 
@@ -118,8 +122,10 @@ func _place_player_at_level_spawn(player : Player) -> void:
 	player.rotation = playerLevelSetup[player.playerId].rotation
 	player.current_track = _current_level
 
-func _load_hud() -> void:
-	pass
+func _load_hud() -> void: # TODO clean up instantiation code
+	var speedometer: PackedScene = ResourceLoader.load(speedometer_uid)
+	var speedometer_instance = speedometer.instantiate()
+	hud_root.add_child(speedometer_instance)
 
 func _load_debug() -> void:
 	var debug_menu : PackedScene =\

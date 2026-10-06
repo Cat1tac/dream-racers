@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c5yhmxdsx1p77"]
+
+[ext_resource type="Script" uid="uid://bpj586k4n3tvv" path="res://src/ui/scripts/loading_screen.gd" id="1_vbt7k"]
+
+[node name="LoadingLayer" type="CanvasLayer" unique_id=1179346688]
+process_mode = 3
+
+[node name="LoadingScreen" type="Control" parent="." unique_id=1083171003]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+script = ExtResource("1_vbt7k")
+
+[node name="ColorRect" type="ColorRect" parent="LoadingScreen" unique_id=1625448416]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0)
+offset_transform_enabled = true
+color = Color(1, 0.56078434, 0.61960787, 1)

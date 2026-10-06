@@ -36,7 +36,7 @@ func _character_next_button_pressed() -> void:
 	
 	
 func _track_next_button_pressed() -> void:
-	GameManager.load_into_main_game()
+	GameManager.load_into_path("uid://dl7oklus7v6pk")
 
 #endregion
 
