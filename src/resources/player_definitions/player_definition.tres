@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="PlayerDefinition" format=3 uid="uid://ccwvpifho7xpy"]
+
+[ext_resource type="Script" uid="uid://cvhn3j43dcbh3" path="res://src/resources/player_definitions/player_definitions.gd" id="1_kigf4"]
+
+[resource]
+script = ExtResource("1_kigf4")

@@ -1,5 +1,5 @@
 extends UIState
-
+#TODO when first going into character select screen make the game show the character being hovered over initially
 @export var character_buttons : Array[TextureButton]
 @export var charater_models : Array[PackedScene]
 @export var character_views : Array[CharacterView]
@@ -28,36 +28,53 @@ func _show_next_button() -> void:
 	transition_animations.play("next_button_pop_in")
 
 func _input(event: InputEvent) -> void:
-	#TODO make it work with multiple players by checking which player is hovered over x character 
-	# Could probably wwork by reading each individual players input and using that to over n stuff  like have p1_right and p2_right
 	if !visible:
 		return
+	
+	for player : PlayerDefinition in GameManager.player_list:
+		if (event.is_action(player.controls.ui_right)
+		or event.is_action(player.controls.ui_left) 
+		or event.is_action(player.controls.ui_select)
+		or event.is_action(player.controls.ui_deselect)):
+			_player_behavior_on_character_select(player)
+	
+func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
+	# Moving left a right on character select
+	if !player.character_select_pressed and (Input.is_action_just_pressed(player.controls.ui_right) or Input.is_action_just_pressed(player.controls.ui_left)):
+		character_views[player.id].remove_model_in_viewport() #Removes previous model in view if theres one
 		
-	if event.is_action("ui_right") or event.is_action("ui_left") or event.is_action("ui_accept"):
-		pass
-	else:
-		return 
+		if Input.is_action_just_pressed(player.controls.ui_right):
+			player.character_select_position += 1
+		elif Input.is_action_just_pressed(player.controls.ui_left):
+			player.character_select_position -= 1
+			
+		player.character_select_position = _keep_player_character_select_position_in_range(player.character_select_position)
+		print(player.character_select_position)
 		
-	for i in range(len(character_buttons)):
-		# For hovering
-		if character_buttons[i].has_focus() and !character_buttons[i].button_pressed:
-			if i > len(charater_models) - 1: # Checks to make sure game isn't trying to access a out of bounds element
-				character_views[0].remove_model_in_viewport()
-				break
-			if charater_models[i] == character_views[0].current_model_packed_scene: # Makes sure game doesnt load the model a second time
-				continue
-			var model_instance := charater_models[i].instantiate() as Model
-			character_views[0].set_model_in_viewport(model_instance)
-			character_views[0].current_model_packed_scene = charater_models[i]
+		if player.character_select_position < len(charater_models):
+			var model_instance := charater_models[player.character_select_position].instantiate() as Model
+			character_views[player.id].set_model_in_viewport(model_instance)
+			character_views[player.id].current_model_packed_scene = charater_models[player.character_select_position]
 			model_instance.current_state = model_instance.STATE.IN_CHARACTER_SELECT
 			model_instance.selected = false
-		# For Pressed
-		elif character_buttons[i].button_pressed:
-			if i > len(charater_models) - 1:
-				continue
-			character_views[0].model_instance.selected = true
-			
 		
+	# Selecting Character
+	if Input.is_action_just_pressed(player.controls.ui_select) and !player.character_select_pressed:
+		player.character_select_pressed = true
+		character_views[player.character_select_position].model_instance.selected = true
+		
+	# Deselecting Character
+	if Input.is_action_just_pressed(player.controls.ui_deselect) and player.character_select_pressed:
+		player.character_select_pressed = false
+		character_views[player.character_select_position].model_instance.selected = false
 
-	
-	
+func _keep_player_character_select_position_in_range(cursor_position : int) -> int:
+	var new_position := cursor_position
+	if cursor_position == len(character_buttons):
+		new_position = 0
+	elif cursor_position < 0:
+		new_position = len(character_buttons) -1 
+	return new_position
+
+func _change_texture_box_outline(player : PlayerDefinition) -> void:
+	pass

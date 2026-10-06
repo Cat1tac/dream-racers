@@ -8,3 +8,9 @@ class_name PlayerControls extends Resource
 @export var spin : String
 @export var drift : String
 @export var store : String
+@export var ui_right : String
+@export var ui_left : String
+@export var ui_up : String
+@export var ui_down : String
+@export var ui_select : String
+@export var ui_deselect : String
