@@ -8,9 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim.tscn" id="5_1kq2p"]
 [ext_resource type="Animation" uid="uid://dif08814ovmqm" path="res://src/ui/animations/next_button_pop_in.res" id="5_eofyr"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
-[ext_resource type="PackedScene" uid="uid://5s5djic3ljby" path="res://src/ui/components/character_view.tscn" id="6_yo02o"]
 [ext_resource type="PackedScene" uid="uid://c7hrqc4lwuvyo" path="res://src/ui/MenuBackgrounds.tscn" id="7_gucsq"]
 [ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
+[ext_resource type="Script" uid="uid://du4i8k5okij7w" path="res://src/ui/components/character_view.gd" id="9_5kva4"]
 [ext_resource type="Texture2D" uid="uid://b5terhl54jqyw" path="res://assets/ui/main menu/gradients/night_gradient.tres" id="9_yo02o"]
 [ext_resource type="Texture2D" uid="uid://dwr06xauwjiie" path="res://assets/ui/main menu/gradients/twilight_gradient.tres" id="10_eofyr"]
 [ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
@@ -1420,6 +1420,12 @@ gradient = SubResource("Gradient_1kq2p")
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_yhtw2"]
 gradient = SubResource("Gradient_5kva4")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pqyqd"]
+
+[sub_resource type="Environment" id="Environment_txy2v"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 0.48235294)
+
 [sub_resource type="Animation" id="Animation_wwjrv"]
 length = 0.001
 tracks/0/type = "value"
@@ -2394,7 +2400,7 @@ grow_vertical = 2
 script = ExtResource("4_7abqo")
 character_buttons = [NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1/Character1"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2/Character2"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3/Character3")]
 charater_models = Array[PackedScene]([ExtResource("5_1kq2p")])
-character_views = [NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1")]
+character_views = [NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4")]
 transition_animations = NodePath("CharacterSelectAnimations")
 next_state = NodePath("../TrackSelect")
 previous_state = NodePath("../MainMenu")
@@ -2545,38 +2551,142 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 72
 
-[node name="CharacterViewP1" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504 instance=ExtResource("6_yo02o")]
-layout_mode = 2
-
-[node name="CharacterView2" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=875719395]
-visible = false
-custom_minimum_size = Vector2(300, 300)
+[node name="CharacterViewP1" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504]
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
+script = ExtResource("9_5kva4")
 
-[node name="Frame2" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterView2" unique_id=1445198411]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=2054640353]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/SubViewportContainer" unique_id=528571801]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/SubViewportContainer/SubViewport" unique_id=330135955]
+transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -0.5876154, 0.849, 1.055)
+environment = SubResource("Environment_txy2v")
+projection = 1
+current = true
+size = 2.234
+
+[node name="OmniLight3D" type="OmniLight3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/SubViewportContainer/SubViewport" unique_id=1645097559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1402035, 1.9989603, -0.48814106)
+light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
+light_energy = 1.481
+omni_range = 12.599
+omni_attenuation = 0.444
+
+[node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1878547767]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="CharacterView3" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1495012233]
-visible = false
-custom_minimum_size = Vector2(300, 300)
+[node name="CharacterViewP2" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=188325276]
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
+script = ExtResource("9_5kva4")
 
-[node name="Frame3" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterView3" unique_id=1119331488]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2" unique_id=755607055]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer" unique_id=1737335371]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer/SubViewport" unique_id=2119217028]
+transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -3.8998504, 0.849, 1.055)
+environment = SubResource("Environment_txy2v")
+projection = 1
+current = true
+size = 2.234
+
+[node name="OmniLight3D" type="OmniLight3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer/SubViewport" unique_id=2095721602]
+transform = Transform3D(0.99577314, -0.09184718, 0, 0.09184718, 0.99577314, 0, 0, 0, 1, -5.3712745, 1.9989603, -0.48814106)
+light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
+light_energy = 1.481
+omni_range = 12.599
+omni_attenuation = 0.444
+
+[node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2" unique_id=308756490]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="CharacterView4" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=442354950]
-visible = false
-custom_minimum_size = Vector2(300, 300)
+[node name="CharacterViewP3" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1015401988]
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
+script = ExtResource("9_5kva4")
 
-[node name="Frame4" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterView4" unique_id=326882621]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3" unique_id=1448957510]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/SubViewportContainer" unique_id=420985607]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/SubViewportContainer/SubViewport" unique_id=1095231269]
+transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -7.212, 0.849, 1.055)
+environment = SubResource("Environment_txy2v")
+projection = 1
+current = true
+size = 2.234
+
+[node name="OmniLight3D" type="OmniLight3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/SubViewportContainer/SubViewport" unique_id=1128172890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.341215, 1.9989603, -0.48814106)
+light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
+light_energy = 1.481
+omni_range = 12.599
+omni_attenuation = 0.444
+
+[node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3" unique_id=734580462]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="CharacterViewP4" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=690232529]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
+script = ExtResource("9_5kva4")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4" unique_id=162694704]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer" unique_id=1231962504]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer/SubViewport" unique_id=1719388882]
+transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -10.524, 0.849, 1.055)
+environment = SubResource("Environment_txy2v")
+projection = 1
+current = true
+size = 2.234
+
+[node name="OmniLight3D" type="OmniLight3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer/SubViewport" unique_id=1718926674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.680183, 1.9989603, -0.48814106)
+light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
+light_energy = 1.481
+omni_range = 12.599
+omni_attenuation = 0.444
+
+[node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4" unique_id=358400210]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 8
@@ -2760,6 +2870,7 @@ material = SubResource("ShaderMaterial_lp5l8")
 
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton" to="." method="_race_button_pressed"]
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/ExitButton" to="." method="_exit_button_pressed"]
+[connection signal="visibility_changed" from="UILayer/CharacterSelect" to="UILayer/CharacterSelect" method="_on_visibility_changed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_char_back_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1/Character1" to="UILayer/CharacterSelect" method="_seraphim_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2/Character2" to="UILayer/CharacterSelect" method="_nyx_pressed"]

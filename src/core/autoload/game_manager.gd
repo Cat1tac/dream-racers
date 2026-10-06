@@ -55,13 +55,14 @@ func load_player_controls() -> void:
 func add_player(controls : PlayerControls) -> void:
 	players_connected += 1
 	print(controls)
-	var new_player : PlayerDefinition = preload(ScenePaths.PLAYER.player_definition)
+	var new_player : PlayerDefinition = preload(ScenePaths.PLAYER.player_definition).duplicate()
 	new_player.id = players_connected - 1
 	new_player.controls = controls
 	new_player.selected_character = SelectedCharacter.NONE
 	new_player.character_select_position = 0
 	new_player.character_select_pressed = false
 	player_list.append(new_player)
+	Events.on_player_added.emit(new_player.character_select_position, new_player.id, true)
 
 func remove_player() -> void:
 	players_connected -= 1

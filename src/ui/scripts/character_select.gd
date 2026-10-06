@@ -6,6 +6,7 @@ extends UIState
 @onready var next_button: Button = $NextButtonMargin/NextButton
 
 func _ready() -> void:
+	Events.on_player_added.connect(_show_character)
 	next_button.hide()
 	GameManager.all_players_selected_character.connect(_show_next_button)
 
@@ -20,6 +21,12 @@ func _nyx_pressed() -> void:
 func _muffin_pressed() -> void:
 	GameManager.set_character(GameManager.SelectedCharacter.MUFFIN)
 	GameManager.validate_character_select()
+
+## Show the character on initial viibility
+func _on_visibility_changed() -> void:
+	_character_view_visibility_toggle()
+	for player : PlayerDefinition in GameManager.player_list:
+		_show_character(player.character_select_position, player.id)
 
 func _show_next_button() -> void:
 	if next_button.visible:
@@ -49,25 +56,24 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 			player.character_select_position -= 1
 			
 		player.character_select_position = _keep_player_character_select_position_in_range(player.character_select_position)
-		print(player.character_select_position)
+		print("Player: ", player.id, "\nPosition: ", player.character_select_position)
 		
 		if player.character_select_position < len(charater_models):
-			var model_instance := charater_models[player.character_select_position].instantiate() as Model
-			character_views[player.id].set_model_in_viewport(model_instance)
-			character_views[player.id].current_model_packed_scene = charater_models[player.character_select_position]
-			model_instance.current_state = model_instance.STATE.IN_CHARACTER_SELECT
-			model_instance.selected = false
+			_show_character(player.character_select_position, player.id)
 		
 	# Selecting Character
 	if Input.is_action_just_pressed(player.controls.ui_select) and !player.character_select_pressed:
-		player.character_select_pressed = true
-		character_views[player.character_select_position].model_instance.selected = true
+		if character_views[player.id].model_instance: 
+			player.character_select_pressed = true
+			character_views[player.id].model_instance.selected = true
 		
 	# Deselecting Character
 	if Input.is_action_just_pressed(player.controls.ui_deselect) and player.character_select_pressed:
-		player.character_select_pressed = false
-		character_views[player.character_select_position].model_instance.selected = false
+		if character_views[player.id].model_instance: 
+			player.character_select_pressed = false
+			character_views[player.id].model_instance.selected = false
 
+## Clamps cursor between 0 and num of character buttons 
 func _keep_player_character_select_position_in_range(cursor_position : int) -> int:
 	var new_position := cursor_position
 	if cursor_position == len(character_buttons):
@@ -78,3 +84,23 @@ func _keep_player_character_select_position_in_range(cursor_position : int) -> i
 
 func _change_texture_box_outline(player : PlayerDefinition) -> void:
 	pass
+
+## Displays character in character view
+func _show_character(select_position : int, id : int, player_added : bool = false) -> void:
+	if !visible:
+		return
+	if player_added:
+		_character_view_visibility_toggle()
+		
+	var model_instance := charater_models[select_position].instantiate() as Model
+	character_views[id].set_model_in_viewport(model_instance, id)
+	character_views[id].current_model_packed_scene = charater_models[select_position]
+	model_instance.current_state = model_instance.STATE.IN_CHARACTER_SELECT
+	model_instance.selected = false
+
+func _character_view_visibility_toggle() -> void:
+	for views in character_views:
+		if character_views.find(views) < GameManager.players_connected:
+			views.visible = true
+		else: 
+			views.visible = false
