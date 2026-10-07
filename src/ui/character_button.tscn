@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://boc2lxjb0h4fk"]
+
+[ext_resource type="Texture2D" uid="uid://b3a1pcsmnqdp2" path="res://assets/ui/main menu/Character Select/Black Select Outline.png" id="1_pnv46"]
+[ext_resource type="Script" uid="uid://bw305rlsv6xhe" path="res://src/ui/character_button.gd" id="1_r81x4"]
+[ext_resource type="Shader" uid="uid://oiid2lv0emw6" path="res://src/shaders/character_button.gdshader" id="3_uximl"]
+[ext_resource type="Texture2D" uid="uid://dr6q2akj42qlw" path="res://assets/ui/main menu/Character Select/P1 Icon.png" id="4_d6wo8"]
+[ext_resource type="Texture2D" uid="uid://c1qkf4oqfx80w" path="res://assets/ui/main menu/Character Select/P2 Icon.png" id="5_6sbg5"]
+[ext_resource type="Texture2D" uid="uid://k8axq5uvn1bf" path="res://assets/ui/main menu/Character Select/P3 Icon.png" id="6_iyidd"]
+[ext_resource type="Texture2D" uid="uid://etgdydkdund7" path="res://assets/ui/main menu/Character Select/P4 Icon.png" id="7_ky8w6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlhin"]
+shader = ExtResource("3_uximl")
+shader_parameter/start_x = -0.03000000305476
+shader_parameter/start_y = -0.03000000305476
+shader_parameter/amplitude_x = -0.012999997357620002
+shader_parameter/amplitude_y = -0.012999997357620002
+shader_parameter/frequency = 4.0000000596048
+shader_parameter/selected_x = -3.725320010805611e-09
+shader_parameter/selected_y = -0.010000003501800012
+shader_parameter/selected = false
+shader_parameter/selected_color = Color(1, 0.6, 0.8784314, 1)
+shader_parameter/color_to_keep = Color(1, 0.9254902, 0.8627451, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y7o6w"]
+shader = ExtResource("3_uximl")
+shader_parameter/start_x = 0.00999999605115999
+shader_parameter/start_y = -0.03000000305476
+shader_parameter/amplitude_x = -0.012999997357620002
+shader_parameter/amplitude_y = 0.013000003877379998
+shader_parameter/frequency = -3.9999999105928
+shader_parameter/selected_x = 0.00999999605115999
+shader_parameter/selected_y = -0.010000003501800012
+shader_parameter/selected = false
+shader_parameter/selected_color = Color(1, 0.6, 0.8784314, 1)
+shader_parameter/color_to_keep = Color(1, 0.9254902, 0.8627451, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cmhfd"]
+shader = ExtResource("3_uximl")
+shader_parameter/start_x = -0.03000000305476
+shader_parameter/start_y = 0.029999995604120006
+shader_parameter/amplitude_x = 0.013000003877379998
+shader_parameter/amplitude_y = -0.012999997357620002
+shader_parameter/frequency = -3.9999999105928
+shader_parameter/selected_x = 0.0
+shader_parameter/selected_y = -3.725320010805611e-09
+shader_parameter/selected = false
+shader_parameter/selected_color = Color(1, 0.6, 0.8784314, 1)
+shader_parameter/color_to_keep = Color(1, 0.9254902, 0.8627451, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hph17"]
+shader = ExtResource("3_uximl")
+shader_parameter/start_x = 0.00999999605115999
+shader_parameter/start_y = 0.01999999582763999
+shader_parameter/amplitude_x = 0.013000003877379998
+shader_parameter/amplitude_y = 0.013000003877379998
+shader_parameter/frequency = 4.0000000596048
+shader_parameter/selected_x = -3.725320010805611e-09
+shader_parameter/selected_y = 0.0
+shader_parameter/selected = false
+shader_parameter/selected_color = Color(1, 0.6, 0.8784314, 1)
+shader_parameter/color_to_keep = Color(1, 0.9254902, 0.8627451, 1)
+
+[node name="TextureRect" type="TextureRect" unique_id=1918381952 node_paths=PackedStringArray("indicators")]
+custom_maximum_size = Vector2(300, 300)
+offset_right = 1200.0
+offset_bottom = 1200.0
+texture = ExtResource("1_pnv46")
+script = ExtResource("1_r81x4")
+indicators = [NodePath("P1"), NodePath("P2"), NodePath("P3"), NodePath("P4")]
+
+[node name="P1" type="TextureRect" parent="." unique_id=1840385678]
+material = SubResource("ShaderMaterial_qlhin")
+custom_maximum_size = Vector2(300, 300)
+layout_mode = 0
+offset_left = -2.0
+offset_right = 298.0
+offset_bottom = 300.0
+texture = ExtResource("4_d6wo8")
+
+[node name="P2" type="TextureRect" parent="." unique_id=397882119]
+material = SubResource("ShaderMaterial_y7o6w")
+custom_maximum_size = Vector2(300, 300)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_6sbg5")
+
+[node name="P3" type="TextureRect" parent="." unique_id=2023057530]
+material = SubResource("ShaderMaterial_cmhfd")
+custom_maximum_size = Vector2(300, 300)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_iyidd")
+
+[node name="P4" type="TextureRect" parent="." unique_id=1071215277]
+material = SubResource("ShaderMaterial_hph17")
+custom_maximum_size = Vector2(300, 300)
+layout_mode = 0
+offset_left = 1.0
+offset_right = 301.0
+offset_bottom = 300.0
+texture = ExtResource("7_ky8w6")

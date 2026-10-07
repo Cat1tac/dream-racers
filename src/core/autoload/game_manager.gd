@@ -69,8 +69,11 @@ func remove_player() -> void:
 	player_list.pop_back()
 
 ## sets character based on MyCharacter enum passed
-func set_character(character: SelectedCharacter) -> void:
-	player_list[0].selected_character = character
+func set_character(character: SelectedCharacter, player : PlayerDefinition) -> void:
+	player.selected_character = character
+
+func remove_character(player : PlayerDefinition) -> void:
+	player.selected_character = SelectedCharacter.NONE
 
 func set_track(given_track: SelectedTrack) -> void:
 	current_track = given_track
@@ -80,9 +83,10 @@ func set_track(given_track: SelectedTrack) -> void:
 func validate_character_select() -> bool:
 	for player in player_list:
 		if player.selected_character == SelectedCharacter.NONE:
+			all_players_selected_character.emit(false)
 			return false
 		
-	all_players_selected_character.emit()
+	all_players_selected_character.emit(true)
 	return true
 #endregion
 

@@ -2,11 +2,11 @@
 
 [ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/mainmenu_theme.tres" id="1_jlntk"]
 [ext_resource type="Script" uid="uid://b14rojhjw7t7j" path="res://src/ui/scripts/ui_manager.gd" id="1_qemve"]
-[ext_resource type="Texture2D" uid="uid://cc8ck4keppajc" path="res://icon.svg" id="1_sp1ie"]
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
 [ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim.tscn" id="5_1kq2p"]
 [ext_resource type="Animation" uid="uid://dif08814ovmqm" path="res://src/ui/animations/next_button_pop_in.res" id="5_eofyr"]
+[ext_resource type="PackedScene" uid="uid://boc2lxjb0h4fk" path="res://src/ui/character_button.tscn" id="6_1kq2p"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
 [ext_resource type="PackedScene" uid="uid://c7hrqc4lwuvyo" path="res://src/ui/MenuBackgrounds.tscn" id="7_gucsq"]
 [ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
@@ -1405,21 +1405,6 @@ _data = {
 &"next_button_pop_in": ExtResource("5_eofyr")
 }
 
-[sub_resource type="Gradient" id="Gradient_eofyr"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_q8x0m"]
-gradient = SubResource("Gradient_eofyr")
-
-[sub_resource type="Gradient" id="Gradient_1kq2p"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_fc2dq"]
-gradient = SubResource("Gradient_1kq2p")
-
-[sub_resource type="Gradient" id="Gradient_5kva4"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_yhtw2"]
-gradient = SubResource("Gradient_5kva4")
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pqyqd"]
 
 [sub_resource type="Environment" id="Environment_txy2v"]
@@ -2398,8 +2383,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_7abqo")
-character_buttons = [NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1/Character1"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2/Character2"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3/Character3")]
-charater_models = Array[PackedScene]([ExtResource("5_1kq2p")])
+character_buttons = [NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3")]
 character_views = [NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4")]
 transition_animations = NodePath("CharacterSelectAnimations")
 next_state = NodePath("../TrackSelect")
@@ -2454,90 +2438,19 @@ theme_override_constants/margin_top = 12
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 32
+theme_override_constants/separation = 131
 
-[node name="CharFrame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1298681276]
-custom_minimum_size = Vector2(200, 200)
+[node name="CharFrame1" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1964031069 instance=ExtResource("6_1kq2p")]
 layout_mode = 2
-size_flags_horizontal = 4
-color = Color(0.80784315, 0.45490196, 0.7294118, 1)
+character_model = ExtResource("5_1kq2p")
+character_enum = 1
 
-[node name="Character1" type="TextureButton" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1" unique_id=654674172]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.06074074
-anchor_top = -0.06074074
-anchor_right = 1.0607408
-anchor_bottom = 1.0607408
-grow_horizontal = 2
-grow_vertical = 2
-focus_neighbor_left = NodePath("../../CharFrame3/Character3")
-focus_neighbor_top = NodePath("../../../../../BackButtonMargin/BackButton")
-focus_neighbor_right = NodePath("../../CharFrame2/Character2")
-focus_neighbor_bottom = NodePath("../../../../../NextButtonMargin/NextButton")
-texture_normal = ExtResource("1_sp1ie")
-texture_focused = SubResource("GradientTexture1D_q8x0m")
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="CharFrame2" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=102421327]
-custom_minimum_size = Vector2(200, 200)
+[node name="CharFrame2" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1918381952 instance=ExtResource("6_1kq2p")]
 layout_mode = 2
-size_flags_horizontal = 4
-color = Color(0.80784315, 0.45490196, 0.7294118, 1)
+offset_transform_enabled = true
 
-[node name="Character2" type="TextureButton" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2" unique_id=305995628]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.24074075
-anchor_top = -0.24074075
-anchor_right = 1.2407408
-anchor_bottom = 1.2407408
-offset_left = 36.0
-offset_top = 36.0
-offset_right = -36.0
-offset_bottom = -36.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_neighbor_left = NodePath("../../CharFrame1/Character1")
-focus_neighbor_top = NodePath("../../../../../BackButtonMargin/BackButton")
-focus_neighbor_right = NodePath("../../CharFrame3/Character3")
-focus_neighbor_bottom = NodePath("../../../../../NextButtonMargin/NextButton")
-texture_normal = ExtResource("1_sp1ie")
-texture_focused = SubResource("GradientTexture1D_fc2dq")
-stretch_mode = 6
-metadata/_edit_use_anchors_ = true
-
-[node name="CharFrame3" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1465976800]
-custom_minimum_size = Vector2(200, 200)
+[node name="CharFrame3" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1116421373 instance=ExtResource("6_1kq2p")]
 layout_mode = 2
-size_flags_horizontal = 4
-color = Color(0.80784315, 0.45490196, 0.7294118, 1)
-
-[node name="Character3" type="TextureButton" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3" unique_id=1712271581]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.24074075
-anchor_top = -0.24074075
-anchor_right = 1.2407408
-anchor_bottom = 1.2407408
-offset_left = 32.5
-offset_top = 32.5
-offset_right = -32.5
-offset_bottom = -32.5
-grow_horizontal = 2
-grow_vertical = 2
-focus_neighbor_left = NodePath("../../CharFrame2/Character2")
-focus_neighbor_top = NodePath("../../../../../BackButtonMargin/BackButton")
-focus_neighbor_right = NodePath("../../CharFrame1/Character1")
-focus_neighbor_bottom = NodePath("../../../../../NextButtonMargin/NextButton")
-texture_normal = ExtResource("1_sp1ie")
-texture_focused = SubResource("GradientTexture1D_yhtw2")
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
 
 [node name="CharacterViewMargin" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer" unique_id=2033354532]
 modulate = Color(1, 1, 1, 0)
@@ -2872,9 +2785,6 @@ material = SubResource("ShaderMaterial_lp5l8")
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/ExitButton" to="." method="_exit_button_pressed"]
 [connection signal="visibility_changed" from="UILayer/CharacterSelect" to="UILayer/CharacterSelect" method="_on_visibility_changed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_char_back_button_pressed"]
-[connection signal="pressed" from="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1/Character1" to="UILayer/CharacterSelect" method="_seraphim_pressed"]
-[connection signal="pressed" from="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2/Character2" to="UILayer/CharacterSelect" method="_nyx_pressed"]
-[connection signal="pressed" from="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3/Character3" to="UILayer/CharacterSelect" method="_muffin_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/NextButtonMargin/NextButton" to="." method="_character_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="." method="_track_back_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="UILayer/TrackSelect" method="_back_button_pressed"]
