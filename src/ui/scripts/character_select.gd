@@ -17,6 +17,7 @@ func _ready() -> void:
 func _on_visibility_changed() -> void:
 	_character_view_visibility_toggle()
 	for player : PlayerDefinition in GameManager.player_list:
+
 		character_buttons[player.character_select_position].unhide_indicator(player.id)
 		_show_character(player.character_select_position, player.id)
 
@@ -24,7 +25,7 @@ func _show_next_button(players_ready : bool) -> void:
 	if players_ready:
 		next_button.show()
 		next_button.grab_focus()
-	transition_animations.play("next_button_pop_in")
+		transition_animations.play("next_button_pop_in")
 	else:
 		next_button.hide()
 

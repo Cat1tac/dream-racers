@@ -18,12 +18,6 @@ var players_connected := 0
 ## an array containing all players and their attributes (id, character, controls, etc)
 var player_list: Array[PlayerDefinition] = []
 
-## updates when track is selected from track select
-var current_track: SelectedTrack = SelectedTrack.NONE
-
-## an array containing all players
-var player_list: Array[Dictionary] = []
-
 var is_loading = false
 
 #region enums
