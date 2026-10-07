@@ -4,14 +4,13 @@ extends Control
 ## an abstract class for UI states with functions to transition between
 ## and signal transitions.
 
-signal transition_state_to(newState: UIState)
-signal transition_finished
+#signal transition_finished
 
 # NOTE each UIState node must have "exit_left" "enter_left"
 @export var transition_animations: AnimationPlayer
 
-var forward_transition_buffer: float = 0.1
-var backward_transition_buffer: float = 0.3
+var forward_transition_delay: float = 0.1
+var backward_transition_delay: float = 0.3
 
 @export var next_state: UIState
 @export var previous_state: UIState
@@ -30,10 +29,10 @@ func transition_to_state(newState: UIState) -> void:
 	
 	## enter newState
 	if newState == next_state: # going forward a state
-		await get_tree().create_timer(forward_transition_buffer).timeout # transition buffer timer
+		await get_tree().create_timer(forward_transition_delay).timeout # transition buffer timer
 		newState.transition_animations.play("enter_right")
 	else: # going back a state
-		await get_tree().create_timer(backward_transition_buffer).timeout
+		await get_tree().create_timer(backward_transition_delay).timeout
 		newState.transition_animations.play("enter_left")
 	
 	# hide old screen

@@ -48,6 +48,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 offset_transform_enabled = true
 script = ExtResource("1_5ys5r")
+buffer_enter_time = 1.2
 
 [node name="BaseMeter" type="TextureRect" parent="." unique_id=1197874311]
 layout_mode = 2
@@ -132,3 +133,7 @@ offset_right = 1000.0
 offset_bottom = 1000.0
 texture = ExtResource("6_p8mb3")
 metadata/_edit_lock_ = true
+
+[node name="BufferTimer" type="Timer" parent="." unique_id=266809621]
+wait_time = 1.2
+one_shot = true
