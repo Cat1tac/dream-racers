@@ -23,7 +23,8 @@ func _on_visibility_changed() -> void:
 func _show_next_button(players_ready : bool) -> void:
 	if players_ready:
 		next_button.show()
-		transition_animations.play("next_button_pop_in")
+		next_button.grab_focus()
+	transition_animations.play("next_button_pop_in")
 	else:
 		next_button.hide()
 

@@ -3,8 +3,11 @@
 extends Node
 
 signal all_players_selected_character
+signal load_finished
+var path_to_load: NodePath
 
-var main_game_scene: PackedScene = preload("res://src/core/main_game/main_game.tscn")
+var loading_layer: PackedScene = preload("uid://c5yhmxdsx1p77")
+
 
 ## stores all predefined PlayerControls resources
 var playerControls : Dictionary[PlayerControls, int] 
@@ -14,6 +17,14 @@ var players_connected := 0
 
 ## an array containing all players and their attributes (id, character, controls, etc)
 var player_list: Array[PlayerDefinition] = []
+
+## updates when track is selected from track select
+var current_track: SelectedTrack = SelectedTrack.NONE
+
+## an array containing all players
+var player_list: Array[Dictionary] = []
+
+var is_loading = false
 
 #region enums
 enum SelectedCharacter {
@@ -35,6 +46,7 @@ var current_track: SelectedTrack = SelectedTrack.NONE
 
 
 func _init() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	load_player_controls()
 
 ## Will be used to read player input and see if another player has joined the game
@@ -44,6 +56,16 @@ func _input(event: InputEvent) -> void:
 			playerControls[controls] = 1
 			add_player(controls)
 		
+func _process(delta: float) -> void:
+	if is_loading:
+		get_tree().paused = true
+		var status: = ResourceLoader.load_threaded_get_status(path_to_load)
+		
+		# constantly get status on the thread until it is loaded the scene
+		match status:
+			ResourceLoader.THREAD_LOAD_LOADED:
+				_finish_loading()
+
 #region game setup
 func load_player_controls() -> void:
 	var p1_controls : PlayerControls = preload(ScenePaths.CONTROLS.p1)
@@ -90,5 +112,34 @@ func validate_character_select() -> bool:
 	return true
 #endregion
 
-func load_into_main_game() -> void:
-	get_tree().change_scene_to_packed(main_game_scene)
+#region loading
+func load_into_path(path: NodePath) -> void:
+	is_loading = true
+	set_path_to_load(path)
+	
+	var new_loading_screen = loading_layer.instantiate()
+	add_child(new_loading_screen)
+	
+	# TODO find prettier way to access first child: new_loading_screen.get_child(0) 
+	load_finished.connect(new_loading_screen.get_child(0).on_loading_finished)
+	
+	# when loading screen is fully in position, we can start the load request
+	await new_loading_screen.get_child(0).loading_screen_ready
+	start_load(path)
+
+func set_path_to_load(path: NodePath) -> void:
+	path_to_load = path
+
+func start_load(path: NodePath) -> void:
+	ResourceLoader.load_threaded_request(path, "", true)
+
+func _finish_loading() -> void:
+	var new_packed_scene: PackedScene = ResourceLoader.load_threaded_get(path_to_load)
+	var new_scene = new_packed_scene.instantiate()
+	load_finished.emit()
+	
+	# adds new the new scene and gets rid of old one
+	get_tree().root.add_child(new_scene)
+	get_tree().current_scene.queue_free()
+	get_tree().current_scene = new_scene
+#endregion

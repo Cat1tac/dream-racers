@@ -33,4 +33,5 @@ func _show_next_button() -> void:
 		if next_button.visible:
 			return
 		next_button.show()
+		next_button.grab_focus()
 		transition_animations.play("next_button_pop_in")
