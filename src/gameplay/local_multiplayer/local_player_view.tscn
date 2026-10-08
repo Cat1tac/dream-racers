@@ -24,7 +24,8 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer1" unique_id=529121116]
 handle_input_locally = false
-size = Vector2i(576, 648)
+audio_listener_enable_3d = true
+size = Vector2i(960, 1080)
 render_target_update_mode = 4
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="." unique_id=189967511]
@@ -35,7 +36,8 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer2" unique_id=676831671]
 handle_input_locally = false
-size = Vector2i(576, 648)
+audio_listener_enable_3d = true
+size = Vector2i(960, 1080)
 render_target_update_mode = 4
 
 [node name="SubViewportContainer3" type="SubViewportContainer" parent="." unique_id=2000070844]
@@ -47,6 +49,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer3" unique_id=1368959407]
 handle_input_locally = false
+audio_listener_enable_3d = true
 size = Vector2i(2, 2)
 render_target_update_mode = 0
 
@@ -59,5 +62,6 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer4" unique_id=1986151598]
 handle_input_locally = false
+audio_listener_enable_3d = true
 size = Vector2i(2, 2)
 render_target_update_mode = 0

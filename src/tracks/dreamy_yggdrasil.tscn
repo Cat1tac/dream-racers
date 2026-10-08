@@ -4,5 +4,5 @@
 
 [node name="DreamyYggdrasil1" unique_id=1683156197 instance=ExtResource("1_mnde0")]
 
-[node name="@StaticBody3D@19879" parent="." index="1" unique_id=1896130066]
+[node name="@StaticBody3D@19879" parent="." index="2" unique_id=1980681436]
 collision_layer = 6
