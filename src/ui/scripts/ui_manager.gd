@@ -1,4 +1,4 @@
-extends Node
+class_name UIManager extends Node
 
 var current_state: State = State.NONE
 @onready var main_menu: UIState = %MainMenu
@@ -49,4 +49,5 @@ func _track_back_button_pressed() -> void:
 #endregion
 
 func _exit_button_pressed() -> void:
+	
 	get_tree().quit()

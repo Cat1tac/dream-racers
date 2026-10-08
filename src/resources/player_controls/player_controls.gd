@@ -15,3 +15,4 @@ class_name PlayerControls extends Resource
 @export var ui_down : String
 @export var ui_select : String
 @export var ui_deselect : String
+@export var ui_next : String

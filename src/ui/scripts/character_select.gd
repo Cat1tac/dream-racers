@@ -40,7 +40,8 @@ func _input(event: InputEvent) -> void:
 		if (event.is_action(player.controls.ui_right)
 		or event.is_action(player.controls.ui_left) 
 		or event.is_action(player.controls.ui_select)
-		or event.is_action(player.controls.ui_deselect)):
+		or event.is_action(player.controls.ui_deselect)
+		or event.is_action(player.controls.ui_next)):
 			_player_behavior_on_character_select(player)
 	
 ## Moving, select, and deselect
@@ -79,11 +80,17 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 			character_buttons[player.character_select_position].unselect(player.id)
 			GameManager.remove_character(player)
 			GameManager.validate_character_select()
+		
 	# Return to Main Menu if no character selected 
 	# BUG left or right and re-entering race will cause an error because the other characters don't have a model
 	elif Input.is_action_just_pressed(player.controls.ui_deselect) and not player.character_select_pressed:
-		back_button.exit()
+		back_button.pressed()
 		ui_root._char_back_button_pressed()
+	
+	# UI next pressed
+	if Input.is_action_just_pressed(player.controls.ui_next) and GameManager.validate_character_select():
+		next_button.pressed()
+		ui_root._character_next_button_pressed()
 		
 
 ## Clamps cursor between 0 and num of character buttons 

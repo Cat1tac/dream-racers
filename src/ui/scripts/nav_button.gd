@@ -36,5 +36,5 @@ func _reset_tween() -> void:
 		tween.kill()
 	tween = create_tween()
 
-func _pressed() -> void:
+func pressed() -> void:
 	exit()

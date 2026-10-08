@@ -6,7 +6,7 @@ extends Control
 
 #signal transition_finished
 
-@export var ui_root: Node
+@export var ui_root: UIManager
 
 
 # NOTE each UIState node must have "exit_left" "enter_left"
