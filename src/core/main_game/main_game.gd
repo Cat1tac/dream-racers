@@ -10,7 +10,7 @@ const PLAYER_SCENE_UID : String = ScenePaths.PLAYER.player
 const PLAYER_VIEW_UID : String = "uid://bqy6omuyhur8a"
 const LOCAL_PLAYER_HUD : String = "uid://y05frtm4j8pc"
 const DEBUG_MENU : String = "uid://csverqobfpghe"
-const TEST_TRACK_1 :String = ScenePaths.TRACKS.test_track_1
+#const TEST_TRACK_1 :String = ScenePaths.TRACKS.test_track_1
 
 var players : Array[Player]
 
@@ -34,11 +34,24 @@ func _ready() -> void:
 	_init_players(GameManager.players_connected)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 
-	load_level(TEST_TRACK_1)
+	load_level(_get_selected_track_uid())
 	_load_debug()
 	#_load_hud()
 
+#region Get what players selected
+func _get_selected_track_uid() -> String:
+	return ScenePaths.TRACKS[GameManager.current_track]
 
+func _get_character_packed_scene(character_uid : String) -> PackedScene:	 
+	var character_scene : PackedScene = ResourceLoader.load(character_uid) as PackedScene
+	if character_scene == null:
+		push_error("Could not load player scene: " + PLAYER_SCENE_UID)
+		return
+	return character_scene
+	
+#endregion
+
+#region load players and track
 ## Instantiates the players and adds it to the local player subview
 func _init_players(playerAmount : int = 1) -> void:
 	var local_player_view : LocalMultiplayerView = _init_local_player_view(playerAmount)
@@ -56,6 +69,7 @@ func _init_players(playerAmount : int = 1) -> void:
 			push_error("Loaded player scene does not extend player or DNE: " + PLAYER_SCENE_UID)
 			return
 		player.playerId = i
+		player.kart_model_scene = _get_character_packed_scene(ScenePaths.CHARACTERS[GameManager.player_list[i].selected_character])#GameManager.player_list[i].selected_character_model
 		player.playerControls = playerControls[i]
 		players.append(player)
 		local_huds.append(_init_local_hud(i))
@@ -125,7 +139,6 @@ func _deferred_load_level(level_scene_uid : String) -> void:
 	await get_tree().process_frame
 	for player in players:
 		_place_player_at_level_spawn(player)
-	#_setup_level_camera()
 
 func _place_player_at_level_spawn(player : Player) -> void:
 	if player == null:
@@ -139,6 +152,8 @@ func _place_player_at_level_spawn(player : Player) -> void:
 	player.global_position = playerLevelSetup[player.playerId].global_position
 	player.rotation = playerLevelSetup[player.playerId].rotation
 	player.current_track = _current_level
+#endregion
+
 
 func _load_hud() -> void: # TODO clean up instantiation code
 	var speedometer: PackedScene = ResourceLoader.load(speedometer_uid)

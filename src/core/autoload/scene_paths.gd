@@ -12,11 +12,12 @@ const CONTROLS : Dictionary = {
 }
 
 const CHARACTERS : Dictionary = {
-	
+	GameManager.SelectedCharacter.SERAPHIM : "uid://b7iut7u3n03vi"
 }
 
 const TRACKS : Dictionary = {
-	"test_track_1" : "uid://c2q2o1k875cs4"
+	GameManager.SelectedTrack.TREE : "uid://c2q2o1k875cs4",
+	GameManager.SelectedTrack.SHIP : "uid://c0i43c0ijhpqa"
 }
 
 const UI : Dictionary = {

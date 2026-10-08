@@ -1,7 +1,6 @@
 class_name Player extends Node3D
 
 @export var playerControls : PlayerControls
-@export var character : Character
 @export var kart_model_scene: PackedScene
 @export var boostChargeArray : Array[KartParticlesManager]
 
@@ -14,13 +13,15 @@ var current_track : Track
 var playerId : int
 var sphere_offset := 0.5
 var kart_model_instance : Model
+var kart_stats : Stats
 
 var selected_camera : Camera3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_change_camera($CameraPivot/Camera3D)
-	kart_model_instance = kart_model_scene.instantiate()
+	kart_model_instance = kart_model_scene.instantiate() as Model
 	kart_model_instance.current_state = kart_model_instance.STATE.IN_RACE
+	kart_stats = kart_model_instance.stats
 	center.add_child(kart_model_instance)
 	
 	for i in range(len(kart_model_instance.charge_markers)):

@@ -131,7 +131,7 @@ var isRacing: bool = false
 
 #Externals
 var controls : PlayerControls
-var kartCharacter : Character
+var kartStats : Stats
 var parent : Player
 
 var kart_scale : Vector3
@@ -262,7 +262,7 @@ func _drift_boost_control(delta : float) -> void:
 		
 	#Controls Drift Charge
 	if input_drift and on_ground():
-		drift_timer += abs(angular_speed + kartCharacter.drift_charge_speed) * delta
+		drift_timer += abs(angular_speed + kartStats.drift_charge_speed) * delta
 		
 		if stored_charge_level > 0:
 			if drift_stage > 2:
@@ -432,24 +432,24 @@ func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	kart_model.scale = kart_scale
 
 func set_up_kart_stats() -> void:
-	top_speed += kartCharacter.speed
-	acceleration += kartCharacter.acceleration
-	max_steering_angle_fast += kartCharacter.max_steering_angle_fast
-	max_steering_angle_slow += kartCharacter.max_steering_angle_slow
-	traction_factor += kartCharacter.traction_factor
-	drift_multiplier += kartCharacter.drift_multiplier
+	top_speed += kartStats.speed
+	acceleration += kartStats.acceleration
+	max_steering_angle_fast += kartStats.max_steering_angle_fast
+	max_steering_angle_slow += kartStats.max_steering_angle_slow
+	traction_factor += kartStats.traction_factor
+	drift_multiplier += kartStats.drift_multiplier
 	
-	boost_top_speed += kartCharacter.boost_top_speed
+	boost_top_speed += kartStats.boost_top_speed
 	#drift_charge_speed (in the drift_boost_control function)
-	boost_max_time += kartCharacter.boost_time
+	boost_max_time += kartStats.boost_time
 
 #region imbedded functions
 func _ready() -> void:
 	await player.ready
 	controls = player.playerControls
 	kart_model = player.kart_model_instance
-	kartCharacter = player.character
-	if kartCharacter:
+	kartStats = player.kart_stats
+	if kartStats:
 		set_up_kart_stats()
 		
 	state = states.DRIVE

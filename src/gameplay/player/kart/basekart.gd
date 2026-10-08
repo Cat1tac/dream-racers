@@ -2,6 +2,7 @@ class_name Model extends Node3D
 
 @onready var kart: Node3D = %kart
 @export var charge_markers : Array[Marker3D]
+@export var stats : Stats
 
 # Controls animatios for player
 @export var animation_tree : AnimationTree
@@ -51,7 +52,7 @@ func _handle_in_character_select_logic() -> void:
 func _handle_in_race_logic(_delta : float) -> void:
 	if !tween or !tween.is_running():
 		if kart.global_rotation != global_rotation:
-			kart.global_rotation = kart.global_rotation.slerp(global_rotation, 1 - pow(0.025, 2 * _delta)).normalized()
+			kart.global_rotation = kart.global_rotation.slerp(global_rotation.normalized(), 1 - pow(0.025, 2 * _delta)).normalized()
 		else:
 			kart.global_rotation = global_rotation
 	

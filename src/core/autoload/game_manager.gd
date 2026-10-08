@@ -50,7 +50,7 @@ func _input(event: InputEvent) -> void:
 			playerControls[controls] = 1
 			add_player(controls)
 		
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_loading:
 		get_tree().paused = true
 		var status: = ResourceLoader.load_threaded_get_status(path_to_load)
@@ -84,7 +84,7 @@ func remove_player() -> void:
 	players_connected -= 1
 	player_list.pop_back()
 
-## sets character based on MyCharacter enum passed
+## sets character num and character model scene in player scene
 func set_character(character: SelectedCharacter, player : PlayerDefinition) -> void:
 	player.selected_character = character
 

@@ -1,7 +1,5 @@
-class_name Character extends Resource
-## Has definitions for character models, animations, sfx, dialogue, and stats
-#TODO add 3d model scene for the character as an export
-
+class_name Stats extends Resource
+## Has definitions for stats
 @export_category("Stats")
 @export_group("Speed")
 @export_range(-5,5, 1, "prefer_slider") var speed : float
