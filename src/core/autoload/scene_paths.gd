@@ -16,7 +16,7 @@ const CHARACTERS : Dictionary = {
 }
 
 const TRACKS : Dictionary = {
-	
+	"test_track_1" : "uid://c2q2o1k875cs4"
 }
 
 const UI : Dictionary = {

@@ -1,8 +1,11 @@
-extends Control
+class_name Speedometer extends Control
 
-@onready var speed_label: Label = $BaseMeter/SpeedLabel
+@onready var texture_progress_bar: TextureProgressBar = %TextureProgressBar
+@onready var speed_label: Label = %SpeedLabel
 ## delays the pop in of speedometer
 @export_range(0.0, 2.0, 0.1) var enter_time_delay: float 
+
+var id : int
 
 var tween: Tween
 
@@ -20,10 +23,11 @@ func _ready() -> void:
 	#if Input.is_key_pressed(KEY_T):
 		#_finish_exit_out()
 
-func _update_speed_label(speed: float, _drift: float) -> void:
+func _update_speed_label(speed: float, _drift: float, player_id : int) -> void:
 	## rounds and lerps [code]speed[/code] to reduce flickering when between two close int values
-	var display_speed: int = roundi(lerpf(speed, 1.0, 0.01))
-	speed_label.text = str(display_speed)
+	if player_id == id:
+		var display_speed: int = roundi(lerpf(speed, 1.0, 0.01))
+		speed_label.text = str(display_speed)
 
 func _set_offscreen() -> void:
 	offset_transform_enabled = true

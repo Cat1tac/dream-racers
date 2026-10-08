@@ -42,4 +42,4 @@ func _on_area_entered(area: Area3D) -> void:
 			print(to_local(shape_cast_3d.get_collision_point(0)))
 			for i in shape_cast_3d.get_collision_count():
 				collision_point = to_local(shape_cast_3d.get_collision_point(i))
-				kart_sphere.apply_clash_force(-collision_point)
+				kart_sphere.apply_clash_force(-collision_point, -10)

@@ -8,9 +8,9 @@ class_name MainGame extends Node
 const TESTING_SCENE : String = "uid://c0i43c0ijhpqa"
 const PLAYER_SCENE_UID : String = ScenePaths.PLAYER.player
 const PLAYER_VIEW_UID : String = "uid://bqy6omuyhur8a"
+const LOCAL_PLAYER_HUD : String = "uid://y05frtm4j8pc"
 const DEBUG_MENU : String = "uid://csverqobfpghe"
-const TEST_TRACK_1 :String = "uid://c2q2o1k875cs4"
-const TEST_TRACK_2 : String = "uid://c3j4rj5e63n5c"
+const TEST_TRACK_1 :String = ScenePaths.TRACKS.test_track_1
 
 var players : Array[Player]
 
@@ -31,12 +31,12 @@ var _current_level : BaseLevel = null
 @onready var speedometer_uid: String = "uid://cebpjaeco7bpy"
 
 func _ready() -> void:
-	_init_players(1)
+	_init_players(GameManager.players_connected)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 
 	load_level(TEST_TRACK_1)
 	_load_debug()
-	_load_hud()
+	#_load_hud()
 
 
 ## Instantiates the players and adds it to the local player subview
@@ -48,6 +48,8 @@ func _init_players(playerAmount : int = 1) -> void:
 		push_error("Could not load player scene: " + PLAYER_SCENE_UID)
 		return
 	
+	
+	var local_huds : Array[Local_Player_HUD]
 	for i in playerAmount:
 		var player : Player = player_scene.instantiate() as Player
 		if player == null:
@@ -56,9 +58,26 @@ func _init_players(playerAmount : int = 1) -> void:
 		player.playerId = i
 		player.playerControls = playerControls[i]
 		players.append(player)
+		local_huds.append(_init_local_hud(i))
 		
 	local_player_view.add_players(players)
-	
+	local_player_view.add_local_huds(local_huds)
+
+## Loads each player hud with speedometer
+func _init_local_hud(id : int) -> Local_Player_HUD:
+	var local_player_hud_scene : PackedScene = ResourceLoader.load(LOCAL_PLAYER_HUD) as PackedScene
+	if local_player_hud_scene == null:
+		push_error("Could not load local player hud scene " + LOCAL_PLAYER_HUD)
+		return
+		
+	var local_hud : Local_Player_HUD = local_player_hud_scene.instantiate() as Local_Player_HUD
+	if local_hud == null:
+		push_error("Loaded scene does not exist " + LOCAL_PLAYER_HUD)
+		return 
+		
+	local_hud.set_ids(id)
+	return local_hud
+
 ## Returns instantiated player view and adds it to the entity layer
 func _init_local_player_view(playerAmount : int = 1) -> LocalMultiplayerView:
 	var local_player_view_scene : PackedScene = ResourceLoader.load(PLAYER_VIEW_UID) as PackedScene

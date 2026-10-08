@@ -3,11 +3,6 @@
 [ext_resource type="Script" uid="uid://bj2nen6juufi7" path="res://src/ui/components/speedometer.gd" id="1_5ys5r"]
 [ext_resource type="Texture2D" uid="uid://hnosxcwqjhrp" path="res://assets/ui/speedometer/SpeedometerWhole_Unfilled.png" id="1_qvrtp"]
 [ext_resource type="Texture2D" uid="uid://bk4ady2kikvkl" path="res://assets/ui/speedometer/StoredChargeBar.png" id="2_1mw6m"]
-[ext_resource type="Texture2D" uid="uid://bnlxamogfigkw" path="res://assets/ui/speedometer/lvl 3 Mask.png" id="3_5ys5r"]
-[ext_resource type="Shader" uid="uid://l2cjsclhd2dj" path="res://src/shaders/speedometer.gdshader" id="3_cdg4w"]
-[ext_resource type="Texture2D" uid="uid://b5c8x3ml41osr" path="res://assets/ui/speedometer/Lvl 4 Mask.png" id="4_cdg4w"]
-[ext_resource type="Texture2D" uid="uid://t3vldsvtd0qo" path="res://assets/ui/speedometer/Lvl 5 mask.png" id="5_cvle4"]
-[ext_resource type="Texture2D" uid="uid://b2dbt0g03ytpu" path="res://assets/ui/speedometer/Lvl 6 Mask.png" id="6_p8mb3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1mw6m"]
 font_size = 400
@@ -27,43 +22,53 @@ shadow_size = 64
 shadow_color = Color(0.1438748, 0.117167704, 0.2616869, 1)
 shadow_offset = Vector2(7, 7)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_osq7s"]
-shader = ExtResource("3_cdg4w")
+[node name="Speedometer" type="Control" unique_id=1850115083]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_5ys5r")
 
-[node name="MeterBoxContainer" type="BoxContainer" unique_id=708238445]
-anchors_preset = -1
-anchor_left = 0.7610677
-anchor_top = 0.6064815
-anchor_right = 0.97591144
-anchor_bottom = 0.9768519
-offset_left = -300.0
-offset_top = -300.0
-offset_right = 300.0
-offset_bottom = 300.0
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1504378010]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -252.5
+offset_top = -251.0
+offset_right = 747.5
+offset_bottom = 749.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.4, 0.4)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-offset_transform_enabled = true
-script = ExtResource("1_5ys5r")
-buffer_enter_time = 1.2
+scale = Vector2(0.2, 0.2)
+max_value = 10.0
+step = 0.1
+fill_mode = 4
+radial_initial_angle = 180.0
+radial_fill_degrees = 252.0
+texture_under = ExtResource("1_qvrtp")
+texture_progress = ExtResource("2_1mw6m")
 
-[node name="BaseMeter" type="TextureRect" parent="." unique_id=1197874311]
-layout_mode = 2
-texture = ExtResource("1_qvrtp")
-
-[node name="SpeedLabel" type="Label" parent="BaseMeter" unique_id=833433538]
+[node name="SpeedLabel" type="Label" parent="TextureProgressBar" unique_id=833433538]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.35500005
-anchor_top = 0.28750002
-anchor_right = 0.9119321
+anchor_left = 0.038000003
+anchor_top = 0.34600002
+anchor_right = 0.545
 anchor_bottom = 0.8205175
-offset_right = -156.93207
-offset_bottom = 125.982544
+offset_left = 251.1401
+offset_top = -138.18002
+offset_right = 190.07751
+offset_bottom = 50.982544
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.2617994
@@ -72,68 +77,24 @@ label_settings = SubResource("LabelSettings_1mw6m")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="MPHLabel" type="Label" parent="BaseMeter" unique_id=763399812]
+[node name="MPHLabel" type="Label" parent="TextureProgressBar" unique_id=763399812]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.552
-anchor_top = 0.7879999
-anchor_right = 0.8903906
-anchor_bottom = 0.8613813
-offset_right = -41.390564
-offset_bottom = 104.61865
-grow_horizontal = 0
-grow_vertical = 0
+anchor_left = 0.24700001
+anchor_top = 0.55300003
+anchor_right = 0.462
+anchor_bottom = 0.726
+offset_left = 267.02725
+offset_top = 145.7995
+offset_right = 332.90228
+offset_bottom = 142.83008
+grow_horizontal = 2
+grow_vertical = 2
 rotation = -0.32637656
 text = "MPH"
 label_settings = SubResource("LabelSettings_cdg4w")
 
-[node name="StoredChargeBar" type="TextureRect" parent="BaseMeter" unique_id=1794721935]
-clip_children = 1
-material = SubResource("ShaderMaterial_osq7s")
-layout_mode = 0
-offset_right = 1000.0
-offset_bottom = 1000.0
-texture = ExtResource("2_1mw6m")
-metadata/_edit_lock_ = true
-
-[node name="BarMasks" type="Control" parent="BaseMeter/StoredChargeBar" unique_id=629763365]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Level3Bar" type="TextureRect" parent="BaseMeter/StoredChargeBar/BarMasks" unique_id=30372016]
-layout_mode = 0
-offset_right = 1000.0
-offset_bottom = 1000.0
-texture = ExtResource("3_5ys5r")
-metadata/_edit_lock_ = true
-
-[node name="Level4Bar" type="TextureRect" parent="BaseMeter/StoredChargeBar/BarMasks" unique_id=1689508237]
-layout_mode = 0
-offset_right = 1000.0
-offset_bottom = 1000.0
-texture = ExtResource("4_cdg4w")
-metadata/_edit_lock_ = true
-
-[node name="Level5Bar" type="TextureRect" parent="BaseMeter/StoredChargeBar/BarMasks" unique_id=1033688624]
-layout_mode = 0
-offset_right = 1000.0
-offset_bottom = 1000.0
-texture = ExtResource("5_cvle4")
-metadata/_edit_lock_ = true
-
-[node name="Level6Bar" type="TextureRect" parent="BaseMeter/StoredChargeBar/BarMasks" unique_id=248063293]
-layout_mode = 0
-offset_right = 1000.0
-offset_bottom = 1000.0
-texture = ExtResource("6_p8mb3")
-metadata/_edit_lock_ = true
-
-[node name="BufferTimer" type="Timer" parent="." unique_id=266809621]
+[node name="BufferTimer" type="Timer" parent="TextureProgressBar" unique_id=266809621]
 wait_time = 1.2
 one_shot = true

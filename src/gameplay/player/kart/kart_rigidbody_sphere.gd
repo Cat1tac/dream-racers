@@ -487,9 +487,10 @@ func _process(delta: float) -> void:
 	_drift_boost_control(delta)
 	_decrement_boost_panel_store_charge_timer(delta)
 	_get_charge_level()
-	#Events.on_get_speed.emit(velocity.length(), drift_timer)
+	#Events.on_get_speed.emit(velocity.length(), drift_timer, player.playerId)
 	
 func _physics_process(delta: float) -> void: 
+	Events.on_get_speed.emit(-center.global_basis.z.dot(linear_velocity), drift_timer, player.playerId)
 	if on_ground():
 		if tricked:
 			set_boost(boosts[1]["dftSpdFactor"], boosts[1]["dftTimeFactor"])
@@ -569,7 +570,6 @@ func _apply_forward_force(_delta : float) -> void:
 	apply_central_force(60 * _calculate_force_vector(forward, vel) * _delta)
 	#print(force_vector)
 	DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
-	Events.on_get_speed.emit(vel, drift_timer)
 
 func _apply_air_resistance(_delta: float) -> void:
 	var forward := -center.global_basis.z
@@ -578,7 +578,7 @@ func _apply_air_resistance(_delta: float) -> void:
 	if vel > 0.5:
 		force_vector = -forward * air_resistance * mass
 	apply_central_force(60 * force_vector * _delta)
-	Events.on_get_speed.emit(vel, drift_timer)
+	Events.on_get_speed.emit(vel, drift_timer, player.playerId)
 
 func _calculate_force_vector(forward : Vector3, vel : float) -> Vector3:
 	var force_vector : Vector3

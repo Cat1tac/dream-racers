@@ -35,7 +35,7 @@ func call_knockback(opposing_knockback : float) -> void:
 		print(to_local(shape_cast_3d.get_collision_point(0)))
 		for i in shape_cast_3d.get_collision_count():
 			var collision_point := to_local(shape_cast_3d.get_collision_point(i))
-			kart_sphere.apply_clash_force(-collision_point, kart_sphere.knockback + (kart_sphere.kartCharacter.knockback - opposing_knockback)) 
+			kart_sphere.apply_clash_force(-collision_point, -(kart_sphere.knockback*2 + (kart_sphere.kartCharacter.knockback - opposing_knockback))) 
 
 func call_spin_hit_slowdown(drift_stage : int, opposing_weight : float) -> void:
 	if drift_stage < 0:

@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://y05frtm4j8pc"]
+
+[ext_resource type="Script" uid="uid://cfrould2egvdi" path="res://src/gameplay/local_multiplayer/local_hud.gd" id="1_4x5ba"]
+[ext_resource type="PackedScene" uid="uid://cebpjaeco7bpy" path="res://src/ui/components/speedometer.tscn" id="1_y85xy"]
+
+[node name="local_hud" type="CanvasLayer" unique_id=1524274057 node_paths=PackedStringArray("speedometer")]
+script = ExtResource("1_4x5ba")
+speedometer = NodePath("local_hud_root/VBoxContainer/HBoxContainer/Speedometer")
+
+[node name="local_hud_root" type="Control" parent="." unique_id=446858653]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="local_hud_root" unique_id=1244423474]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="local_hud_root/VBoxContainer" unique_id=724899475]
+layout_mode = 2
+accessibility_region = true
+alignment = 2
+
+[node name="Speedometer" parent="local_hud_root/VBoxContainer/HBoxContainer" unique_id=708238445 instance=ExtResource("1_y85xy")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SpeedLabel" parent="local_hud_root/VBoxContainer/HBoxContainer/Speedometer/TextureProgressBar" parent_id_path=PackedInt32Array(708238445, 1504378010) index="0" unique_id=833433538]
+offset_top = -98.18002
+offset_bottom = 90.982544
+
+[node name="MPHLabel" parent="local_hud_root/VBoxContainer/HBoxContainer/Speedometer/TextureProgressBar" parent_id_path=PackedInt32Array(708238445, 1504378010) index="1" unique_id=763399812]
+offset_left = 258.96484
+offset_top = 176.81488
+offset_right = 340.96484
+offset_bottom = 181.81494
+
+[editable path="local_hud_root/VBoxContainer/HBoxContainer/Speedometer"]

@@ -14,7 +14,7 @@ func _ready() -> void:
 	Events.on_get_speed.connect(displaySpeedInfo)
 	Events.on_get_time.connect(displayTimeInfo)
 
-func displaySpeedInfo(speed : float, drift_timer : float) -> void:
+func displaySpeedInfo(speed : float, drift_timer : float, id : int = 1) -> void:
 	speed_num.text = str(speed)
 	drifttimer_num.text = str(drift_timer)
 
