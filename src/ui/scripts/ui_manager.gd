@@ -32,7 +32,6 @@ func _character_next_button_pressed() -> void:
 	character_select.transition_to_state(track_select)
 	track_select.set_initial_focus(track_1_button)
 	
-	
 func _track_next_button_pressed() -> void:
 	GameManager.load_into_path("uid://dl7oklus7v6pk")
 

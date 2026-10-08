@@ -1,10 +1,13 @@
 extends UIState
 
-@export var next_button: Button
+@onready var back_button: NavButton = $BackButtonMargin/BackButton
+@onready var next_button: NavButton = $NextButtonMargin/NextButton
 
 func _ready() -> void:
+	self.visibility_changed.connect(_show_back_button)
+	
 	if GameManager.current_track == GameManager.SelectedTrack.NONE:
-		next_button.hide()
+		next_button.exit()
 
 func _process(_delta: float) -> void:
 	pass
@@ -25,13 +28,11 @@ func _track_4_button_pressed() -> void:
 	
 #region transitions
 func _back_button_pressed() -> void:
-	next_button.hide()
 	GameManager.set_track(GameManager.SelectedTrack.NONE)
 	
 #endregion
+func _show_back_button() -> void:
+	back_button.set_onscreen()
 func _show_next_button() -> void:
-		if next_button.visible:
-			return
-		next_button.show()
+		next_button.enter()
 		next_button.grab_focus()
-		transition_animations.play("next_button_pop_in")

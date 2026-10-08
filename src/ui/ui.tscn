@@ -5,15 +5,17 @@
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
 [ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim.tscn" id="5_1kq2p"]
-[ext_resource type="Animation" uid="uid://dif08814ovmqm" path="res://src/ui/animations/next_button_pop_in.res" id="5_eofyr"]
-[ext_resource type="PackedScene" uid="uid://boc2lxjb0h4fk" path="res://src/ui/character_button.tscn" id="6_1kq2p"]
+[ext_resource type="PackedScene" uid="uid://boc2lxjb0h4fk" path="res://src/ui/components/character_button.tscn" id="6_1kq2p"]
+[ext_resource type="PackedScene" uid="uid://dmgpxiaj15x20" path="res://src/ui/components/back_button.tscn" id="6_2auc3"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
 [ext_resource type="PackedScene" uid="uid://c7hrqc4lwuvyo" path="res://src/ui/MenuBackgrounds.tscn" id="7_gucsq"]
 [ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
 [ext_resource type="Script" uid="uid://du4i8k5okij7w" path="res://src/ui/components/character_view.gd" id="9_5kva4"]
 [ext_resource type="Texture2D" uid="uid://b5terhl54jqyw" path="res://assets/ui/main menu/gradients/night_gradient.tres" id="9_yo02o"]
+[ext_resource type="PackedScene" uid="uid://cwkwov7useclc" path="res://src/ui/components/next_button.tscn" id="10_ba7qp"]
 [ext_resource type="Texture2D" uid="uid://dwr06xauwjiie" path="res://assets/ui/main menu/gradients/twilight_gradient.tres" id="10_eofyr"]
 [ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
+[ext_resource type="Script" uid="uid://j8n80agc0365" path="res://src/ui/scripts/nav_button.gd" id="11_2auc3"]
 [ext_resource type="Texture2D" uid="uid://5c7g1b2beiti" path="res://assets/ui/main menu/gradients/sunset_gradient.tres" id="12_5kva4"]
 [ext_resource type="Texture2D" uid="uid://cwx2m4gn17vf5" path="res://assets/ui/main menu/gradients/clouds_night_gradient.tres" id="13_2auc3"]
 [ext_resource type="Texture2D" uid="uid://d4fc7uh24338m" path="res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres" id="14_ba7qp"]
@@ -1401,8 +1403,7 @@ _data = {
 &"enter_left": SubResource("Animation_6s7ef"),
 &"enter_right": SubResource("Animation_l5owu"),
 &"exit_left": SubResource("Animation_yo02o"),
-&"exit_right": SubResource("Animation_j4riv"),
-&"next_button_pop_in": ExtResource("5_eofyr")
+&"exit_right": SubResource("Animation_j4riv")
 }
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pqyqd"]
@@ -1640,42 +1641,6 @@ tracks/18/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("NextButtonMargin/NextButton:offset_transform_enabled")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("NextButtonMargin/NextButton:modulate")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("NextButtonMargin/NextButton:offset_transform_position_ratio")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ri2wq"]
@@ -2181,8 +2146,7 @@ tracks/18/keys = {
 _data = {
 &"RESET": SubResource("Animation_wwjrv"),
 &"enter_right": SubResource("Animation_ri2wq"),
-&"exit_right": SubResource("Animation_idipi"),
-&"next_button_pop_in": ExtResource("5_eofyr")
+&"exit_right": SubResource("Animation_idipi")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qemve"]
@@ -2281,7 +2245,7 @@ script = ExtResource("1_qemve")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=515055114]
 
-[node name="MainMenu" type="Control" parent="UILayer" unique_id=426220796 node_paths=PackedStringArray("transition_animations", "next_state")]
+[node name="MainMenu" type="Control" parent="UILayer" unique_id=426220796 node_paths=PackedStringArray("ui_root", "transition_animations", "next_state")]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -2290,6 +2254,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_8wxmc")
+ui_root = NodePath("../..")
 transition_animations = NodePath("MainMenuAnimations")
 next_state = NodePath("../CharacterSelect")
 metadata/_edit_lock_ = true
@@ -2382,7 +2347,7 @@ theme = ExtResource("1_jlntk")
 theme_override_font_sizes/font_size = 70
 text = "Exit"
 
-[node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("character_buttons", "character_views", "transition_animations", "next_state", "previous_state")]
+[node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("character_buttons", "character_views", "ui_root", "transition_animations", "next_state", "previous_state")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -2394,6 +2359,7 @@ grow_vertical = 2
 script = ExtResource("4_7abqo")
 character_buttons = [NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3")]
 character_views = [NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4")]
+ui_root = NodePath("../..")
 transition_animations = NodePath("CharacterSelectAnimations")
 next_state = NodePath("../TrackSelect")
 previous_state = NodePath("../MainMenu")
@@ -2408,13 +2374,9 @@ offset_bottom = 48.0
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 
-[node name="BackButton" type="Button" parent="UILayer/CharacterSelect/BackButtonMargin" unique_id=772965871]
-custom_minimum_size = Vector2(100, 100)
+[node name="BackButton" parent="UILayer/CharacterSelect/BackButtonMargin" unique_id=1394668878 instance=ExtResource("6_2auc3")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Back"
+offscreen_vector = Vector2(0, -1.5)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect" unique_id=674948339]
 layout_mode = 1
@@ -2628,16 +2590,13 @@ grow_vertical = 2
 theme_override_constants/margin_right = 30
 metadata/_edit_use_anchors_ = true
 
-[node name="NextButton" type="Button" parent="UILayer/CharacterSelect/NextButtonMargin" unique_id=503467714]
-custom_minimum_size = Vector2(150, 100)
+[node name="NextButton" parent="UILayer/CharacterSelect/NextButtonMargin" unique_id=1711733650 instance=ExtResource("10_ba7qp")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-offset_transform_enabled = true
-theme_override_font_sizes/font_size = 24
-text = "Next"
+offset_transform_position_ratio = Vector2(1.5, 0)
+type = 1
+offscreen_vector = Vector2(2, 0)
 
-[node name="TrackSelect" type="Control" parent="UILayer" unique_id=424881822 node_paths=PackedStringArray("next_button", "transition_animations", "previous_state")]
+[node name="TrackSelect" type="Control" parent="UILayer" unique_id=424881822 node_paths=PackedStringArray("ui_root", "transition_animations", "previous_state")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -2649,7 +2608,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("6_gucsq")
-next_button = NodePath("NextButtonMargin/NextButton")
+ui_root = NodePath("../..")
 transition_animations = NodePath("TrackSelectAnimations")
 previous_state = NodePath("../CharacterSelect")
 metadata/_edit_lock_ = true
@@ -2677,6 +2636,8 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Back"
+script = ExtResource("11_2auc3")
+offscreen_vector = Vector2(0, -1.5)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TrackSelect" unique_id=162563002]
 layout_mode = 1
@@ -2774,13 +2735,15 @@ theme_override_constants/margin_right = 30
 metadata/_edit_use_anchors_ = true
 
 [node name="NextButton" type="Button" parent="UILayer/TrackSelect/NextButtonMargin" unique_id=94423041]
-modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Next"
+script = ExtResource("11_2auc3")
+type = 1
+offscreen_vector = Vector2(2, 0)
 
 [node name="BackgroundLayers" parent="." unique_id=1665049764 instance=ExtResource("7_gucsq")]
 unique_name_in_owner = true

@@ -48,7 +48,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 offset_transform_enabled = true
 script = ExtResource("1_5ys5r")
-buffer_enter_time = 1.2
+enter_time_delay = 1.2
 
 [node name="BaseMeter" type="TextureRect" parent="." unique_id=1197874311]
 layout_mode = 2

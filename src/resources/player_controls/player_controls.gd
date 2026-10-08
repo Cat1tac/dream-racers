@@ -1,3 +1,4 @@
+## a class that defines a player's controls
 class_name PlayerControls extends Resource
 
 @export var player_index : int
