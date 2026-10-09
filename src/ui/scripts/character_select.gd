@@ -60,7 +60,6 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 			
 		player.character_select_position = _keep_player_character_select_position_in_range(player.character_select_position)
 		character_buttons[player.character_select_position].unhide_indicator(player.id)
-		print("Player: ", player.id, "\nPosition: ", player.character_select_position)
 		
 		if player.character_select_position < len(character_buttons) and character_buttons[player.character_select_position].character_model:
 			_show_character(player.character_select_position, player.id)

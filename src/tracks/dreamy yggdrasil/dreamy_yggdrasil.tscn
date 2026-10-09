@@ -81,7 +81,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -151
 transform = Transform3D(16.360523, 0.34915555, 0.15677765, -0.34726247, 16.360132, -0.19669457, -0.16092737, 0.1933142, 16.363066, 89.20915, 32.695442, -32.822815)
 bounce_height = 16.0
 super_bounce = 30.0
-forward_boost = 0.1
 
 [node name="Cloud2" parent="Objects/Clouds" unique_id=545699189 instance=ExtResource("9_ehbii")]
 transform = Transform3D(16.365, 0, 0, 0, 16.365, 0, 0, 0, 16.365, 45.732933, 21.123245, -127.71298)
@@ -113,8 +112,8 @@ transform = Transform3D(-0.14408457, -0.016059067, 3.997372, -0.14244749, 3.9974
 [node name="Boost_Panel4" parent="Objects/Boost Panels" unique_id=55892047 instance=ExtResource("4_q854r")]
 transform = Transform3D(-0.2849902, 0.97633225, -6.4906626, -0.033799294, 3.8788753, 1.6349773, 12.331661, 0.033194907, -0.14552088, -66.617966, -25.647898, 29.143436)
 
-[node name="Boost_Panel5" parent="Objects/Boost Panels" unique_id=1657521361 instance=ExtResource("4_q854r")]
-transform = Transform3D(-0.06605153, 1.8748382, -5.688929, 0.14611334, 5.688704, 1.8743107, 11.583889, -0.06106408, -0.05608002, 63.09928, 11.477083, 88.582886)
+[node name="Boost_Panel9" parent="Objects/Boost Panels" unique_id=1900556123 instance=ExtResource("4_q854r")]
+transform = Transform3D(-0.10793586, 0.026907802, -5.9896793, 0.11858231, 5.989629, 0.026336432, 11.58389, -0.061064087, -0.05608003, 85.43142, 9.580391, 87.882935)
 
 [node name="Dream Catchers" type="Node" parent="Objects" unique_id=756085328]
 
@@ -243,7 +242,7 @@ transform = Transform3D(0.12927514, 0.013761417, 0.99151355, 0.00060248934, -0.9
 transform = Transform3D(0.9974123, 0, 0.07189497, -0.0019158972, -0.99964494, 0.0265796, 0.07186945, -0.026648559, -0.9970582, 85.76959, 14.646595, 87.76967)
 
 [node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint9" index="1" unique_id=446360075]
-transform = Transform3D(-5.9604645e-08, 0, -1, -3.7252903e-09, 1.0000002, -2.3283064e-10, 1, -3.7252903e-09, -5.9604645e-08, 0.0072403466, -3.6939893, -1.0876975)
+transform = Transform3D(-6.7055225e-08, 0, -1, -5.5879354e-09, 1.0000004, -3.4924597e-10, 1, -7.450581e-09, -6.7055225e-08, 11.929245, -3.6939907, -0.22834015)
 
 [node name="Checkpoint11" parent="LapLogic/Checkpoints" unique_id=1226108902 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.9974123, 0, 0.07189497, -0.0019158972, -0.99964494, 0.0265796, 0.07186945, -0.026648559, -0.9970582, 16.782675, 14.646595, 87.76967)
@@ -339,7 +338,8 @@ stream = null
 
 [node name="Loop" parent="MusicHolder" index="1" unique_id=1654185185]
 stream = ExtResource("13_on71r")
-volume_db = -22.282
+volume_db = -10.0
+parameters/looping = true
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 

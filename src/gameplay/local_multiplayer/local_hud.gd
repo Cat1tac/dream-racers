@@ -15,8 +15,13 @@ func set_ids(player_id : int) -> void:
 	id = player_id
 	speedometer.id = player_id
 
-func _update_lap_count(num : int) -> void:
-	lap_count_current.text = str(num)
+func _update_lap_count(num : int, player_id) -> void:
+	if id != player_id:
+		return
+		
+	if num == 3:
+		return
+	lap_count_current.text = str(num + 1)
 
 func _update_timer(time : float) -> void:
 	var minutes : int = int(time) / 60

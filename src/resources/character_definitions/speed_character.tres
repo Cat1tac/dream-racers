@@ -1,10 +1,16 @@
-[gd_resource type="Resource" script_class="Character" format=3 uid="uid://d4dbqjovqh6fk"]
+[gd_resource type="Resource" script_class="Stats" format=3 uid="uid://d4dbqjovqh6fk"]
 
 [ext_resource type="Script" uid="uid://15ad33ohkjn6" path="res://src/resources/character_definitions/characters.gd" id="1_id6vg"]
 
 [resource]
 script = ExtResource("1_id6vg")
-speed = 3
-acceleration = -3
-handling = -1
-weight = 1
+speed = 4.0
+air_resistance = 2.5
+max_steering_angle_fast = -1.0
+max_steering_angle_slow = -1.0
+traction_factor = -0.09999999999999998
+drift_multiplier = 0.19999999999999996
+weight = 0.1
+boost_top_speed = -1.0
+drift_charge_speed = -0.19999999999999996
+boost_time = 0.30000000000000004

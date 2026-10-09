@@ -28,7 +28,7 @@ size = Vector3(1, 8.7300415, 22.593689)
 
 [node name="Testtrack1" type="Node3D" unique_id=1971607976 node_paths=PackedStringArray("player_spawners")]
 script = ExtResource("1_xgnfn")
-player_spawners = [NodePath("PlayerSpawn1"), NodePath("PlayerSpawn2")]
+player_spawners = [NodePath("PlayerSpawn1"), NodePath("PlayerSpawn2"), NodePath("PlayerSpawn3"), NodePath("PlayerSpawn4")]
 willCountdown = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=331994150]
@@ -45,10 +45,16 @@ shadow_blur = 0.0
 environment = SubResource("Environment_1bvp3")
 
 [node name="PlayerSpawn1" type="Marker3D" parent="." unique_id=531213]
-transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, -4.447203)
+transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, -6.119713)
 
 [node name="PlayerSpawn2" type="Marker3D" parent="." unique_id=1645730136]
-transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, 3.8834085)
+transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, -2.209499)
+
+[node name="PlayerSpawn3" type="Marker3D" parent="." unique_id=73183493]
+transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, 1.4902868)
+
+[node name="PlayerSpawn4" type="Marker3D" parent="." unique_id=348309038]
+transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, 4.845709)
 
 [node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("3_5ryjy")]
 
@@ -143,9 +149,12 @@ transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0,
 transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0, -0.99998903, -57.290894, 2.4219437, 104.632484)
 
 [node name="OutOfBounds" parent="." unique_id=2017124765 instance=ExtResource("9_mvbxg")]
-transform = Transform3D(30.31, 0, 0, 0, 30.31, 0, 0, 0, 30.31, 48.053802, -29.245155, 36.661545)
+transform = Transform3D(30.31, 0, 0, 0, 30.31, 0, 0, 0, 30.31, 48.053802, -36.040436, 36.661545)
 
 [node name="MusicHolder" parent="." unique_id=601645172 instance=ExtResource("10_gj6qf")]
+
+[node name="Loop" parent="MusicHolder" index="1" unique_id=1654185185]
+parameters/looping = true
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 

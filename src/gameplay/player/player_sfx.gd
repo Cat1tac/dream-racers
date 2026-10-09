@@ -12,7 +12,7 @@ var player_top_speed: float
 
 func update_top_speed(speed: float) -> void:
 	player_top_speed = speed
-	print("Top speed is " + str(player_top_speed))
+	#print("Top speed is " + str(player_top_speed))
 
 
 

@@ -66,7 +66,7 @@ offset_transform_position = Vector2(65.395, -44.01)
 [node name="Lap Count current" type="Label" parent="HBoxContainer" unique_id=1090670641]
 unique_name_in_owner = true
 layout_mode = 2
-text = "0"
+text = "1"
 label_settings = SubResource("LabelSettings_4x5ba")
 
 [node name="Lap Count divider" type="Label" parent="HBoxContainer" unique_id=1042930991]

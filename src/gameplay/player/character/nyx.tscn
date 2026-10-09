@@ -1,9 +1,134 @@
 [gd_scene format=4 uid="uid://bxn0ntd0iqflh"]
 
 [ext_resource type="Script" uid="uid://dvqjg8mckctmn" path="res://src/gameplay/player/kart/basekart.gd" id="1_dace7"]
-[ext_resource type="Resource" uid="uid://d3eq8jfnvx35g" path="res://src/resources/character_definitions/balanced_character.tres" id="2_dn5wp"]
+[ext_resource type="Resource" uid="uid://d4dbqjovqh6fk" path="res://src/resources/character_definitions/speed_character.tres" id="2_hyueo"]
 [ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="3_tyvwq"]
 [ext_resource type="Animation" uid="uid://bruu41qgf1do6" path="res://assets/animations/Seperate_character_and_kart.res" id="4_4hbok"]
+[ext_resource type="Texture2D" uid="uid://bxinukwv8vo05" path="res://assets/models/karts/BaseKart/KartBaseColor.png" id="4_hyueo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dace7"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.02
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Shader" id="Shader_nh4bs"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float emission_multiplier : hint_range(0.0, 100.0, 1);
+uniform vec4 emission_color : source_color; 
+uniform sampler2D texture_emission;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform sampler2D color_gradient;
+uniform sampler2D fresnel_gradient;
+uniform bool fresnel_on;
+uniform float fresnel_amount : hint_range(0.0, 100.0, 0.01);
+
+float fresnel(float amount, vec3 normal, vec3 view){
+	//highlights the pixels that are more perpendicular to camera
+	// amount determines how much of an effect it has
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	float basic_fresnel = fresnel(fresnel_amount, NORMAL, VIEW);
+	
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	if (fresnel_on){
+		ALBEDO += (basic_fresnel * texture(fresnel_gradient, vec2(basic_fresnel, 0.0)).rgb * 1.0);
+	}
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+	
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	
+	vec4 emission_tex = texture(texture_emission, base_uv) * emission_color;
+	EMISSION += emission_tex.rgb * emission_multiplier;
+}
+
+void light(){
+	float dotproduct = clamp(dot(NORMAL, LIGHT), -1.0, 1.0);
+	float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.0, 0.05, 0.95);
+	vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+	DIFFUSE_LIGHT += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_tyvwq"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_23aqo"]
+gradient = SubResource("Gradient_tyvwq")
+
+[sub_resource type="Gradient" id="Gradient_ewh0y"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jx378"]
+gradient = SubResource("Gradient_ewh0y")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c46hp"]
+load_path = "res://.godot/imported/Seraphim Kart Emissive.png-14913c16f0b825031d4ab59bb977283f.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1duix"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_dace7")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("4_hyueo")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 66.0
+shader_parameter/emission_color = Color(0.6072261, 0.35889643, 0.12805015, 1)
+shader_parameter/texture_emission = SubResource("CompressedTexture2D_c46hp")
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_23aqo")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_jx378")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bvdtm"]
 
@@ -315,7 +440,7 @@ grow_amount = 0.02
 proximity_fade_enabled = true
 proximity_fade_distance = 1.01
 
-[sub_resource type="Shader" id="Shader_nh4bs"]
+[sub_resource type="Shader" id="Shader_srcpb"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
 
 shader_type spatial;
@@ -406,7 +531,7 @@ gradient = SubResource("Gradient_dn5wp")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_23aqo"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_4hbok")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_srcpb")
 shader_parameter/albedo = Color(0.1254902, 0.09803922, 0.21960784, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -454,7 +579,7 @@ blend_shape_mode = 0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ewh0y"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_4hbok")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_srcpb")
 shader_parameter/albedo = Color(0.1254902, 0.09803922, 0.21960784, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -520,7 +645,7 @@ gradient = SubResource("Gradient_srcpb")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f2e7u"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_jx378")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_srcpb")
 shader_parameter/albedo = Color(0.89411765, 0.8666667, 0.92156863, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -10413,13 +10538,37 @@ graph_offset = Vector2(-29.77027, -16.762545)
 [node name="Nyx" type="Node3D" unique_id=322080802 node_paths=PackedStringArray("charge_markers", "animation_tree")]
 script = ExtResource("1_dace7")
 charge_markers = [NodePath("kart/ChargeRMarker"), NodePath("kart/ChargeLMarker")]
-stats = ExtResource("2_dn5wp")
+stats = ExtResource("2_hyueo")
 animation_tree = NodePath("AnimationTree")
 current_state = 1
 
 [node name="kart" parent="." unique_id=2060035001 instance=ExtResource("3_tyvwq")]
 unique_name_in_owner = true
 transform = Transform3D(0.5784728, 0, -0.9939158, 0, 1.15, 0, 0.9939158, 0, 0.5784728, -0.387, 0.283, -2.004)
+
+[node name="Seat" parent="kart" index="0" unique_id=640990874]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
+
+[node name="Base" parent="kart" index="1" unique_id=1469732125]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
+
+[node name="Front" parent="kart" index="2" unique_id=1076451586]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
+
+[node name="FrontHover" parent="kart" index="3" unique_id=1885635568]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
+
+[node name="BackHover" parent="kart" index="4" unique_id=626634695]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
+
+[node name="Thrusters" parent="kart" index="5" unique_id=1532517019]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
+
+[node name="Pedals" parent="kart" index="6" unique_id=1349420408]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
+
+[node name="Side Panels" parent="kart" index="7" unique_id=1990708747]
+surface_material_override/0 = SubResource("ShaderMaterial_1duix")
 
 [node name="Skeleton3D" parent="kart/Armature_002" parent_id_path=PackedInt32Array(2060035001, 726061753) index="0" unique_id=1103918706]
 bones/1/scale = Vector3(1, 0.99999994, 0.99999994)
@@ -10431,7 +10580,7 @@ transform = Transform3D(0.99999994, 0, 0, 0, 1.0000001, 0, 0, 0, 0.99999994, 0.7
 transform = Transform3D(-1.15, 0, -1.0053619e-07, 0, 1.15, 0, 1.0053619e-07, 0, -1.15, 0, 0, 0)
 
 [node name="Nyx_Copy" type="Node3D" parent="Nyx2" unique_id=2134485522]
-transform = Transform3D(0.99844074, 0, 0.055821504, 0, 1, 0, -0.055821504, 0, 0.99844074, 0.245, -0.18, 0.277)
+transform = Transform3D(0.9984407, 0, 0.0558215, 0, 1, 0, -0.0558215, 0, 0.9984407, 0.245, -0.18, 0.277)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Nyx2/Nyx_Copy" unique_id=235767713]
 bones/0/name = "Root"
@@ -10445,15 +10594,15 @@ bones/1/name = "leg_IK_pole.L"
 bones/1/parent = 0
 bones/1/rest = Transform3D(0.9951219, 2.5355023e-08, -0.09865295, -2.5355023e-08, -0.9999999, -5.1277084e-07, -0.09865295, 5.1277084e-07, -0.99512184, -0.096278414, -0.39051393, -0.23887083)
 bones/1/enabled = true
-bones/1/position = Vector3(-0.096278444, -0.39051393, -0.23887084)
-bones/1/rotation = Quaternion(0.9987798, 4.473785e-16, -0.049386747, 2.566987e-07)
+bones/1/position = Vector3(-0.22586443, -0.33974245, -0.23887078)
+bones/1/rotation = Quaternion(0.9823942, -0.18017405, -0.048576474, -0.008908759)
 bones/1/scale = Vector3(1, 0.9999999, 0.99999994)
 bones/2/name = "leg_IK_pole.R"
 bones/2/parent = 0
 bones/2/rest = Transform3D(0.99512196, -2.5354844e-08, 0.09865225, 2.535485e-08, -1, -5.127709e-07, 0.09865226, 5.1277095e-07, -0.9951219, 0.096278235, -0.39051393, -0.2388709)
 bones/2/enabled = true
-bones/2/position = Vector3(0.23721063, -0.29785606, -0.23887098)
-bones/2/rotation = Quaternion(0.97087896, 0.23442465, 0.0480068, -0.011591375)
+bones/2/position = Vector3(0.09627822, -0.3905139, -0.2388709)
+bones/2/rotation = Quaternion(0.9987798, 7.642778e-18, 0.049386393, 2.5669866e-07)
 bones/2/scale = Vector3(0.99999994, 1, 0.9999999)
 bones/3/name = "arm_IK_Target.L"
 bones/3/parent = 0
@@ -10466,8 +10615,8 @@ bones/4/name = "leg_IK_Target.L"
 bones/4/parent = 0
 bones/4/rest = Transform3D(0.9986103, 0, 0.052701194, -1.0737388e-08, 1, 2.0345774e-07, -0.052701194, -2.0374088e-07, 0.9986103, -0.08958566, 0.01391229, -0.08661178)
 bones/4/enabled = true
-bones/4/position = Vector3(-0.088806674, 0.0139122885, -0.08665289)
-bones/4/rotation = Quaternion(-1.0183505e-07, 0.026359757, -2.6852796e-09, 0.99965256)
+bones/4/position = Vector3(-0.07627158, 0.0139122885, -0.08661181)
+bones/4/rotation = Quaternion(0.008408262, 0.02498264, -0.3188787, 0.947429)
 bones/4/scale = Vector3(0.99999994, 1, 0.99999994)
 bones/5/name = "Foot.L"
 bones/5/parent = 4
@@ -10488,7 +10637,7 @@ bones/7/parent = 0
 bones/7/rest = Transform3D(0.9986104, 4.440892e-16, -0.052700423, 1.073723e-08, 1, 2.0345777e-07, 0.052700423, -2.0374091e-07, 0.9986104, 0.08958559, 0.01391229, -0.086611845)
 bones/7/enabled = true
 bones/7/position = Vector3(0.08958559, 0.01391229, -0.086611845)
-bones/7/rotation = Quaternion(0.00637788, -0.0255761, 0.24187505, 0.9699493)
+bones/7/rotation = Quaternion(-1.0183505e-07, -0.02635937, 2.6852403e-09, 0.99965256)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "Foot.R"
 bones/8/parent = 7
@@ -10508,8 +10657,8 @@ bones/10/name = "torso"
 bones/10/parent = 0
 bones/10/rest = Transform3D(-1, -1.03254367e-13, -3.8941437e-07, 6.5393295e-14, 1, -4.3308023e-07, 3.8941437e-07, -4.3308023e-07, -1, -2.1465785e-07, 0.0046803355, -0.55123246)
 bones/10/enabled = true
-bones/10/position = Vector3(-0.045401163, 0.0046803416, -0.52232003)
-bones/10/rotation = Quaternion(-0.13280973, 0.99114156, -1.8505969e-07, -1.9461552e-07)
+bones/10/position = Vector3(0.059970524, 0.004680338, -0.52941835)
+bones/10/rotation = Quaternion(0.11146386, 0.9937686, -2.3689356e-07, -1.6935746e-07)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/name = "Hips_mid"
 bones/11/parent = 10
@@ -10530,14 +10679,14 @@ bones/13/parent = 12
 bones/13/rest = Transform3D(-0.104349114, -0.0027446446, 0.99453676, -0.76582056, -0.63779026, -0.08211178, 0.63453126, -0.7702052, 0.064450935, 5.5879354e-09, 0.12304646, -5.7625584e-09)
 bones/13/enabled = true
 bones/13/position = Vector3(5.5879354e-09, 0.12304646, -5.7625584e-09)
-bones/13/rotation = Quaternion(0.6639555, -0.22012684, 0.62293845, -0.35022143)
+bones/13/rotation = Quaternion(0.59224063, -0.25685924, 0.63338953, -0.4267224)
 bones/13/scale = Vector3(0.9999999, 1, 0.9999998)
 bones/14/name = "LowerLeg.L"
 bones/14/parent = 13
 bones/14/rest = Transform3D(0.9907799, 0.04272244, 0.12856896, -0.06770215, 0.9781225, 0.19670495, -0.11735248, -0.2035957, 0.9719965, 3.9872248e-09, 0.24916437, -6.519258e-09)
 bones/14/enabled = true
 bones/14/position = Vector3(3.9872248e-09, 0.24916437, -6.519258e-09)
-bones/14/rotation = Quaternion(-0.36651036, 0.057680596, -0.105488576, 0.9226133)
+bones/14/rotation = Quaternion(-0.27859527, 0.059679866, -0.07977031, 0.9552276)
 bones/14/scale = Vector3(0.99999994, 1, 1)
 bones/15/name = "Hip.R"
 bones/15/parent = 11
@@ -10551,14 +10700,14 @@ bones/16/parent = 15
 bones/16/rest = Transform3D(-0.10434901, 0.0027447867, -0.99453676, 0.7658206, -0.63779, -0.08211178, -0.6345313, -0.770205, 0.064450756, 1.1175871e-08, 0.12304646, 9.604264e-09)
 bones/16/enabled = true
 bones/16/position = Vector3(1.1175871e-08, 0.12304646, 9.604264e-09)
-bones/16/rotation = Quaternion(-0.5827197, -0.23880398, 0.6374958, 0.44385758)
+bones/16/rotation = Quaternion(-0.66401595, -0.22318748, 0.6423134, 0.31097215)
 bones/16/scale = Vector3(0.99999994, 0.9999997, 0.9999998)
 bones/17/name = "LowerLeg.R"
 bones/17/parent = 16
 bones/17/rest = Transform3D(0.99078, -0.042722423, -0.12856908, 0.06770218, 0.9781224, 0.19670513, 0.1173526, -0.20359585, 0.97199655, -8.767529e-10, 0.24916436, -8.381903e-09)
 bones/17/enabled = true
 bones/17/position = Vector3(-8.767529e-10, 0.24916436, -8.381903e-09)
-bones/17/rotation = Quaternion(-0.32361662, -0.058734342, 0.09293863, 0.9397792)
+bones/17/rotation = Quaternion(-0.30189204, -0.05921051, 0.08658396, 0.947554)
 bones/17/scale = Vector3(1.0000001, 0.99999994, 1.0000001)
 bones/18/name = "MiddleSpine"
 bones/18/parent = 10
@@ -10593,7 +10742,7 @@ bones/22/parent = 21
 bones/22/rest = Transform3D(0.725392, -0.35493872, 0.5897669, 0.6853464, 0.45219076, -0.5708099, -0.06408462, 0.81825566, 0.5712714, -0.15642194, 0.21293497, -0.03784534)
 bones/22/enabled = true
 bones/22/position = Vector3(-0.15642194, 0.21293497, -0.03784534)
-bones/22/rotation = Quaternion(0.41054997, 0.20984176, 0.35093892, 0.8150197)
+bones/22/rotation = Quaternion(0.4383724, 0.17126933, 0.21003816, 0.85695994)
 bones/22/scale = Vector3(1, 1.0000001, 1)
 bones/23/name = "UpperEar.L"
 bones/23/parent = 22
@@ -10607,7 +10756,7 @@ bones/24/parent = 21
 bones/24/rest = Transform3D(0.725392, 0.35493854, -0.589767, -0.6853463, 0.45219064, -0.5708101, 0.06408461, 0.81825566, 0.5712713, 0.15642194, 0.21293497, -0.037845287)
 bones/24/enabled = true
 bones/24/position = Vector3(0.15642194, 0.21293497, -0.037845287)
-bones/24/rotation = Quaternion(0.43581307, -0.1707513, -0.24564646, 0.8488633)
+bones/24/rotation = Quaternion(0.41395003, -0.20922439, -0.36630467, 0.8066545)
 bones/24/scale = Vector3(0.99999994, 1, 1)
 bones/25/name = "UpperEar.R"
 bones/25/parent = 24
@@ -10628,7 +10777,7 @@ bones/27/parent = 26
 bones/27/rest = Transform3D(-0.24524343, 0.12415568, 0.96147853, -0.08740483, 0.98489475, -0.1494737, -0.9655134, -0.12069529, -0.23068717, 1.8626451e-08, 0.12983505, 3.5390258e-08)
 bones/27/enabled = true
 bones/27/position = Vector3(1.8626451e-08, 0.12983505, 3.5390258e-08)
-bones/27/rotation = Quaternion(-0.04566492, 0.84168327, 0.12593643, 0.5230908)
+bones/27/rotation = Quaternion(-0.09499714, 0.8416296, 0.17710319, 0.5012681)
 bones/27/scale = Vector3(1, 0.9999998, 0.99999994)
 bones/28/name = "MCH-MiddleWing.L"
 bones/28/parent = 27
@@ -10698,7 +10847,7 @@ bones/37/parent = 26
 bones/37/rest = Transform3D(-0.24524297, 0.12415546, 0.96147865, -0.087404884, 0.9848946, -0.14947347, -0.9655134, -0.12069522, -0.23068675, 7.8231096e-08, 0.12983504, 2.0489097e-08)
 bones/37/enabled = true
 bones/37/position = Vector3(7.8231096e-08, 0.12983504, 2.0489097e-08)
-bones/37/rotation = Quaternion(-0.045664907, 0.84168345, 0.1259364, 0.5230907)
+bones/37/rotation = Quaternion(-0.094997205, 0.8416297, 0.1771032, 0.5012681)
 bones/37/scale = Vector3(0.99999994, 0.9999996, 0.99999994)
 bones/38/name = "MiddleWing-FK.L"
 bones/38/parent = 37
@@ -10768,14 +10917,14 @@ bones/47/parent = 26
 bones/47/rest = Transform3D(-0.24524331, 0.12415591, 0.96147865, -0.08740491, 0.98489475, -0.14947395, -0.9655135, -0.1206954, -0.23068704, 1.8626451e-08, 0.12983505, 3.5390258e-08)
 bones/47/enabled = true
 bones/47/position = Vector3(1.8626451e-08, 0.12983505, 3.5390258e-08)
-bones/47/rotation = Quaternion(-0.73053735, 0.6309583, 0.12699945, 0.22820601)
+bones/47/rotation = Quaternion(-0.64973474, 0.73211396, -0.18875885, 0.07889302)
 bones/47/scale = Vector3(1.0000001, 0.9999999, 1)
 bones/48/name = "MiddleWing-IK.L"
 bones/48/parent = 47
 bones/48/rest = Transform3D(0.99379903, 0.08828811, -0.06759157, -0.11062236, 0.8464573, -0.5208385, 0.011229527, 0.5250859, 0.85097516, 2.4447218e-09, 0.28208762, -7.450581e-09)
 bones/48/enabled = true
 bones/48/position = Vector3(2.4447218e-09, 0.28208762, -7.450581e-09)
-bones/48/rotation = Quaternion(0.55026656, -0.017680613, -0.10401835, 0.82829607)
+bones/48/rotation = Quaternion(0.36501792, -0.019818613, -0.06921446, 0.9282126)
 bones/48/scale = Vector3(0.99999994, 1, 1)
 bones/49/name = "LowerWing-IK.L"
 bones/49/parent = 48
@@ -10845,7 +10994,7 @@ bones/58/parent = 57
 bones/58/rest = Transform3D(-0.24524331, -0.12415571, -0.96147865, 0.087404855, 0.98489493, -0.14947371, 0.9655134, -0.12069531, -0.23068702, -8.009374e-08, 0.12983502, 1.1175871e-08)
 bones/58/enabled = true
 bones/58/position = Vector3(-8.009374e-08, 0.12983502, 1.1175871e-08)
-bones/58/rotation = Quaternion(-0.094996996, -0.84162956, -0.17710313, 0.501268)
+bones/58/rotation = Quaternion(-0.016804624, -0.84194285, -0.106801085, 0.52862406)
 bones/58/scale = Vector3(1, 1, 1)
 bones/59/name = "MCH-MiddleWing.R"
 bones/59/parent = 58
@@ -10915,7 +11064,7 @@ bones/68/parent = 57
 bones/68/rest = Transform3D(-0.24524295, -0.12415552, -0.9614787, 0.08740487, 0.9848952, -0.14947346, 0.96551347, -0.12069527, -0.23068674, -1.3969839e-07, 0.12983501, -3.7252903e-09)
 bones/68/enabled = true
 bones/68/position = Vector3(-1.3969839e-07, 0.12983501, -3.7252903e-09)
-bones/68/rotation = Quaternion(-0.094997, -0.8416296, -0.1771032, 0.5012681)
+bones/68/rotation = Quaternion(-0.016804578, -0.8419429, -0.10680106, 0.52862406)
 bones/68/scale = Vector3(0.99999994, 1.0000002, 1)
 bones/69/name = "MiddleWing-FK.R"
 bones/69/parent = 68
@@ -10985,14 +11134,14 @@ bones/78/parent = 57
 bones/78/rest = Transform3D(-0.24524307, -0.12415591, -0.96147865, 0.08740488, 0.984895, -0.14947388, 0.9655135, -0.12069535, -0.2306868, -8.009374e-08, 0.12983502, 1.1175871e-08)
 bones/78/enabled = true
 bones/78/position = Vector3(-8.009374e-08, 0.12983502, 1.1175871e-08)
-bones/78/rotation = Quaternion(-0.6621411, -0.71769834, 0.207257, 0.059353996)
+bones/78/rotation = Quaternion(-0.7479936, -0.61339325, -0.11955911, 0.22351713)
 bones/78/scale = Vector3(1, 1.0000001, 1)
 bones/79/name = "MiddleWing-IK.R"
 bones/79/parent = 78
 bones/79/rest = Transform3D(0.99379903, -0.08828824, 0.06759152, 0.11062244, 0.84645724, -0.5208386, -0.011229402, 0.52508605, 0.85097504, 8.1490725e-10, 0.28208768, 1.7083948e-08)
 bones/79/enabled = true
 bones/79/position = Vector3(8.1490725e-10, 0.28208768, 1.7083948e-08)
-bones/79/rotation = Quaternion(0.3699024, 0.019775651, 0.07013245, 0.92620873)
+bones/79/rotation = Quaternion(0.5202629, 0.018104956, 0.09838336, 0.8481271)
 bones/79/scale = Vector3(0.99999994, 1, 1)
 bones/80/name = "LowerWing-IK.R"
 bones/80/parent = 79

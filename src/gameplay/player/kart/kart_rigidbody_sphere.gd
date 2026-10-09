@@ -32,7 +32,7 @@ var drift_direction : float
 
 @export var brake_resistance := 10 ## How much resistance there is to forward movement when pressing in the opposite direction of the velocity
 @export var ground_resistance := 3 ## How mcuh resistance there is to forward movement when coasting
-@export var air_resistance := 5 ## How fast you lose speed in the air 
+@export var air_resistance := 5.0 ## How fast you lose speed in the air 
 
 @export_group("Steering")
 @export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_slow := 10.0 # will be stat adjustable
@@ -450,6 +450,7 @@ func set_up_kart_stats() -> void:
 	max_steering_angle_slow += kartStats.max_steering_angle_slow
 	traction_factor += kartStats.traction_factor
 	drift_multiplier += kartStats.drift_multiplier
+	air_resistance += kartStats.air_resistance
 	
 	boost_top_speed += kartStats.boost_top_speed
 	#drift_charge_speed (in the drift_boost_control function)
@@ -593,7 +594,7 @@ func _apply_air_resistance(_delta: float) -> void:
 	var forward := -center.global_basis.z
 	var vel := forward.dot(linear_velocity)
 	var force_vector : Vector3
-	if vel > 0.5:
+	if vel > top_speed * 0.6:
 		force_vector = -forward * air_resistance * mass
 	apply_central_force(60 * force_vector * _delta)
 	Events.on_get_speed.emit(vel, drift_timer, player.playerId)

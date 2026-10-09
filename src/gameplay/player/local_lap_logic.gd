@@ -20,7 +20,7 @@ func complete_lap() -> void:
 	if len(progress) == checks_needed and player_controller.isRacing:
 		progress.clear()
 		laps_done += 1
-		Events.on_get_lap_count.emit(laps_done)
+		Events.on_get_lap_count.emit(laps_done, parent.playerId)
 		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:
 		progress.clear()
@@ -28,6 +28,7 @@ func complete_lap() -> void:
 	
 	#does *something* when 3 laps have been done
 	if laps_done == parent.current_track.lap_count:
+		Events.players_finished_race.emit()
 		print("LocalLapLogic: Three laps have been completed! This player is out of the race!")
 		player_controller.isRacing = false
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
@@ -54,7 +55,11 @@ func get_check_order(order: Array) -> void:
 func _on_tree_entered() -> void:
 	await Events.on_track_loaded
 	await Events.on_checkpoints_list_filled # Gives time for TrackInfo to update
-	get_check_order(parent.current_track.checkpoint_list)
+	if !parent.current_track:
+		await get_tree().create_timer(0.1).timeout
+		get_check_order(parent.current_track.checkpoint_list)
+	else:
+		get_check_order(parent.current_track.checkpoint_list)
 	if parent.current_track.willCountdown:
 		await get_tree().create_timer(4.8).timeout # Total of a 5 second wait from Scene Start
 		player_controller.isRacing = true

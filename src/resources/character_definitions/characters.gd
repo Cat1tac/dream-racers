@@ -3,6 +3,7 @@ class_name Stats extends Resource
 @export_category("Stats")
 @export_group("Speed")
 @export_range(-5,5, 1, "prefer_slider") var speed : float
+@export_range(-5,5, 0.1, "prefer_slider") var air_resistance : float
 @export_group("Acceleration")
 @export_range(-5,5, 1, "prefer_slider") var acceleration : float
 @export_group("Handling")

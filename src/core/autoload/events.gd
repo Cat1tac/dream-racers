@@ -14,3 +14,5 @@ signal on_player_added
 
 signal on_checkpoints_list_filled
 signal on_track_loaded
+signal players_finished_race
+signal on_race_over

@@ -26,17 +26,17 @@ func _on_start_line_area_entered(area: Area3D) -> void:
 			local_lap_logic.complete_lap()
 			local_lap_logic.respawn_location = starting_line.global_position
 			local_lap_logic.respawn_rotation = starting_line.global_rotation
-			print("LapLogic: Start Coords: " + str(starting_line.global_position))
+			#print("LapLogic: Start Coords: " + str(starting_line.global_position))
 
 # Debug function, prints instance id of each checkpoint in order
 func print_checks() -> void:
-	var count := 0
+	var _count := 0
 	for id in check_list:
-		count += 1
-		print("LapLogic: check #" + str(count) + " " + str(id))
+		_count += 1
+		#print("LapLogic: check #" + str(_count) + " " + str(id))
 
 func _ready() -> void:
-	print("LapLogic: loading checkpoints...")
+	#print("LapLogic: loading checkpoints...")
 	talk_with_papa()
 	if track.willCountdown:
 		await get_tree().create_timer(2).timeout

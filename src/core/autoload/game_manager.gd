@@ -70,7 +70,6 @@ func load_player_controls() -> void:
 
 func add_player(controls : PlayerControls) -> void:
 	players_connected += 1
-	print(controls)
 	var new_player : PlayerDefinition = preload(ScenePaths.PLAYER.player_definition).duplicate()
 	new_player.id = players_connected - 1
 	new_player.controls = controls
@@ -93,7 +92,7 @@ func remove_character(player : PlayerDefinition) -> void:
 
 func set_track(given_track: SelectedTrack) -> void:
 	current_track = given_track
-	print(SelectedTrack.keys()[given_track] + " selected!")
+	#print(SelectedTrack.keys()[given_track] + " selected!")
 
 ## check if all players have selected a character
 func validate_character_select() -> bool:
@@ -104,6 +103,13 @@ func validate_character_select() -> bool:
 		
 	all_players_selected_character.emit(true)
 	return true
+	
+func reset_selections() -> void:
+	for player in player_list:
+		player.selected_character = SelectedCharacter.NONE
+		player.character_select_pressed = false
+		
+	current_track = SelectedTrack.NONE
 #endregion
 
 #region loading functions
