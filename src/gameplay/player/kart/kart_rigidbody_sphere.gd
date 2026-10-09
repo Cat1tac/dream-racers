@@ -333,8 +333,6 @@ func _execute_boost(charge_to_use : int) -> void:
 		var speedMultiplier : float = boosts[boostlevel]["dftSpdFactor"]
 		var timeMultiplier : float = boosts[boostlevel]["dftTimeFactor"]
 		set_boost(speedMultiplier, timeMultiplier)
-
-		audio_player.play_audio("BOOST")
 	
 	remove_drift_charge()
 
@@ -343,6 +341,7 @@ func set_boost(speedMultiplier : float, timeMultiplier : float) -> void:
 	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
 	boost_timer = boost_max_time * timeMultiplier 
+	audio_player.play_audio("BOOST")
 	
 
 #Stored Charge

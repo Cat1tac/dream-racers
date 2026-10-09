@@ -1,9 +1,10 @@
 extends Node3D
 
 @onready var driving: AudioStreamPlayer3D = $DriveSFX
-@onready var boosting: AudioStreamPlayer3D = $BoostSFX
+#@onready var boosting: AudioStreamPlayer3D = $BoostSFX
 @onready var crashing: AudioStreamPlayer3D = $CrashSFX
 @onready var charging: AudioStreamPlayer3D = $ChargeSFX
+@onready var tricking: AudioStreamPlayer3D = $TrickSFX
 # MISSING DRIFT, SPIN, TRICK
 
 
@@ -13,23 +14,28 @@ func update_top_speed(speed: float) -> void:
 	player_top_speed = speed
 	print("Top speed is " + str(player_top_speed))
 
+
+
 func play_audio(request: String) -> void:
 	request.capitalize()
 	match request:
 		"DRIVE":
 			driving.play()
 		"DRIFT":
+			#drifting.play()
 			pass
 		"CHARGE":
 			charging.play()
 		"SPIN":
+			#spinning.play()
 			pass
 		"CRASH":
 			crashing.play()
 		"BOOST":
-			boosting.play()
-		"TRICK":
+			#boosting.play()
 			pass
+		"TRICK":
+			tricking.play()
 		_:
 			print("AudioError: Tried to play Audio that isn't defined")
 
@@ -45,7 +51,8 @@ func stop_audio(request: String) -> void:
 		"CRASH":
 			crashing.stop()
 		"BOOST":
-			boosting.stop()
+			#boosting.stop()
+			pass
 		_:
 			print("AudioError: Tried to play Audio that isn't defined")
 
@@ -58,6 +65,7 @@ func bend_pitch(request: String, modifier: float) -> void:
 			modifier = (modifier/player_top_speed) * 0.6 + _min
 			if modifier > 1.05:
 				modifier += 0.3 #Boosts are more noticable
+
 			driving.pitch_scale = modifier
 		"CHARGE":
 			modifier = (modifier/20) + 0.8

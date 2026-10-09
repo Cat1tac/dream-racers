@@ -31,7 +31,6 @@ size = Vector3(1, 8.7300415, 22.593689)
 [node name="Testtrack1" type="Node3D" unique_id=1971607976 node_paths=PackedStringArray("player_spawners")]
 script = ExtResource("1_xgnfn")
 player_spawners = [NodePath("PlayerSpawn1"), NodePath("PlayerSpawn2")]
-willCountdown = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=331994150]
 transform = Transform3D(0.965459, 0.14834361, -0.21420336, -1.2948174e-08, 0.8221043, 0.569337, 0.26055497, -0.54967153, 0.79370797, 288.66183, 210.33945, 38.24308)
@@ -149,10 +148,14 @@ script = ExtResource("10_crods")
 
 [node name="Intro" type="AudioStreamPlayer" parent="MusicHolder" unique_id=1000932650]
 stream = ExtResource("10_4osdo")
+bus = &"Music"
 
 [node name="Loop" type="AudioStreamPlayer" parent="MusicHolder" unique_id=854307945]
 stream = ExtResource("11_crods")
+bus = &"Music"
 
+[connection signal="countdown_finished" from="." to="MusicHolder" method="_on_testtrack_1_countdown_finished"]
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
+[connection signal="finished" from="MusicHolder/Intro" to="MusicHolder" method="_on_intro_finished"]
 
 [editable path="testtrack3"]

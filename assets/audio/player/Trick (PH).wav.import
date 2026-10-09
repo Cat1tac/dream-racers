@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dl88o1u6y7vos"
-path="res://.godot/imported/Charge (PH).wav-7b4efd72d8f7187a6d4e7a4d034ee325.sample"
+path="res://.godot/imported/Trick (PH).wav-7f0b781b4201bc5d7d719545cd427fe7.sample"
 
 [deps]
 
-source_file="res://assets/audio/player/Charge (PH).wav"
-dest_files=["res://.godot/imported/Charge (PH).wav-7b4efd72d8f7187a6d4e7a4d034ee325.sample"]
+source_file="res://assets/audio/player/Trick (PH).wav"
+dest_files=["res://.godot/imported/Trick (PH).wav-7f0b781b4201bc5d7d719545cd427fe7.sample"]
 
 [params]
 

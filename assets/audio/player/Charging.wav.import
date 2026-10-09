@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://ci8tpexcd4wm5"
-path="res://.godot/imported/Boosting.wav-86dc72b483f4c3380f7a943e9c67e60f.sample"
+path="res://.godot/imported/Charging.wav-3d61d3778bf4a1b0b51fdcc8bc1856e3.sample"
 
 [deps]
 
-source_file="res://assets/audio/player/Boosting.wav"
-dest_files=["res://.godot/imported/Boosting.wav-86dc72b483f4c3380f7a943e9c67e60f.sample"]
+source_file="res://assets/audio/player/Charging.wav"
+dest_files=["res://.godot/imported/Charging.wav-3d61d3778bf4a1b0b51fdcc8bc1856e3.sample"]
 
 [params]
 
@@ -18,7 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=true
 edit/normalize=false
-edit/loop_mode=0
+edit/loop_mode=1
 edit/loop_begin=0
 edit/loop_end=-1
 compress/mode=2
