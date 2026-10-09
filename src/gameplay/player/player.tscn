@@ -127,7 +127,7 @@ script = ExtResource("11_xptrr")
 
 [node name="DriveSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=1911303621]
 stream = ExtResource("16_xptrr")
-volume_db = -24.0
+volume_db = -17.433
 bus = &"Player"
 area_mask = 1
 
@@ -140,7 +140,7 @@ bus = &"Player"
 stream = ExtResource("13_ymqj1")
 
 [node name="ChargeSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=814048987]
-stream = ExtResource("15_7c3x0")
+stream = ExtResource("13_ymqj1")
 volume_db = -10.0
 
 [node name="SecondCamera" type="Marker3D" parent="." unique_id=1667103743]

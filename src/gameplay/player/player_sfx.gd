@@ -64,11 +64,11 @@ func bend_pitch(request: String, modifier: float) -> void:
 			var _min = 0.4 #Minimum pitch bend value
 			modifier = (modifier/player_top_speed) * 0.6 + _min
 			if modifier > 1.05:
-				modifier += 0.3 #Boosts are more noticable
-
+				modifier += 0.3 # Boosts are more noticable
+			driving.volume_db = -24.0 + modifier * 5
 			driving.pitch_scale = modifier
 		"CHARGE":
 			modifier = (modifier/20) + 0.8
 			charging.pitch_scale = modifier
 		_:
-			print("AudioError: Tried to bend undefined pitch")
+			print("AudioError: Tried to bend pitch of undefined sound")
