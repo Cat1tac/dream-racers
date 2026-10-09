@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://boc2lxjb0h4fk" path="res://src/ui/character_button.tscn" id="6_1kq2p"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
 [ext_resource type="PackedScene" uid="uid://c7hrqc4lwuvyo" path="res://src/ui/MenuBackgrounds.tscn" id="7_gucsq"]
+[ext_resource type="PackedScene" uid="uid://bxn0ntd0iqflh" path="res://src/gameplay/player/character/nyx.tscn" id="8_5kva4"]
 [ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
 [ext_resource type="Script" uid="uid://du4i8k5okij7w" path="res://src/ui/components/character_view.gd" id="9_5kva4"]
 [ext_resource type="Texture2D" uid="uid://b5terhl54jqyw" path="res://assets/ui/main menu/gradients/night_gradient.tres" id="9_yo02o"]
@@ -2457,6 +2458,8 @@ character_enum = 1
 [node name="CharFrame2" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1918381952 instance=ExtResource("6_1kq2p")]
 layout_mode = 2
 offset_transform_enabled = true
+character_model = ExtResource("8_5kva4")
+character_enum = 2
 
 [node name="CharFrame3" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1116421373 instance=ExtResource("6_1kq2p")]
 layout_mode = 2

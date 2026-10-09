@@ -12,7 +12,8 @@ const CONTROLS : Dictionary = {
 }
 
 const CHARACTERS : Dictionary = {
-	GameManager.SelectedCharacter.SERAPHIM : "uid://b7iut7u3n03vi"
+	GameManager.SelectedCharacter.SERAPHIM : "uid://b7iut7u3n03vi",
+	GameManager.SelectedCharacter.NYX : "uid://bxn0ntd0iqflh"
 }
 
 const TRACKS : Dictionary = {
