@@ -13,6 +13,7 @@ func _ready() -> void:
 	set_offscreen()
 
 func enter() -> void:
+	show()
 	_reset_tween()
 	offset_transform_enabled = true
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
@@ -25,10 +26,12 @@ func exit() -> void:
 	tween.tween_property(self, "offset_transform_position_ratio", offscreen_vector, 0.5)
 	
 func set_offscreen() -> void:
+	hide()
 	offset_transform_enabled = true
 	offset_transform_position_ratio = offscreen_vector
 
 func set_onscreen() -> void:
+	show()
 	offset_transform_enabled = false
 
 func _reset_tween() -> void:
@@ -36,5 +39,5 @@ func _reset_tween() -> void:
 		tween.kill()
 	tween = create_tween()
 
-func pressed() -> void:
+func _pressed() -> void:
 	exit()

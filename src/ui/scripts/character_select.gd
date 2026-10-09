@@ -28,12 +28,13 @@ func _show_back_button() -> void:
 func _show_next_button(players_ready : bool) -> void:
 	if players_ready:
 		next_button.enter()
-		next_button.grab_focus()
 	else:
 		next_button.exit()
 
 func _input(event: InputEvent) -> void:
 	if !visible:
+		return
+	if ui_root.current_state != ui_root.State.CHAR_SELECT:
 		return
 	
 	for player : PlayerDefinition in GameManager.player_list:
@@ -84,12 +85,12 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 	# Return to Main Menu if no character selected 
 	# BUG left or right and re-entering race will cause an error because the other characters don't have a model
 	elif Input.is_action_just_pressed(player.controls.ui_deselect) and not player.character_select_pressed:
-		back_button.pressed()
+		back_button._pressed()
 		ui_root._char_back_button_pressed()
 	
 	# UI next pressed
 	if Input.is_action_just_pressed(player.controls.ui_next) and GameManager.validate_character_select():
-		next_button.pressed()
+		next_button._pressed()
 		ui_root._character_next_button_pressed()
 		
 

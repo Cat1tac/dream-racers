@@ -7,6 +7,7 @@ custom_minimum_size = Vector2(100, 100)
 size_flags_horizontal = 0
 size_flags_vertical = 0
 offset_transform_enabled = true
+focus_mode = 0
 theme_override_font_sizes/font_size = 24
 text = "Back"
 script = ExtResource("1_pl7wq")
