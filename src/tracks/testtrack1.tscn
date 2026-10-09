@@ -9,9 +9,9 @@
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="7_wvh85"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="9_mvbxg"]
-[ext_resource type="AudioStream" uid="uid://buj5dvxgr0b0k" path="res://assets/audio/music/Baattleship Intro.ogg" id="10_4osdo"]
+[ext_resource type="AudioStream" uid="uid://buj5dvxgr0b0k" path="res://assets/audio/music/tracks/Baattleship Intro.ogg" id="10_4osdo"]
 [ext_resource type="Script" uid="uid://12gdbcuvfptw" path="res://src/tracks/music_holder.gd" id="10_crods"]
-[ext_resource type="AudioStream" uid="uid://dm4ek7v67jrlj" path="res://assets/audio/music/Baattleship Loop.ogg" id="11_crods"]
+[ext_resource type="AudioStream" uid="uid://dm4ek7v67jrlj" path="res://assets/audio/music/tracks/Baattleship Loop.ogg" id="11_crods"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
 panorama = ExtResource("2_wvh85")
