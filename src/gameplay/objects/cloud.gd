@@ -19,6 +19,6 @@ func _on_area_3d_area_exited(area: Area3D) -> void:
 	await get_tree().create_timer(0.2).timeout
 	if area is SpinHurtBox:
 		var hurt_box : SpinHurtBox = area
-		if hurt_box.kart_sphere.charge_level >= charge_need_for_super_bounce:
+		if hurt_box.kart_sphere.charge_level >= charge_need_for_super_bounce and charge_need_for_super_bounce > -1:
 			hurt_box.call_vertical_bounce(super_bounce)
 		

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cq1s6le7mmo58"]
+
+[ext_resource type="Script" uid="uid://cs37fytxppart" path="res://src/ui/hud.gd" id="1_eqvli"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_x2l1u"]
+font_size = 400
+font_color = Color(0.85178113, 0.86646545, 0.9710317, 1)
+outline_size = 65
+outline_color = Color(0.22669175, 3.47865e-05, 0.22668979, 1)
+shadow_size = 90
+shadow_color = Color(0.13725491, 0, 0.18431373, 0.50980395)
+shadow_offset = Vector2(5.06, 15.89)
+
+[node name="Hud" type="Control" unique_id=214368370]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eqvli")
+
+[node name="Countdown" type="Label" parent="." unique_id=335300990]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.5
+offset_top = -273.0
+offset_right = 114.5
+offset_bottom = 273.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_x2l1u")

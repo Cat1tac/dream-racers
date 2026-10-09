@@ -13,6 +13,7 @@ var check_list: Array[int]
 func talk_with_papa() -> void:
 	await get_tree().create_timer(0.1).timeout # Lets checkpoints give info to this scripts before sending it to TrackInfo
 	track.update(3, check_list) # (Number of laps, list of checkpoints)
+	Events.on_checkpoints_list_filled.emit()
 
 # recieves the instance id of each checkpoint in tree order (top to bottom)
 func log_checkpoints(check_id : int) -> void:

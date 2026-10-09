@@ -10219,6 +10219,9 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 0.43503487, 0.7690737, 0.012493927, 0.033333335, 1, 0.43753985, 0.78288215, -0.02970308, 0.06666667, 1, 0.44286293, 0.8122251, -0.11937165, 0.1, 1, 0.45006475, 0.85192436, -0.240688, 0.16666667, 1, 0.4663471, 0.9416792, -0.51496845, 0.2, 1, 0.47260955, 0.9762004, -0.620461, 0.23333333, 1, 0.4760539, 0.995187, -0.6784818, 0.25, 1, 0.4773064, 1.0020912, -0.69958025)
 
+[sub_resource type="Animation" id="Animation_4hbok"]
+length = 0.001
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_23aqo"]
 _data = {
 &"Nyx_CopyAction": SubResource("Animation_bospg"),
@@ -10245,6 +10248,7 @@ _data = {
 &"Nyx_Trick_Idle_Anim": SubResource("Animation_x0bwq"),
 &"Nyx_Turn_Left_Anim": SubResource("Animation_ys04p"),
 &"Nyx_Turn_Right_Anim": SubResource("Animation_xypl1"),
+&"RESET": SubResource("Animation_4hbok"),
 &"Seperate_character_and_kart": ExtResource("4_4hbok")
 }
 
@@ -10415,7 +10419,7 @@ current_state = 1
 
 [node name="kart" parent="." unique_id=2060035001 instance=ExtResource("3_tyvwq")]
 unique_name_in_owner = true
-transform = Transform3D(0.5784728, 0, -0.9939158, 0, 1.15, 0, 0.9939158, 0, 0.5784728, -0.587, 0.283, -1.459)
+transform = Transform3D(0.5784728, 0, -0.9939158, 0, 1.15, 0, 0.9939158, 0, 0.5784728, -0.387, 0.283, -2.004)
 
 [node name="Skeleton3D" parent="kart/Armature_002" parent_id_path=PackedInt32Array(2060035001, 726061753) index="0" unique_id=1103918706]
 bones/1/scale = Vector3(1, 0.99999994, 0.99999994)
@@ -10427,7 +10431,7 @@ transform = Transform3D(0.99999994, 0, 0, 0, 1.0000001, 0, 0, 0, 0.99999994, 0.7
 transform = Transform3D(-1.15, 0, -1.0053619e-07, 0, 1.15, 0, 1.0053619e-07, 0, -1.15, 0, 0, 0)
 
 [node name="Nyx_Copy" type="Node3D" parent="Nyx2" unique_id=2134485522]
-transform = Transform3D(0.99844074, 0, 0.055821504, 0, 1, 0, -0.055821504, 0, 0.99844074, 0.105, 0, 0.277)
+transform = Transform3D(0.99844074, 0, 0.055821504, 0, 1, 0, -0.055821504, 0, 0.99844074, 0.245, -0.18, 0.277)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Nyx2/Nyx_Copy" unique_id=235767713]
 bones/0/name = "Root"

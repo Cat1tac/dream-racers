@@ -141,7 +141,6 @@ snap_cast = NodePath("../Center/SnapRay")
 wall_cast = NodePath("../Center/WallRay")
 particlesManager = [NodePath("../Center/BoostCharge"), NodePath("../Center/BoostCharge2")]
 top_speed = 25.0
-air_resistance = 2
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
 boost_max_time = 1.7

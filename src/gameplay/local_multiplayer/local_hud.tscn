@@ -3,6 +3,15 @@
 [ext_resource type="Script" uid="uid://cfrould2egvdi" path="res://src/gameplay/local_multiplayer/local_hud.gd" id="1_4x5ba"]
 [ext_resource type="PackedScene" uid="uid://cebpjaeco7bpy" path="res://src/ui/components/speedometer.tscn" id="1_y85xy"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_4x5ba"]
+font_size = 60
+font_color = Color(0.85178113, 0.86646545, 0.9710317, 1)
+outline_size = 11
+outline_color = Color(0.22669175, 3.47865e-05, 0.22668979, 1)
+shadow_size = 6
+shadow_color = Color(0.13725491, 0, 0.18431373, 0.50980395)
+shadow_offset = Vector2(3.085, 4.545)
+
 [node name="local_hud" type="CanvasLayer" unique_id=1524274057 node_paths=PackedStringArray("speedometer")]
 script = ExtResource("1_4x5ba")
 speedometer = NodePath("local_hud_root/VBoxContainer/HBoxContainer/Speedometer")
@@ -43,5 +52,44 @@ offset_left = 258.96484
 offset_top = 176.81488
 offset_right = 340.96484
 offset_bottom = 181.81494
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=988266475]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(65.395, -44.01)
+
+[node name="Lap Count current" type="Label" parent="HBoxContainer" unique_id=1090670641]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_4x5ba")
+
+[node name="Lap Count divider" type="Label" parent="HBoxContainer" unique_id=1042930991]
+layout_mode = 2
+text = "/"
+label_settings = SubResource("LabelSettings_4x5ba")
+
+[node name="Lap Count Total" type="Label" parent="HBoxContainer" unique_id=29753224]
+unique_name_in_owner = true
+layout_mode = 2
+text = "3"
+label_settings = SubResource("LabelSettings_4x5ba")
+
+[node name="Time" type="Label" parent="." unique_id=271966999]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.5
+offset_right = 28.5
+offset_bottom = 137.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_4x5ba")
+horizontal_alignment = 1
 
 [editable path="local_hud_root/VBoxContainer/HBoxContainer/Speedometer"]

@@ -5,7 +5,7 @@ class_name Track extends BaseLevel
 var lap_count: int
 var checkpoint_list: Array
 @export var willCountdown: bool = false # set to false to disable race countdown
-signal countdown_finished
+
 
 func update(laps: int, c_list: Array) -> void:
 	lap_count = laps
@@ -14,16 +14,17 @@ func update(laps: int, c_list: Array) -> void:
 
 func countdown(time: float, message: String) -> void:
 	for n in range(time, 0, -1):
+		Events.on_get_countdown.emit(n)
 		print("GlobalLapLogic: " + str(n))
 		await get_tree().create_timer(1).timeout
 	print("GlobalLapLogic: " + message)
 	
-	countdown_finished.emit()
+	Events.on_countdown_finished.emit()
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	Events.on_track_loaded.emit()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

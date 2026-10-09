@@ -20,6 +20,7 @@ func complete_lap() -> void:
 	if len(progress) == checks_needed and player_controller.isRacing:
 		progress.clear()
 		laps_done += 1
+		Events.on_get_lap_count.emit(laps_done)
 		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:
 		progress.clear()
@@ -51,7 +52,8 @@ func get_check_order(order: Array) -> void:
 		print("LocalLapLogic: kart has recieved checkpoint info")
 
 func _on_tree_entered() -> void:
-	await get_tree().create_timer(0.2).timeout # Gives time for TrackInfo to update
+	await Events.on_track_loaded
+	await Events.on_checkpoints_list_filled # Gives time for TrackInfo to update
 	get_check_order(parent.current_track.checkpoint_list)
 	if parent.current_track.willCountdown:
 		await get_tree().create_timer(4.8).timeout # Total of a 5 second wait from Scene Start
@@ -70,5 +72,5 @@ func _process(delta: float) -> void:
 # DysFUNCtional (haha get it) since I have yet to figure out rotations
 func respawn() -> void:
 	player_controller.global_position = respawn_location
-	player.global_rotation = respawn_rotation
+	#player.global_rotation = respawn_rotation
 	player_controller.linear_velocity = Vector3(0.0, 0.0, 0.0)

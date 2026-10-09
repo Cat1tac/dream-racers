@@ -64,12 +64,12 @@ var drift_direction : float
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var boost_acceleration := 21.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var boost_top_speed : = 5.0
 @export var boosts : Dictionary = { ## Dictionary containing divisors for drift boost speed/time and spin boost speed/time
-	1:{"dftSpdFactor" : 0.5, "dftTimeFactor" : 0.5, "spinSpdFactor" : 0.3, "spinTimeFactor" : 0.4},
-	2:{"dftSpdFactor" : 0.7, "dftTimeFactor" : 0.7, "spinSpdFactor" : 0.4, "spinTimeFactor" : 0.4},
-	3:{"dftSpdFactor" : 1, "dftTimeFactor" : 1, "spinSpdFactor" : 0.5, "spinTimeFactor" : 0.5},
-	4:{"dftSpdFactor" : 1.2, "dftTimeFactor" : 1.2, "spinSpdFactor" : 0.6, "spinTimeFactor" : 0.6},
-	5:{"dftSpdFactor" : 1.5, "dftTimeFactor" : 1.5, "spinSpdFactor" : 0.7, "spinTimeFactor" : 0.7},
-	6:{"dftSpdFactor" : 1.8, "dftTimeFactor" : 1.8, "spinSpdFactor" : 0.8, "spinTimeFactor" : 0.8}}
+	1:{"dftSpdFactor" : 0.5, "dftTimeFactor" : 0.5, "spinSpdFactor" : 0.4, "spinTimeFactor" : 0.4},
+	2:{"dftSpdFactor" : 0.7, "dftTimeFactor" : 0.7, "spinSpdFactor" : 0.5, "spinTimeFactor" : 0.5},
+	3:{"dftSpdFactor" : 1, "dftTimeFactor" : 1, "spinSpdFactor" : 0.6, "spinTimeFactor" : 0.6},
+	4:{"dftSpdFactor" : 1.2, "dftTimeFactor" : 1.2, "spinSpdFactor" : 0.7, "spinTimeFactor" : 0.7},
+	5:{"dftSpdFactor" : 1.5, "dftTimeFactor" : 1.5, "spinSpdFactor" : 0.8, "spinTimeFactor" : 0.8},
+	6:{"dftSpdFactor" : 2, "dftTimeFactor" : 2, "spinSpdFactor" : 1.0, "spinTimeFactor" : 1.0}}
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var boost_max_time := 1.5 # will be state adjustable
 #TODO Implement a boost curve
 
@@ -151,7 +151,7 @@ func on_ground() -> bool:
 
 func body_colliding_with_ground() -> bool:
 	for body in get_colliding_bodies():
-		if body.get_collision_layer_value(2) or body.get_collision_layer_value(3):
+		if body.get_collision_layer_value(2):
 			return true
 	return false
 
@@ -225,7 +225,7 @@ func _handle_input() -> void:
 		elif stored_charge_level >= 3 and boost_panels_driven_over_increment <= 0: # use stored charge
 			_execute_boost(stored_charge_level)
 			_remove_stored_charge()
-		print(stored_charge_level)
+		Events.on_get_stored_charge.emit(stored_charge_level, boost_panels_driven_over_store, player.playerId)
 			
 
 
@@ -332,6 +332,8 @@ func set_boost(speedMultiplier : float, timeMultiplier : float) -> void:
 	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
 	boost_timer = boost_max_time * timeMultiplier 
+	if speedMultiplier == 1.8:
+		print(boost_actual_speed)
 	
 
 #Stored Charge

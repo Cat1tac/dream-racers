@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d0qafquu1y2j"]
 
-[ext_resource type="Script" uid="uid://bt2wshrjxrpvr" path="res://src/tracks/out_of_bounds.gd" id="1_wg36c"]
+[ext_resource type="Script" uid="uid://bt2wshrjxrpvr" path="res://src/gameplay/objects/out_of_bounds.gd" id="1_wg36c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
-size = Vector3(16, 0.185, 16)
+size = Vector3(16, 1, 16)
 
 [node name="OutOfBounds" type="Area3D" unique_id=2017124765]
 script = ExtResource("1_wg36c")
@@ -11,6 +11,6 @@ script = ExtResource("1_wg36c")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1150197033]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3369529, 0)
 shape = SubResource("BoxShape3D_skbuk")
-debug_color = Color(0.99, 0, 0.016499748, 0.7529412)
+debug_color = Color(0.8404611, 0.26265156, 0.99999994, 0.41960785)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
