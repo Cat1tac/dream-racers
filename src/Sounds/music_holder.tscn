@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cg1f8wo7jqdr6"]
+
+[ext_resource type="Script" uid="uid://12gdbcuvfptw" path="res://src/tracks/music_holder.gd" id="1_1bf6w"]
+[ext_resource type="AudioStream" uid="uid://buj5dvxgr0b0k" path="res://assets/audio/music/tracks/Baattleship Intro.ogg" id="2_22blg"]
+[ext_resource type="AudioStream" uid="uid://dm4ek7v67jrlj" path="res://assets/audio/music/tracks/Baattleship Loop.ogg" id="3_nguhb"]
+
+[node name="MusicHolder" type="Node" unique_id=601645172]
+script = ExtResource("1_1bf6w")
+
+[node name="Intro" type="AudioStreamPlayer" parent="." unique_id=589336577]
+stream = ExtResource("2_22blg")
+bus = &"Music"
+
+[node name="Loop" type="AudioStreamPlayer" parent="." unique_id=1654185185]
+stream = ExtResource("3_nguhb")
+bus = &"Music"
+
+[connection signal="finished" from="Intro" to="." method="_on_intro_finished"]

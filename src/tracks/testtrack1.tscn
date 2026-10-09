@@ -9,9 +9,7 @@
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="7_wvh85"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="9_mvbxg"]
-[ext_resource type="AudioStream" uid="uid://buj5dvxgr0b0k" path="res://assets/audio/music/tracks/Baattleship Intro.ogg" id="10_4osdo"]
-[ext_resource type="Script" uid="uid://12gdbcuvfptw" path="res://src/tracks/music_holder.gd" id="10_crods"]
-[ext_resource type="AudioStream" uid="uid://dm4ek7v67jrlj" path="res://assets/audio/music/tracks/Baattleship Loop.ogg" id="11_crods"]
+[ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="10_gj6qf"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
 panorama = ExtResource("2_wvh85")
@@ -31,6 +29,7 @@ size = Vector3(1, 8.7300415, 22.593689)
 [node name="Testtrack1" type="Node3D" unique_id=1971607976 node_paths=PackedStringArray("player_spawners")]
 script = ExtResource("1_xgnfn")
 player_spawners = [NodePath("PlayerSpawn1"), NodePath("PlayerSpawn2")]
+willCountdown = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=331994150]
 transform = Transform3D(0.965459, 0.14834361, -0.21420336, -1.2948174e-08, 0.8221043, 0.569337, 0.26055497, -0.54967153, 0.79370797, 288.66183, 210.33945, 38.24308)
@@ -53,10 +52,10 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 
 [node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("3_5ryjy")]
 
-[node name="@StaticBody3D@19874" parent="testtrack3" index="1" unique_id=908172225]
+[node name="@StaticBody3D@19982" parent="testtrack3" index="1" unique_id=984007756]
 collision_layer = 6
 
-[node name="@StaticBody3D@19875" parent="testtrack3" index="3" unique_id=1546142642]
+[node name="@StaticBody3D@19983" parent="testtrack3" index="3" unique_id=910210591]
 collision_layer = 6
 
 [node name="Boost_Panels" type="Node3D" parent="." unique_id=1827261410]
@@ -146,19 +145,9 @@ transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0,
 [node name="OutOfBounds" parent="." unique_id=2017124765 instance=ExtResource("9_mvbxg")]
 transform = Transform3D(30.31, 0, 0, 0, 30.31, 0, 0, 0, 30.31, 48.053802, -29.245155, 36.661545)
 
-[node name="MusicHolder" type="Node" parent="." unique_id=1878177723]
-script = ExtResource("10_crods")
+[node name="MusicHolder" parent="." unique_id=601645172 instance=ExtResource("10_gj6qf")]
 
-[node name="Intro" type="AudioStreamPlayer" parent="MusicHolder" unique_id=1000932650]
-stream = ExtResource("10_4osdo")
-bus = &"Music"
-
-[node name="Loop" type="AudioStreamPlayer" parent="MusicHolder" unique_id=854307945]
-stream = ExtResource("11_crods")
-bus = &"Music"
-
-[connection signal="countdown_finished" from="." to="MusicHolder" method="_on_testtrack_1_countdown_finished"]
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
-[connection signal="finished" from="MusicHolder/Intro" to="MusicHolder" method="_on_intro_finished"]
 
 [editable path="testtrack3"]
+[editable path="MusicHolder"]

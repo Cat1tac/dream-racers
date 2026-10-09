@@ -3,9 +3,14 @@ extends Node
 @onready var intro: AudioStreamPlayer = $Intro
 @onready var loop: AudioStreamPlayer = $Loop
 
+func _ready() -> void:
+	Events.on_countdown_finished.connect(_play_intro)
 
-func _on_testtrack_1_countdown_finished() -> void:
-	intro.play()
+func _play_intro() -> void:
+	if intro.stream:
+		intro.play()
+	else:
+		loop.play()
 
 
 func _on_intro_finished() -> void:

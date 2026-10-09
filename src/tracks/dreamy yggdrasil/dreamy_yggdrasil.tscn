@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c06t6qhj34x80" path="res://assets/models/tracks/Dreamy Yggdrasil/DreamyYggdrasil (with Leaves).glb" id="10_5tsv1"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="10_d1fgb"]
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="11_fa1el"]
+[ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="12_fa1el"]
+[ext_resource type="AudioStream" uid="uid://d1f2yit8o115y" path="res://src/Sounds/Dream Racers - Yggdrasil v2.mp3" id="13_on71r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bd4lb"]
 shader = ExtResource("2_q854r")
@@ -148,20 +150,20 @@ transform = Transform3D(3.494975, 0, 0.41898447, 0, 3.52, 0, -0.41898447, 0, 3.4
 
 [node name="DreamyYggdrasil (with Leaves)2" parent="." unique_id=1475172835 instance=ExtResource("10_5tsv1")]
 
-[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=413953391]
+[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=999346627]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010043144, 0, -0.02722168)
 surface_material_override/1 = SubResource("StandardMaterial3D_o8quk")
 
-[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=718817460]
+[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=287506237]
 surface_material_override/0 = ExtResource("8_ehbii")
 
-[node name="@StaticBody3D@252772" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=961090200]
+[node name="@StaticBody3D@20126" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=1048557939]
 collision_layer = 4
 
-[node name="@StaticBody3D@252773" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=1973231181]
+[node name="@StaticBody3D@20127" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=807985940]
 collision_layer = 4
 
-[node name="@StaticBody3D@252774" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=1373729415]
+[node name="@StaticBody3D@20128" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=2048447300]
 collision_layer = 2
 
 [node name="LapLogic" type="Node" parent="." unique_id=24872241 node_paths=PackedStringArray("track")]
@@ -330,6 +332,15 @@ transform = Transform3D(0.5387707, 0, -0.84245235, 0, 1.0000002, 0, 0.8424523, 0
 [node name="OutOfBounds" parent="." unique_id=2017124765 instance=ExtResource("11_fa1el")]
 transform = Transform3D(30.505, 0, 0, 0, 30.505, 0, 0, 0, 30.505, 15.436226, -81.31001, -6.1447296)
 
+[node name="MusicHolder" parent="." unique_id=601645172 instance=ExtResource("12_fa1el")]
+
+[node name="Intro" parent="MusicHolder" index="0" unique_id=589336577]
+stream = null
+
+[node name="Loop" parent="MusicHolder" index="1" unique_id=1654185185]
+stream = ExtResource("13_on71r")
+volume_db = -22.282
+
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 
 [editable path="DreamyYggdrasil (with Leaves)2"]
@@ -353,3 +364,4 @@ transform = Transform3D(30.505, 0, 0, 0, 30.505, 0, 0, 0, 30.505, 15.436226, -81
 [editable path="LapLogic/Checkpoints/Checkpoint21"]
 [editable path="LapLogic/Checkpoints/Checkpoint22"]
 [editable path="OutOfBounds"]
+[editable path="MusicHolder"]

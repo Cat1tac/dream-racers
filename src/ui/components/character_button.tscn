@@ -15,7 +15,7 @@ shader_parameter/start_y = -0.03000000305476
 shader_parameter/amplitude_x = -0.01299999735762
 shader_parameter/amplitude_y = -0.01299999735762
 shader_parameter/frequency = 4.0000000596048
-shader_parameter/selected_x = -3.7253200108056114e-09
+shader_parameter/selected_x = -3.725320010805611e-09
 shader_parameter/selected_y = -0.01000000350180001
 shader_parameter/selected = false
 shader_parameter/selected_color = Color(1, 0.6, 0.8784314, 1)
@@ -42,7 +42,7 @@ shader_parameter/amplitude_x = 0.01300000387737999
 shader_parameter/amplitude_y = -0.01299999735762
 shader_parameter/frequency = -3.9999999105928
 shader_parameter/selected_x = 0.0
-shader_parameter/selected_y = -3.7253200108056114e-09
+shader_parameter/selected_y = -3.725320010805611e-09
 shader_parameter/selected = false
 shader_parameter/selected_color = Color(1, 0.6, 0.8784314, 1)
 shader_parameter/color_to_keep = Color(1, 0.9254902, 0.8627451, 1)
@@ -54,7 +54,7 @@ shader_parameter/start_y = 0.01999999582763999
 shader_parameter/amplitude_x = 0.01300000387737999
 shader_parameter/amplitude_y = 0.01300000387737999
 shader_parameter/frequency = 4.0000000596048
-shader_parameter/selected_x = -3.7253200108056114e-09
+shader_parameter/selected_x = -3.725320010805611e-09
 shader_parameter/selected_y = 0.0
 shader_parameter/selected = false
 shader_parameter/selected_color = Color(1, 0.6, 0.8784314, 1)
@@ -69,6 +69,7 @@ script = ExtResource("1_r81x4")
 indicators = [NodePath("P1"), NodePath("P2"), NodePath("P3"), NodePath("P4")]
 
 [node name="P1" type="TextureRect" parent="." unique_id=1840385678]
+visible = false
 material = SubResource("ShaderMaterial_qlhin")
 custom_maximum_size = Vector2(300, 300)
 layout_mode = 0
@@ -78,6 +79,7 @@ offset_bottom = 300.0
 texture = ExtResource("4_d6wo8")
 
 [node name="P2" type="TextureRect" parent="." unique_id=397882119]
+visible = false
 material = SubResource("ShaderMaterial_y7o6w")
 custom_maximum_size = Vector2(300, 300)
 layout_mode = 0
@@ -86,6 +88,7 @@ offset_bottom = 40.0
 texture = ExtResource("5_6sbg5")
 
 [node name="P3" type="TextureRect" parent="." unique_id=2023057530]
+visible = false
 material = SubResource("ShaderMaterial_cmhfd")
 custom_maximum_size = Vector2(300, 300)
 layout_mode = 0
@@ -94,6 +97,7 @@ offset_bottom = 40.0
 texture = ExtResource("6_iyidd")
 
 [node name="P4" type="TextureRect" parent="." unique_id=1071215277]
+visible = false
 material = SubResource("ShaderMaterial_hph17")
 custom_maximum_size = Vector2(300, 300)
 layout_mode = 0

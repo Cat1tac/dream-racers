@@ -587,7 +587,6 @@ func _apply_forward_force(_delta : float) -> void:
 	apply_central_force(60 * _calculate_force_vector(forward, vel) * _delta)
 	#print(force_vector)
 	DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
-	Events.on_get_speed.emit(vel, drift_timer)
 	audio_player.bend_pitch("DRIVE", vel)
 
 func _apply_air_resistance(_delta: float) -> void:

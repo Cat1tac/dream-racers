@@ -28,6 +28,7 @@ func _show_back_button() -> void:
 func _show_next_button(players_ready : bool) -> void:
 	if players_ready:
 		next_button.enter()
+		next_button.grab_focus()
 	else:
 		next_button.exit()
 

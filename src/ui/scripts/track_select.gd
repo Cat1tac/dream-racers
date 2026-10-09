@@ -66,3 +66,4 @@ func _show_back_button() -> void:
 	
 func _show_next_button() -> void:
 		next_button.enter()
+		next_button.grab_focus()
