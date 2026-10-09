@@ -55,6 +55,7 @@ radial_initial_angle = 180.0
 radial_fill_degrees = 252.0
 texture_under = ExtResource("1_qvrtp")
 texture_progress = ExtResource("2_1mw6m")
+enter_time_delay = 1.2
 
 [node name="SpeedLabel" type="Label" parent="TextureProgressBar" unique_id=833433538]
 unique_name_in_owner = true

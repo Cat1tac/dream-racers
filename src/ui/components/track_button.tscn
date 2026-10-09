@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dkisc0g5e2d7t"]
+
+[ext_resource type="Texture2D" uid="uid://b3a1pcsmnqdp2" path="res://assets/ui/main menu/Character Select/Black Select Outline.png" id="1_ffv1w"]
+[ext_resource type="Texture2D" uid="uid://c4nbe2h4oopx2" path="res://assets/ui/main menu/Character Select/White Outline.png" id="2_nrnul"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jlntk"]
+bg_color = Color(0.3544355, 0.22322714, 0.54567975, 1)
+border_width_bottom = 5
+border_color = Color(0.19107318, 0.00024691076, 0.5326519, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="TrackIcon" type="PanelContainer" unique_id=777723048]
+custom_minimum_size = Vector2(225, 225)
+custom_maximum_size = Vector2(225, 225)
+propagate_maximum_size = false
+size_flags_horizontal = 4
+offset_transform_enabled = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
+
+[node name="TrackButton" type="TextureButton" parent="." unique_id=1245828597]
+custom_minimum_size = Vector2(255, 255)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_enabled = true
+texture_normal = ExtResource("1_ffv1w")
+texture_focused = ExtResource("2_nrnul")
+ignore_texture_size = true
+stretch_mode = 0

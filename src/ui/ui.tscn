@@ -5,16 +5,19 @@
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
 [ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim.tscn" id="5_1kq2p"]
-[ext_resource type="Animation" uid="uid://dif08814ovmqm" path="res://src/ui/animations/next_button_pop_in.res" id="5_eofyr"]
-[ext_resource type="PackedScene" uid="uid://boc2lxjb0h4fk" path="res://src/ui/character_button.tscn" id="6_1kq2p"]
+[ext_resource type="PackedScene" uid="uid://boc2lxjb0h4fk" path="res://src/ui/components/character_button.tscn" id="6_1kq2p"]
+[ext_resource type="PackedScene" uid="uid://dmgpxiaj15x20" path="res://src/ui/components/back_button.tscn" id="6_2auc3"]
 [ext_resource type="Script" uid="uid://bbq3mvswtwiv3" path="res://src/ui/scripts/track_select.gd" id="6_gucsq"]
 [ext_resource type="PackedScene" uid="uid://c7hrqc4lwuvyo" path="res://src/ui/MenuBackgrounds.tscn" id="7_gucsq"]
 [ext_resource type="PackedScene" uid="uid://bxn0ntd0iqflh" path="res://src/gameplay/player/character/nyx.tscn" id="8_5kva4"]
 [ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
 [ext_resource type="Script" uid="uid://du4i8k5okij7w" path="res://src/ui/components/character_view.gd" id="9_5kva4"]
 [ext_resource type="Texture2D" uid="uid://b5terhl54jqyw" path="res://assets/ui/main menu/gradients/night_gradient.tres" id="9_yo02o"]
+[ext_resource type="PackedScene" uid="uid://cwkwov7useclc" path="res://src/ui/components/next_button.tscn" id="10_ba7qp"]
 [ext_resource type="Texture2D" uid="uid://dwr06xauwjiie" path="res://assets/ui/main menu/gradients/twilight_gradient.tres" id="10_eofyr"]
 [ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
+[ext_resource type="Script" uid="uid://j8n80agc0365" path="res://src/ui/scripts/nav_button.gd" id="11_2auc3"]
+[ext_resource type="PackedScene" uid="uid://dkisc0g5e2d7t" path="res://src/ui/components/track_button.tscn" id="11_gq7f2"]
 [ext_resource type="Texture2D" uid="uid://5c7g1b2beiti" path="res://assets/ui/main menu/gradients/sunset_gradient.tres" id="12_5kva4"]
 [ext_resource type="Texture2D" uid="uid://cwx2m4gn17vf5" path="res://assets/ui/main menu/gradients/clouds_night_gradient.tres" id="13_2auc3"]
 [ext_resource type="Texture2D" uid="uid://d4fc7uh24338m" path="res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres" id="14_ba7qp"]
@@ -1402,8 +1405,7 @@ _data = {
 &"enter_left": SubResource("Animation_6s7ef"),
 &"enter_right": SubResource("Animation_l5owu"),
 &"exit_left": SubResource("Animation_yo02o"),
-&"exit_right": SubResource("Animation_j4riv"),
-&"next_button_pop_in": ExtResource("5_eofyr")
+&"exit_right": SubResource("Animation_j4riv")
 }
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pqyqd"]
@@ -1441,7 +1443,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_position_ratio")
+tracks/2/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:offset_transform_position_ratio")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1453,7 +1455,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_position_ratio")
+tracks/3/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:offset_transform_position_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1513,7 +1515,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:modulate")
+tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -1525,7 +1527,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_enabled")
+tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:offset_transform_enabled")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -1537,7 +1539,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:modulate")
+tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -1549,7 +1551,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -1561,122 +1563,74 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("BackButtonMargin/BackButton:disabled")
+tracks/12/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:offset_transform_position_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_position_ratio")
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:modulate")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:modulate")
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:offset_transform_enabled")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
+"update": 1,
+"values": [false]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_enabled")
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:offset_transform_position_ratio")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_position_ratio")
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:modulate")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Color(0, 0, 0, 0)]
 }
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:modulate")
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:offset_transform_enabled")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
-}
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_enabled")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("NextButtonMargin/NextButton:offset_transform_enabled")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("NextButtonMargin/NextButton:modulate")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("NextButtonMargin/NextButton:offset_transform_position_ratio")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ri2wq"]
@@ -1757,7 +1711,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_position_ratio")
+tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:offset_transform_position_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -1769,7 +1723,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:modulate")
+tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -1781,7 +1735,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_enabled")
+tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:offset_transform_enabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -1793,7 +1747,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_position_ratio")
+tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:offset_transform_position_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -1805,7 +1759,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:modulate")
+tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -1817,7 +1771,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -1829,91 +1783,91 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("BackButtonMargin/BackButton:disabled")
+tracks/12/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:offset_transform_position_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_position_ratio")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
 "times": PackedFloat32Array(0.46666667, 0.6666666),
 "transitions": PackedFloat32Array(0.61557215, 1),
 "update": 0,
 "values": [Vector2(6, 0), Vector2(0, 0)]
 }
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:modulate")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:modulate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
 "times": PackedFloat32Array(0.46666667, 0.6333333),
 "transitions": PackedFloat32Array(0.53588665, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_enabled")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:offset_transform_enabled")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_position_ratio")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:offset_transform_position_ratio")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
 "times": PackedFloat32Array(0.5, 0.6999999),
 "transitions": PackedFloat32Array(0.61557215, 1),
 "update": 0,
 "values": [Vector2(6, 0), Vector2(0, 0)]
 }
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:modulate")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:modulate")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
 "times": PackedFloat32Array(0.5, 0.6666666),
 "transitions": PackedFloat32Array(0.53588665, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_enabled")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:offset_transform_enabled")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
 "times": PackedFloat32Array(0.03333336),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("../../BackgroundLayers/Background:material:shader_parameter/gradient_control")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1.4142134, 1),
+"update": 0,
+"values": [0.39999998988, 0.79999997976]
+}
 tracks/19/type = "value"
 tracks/19/imported = false
 tracks/19/enabled = true
-tracks/19/path = NodePath("../../BackgroundLayers/Background:material:shader_parameter/gradient_control")
+tracks/19/path = NodePath("../../BackgroundLayers/Sun:material:shader_parameter/gradient_control")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
@@ -1925,22 +1879,10 @@ tracks/19/keys = {
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("../../BackgroundLayers/Sun:material:shader_parameter/gradient_control")
+tracks/20/path = NodePath("../../BackgroundLayers/Clouds:material:shader_parameter/gradient_control")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1.4142134, 1),
-"update": 0,
-"values": [0.39999998988, 0.79999997976]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("../../BackgroundLayers/Clouds:material:shader_parameter/gradient_control")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1.4142134, 1),
 "update": 0,
@@ -2024,7 +1966,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_position_ratio")
+tracks/6/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:offset_transform_position_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -2036,7 +1978,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:modulate")
+tracks/7/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -2048,7 +1990,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track1:offset_transform_enabled")
+tracks/8/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1:offset_transform_enabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -2060,7 +2002,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_position_ratio")
+tracks/9/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:offset_transform_position_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -2072,7 +2014,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:modulate")
+tracks/10/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -2084,7 +2026,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track2:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -2096,82 +2038,70 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("BackButtonMargin/BackButton:disabled")
+tracks/12/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:offset_transform_position_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_position_ratio")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
 "times": PackedFloat32Array(0.13333334, 0.4333334),
 "transitions": PackedFloat32Array(0.61557215, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(6, 0)]
 }
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:modulate")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:modulate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
 "times": PackedFloat32Array(0.13333334, 0.4000001),
 "transitions": PackedFloat32Array(0.4061261, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track3:offset_transform_enabled")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3:offset_transform_enabled")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_position_ratio")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:offset_transform_position_ratio")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
 "times": PackedFloat32Array(0.1, 0.39999992),
 "transitions": PackedFloat32Array(0.61557215, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(6, 0)]
 }
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:modulate")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:modulate")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
 "times": PackedFloat32Array(0.1, 0.36666662),
 "transitions": PackedFloat32Array(0.4061261, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/Track4:offset_transform_enabled")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4:offset_transform_enabled")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
 "times": PackedFloat32Array(0.03333336),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -2182,8 +2112,7 @@ tracks/18/keys = {
 _data = {
 &"RESET": SubResource("Animation_wwjrv"),
 &"enter_right": SubResource("Animation_ri2wq"),
-&"exit_right": SubResource("Animation_idipi"),
-&"next_button_pop_in": ExtResource("5_eofyr")
+&"exit_right": SubResource("Animation_idipi")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qemve"]
@@ -2197,24 +2126,6 @@ corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jlntk"]
-bg_color = Color(0.3544355, 0.22322714, 0.54567975, 1)
-border_width_bottom = 5
-border_color = Color(0.19107318, 0.00024691076, 0.5326519, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="Gradient" id="Gradient_2auc3"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_1kq2p"]
-gradient = SubResource("Gradient_2auc3")
-width = 225
-height = 225
-fill_from = Vector2(0.5165094, 0)
-fill_to = Vector2(0.4764151, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g1bnb"]
 shader = ExtResource("8_6s7ef")
@@ -2282,7 +2193,7 @@ script = ExtResource("1_qemve")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=515055114]
 
-[node name="MainMenu" type="Control" parent="UILayer" unique_id=426220796 node_paths=PackedStringArray("transition_animations", "next_state")]
+[node name="MainMenu" type="Control" parent="UILayer" unique_id=426220796 node_paths=PackedStringArray("ui_root", "transition_animations", "next_state")]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -2291,6 +2202,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_8wxmc")
+ui_root = NodePath("../..")
 transition_animations = NodePath("MainMenuAnimations")
 next_state = NodePath("../CharacterSelect")
 metadata/_edit_lock_ = true
@@ -2383,7 +2295,7 @@ theme = ExtResource("1_jlntk")
 theme_override_font_sizes/font_size = 70
 text = "Exit"
 
-[node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("character_buttons", "character_views", "transition_animations", "next_state", "previous_state")]
+[node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("character_buttons", "character_views", "ui_root", "transition_animations", "next_state", "previous_state")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -2395,6 +2307,7 @@ grow_vertical = 2
 script = ExtResource("4_7abqo")
 character_buttons = [NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2"), NodePath("VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3")]
 character_views = [NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3"), NodePath("VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4")]
+ui_root = NodePath("../..")
 transition_animations = NodePath("CharacterSelectAnimations")
 next_state = NodePath("../TrackSelect")
 previous_state = NodePath("../MainMenu")
@@ -2409,13 +2322,9 @@ offset_bottom = 48.0
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 
-[node name="BackButton" type="Button" parent="UILayer/CharacterSelect/BackButtonMargin" unique_id=772965871]
-custom_minimum_size = Vector2(100, 100)
+[node name="BackButton" parent="UILayer/CharacterSelect/BackButtonMargin" unique_id=1394668878 instance=ExtResource("6_2auc3")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Back"
+offscreen_vector = Vector2(0, -1.5)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect" unique_id=674948339]
 layout_mode = 1
@@ -2631,16 +2540,13 @@ grow_vertical = 2
 theme_override_constants/margin_right = 30
 metadata/_edit_use_anchors_ = true
 
-[node name="NextButton" type="Button" parent="UILayer/CharacterSelect/NextButtonMargin" unique_id=503467714]
-custom_minimum_size = Vector2(150, 100)
+[node name="NextButton" parent="UILayer/CharacterSelect/NextButtonMargin" unique_id=1711733650 instance=ExtResource("10_ba7qp")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-offset_transform_enabled = true
-theme_override_font_sizes/font_size = 24
-text = "Next"
+offset_transform_position_ratio = Vector2(1.5, 0)
+type = 1
+offscreen_vector = Vector2(2, 0)
 
-[node name="TrackSelect" type="Control" parent="UILayer" unique_id=424881822 node_paths=PackedStringArray("next_button", "transition_animations", "previous_state")]
+[node name="TrackSelect" type="Control" parent="UILayer" unique_id=424881822 node_paths=PackedStringArray("ui_root", "transition_animations", "previous_state")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -2651,8 +2557,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 script = ExtResource("6_gucsq")
-next_button = NodePath("NextButtonMargin/NextButton")
+ui_root = NodePath("../..")
 transition_animations = NodePath("TrackSelectAnimations")
 previous_state = NodePath("../CharacterSelect")
 metadata/_edit_lock_ = true
@@ -2673,13 +2580,8 @@ theme_override_constants/margin_top = 6
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="BackButton" type="Button" parent="UILayer/TrackSelect/BackButtonMargin" unique_id=1163927883]
-custom_minimum_size = Vector2(100, 100)
+[node name="BackButton" parent="UILayer/TrackSelect/BackButtonMargin" unique_id=687341906 instance=ExtResource("6_2auc3")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Back"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TrackSelect" unique_id=162563002]
 layout_mode = 1
@@ -2711,7 +2613,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qemve")
 
 [node name="TrackViewMargin" type="MarginContainer" parent="UILayer/TrackSelect/VBoxContainer" unique_id=1889994990]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
 theme_override_constants/margin_bottom = 25
 
 [node name="TrackViewHBox" type="HBoxContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin" unique_id=1461557336]
@@ -2720,49 +2622,25 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 72
 
-[node name="Track1" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=900318843]
+[node name="TrackIcon1" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=777723048 instance=ExtResource("11_gq7f2")]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
+offset_transform_enabled = false
 
-[node name="Track1Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track1" unique_id=1753988692]
-layout_mode = 2
-texture_focused = SubResource("GradientTexture2D_1kq2p")
-
-[node name="Track2" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=449278947]
+[node name="TrackIcon2" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=1694138367 instance=ExtResource("11_gq7f2")]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
+offset_transform_enabled = false
 
-[node name="Track2Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track2" unique_id=441718402]
-layout_mode = 2
-texture_focused = SubResource("GradientTexture2D_1kq2p")
-
-[node name="Track3" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=1773307534]
+[node name="TrackIcon3" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=314372748 instance=ExtResource("11_gq7f2")]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
+offset_transform_enabled = false
 
-[node name="Track3Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track3" unique_id=191107945]
-layout_mode = 2
-texture_focused = SubResource("GradientTexture2D_1kq2p")
-
-[node name="Track4" type="PanelContainer" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=270231830]
+[node name="TrackIcon4" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox" unique_id=946919230 instance=ExtResource("11_gq7f2")]
 modulate = Color(0, 0, 0, 0)
-custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_jlntk")
-
-[node name="Track4Button" type="TextureButton" parent="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track4" unique_id=62370896]
-layout_mode = 2
-texture_focused = SubResource("GradientTexture2D_1kq2p")
+offset_transform_enabled = false
 
 [node name="NextButtonMargin" type="MarginContainer" parent="UILayer/TrackSelect" unique_id=1112518091]
 layout_mode = 1
@@ -2776,14 +2654,17 @@ grow_vertical = 2
 theme_override_constants/margin_right = 30
 metadata/_edit_use_anchors_ = true
 
-[node name="NextButton" type="Button" parent="UILayer/TrackSelect/NextButtonMargin" unique_id=94423041]
-modulate = Color(1, 1, 1, 0)
+[node name="NextButton" type="Button" parent="UILayer/TrackSelect/NextButtonMargin" unique_id=1701418014]
 custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Next"
+script = ExtResource("11_2auc3")
+type = 1
+offscreen_vector = Vector2(2, 0)
+metadata/_custom_type_script = "uid://j8n80agc0365"
 
 [node name="BackgroundLayers" parent="." unique_id=1665049764 instance=ExtResource("7_gucsq")]
 unique_name_in_owner = true
@@ -2798,16 +2679,21 @@ material = SubResource("ShaderMaterial_5m051")
 material = SubResource("ShaderMaterial_lp5l8")
 
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton" to="." method="_race_button_pressed"]
+[connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton" to="." method="_how_to_play_button_pressed"]
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/ExitButton" to="." method="_exit_button_pressed"]
 [connection signal="visibility_changed" from="UILayer/CharacterSelect" to="UILayer/CharacterSelect" method="_on_visibility_changed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_char_back_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/NextButtonMargin/NextButton" to="." method="_character_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="." method="_track_back_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="UILayer/TrackSelect" method="_back_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track1/Track1Button" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track2/Track2Button" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track3/Track3Button" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/Track4/Track4Button" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2/TrackButton" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="." method="_track_next_button_pressed"]
 
+[editable path="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1"]
+[editable path="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2"]
+[editable path="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3"]
+[editable path="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4"]
 [editable path="BackgroundLayers"]

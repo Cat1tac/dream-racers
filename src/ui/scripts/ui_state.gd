@@ -4,7 +4,10 @@ extends Control
 ## an abstract class for UI states with functions to transition between
 ## and signal transitions.
 
-#signal transition_finished
+signal transition_finished
+
+@export var ui_root: UIManager
+
 
 # NOTE each UIState node must have "exit_left" "enter_left"
 @export var transition_animations: AnimationPlayer
@@ -37,8 +40,9 @@ func transition_to_state(newState: UIState) -> void:
 	
 	# hide old screen
 	await transition_animations.animation_finished
+	transition_finished.emit()
 	hide()
 
-##Sets focus to first button
+## Sets focus to [code]button[/code].
 func set_initial_focus(button : Control) -> void:
 	button.grab_focus()

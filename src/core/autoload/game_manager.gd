@@ -30,7 +30,7 @@ enum SelectedCharacter {
 
 enum SelectedTrack {
 	NONE, ## No track is selected
-	TREE, ## Yggdrasil Tree
+	TREE, ## Dreamy Yggdrasil
 	SHIP, ## Baa Baa Battleship
 }
 #endregion
@@ -106,7 +106,7 @@ func validate_character_select() -> bool:
 	return true
 #endregion
 
-#region loading
+#region loading functions
 func load_into_path(path: NodePath) -> void:
 	is_loading = true
 	set_path_to_load(path)

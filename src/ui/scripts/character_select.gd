@@ -2,7 +2,8 @@ extends UIState
 #TODO when first going into character select screen make the game show the character being hovered over initially
 @export var character_buttons : Array[CharacterButton]
 @export var character_views : Array[CharacterView]
-@onready var next_button: Button = $NextButtonMargin/NextButton
+@onready var next_button: NavButton = $NextButtonMargin/NextButton
+@onready var back_button: NavButton = $BackButtonMargin/BackButton
 
 #TODO add way for player to leave game while on main menu (- on controller, spin key on keyboard)
 #TODO make next button work by pressing ui_accept
@@ -10,7 +11,7 @@ extends UIState
 
 func _ready() -> void:
 	Events.on_player_added.connect(_show_character)
-	next_button.hide()
+	self.visibility_changed.connect(_show_back_button)
 	GameManager.all_players_selected_character.connect(_show_next_button)
 
 ## Show the character on initial visibility
@@ -21,23 +22,27 @@ func _on_visibility_changed() -> void:
 		character_buttons[player.character_select_position].unhide_indicator(player.id)
 		_show_character(player.character_select_position, player.id)
 
+func _show_back_button() -> void:
+	back_button.enter()
+	
 func _show_next_button(players_ready : bool) -> void:
 	if players_ready:
-		next_button.show()
-		next_button.grab_focus()
-		transition_animations.play("next_button_pop_in")
+		next_button.enter()
 	else:
-		next_button.hide()
+		next_button.exit()
 
 func _input(event: InputEvent) -> void:
 	if !visible:
+		return
+	if ui_root.current_state != ui_root.State.CHAR_SELECT:
 		return
 	
 	for player : PlayerDefinition in GameManager.player_list:
 		if (event.is_action(player.controls.ui_right)
 		or event.is_action(player.controls.ui_left) 
 		or event.is_action(player.controls.ui_select)
-		or event.is_action(player.controls.ui_deselect)):
+		or event.is_action(player.controls.ui_deselect)
+		or event.is_action(player.controls.ui_next)):
 			_player_behavior_on_character_select(player)
 	
 ## Moving, select, and deselect
@@ -76,6 +81,18 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 			character_buttons[player.character_select_position].unselect(player.id)
 			GameManager.remove_character(player)
 			GameManager.validate_character_select()
+		
+	# Return to Main Menu if no character selected 
+	# BUG left or right and re-entering race will cause an error because the other characters don't have a model
+	elif Input.is_action_just_pressed(player.controls.ui_deselect) and not player.character_select_pressed:
+		back_button._pressed()
+		ui_root._char_back_button_pressed()
+	
+	# UI next pressed
+	if Input.is_action_just_pressed(player.controls.ui_next) and GameManager.validate_character_select():
+		next_button._pressed()
+		ui_root._character_next_button_pressed()
+		
 
 ## Clamps cursor between 0 and num of character buttons 
 func _keep_player_character_select_position_in_range(cursor_position : int) -> int:

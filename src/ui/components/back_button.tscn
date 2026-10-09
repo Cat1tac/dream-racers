@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dmgpxiaj15x20"]
+
+[ext_resource type="Script" uid="uid://j8n80agc0365" path="res://src/ui/scripts/nav_button.gd" id="1_pl7wq"]
+
+[node name="BackButton" type="Button" unique_id=1394668878]
+custom_minimum_size = Vector2(100, 100)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+offset_transform_enabled = true
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "Back"
+script = ExtResource("1_pl7wq")
+offscreen_vector = Vector2(0, -1)
