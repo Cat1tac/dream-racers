@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://dswf8nw7ww6va" path="res://src/gameplay/player/tween_camera.gd" id="12_6eivh"]
 [ext_resource type="AudioStream" uid="uid://ci8tpexcd4wm5" path="res://assets/audio/player/Boosting.wav" id="13_ymqj1"]
 [ext_resource type="AudioStream" uid="uid://vamku016t46h" path="res://assets/audio/player/Skid Out 2.wav" id="14_7c3x0"]
+[ext_resource type="AudioStream" uid="uid://dl88o1u6y7vos" path="res://assets/audio/player/Charge (PH).wav" id="15_7c3x0"]
 [ext_resource type="AudioStream" uid="uid://8wmlre41n33j" path="res://assets/audio/player/Driving (1).wav" id="16_xptrr"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xdbtd"]
@@ -128,16 +129,19 @@ script = ExtResource("11_xptrr")
 [node name="DriveSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=1911303621]
 stream = ExtResource("16_xptrr")
 volume_db = -23.88
-autoplay = true
 bus = &"Player"
 area_mask = 1
 
 [node name="BoostSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=484842172]
 stream = ExtResource("13_ymqj1")
-volume_db = -10.149
+volume_db = -34.677
 
 [node name="CrashSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=272184761]
 stream = ExtResource("14_7c3x0")
+
+[node name="ChargeSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=814048987]
+stream = ExtResource("15_7c3x0")
+volume_db = -10.0
 
 [node name="SecondCamera" type="Marker3D" parent="." unique_id=1667103743]
 unique_name_in_owner = true

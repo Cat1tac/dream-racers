@@ -9,6 +9,9 @@
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="7_wvh85"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="9_mvbxg"]
+[ext_resource type="AudioStream" uid="uid://buj5dvxgr0b0k" path="res://assets/audio/music/Baattleship Intro.ogg" id="10_4osdo"]
+[ext_resource type="Script" uid="uid://12gdbcuvfptw" path="res://src/tracks/music_holder.gd" id="10_crods"]
+[ext_resource type="AudioStream" uid="uid://dm4ek7v67jrlj" path="res://assets/audio/music/Baattleship Loop.ogg" id="11_crods"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
 panorama = ExtResource("2_wvh85")
@@ -140,6 +143,15 @@ transform = Transform3D(-0.99998903, 0, 0.0046916306, 0, 1, 0, -0.0046916306, 0,
 
 [node name="OutOfBounds" parent="." unique_id=2017124765 instance=ExtResource("9_mvbxg")]
 transform = Transform3D(30.31, 0, 0, 0, 30.31, 0, 0, 0, 30.31, 48.053802, -29.245155, 36.661545)
+
+[node name="MusicHolder" type="Node" parent="." unique_id=1878177723]
+script = ExtResource("10_crods")
+
+[node name="Intro" type="AudioStreamPlayer" parent="MusicHolder" unique_id=1000932650]
+stream = ExtResource("10_4osdo")
+
+[node name="Loop" type="AudioStreamPlayer" parent="MusicHolder" unique_id=854307945]
+stream = ExtResource("11_crods")
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 
