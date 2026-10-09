@@ -16,3 +16,10 @@ class_name PlayerControls extends Resource
 @export var ui_select : String
 @export var ui_deselect : String
 @export var ui_next : String
+
+#TODO add more robust input system
+func duplicate_controls(device_id : int) -> void:
+	for input in InputMap.get_actions():
+		if input.match("p1*"):
+			pass
+			#"InputMap.add_action()"

@@ -67,6 +67,7 @@ func load_player_controls() -> void:
 	
 	var p2_controls : PlayerControls = preload(ScenePaths.CONTROLS.p2)
 	playerControls[p2_controls] = 0
+	p2_controls.duplicate_controls(0)
 
 func add_player(controls : PlayerControls) -> void:
 	players_connected += 1
