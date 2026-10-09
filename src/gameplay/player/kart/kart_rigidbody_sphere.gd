@@ -10,6 +10,8 @@ class_name Kart_Sphere extends RigidBody3D
 @onready var spin_hurt_box: SpinHurtBox = %SpinHurtBox
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var trail_spawner: Trail_Spawner = %TrailSpawner
+#Sound Setup
+@onready var audio_player: Node3D = %PlayerSFX
 
 var kart_model : Model
 
@@ -179,10 +181,12 @@ func _handle_input() -> void:
 	if Input.is_action_just_pressed(controls.drift) && linear_velocity.length() > 0 && input_acceleration >= 0:
 		input_drift = true
 		drift_direction = 0
+		audio_player.play_audio("DRIFT")
 		
 	if Input.is_action_just_released(controls.drift):
 		input_drift = false
 		drift_just_released = true
+		audio_player.stop_audio("DRIFT")
 		 
 	if Input.is_action_just_pressed(controls.spin):
 		if !on_ground():
@@ -200,6 +204,7 @@ func _handle_input() -> void:
 				speed_right_before_spin = forward.dot(linear_velocity) if forward.dot(linear_velocity) < top_speed else top_speed
 				#apply_slowdown_force(0.25)
 				input_spin = true
+				audio_player.play_audio("SPIN")
 			
 	if Input.is_action_just_pressed(controls.store):
 		if stored_charge_level == 0: # Put charge in store
@@ -307,6 +312,10 @@ func _set_drifting_stage(stage : int) -> void:
 	for particle in particlesManager:
 		particle.set_drifting_stage(stage)
 	drift_stage = stage
+	if drift_stage > 0:
+		audio_player.bend_pitch("CHARGE", drift_stage)
+		audio_player.play_audio("CHARGE")
+		print(str(drift_stage))
 	
 	#print(boost_panels_drifted_over)
 	
@@ -332,8 +341,7 @@ func set_boost(speedMultiplier : float, timeMultiplier : float) -> void:
 	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
 	boost_timer = boost_max_time * timeMultiplier 
-	if speedMultiplier == 1.8:
-		print(boost_actual_speed)
+	audio_player.play_audio("BOOST")
 	
 
 #Stored Charge
@@ -373,6 +381,7 @@ func _do_spin(delta : float) -> void:
 			spin_timer = 0.0
 			input_spin = false
 			spin_hurt_box.setIntangiblility(false)
+			audio_player.play_audio("SPIN")
 			if !spin_hitbox.hit_dreamcatcher: # if hitbox did not hit dreamcatcher remove all charge
 				spin_cooldown_timer = spin_cooldown
 				remove_drift_charge()
@@ -405,6 +414,7 @@ func _set_dreamcatcher_boost(speedMultiplier : float, timeMultiplier : float) ->
 #region Trick
 func _do_trick() -> void:
 	kart_model.do_trick_anim()
+	audio_player.play_audio("TRICK")
 	
 func reset_trick() -> void:
 	tricked = false
@@ -458,6 +468,8 @@ func _ready() -> void:
 	kart_scale = kart_model.scale
 	contact_monitor = true
 	max_contacts_reported = 2
+	audio_player.update_top_speed(top_speed)
+	audio_player.play_audio("DRIVE")
 
 func _process(delta: float) -> void:
 	#base_kart_rotation_y = kart_model.rotation.y
@@ -490,6 +502,9 @@ func _process(delta: float) -> void:
 	_decrement_boost_panel_store_charge_timer(delta)
 	_get_charge_level()
 	#Events.on_get_speed.emit(velocity.length(), drift_timer, player.playerId)
+	
+	
+	
 	
 func _physics_process(delta: float) -> void: 
 	Events.on_get_speed.emit(-center.global_basis.z.dot(linear_velocity), drift_timer, player.playerId)
@@ -572,6 +587,8 @@ func _apply_forward_force(_delta : float) -> void:
 	apply_central_force(60 * _calculate_force_vector(forward, vel) * _delta)
 	#print(force_vector)
 	DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
+	Events.on_get_speed.emit(vel, drift_timer)
+	audio_player.bend_pitch("DRIVE", vel)
 
 func _apply_air_resistance(_delta: float) -> void:
 	var forward := -center.global_basis.z

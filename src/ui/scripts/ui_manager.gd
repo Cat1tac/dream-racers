@@ -11,6 +11,12 @@ var current_state: State = State.NONE
 
 var is_transitioning: bool
 
+@onready var main_music: AudioStreamPlayer = $MainMusic
+var music_time: float # offset of transisions
+var music_stage_start: float = 0.0
+var music_stage_end: float = 0.0
+var seconds_per_beat:= 60.0/170.0 # used for precise timing calculations
+
 ## defined states that the UI can be in
 enum State {
 	NONE, 
@@ -21,6 +27,8 @@ enum State {
 
 # TODO set & auto detect what UI state is active based on which is visible
 func _ready() -> void:
+	main_music.play()
+	switch_music_stage(1)
 	if main_menu.visible:
 		current_state = State.MAIN_MENU
 		main_menu.set_initial_focus(race_button)
@@ -38,6 +46,7 @@ func _race_button_pressed() -> void:
 	is_transitioning = false
 	
 	current_state = State.CHAR_SELECT
+	switch_music_stage(2)
 
 func _character_next_button_pressed() -> void:
 	character_select.transition_to_state(track_select)
@@ -45,11 +54,13 @@ func _character_next_button_pressed() -> void:
 	is_transitioning = true
 	await character_select.transition_finished
 	is_transitioning = false
+	switch_music_stage(3)
 	
 	current_state = State.TRACK_SELECT
 	track_select.set_initial_focus(track_icon_1)
 	
 func _track_next_button_pressed() -> void:
+	main_music.stop()
 	GameManager.load_into_path("uid://dl7oklus7v6pk")
 
 #endregion
@@ -66,6 +77,7 @@ func _char_back_button_pressed() -> void:
 	
 	current_state = State.MAIN_MENU
 	main_menu.set_initial_focus(race_button)
+	switch_music_stage(1)
 
 func _track_back_button_pressed() -> void:
 	if is_transitioning:
@@ -78,6 +90,36 @@ func _track_back_button_pressed() -> void:
 	
 	current_state = State.CHAR_SELECT
 	
+	switch_music_stage(2)
+#endregion
+
+#region music
+
+# tracks time within sections to transition seamlessly
+func _process(delta: float) -> void:
+	music_time += delta
+	if main_music.get_playback_position() >= music_stage_end:
+		print("Audio: Loop End Passed")
+		music_time = 0
+		main_music.play(music_stage_start)
+
+# transitions to each section of the main theme depending on UI state
+func switch_music_stage(state: int) -> void:
+	match state:
+		1:
+			music_stage_start = 0.0 
+			music_stage_end = 64 * seconds_per_beat
+		2:
+			music_stage_start = 64 * seconds_per_beat
+			music_stage_end = 128 * seconds_per_beat
+		3:
+			music_stage_start = 128 * seconds_per_beat
+			music_stage_end = 192 * seconds_per_beat
+		_:
+			print("AudioError: Swapped to an Undefined stage")
+	
+	main_music.play(music_stage_start + music_time)
+
 #endregion
 
 func _exit_button_pressed() -> void:

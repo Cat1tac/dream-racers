@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://d4fc7uh24338m" path="res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres" id="14_ba7qp"]
 [ext_resource type="Texture2D" uid="uid://07uowprv713g" path="res://assets/ui/main menu/gradients/cloud_noise_tex.tres" id="15_tlfe1"]
 [ext_resource type="Texture2D" uid="uid://b146ox7oemdoq" path="res://assets/ui/main menu/gradients/clouds_sunset_gradient.tres" id="16_gq7f2"]
+[ext_resource type="AudioStream" uid="uid://cgkxsqk1u43dq" path="res://assets/audio/music/general/Menu_Theme_V1_3.ogg" id="21_ba7qp"]
 
 [sub_resource type="Animation" id="Animation_7abqo"]
 length = 0.001
@@ -2677,6 +2678,10 @@ material = SubResource("ShaderMaterial_5m051")
 
 [node name="Clouds" parent="BackgroundLayers" index="2" unique_id=1379269482]
 material = SubResource("ShaderMaterial_lp5l8")
+
+[node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=156168761]
+stream = ExtResource("21_ba7qp")
+bus = &"Music"
 
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton" to="." method="_race_button_pressed"]
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton" to="." method="_how_to_play_button_pressed"]

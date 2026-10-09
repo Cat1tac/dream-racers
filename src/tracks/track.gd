@@ -10,14 +10,14 @@ var checkpoint_list: Array
 func update(laps: int, c_list: Array) -> void:
 	lap_count = laps
 	checkpoint_list = c_list
-	print("GlobalLapLogic: stuff has been updated")
+	print("TrackLapLogic: stuff has been updated")
 
 func countdown(time: float, message: String) -> void:
 	for n in range(time, 0, -1):
 		Events.on_get_countdown.emit(n)
 		print("GlobalLapLogic: " + str(n))
 		await get_tree().create_timer(1).timeout
-	print("GlobalLapLogic: " + message)
+	print("TrackLapLogic: " + message)
 	
 	Events.on_countdown_finished.emit()
 
