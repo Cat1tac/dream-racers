@@ -41,13 +41,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -252.5
-offset_top = -251.0
-offset_right = 747.5
-offset_bottom = 749.0
+offset_left = -321.215
+offset_top = -327.045
+offset_right = 678.78503
+offset_bottom = 672.95496
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.3, 0.3)
 max_value = 10.0
 step = 0.1
 fill_mode = 4
@@ -55,7 +55,6 @@ radial_initial_angle = 180.0
 radial_fill_degrees = 252.0
 texture_under = ExtResource("1_qvrtp")
 texture_progress = ExtResource("2_1mw6m")
-enter_time_delay = 1.2
 
 [node name="SpeedLabel" type="Label" parent="TextureProgressBar" unique_id=833433538]
 unique_name_in_owner = true

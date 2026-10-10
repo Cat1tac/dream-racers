@@ -386,6 +386,7 @@ func _do_spin(delta : float) -> void:
 				spin_cooldown_timer = spin_cooldown
 				remove_drift_charge()
 				_remove_stored_charge()
+				Events.on_get_stored_charge.emit(stored_charge_level, boost_panels_driven_over_store, player.playerId)
 				
 				
 	spin_hitbox.set_active(input_spin)

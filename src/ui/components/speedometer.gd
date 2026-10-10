@@ -46,8 +46,9 @@ func _updated_stored_charge_meter(store_lvl : int, in_between : int, player_id :
 func _update_speed_label(speed: float, _drift: float, player_id : int) -> void:
 	## rounds and lerps [code]speed[/code] to reduce flickering when between two close int values
 	if player_id == id:
-		var display_speed: int = roundi(lerpf(speed, 1.0, 0.01))
-		speed_label.text = str(display_speed)
+		var display_speed: int = roundi(lerpf(speed * 2.23694, 1.0, 0.01))
+		
+		speed_label.text = str(display_speed) #converts to mph
 
 func _set_offscreen() -> void:
 	offset_transform_enabled = true
