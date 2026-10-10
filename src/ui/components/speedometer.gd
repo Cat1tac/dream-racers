@@ -48,7 +48,7 @@ func _update_speed_label(speed: float, _drift: float, player_id : int) -> void:
 	if player_id == id:
 		var display_speed: int = roundi(lerpf(speed * 2.23694, 1.0, 0.01))
 		
-		speed_label.text = str(display_speed) #converts to mph
+		speed_label.text = str(abs(display_speed)) #converts to mph
 
 func _set_offscreen() -> void:
 	offset_transform_enabled = true

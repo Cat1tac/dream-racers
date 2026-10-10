@@ -8,6 +8,7 @@ class_name Player extends Node3D
 @onready var second_camera: Marker3D = %SecondCamera
 @onready var kart_sphere: Kart_Sphere = $Kart_Sphere
 @onready var center: Node3D = %Center
+@onready var camera_3d: Camera3D = %Camera3D
 
 var current_track : Track
 var playerId : int
@@ -16,13 +17,17 @@ var kart_model_instance : Model
 var kart_stats : Stats
 
 var selected_camera : Camera3D
-# Called when the node enters the scene tree for the first time.
+
+var base_fov : float
+
+
 func _ready() -> void:
 	_change_camera($CameraPivot/Camera3D)
 	kart_model_instance = kart_model_scene.instantiate() as Model
 	kart_model_instance.current_state = kart_model_instance.STATE.IN_RACE
 	kart_stats = kart_model_instance.stats
 	center.add_child(kart_model_instance)
+	base_fov = camera_3d.fov
 	
 	for i in range(len(kart_model_instance.charge_markers)):
 		boostChargeArray[i].reparent(kart_model_instance.charge_markers[i])
@@ -70,3 +75,10 @@ func _align_camera_to_floor_normal() -> void:
 	new_basis.z = forward
 	
 	camera_pivot.tween_new_basis(new_basis)
+
+func increase_fov(target_fov : float, _delta : float) -> void:
+	camera_3d.fov = lerp(camera_3d.fov, target_fov, _delta)
+
+func reset_fov(_delta : float) -> void:
+	if camera_3d.fov != base_fov:
+		camera_3d.fov = lerp(camera_3d.fov, base_fov, _delta * 0.5)

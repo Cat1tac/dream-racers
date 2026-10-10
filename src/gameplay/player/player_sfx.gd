@@ -1,4 +1,4 @@
-extends Node3D
+class_name Player_SFX extends Node3D
 
 @onready var driving: AudioStreamPlayer3D = $DriveSFX
 #@onready var boosting: AudioStreamPlayer3D = $BoostSFX

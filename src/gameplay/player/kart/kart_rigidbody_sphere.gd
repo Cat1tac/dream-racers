@@ -11,7 +11,7 @@ class_name Kart_Sphere extends RigidBody3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var trail_spawner: Trail_Spawner = %TrailSpawner
 #Sound Setup
-@onready var audio_player: Node3D = %PlayerSFX
+@onready var audio_player: Player_SFX = %PlayerSFX
 
 var kart_model : Model
 
@@ -305,7 +305,12 @@ func _drift_boost_control(delta : float) -> void:
 	#Boost timer Countdown
 	if boost_timer > 0:
 		boost_timer -= delta
+		if on_ground():
+			player.increase_fov(player.base_fov + ((player.base_fov * pow(1.115, boost_actual_speed - kartStats.speed)) / player.base_fov), delta)
+		else:
+			player.reset_fov(delta)
 	else:
+		player.reset_fov(delta)
 		boost_actual_speed = 0
 
 func _set_drifting_stage(stage : int) -> void:
@@ -393,7 +398,12 @@ func _do_spin(delta : float) -> void:
 			
 	if dreamcatcher_boost_timer > 0:
 		dreamcatcher_boost_timer -= delta
+		if on_ground():
+			player.increase_fov(player.base_fov + ((player.base_fov * pow(1.2, dreamcatcher_boost)) / player.base_fov), delta)
+		else:
+			player.reset_fov(delta)
 	else:
+		player.reset_fov(delta)
 		dreamcatcher_boost = 0
 		dreamcatcher_acceleration = 0
 		

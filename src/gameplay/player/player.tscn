@@ -151,6 +151,7 @@ unique_name_in_owner = true
 script = ExtResource("12_6eivh")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=541525602]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6859641, 4.8363237)
 current = true
 
