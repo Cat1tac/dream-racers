@@ -84,7 +84,7 @@ super_bounce = 30.0
 
 [node name="Cloud2" parent="Objects/Clouds" unique_id=545699189 instance=ExtResource("9_ehbii")]
 transform = Transform3D(16.365, 0, 0, 0, 16.365, 0, 0, 0, 16.365, 45.732933, 21.123245, -127.71298)
-bounce_height = 18.0
+bounce_height = 12.0
 super_bounce = 0.0
 charge_need_for_super_bounce = -1.0
 forward_boost = 0.5

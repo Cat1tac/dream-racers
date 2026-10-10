@@ -13,6 +13,7 @@ config_version=5
 config/name="Dream Racers"
 run/main_scene="uid://dt5xamoe48268"
 config/features=PackedStringArray("4.7", "Forward Plus")
+boot_splash/image="uid://dap40omm61pyj"
 config/icon="res://icon.svg"
 
 [audio]
