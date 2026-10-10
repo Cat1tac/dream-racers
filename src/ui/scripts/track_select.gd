@@ -22,7 +22,7 @@ func _input(event: InputEvent) -> void:
 	
 	# emit the button pressed with ui_select
 	for player : PlayerDefinition in GameManager.player_list:
-		if event.is_action(player.controls.ui_select):
+		if event.is_action(player.controls.actions["forward"]):
 			match get_viewport().gui_get_focus_owner():
 				track_button_1:
 					track_button_1.pressed.emit()
@@ -30,11 +30,11 @@ func _input(event: InputEvent) -> void:
 					track_button_2.pressed.emit()
 		
 		# next button pressed
-		if event.is_action(player.controls.ui_next):
+		if event.is_action(player.controls.actions["start"]):
 			next_button.pressed.emit()
 		
 		# deselect goes back
-		if event.is_action(player.controls.ui_deselect):
+		if event.is_action(player.controls.actions["backwards"]):
 			back_button.pressed.emit()
 			back_button.hide()
 			next_button.exit()

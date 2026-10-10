@@ -1,25 +1,31 @@
 [gd_scene format=3 uid="uid://cr8hhutactn1a"]
 
+[ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/mainmenu_theme.tres" id="1_3q573"]
 [ext_resource type="Script" uid="uid://bh2o8g0u60sxm" path="res://src/ui/scripts/how_to_play_window.gd" id="1_788uv"]
 
-[node name="htp_window" type="PanelContainer" unique_id=151372613]
-custom_minimum_size = Vector2(750, 650)
-anchors_preset = -1
-anchor_left = 0.3046875
-anchor_top = 0.19907407
-anchor_right = 0.6953125
-anchor_bottom = 0.8009259
-offset_left = 325.0
-offset_top = 250.0
-offset_right = -325.0
-offset_bottom = -250.0
+[node name="TabContainer" type="TabContainer" unique_id=920334996]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_3q573")
+tab_alignment = 1
+current_tab = 0
 script = ExtResource("1_788uv")
-metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="." unique_id=539549481]
+[node name="Controls" type="PanelContainer" parent="." unique_id=151372613]
 layout_mode = 2
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 40
-text = "How to Play:"
+metadata/_edit_use_anchors_ = true
+metadata/_tab_index = 0
+
+[node name="Actions" type="PanelContainer" parent="." unique_id=1530497468]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_3q573")
+metadata/_tab_index = 1
+
+[node name="Obstacles" type="PanelContainer" parent="." unique_id=120569910]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2

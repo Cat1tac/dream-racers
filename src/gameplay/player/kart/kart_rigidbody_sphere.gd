@@ -174,21 +174,21 @@ func get_wall_normal() -> Vector3:
 #endregion
 
 func _handle_input() -> void:
-	var move_vector := Input.get_vector(controls.turn_left,controls.turn_right,controls.backward,controls.forward)
+	var move_vector := Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["backwards"],controls.actions["forward"])
 	input_acceleration = move_vector.y
 	input_steering = move_vector.x if abs(move_vector.x) > 0.05 else 0
 
-	if Input.is_action_just_pressed(controls.drift) && linear_velocity.length() > 0 && input_acceleration >= 0:
+	if Input.is_action_just_pressed(controls.actions["drift"]) && linear_velocity.length() > 0 && input_acceleration >= 0:
 		input_drift = true
 		drift_direction = 0
 		audio_player.play_audio("DRIFT")
 		
-	if Input.is_action_just_released(controls.drift):
+	if Input.is_action_just_released(controls.actions["drift"]):
 		input_drift = false
 		drift_just_released = true
 		audio_player.stop_audio("DRIFT")
 		 
-	if Input.is_action_just_pressed(controls.spin):
+	if Input.is_action_just_pressed(controls.actions["spin"]):
 		if !on_ground():
 			if trick_window_increment > 0 and !tricked:
 				tricked = true
@@ -206,7 +206,7 @@ func _handle_input() -> void:
 				input_spin = true
 				audio_player.play_audio("SPIN")
 			
-	if Input.is_action_just_pressed(controls.store):
+	if Input.is_action_just_pressed(controls.actions["store"]):
 		if stored_charge_level == 0: # Put charge in store
 			stored_charge_level = drift_stage if drift_stage >= 3 else 0
 			

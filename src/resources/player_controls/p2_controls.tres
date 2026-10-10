@@ -4,18 +4,16 @@
 
 [resource]
 script = ExtResource("1_cnpky")
-player_index = 1
-forward = "p2_forward"
-backward = "p2_backward"
-turn_right = "p2_turn_right"
-turn_left = "p2_turn_left"
-spin = "p2_spin"
-drift = "p2_drift"
-store = "p2_store_charge"
-ui_right = "p2_turn_right"
-ui_left = "p2_turn_left"
-ui_up = "p2_ui_up"
-ui_down = "p2_ui_down"
-ui_select = "p2_ui_select"
-ui_deselect = "p2_ui_deselect"
-ui_next = "p2_ui_next"
+actions = Dictionary[String, String]({
+"backwards": "keys2_backwards",
+"down": "keys2_down",
+"drift": "keys2_drift",
+"forward": "keys2_forward",
+"leave": "",
+"left": "keys2_left",
+"right": "keys2_right",
+"spin": "keys2_spin",
+"start": "keys2_start",
+"store": "keys2_store",
+"up": "keys2_up"
+})

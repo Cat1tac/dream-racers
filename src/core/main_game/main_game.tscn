@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://dl7oklus7v6pk"]
 
 [ext_resource type="Script" uid="uid://cnbwypbisk32" path="res://src/core/main_game/main_game.gd" id="1_3fed5"]
-[ext_resource type="Script" uid="uid://d1mgh844d72qw" path="res://src/resources/player_controls/player_controls.gd" id="2_ibp4d"]
-[ext_resource type="Resource" uid="uid://dlkv4ebximllc" path="res://src/resources/player_controls/p1_controls.tres" id="3_tk58t"]
-[ext_resource type="Resource" uid="uid://y1u6uypijo1n" path="res://src/resources/player_controls/p2_controls.tres" id="4_n4iq1"]
 
 [node name="MainGame" type="Node" unique_id=2114321724]
 script = ExtResource("1_3fed5")
-playerControls = Array[ExtResource("2_ibp4d")]([ExtResource("3_tk58t"), ExtResource("4_n4iq1")])
 
 [node name="Systems" type="Node" parent="." unique_id=561549987]
 

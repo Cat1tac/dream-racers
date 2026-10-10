@@ -10,13 +10,17 @@ var loading_layer: PackedScene = preload("uid://c5yhmxdsx1p77")
 
 
 ## stores all predefined PlayerControls resources
-var playerControls : Dictionary[PlayerControls, int] 
+var keyboardControls : Dictionary[PlayerControls, int] 
 
 ## updates whenever a player is added
 var players_connected := 0
 
 ## an array containing all players and their attributes (id, character, controls, etc)
 var player_list: Array[PlayerDefinition] = []
+
+## an array containing all devices that currently have controls in game
+var device_id_list : Array[int]
+
 
 var is_loading = false
 
@@ -41,14 +45,22 @@ var current_track: SelectedTrack = SelectedTrack.NONE
 
 func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	load_player_controls()
+	load_keyboard_controls()
 
 ## Will be used to read player input and see if another player has joined the game
 func _input(event: InputEvent) -> void:
-	for controls in  playerControls:
-		if event.is_action(controls.ui_select) and playerControls[controls] == 0:
-			playerControls[controls] = 1
-			add_player(controls)
+	if players_connected == 4:
+		return
+		
+	if Input.is_action_just_pressed("controller_start") and !device_id_list.has(event.device):
+		add_player(create_new_controls(event.device))
+		
+	for keyboard in keyboardControls:
+		if Input.is_action_just_pressed(keyboard.actions["start"]):
+			if keyboardControls[keyboard] == 0:
+				add_player(keyboard)
+				keyboardControls[keyboard] = 1
+	#print(event.device)
 		
 func _process(_delta: float) -> void:
 	if is_loading:
@@ -61,24 +73,29 @@ func _process(_delta: float) -> void:
 				_finish_loading()
 
 #region game setup
-func load_player_controls() -> void:
-	var p1_controls : PlayerControls = preload(ScenePaths.CONTROLS.p1)
-	playerControls[p1_controls] = 0
+func load_keyboard_controls() -> void:
+	var keys1_controls : PlayerControls = preload(ScenePaths.CONTROLS.p1)
+	keyboardControls[keys1_controls] = 0
 	
-	var p2_controls : PlayerControls = preload(ScenePaths.CONTROLS.p2)
-	playerControls[p2_controls] = 0
-	p2_controls.duplicate_controls(0)
+	var keys2_controls : PlayerControls = preload(ScenePaths.CONTROLS.p2)
+	keyboardControls[keys2_controls] = 0
+
+func create_new_controls(device : int) -> PlayerControls:
+	var new_controls : PlayerControls = PlayerControls.new()
+	new_controls.duplicate_controls(device)
+	device_id_list.append(device)
+	return new_controls
 
 func add_player(controls : PlayerControls) -> void:
 	players_connected += 1
-	var new_player : PlayerDefinition = preload(ScenePaths.PLAYER.player_definition).duplicate()
+	var new_player : PlayerDefinition = PlayerDefinition.new()
 	new_player.id = players_connected - 1
 	new_player.controls = controls
 	new_player.selected_character = SelectedCharacter.NONE
 	new_player.character_select_position = 0
 	new_player.character_select_pressed = false
 	player_list.append(new_player)
-	Events.on_player_added.emit(new_player.character_select_position, new_player.id, true)
+	Events.on_player_added.emit(new_player, true)
 
 func remove_player() -> void:
 	players_connected -= 1

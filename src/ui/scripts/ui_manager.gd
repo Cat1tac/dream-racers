@@ -4,7 +4,6 @@ var current_state: State = State.NONE
 @onready var main_menu: UIState = %MainMenu
 @onready var character_select: UIState = %CharacterSelect
 @onready var track_select: UIState = %TrackSelect
-@onready var how_to_play_window: = preload("uid://cr8hhutactn1a")
 
 @onready var race_button: Button = $UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton
 @onready var track_icon_1: TextureButton = $UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton
@@ -32,10 +31,6 @@ func _ready() -> void:
 	if main_menu.visible:
 		current_state = State.MAIN_MENU
 		main_menu.set_initial_focus(race_button)
-
-func _how_to_play_button_pressed() -> void:
-	var window_instance = how_to_play_window.instantiate()
-	get_child(0).add_child(window_instance)
 
 #region forward transitions
 func _race_button_pressed() -> void:
@@ -121,9 +116,6 @@ func switch_music_stage(state: int) -> void:
 	main_music.play(music_stage_start + music_time)
 
 #endregion
-
-func _exit_button_pressed() -> void:
-	get_tree().quit()
 
 # supposed to consolidate transition flag logic but doesn't work rn
 func transition_flag(state: UIState) -> void:

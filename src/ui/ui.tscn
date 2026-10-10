@@ -2269,6 +2269,7 @@ size_flags_vertical = 4
 theme_override_constants/separation = 20
 
 [node name="RaceButton" type="Button" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=933511100]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_top = NodePath("../ExitButton")
@@ -2280,6 +2281,7 @@ button_mask = 5
 text = "Race"
 
 [node name="HowToPlayButton" type="Button" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=294773205]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_top = NodePath("../RaceButton")
@@ -2291,6 +2293,7 @@ theme_override_font_sizes/font_size = 70
 text = "How to Play"
 
 [node name="ExitButton" type="Button" parent="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=699455541]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 offset_transform_enabled = true
@@ -2753,8 +2756,6 @@ stream = ExtResource("21_ba7qp")
 bus = &"Music"
 
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton" to="." method="_race_button_pressed"]
-[connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton" to="." method="_how_to_play_button_pressed"]
-[connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/ExitButton" to="." method="_exit_button_pressed"]
 [connection signal="visibility_changed" from="UILayer/CharacterSelect" to="UILayer/CharacterSelect" method="_on_visibility_changed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_char_back_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/NextButtonMargin/NextButton" to="." method="_character_next_button_pressed"]

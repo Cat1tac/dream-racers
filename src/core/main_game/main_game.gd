@@ -2,8 +2,6 @@ class_name MainGame extends Node
 ## Main entry point for the game
 ## Responsible for setting up the World layers and coordinating high-level systems
 
-@export var playerControls : Array[PlayerControls]
-#test
 # Future (main menu): Load test level for prototype
 const TESTING_SCENE : String = "uid://c0i43c0ijhpqa"
 const PLAYER_SCENE_UID : String = ScenePaths.PLAYER.player
@@ -70,8 +68,8 @@ func _init_players(playerAmount : int = 1) -> void:
 			push_error("Loaded player scene does not extend player or DNE: " + PLAYER_SCENE_UID)
 			return
 		player.playerId = i
-		player.kart_model_scene = _get_character_packed_scene(ScenePaths.CHARACTERS[GameManager.player_list[i].selected_character])#GameManager.player_list[i].selected_character_model
-		player.playerControls = playerControls[i]
+		player.kart_model_scene = _get_character_packed_scene(ScenePaths.CHARACTERS[GameManager.player_list[i].selected_character])
+		player.playerControls = GameManager.player_list[i].controls
 		players.append(player)
 		local_huds.append(_init_local_hud(i))
 		

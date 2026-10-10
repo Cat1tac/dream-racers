@@ -4,17 +4,16 @@
 
 [resource]
 script = ExtResource("1_k7xhu")
-forward = "p1_forward"
-backward = "p1_backward"
-turn_right = "p1_turn_right"
-turn_left = "p1_turn_left"
-spin = "p1_spin"
-drift = "p1_drift"
-store = "p1_store_charge"
-ui_right = "p1_turn_right"
-ui_left = "p1_turn_left"
-ui_up = "p1_ui_up"
-ui_down = "p1_ui_down"
-ui_select = "p1_ui_select"
-ui_deselect = "p1_ui_deselect"
-ui_next = "p1_ui_next"
+actions = Dictionary[String, String]({
+"backwards": "keys1_backwards",
+"down": "keys1_down",
+"drift": "keys1_drift",
+"forward": "keys1_forward",
+"leave": "",
+"left": "keys1_left",
+"right": "keys1_right",
+"spin": "keys1_spin",
+"start": "keys1_start",
+"store": "keys1_store",
+"up": "keys1_up"
+})
