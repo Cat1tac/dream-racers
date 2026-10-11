@@ -14,7 +14,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	Events.on_get_speed.connect(_update_speed_label)
-	Events.on_get_stored_charge.connect(_updated_stored_charge_meter)
+	Events.on_get_stored_charge.connect(_update_boost_meter)
 	await get_tree().create_timer(enter_time_delay).timeout
 	_init_pop_in()
 
@@ -23,25 +23,17 @@ func _ready() -> void:
 	#if Input.is_key_pressed(KEY_T):
 		#_finish_exit_out()
 
-func _updated_stored_charge_meter(store_lvl : int, in_between : int, player_id : int) -> void:
+func _update_boost_meter(lvl : int, time : float, player_id : int, timeMax : float, drifting : bool) -> void:
+	var values_of_clouds : Array[float] = [2.22,5.11,10.92,16.00]
 	if player_id != id:
 		return
-	if store_lvl == 0:
-		texture_progress_bar.value = 0
-	elif store_lvl == 3:
-		texture_progress_bar.value = 1.4
-	elif store_lvl == 4 and in_between == 1:
-		texture_progress_bar.value = 3.2
-	elif store_lvl == 4 and in_between == 2:
-		texture_progress_bar.value = 4.9
-	elif store_lvl == 5 and in_between == 3:
-		texture_progress_bar.value = 6.9
-	elif store_lvl == 5 and in_between == 4:
-		texture_progress_bar.value = 8.0
-	elif store_lvl == 5 and in_between == 5:
-		texture_progress_bar.value = 9.0
-	elif store_lvl == 6:
-		texture_progress_bar.value = 10
+	
+	if lvl == -1:
+		lvl = 0
+	if drifting: # do drift meter build
+		texture_progress_bar.value =  min(time * (values_of_clouds[lvl] / timeMax), values_of_clouds[1])
+	else: # do boost time decrease
+		texture_progress_bar.value = time * (values_of_clouds[lvl - 1] / timeMax)
 
 func _update_speed_label(speed: float, _drift: float, player_id : int) -> void:
 	## rounds and lerps [code]speed[/code] to reduce flickering when between two close int values

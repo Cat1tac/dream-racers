@@ -51,11 +51,9 @@ func call_slowdown(multiplier : float = 0.5) -> void:
 func call_bounce(bounce : float = 8) -> void:
 	kart_sphere.apply_bounce_force(bounce)
 
-func apply_boost_panel_boost(boost_speed_multiplier : float, boost_time_multiplier : float) -> void: ## Applies speed boost and from boost panel
-	kart_sphere.set_boost(boost_speed_multiplier, boost_time_multiplier)
-	kart_sphere.start_store_charge_boost_panel_timer()
-	if kart_sphere.drift_stage >= 3:
-		kart_sphere.boost_panels_drifted_over += 1
+func apply_boost_panel_boost(boost_level : int) -> void: ## Applies speed boost and from boost panel
+	kart_sphere.execute_boost(boost_level)
+	#kart_sphere.start_store_charge_boost_panel_timer()
 
 ## Connecting function that calls a vertical force function in player rigidbody
 func call_vertical_bounce(bounce : float = 10) -> void:

@@ -6,4 +6,4 @@ extends Node3D
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
 		var spinHurtbox : SpinHurtBox = area
-		spinHurtbox.apply_boost_panel_boost(boost_speed_divisor, boost_time_divisor)
+		spinHurtbox.apply_boost_panel_boost(3)

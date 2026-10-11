@@ -3,14 +3,18 @@ extends Node3D
 @export var bounce_height : float = 15
 @export var super_bounce : float = 20
 @export var charge_need_for_super_bounce : float = 4
-@export var forward_boost : float = 0.3
+@export var trick_forward_boost : float = 0.7
+@export var forward_boost : float = 0.4
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
 		var hurt_box : SpinHurtBox = area
 		hurt_box.call_vertical_bounce(bounce_height)
+		hurt_box.call_slowdown()
 		if hurt_box.kart_sphere.tricked:
-			hurt_box.call_slowdown(-forward_boost) #if negative will turn slowdown into boost
+			hurt_box.call_slowdown(-trick_forward_boost) #if negative will turn slowdown into boost
+		else:
+			hurt_box.call_slowdown(-forward_boost)
 		hurt_box.reset_trick()
 		
 

@@ -219,7 +219,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -151
 [node name="Clouds" type="Node" parent="Objects" unique_id=1079521732]
 
 [node name="Cloud" parent="Objects/Clouds" unique_id=2108663503 instance=ExtResource("9_ehbii")]
-transform = Transform3D(16.360523, 0.34915555, 0.15677765, -0.34726247, 16.360132, -0.19669457, -0.16092737, 0.1933142, 16.363066, 103.99139, 32.695442, -32.822815)
+transform = Transform3D(16.360523, 0.34915555, 0.15677765, -0.34726247, 16.360132, -0.19669457, -0.16092737, 0.1933142, 16.363066, 105.68617, 32.695442, -32.822815)
 bounce_height = 16.0
 super_bounce = 30.0
 forward_boost = 0.7
@@ -292,7 +292,7 @@ transform = Transform3D(3.494975, 0, 0.41898447, 0, 3.52, 0, -0.41898447, 0, 3.4
 [node name="Arrow2" parent="Objects" unique_id=1826455058 instance=ExtResource("7_on71r")]
 transform = Transform3D(1.971086, 0.67125845, -2.3033144, -0.8650795, 2.97931, 0.1279638, 2.2377403, 0.5604906, 2.078315, 114.0841, 44.161167, 2.0620995)
 
-[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=1344111143]
+[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=1225917356]
 transform = Transform3D(0.9966793, -0.07036513, -0.040979266, 0.06639898, 0.9936163, -0.09120381, 0.047135085, 0.088179916, 0.99498904, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsb3b")
 

@@ -35,7 +35,8 @@ func complete_lap() -> void:
 
 # Adds the given id to the progress array if it is the proper id
 func add_checkpoint(check_id: int) -> void:
-	
+	if len(check_order) < progress.size():
+		return
 	var _needed_check : int = check_order[progress.size()] # This is the value that we are looking for
 	
 	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))

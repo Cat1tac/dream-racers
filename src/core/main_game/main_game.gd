@@ -39,6 +39,7 @@ func _ready() -> void:
 
 #region Get what players selected
 func _get_selected_track_uid() -> String:
+	#TODO fix error where you pick next before choosing track
 	return ScenePaths.TRACKS[GameManager.current_track]
 
 func _get_character_packed_scene(character_uid : String) -> PackedScene:	 
