@@ -520,6 +520,7 @@ func _process(delta: float) -> void:
 	
 func _physics_process(delta: float) -> void: 
 	Events.on_get_speed.emit(-center.global_basis.z.dot(linear_velocity), drift_timer, player.playerId)
+	audio_player.bend_pitch("DRIVE", -center.global_basis.z.dot(linear_velocity))
 	if on_ground():
 		if tricked:
 			set_boost(boosts[1]["dftSpdFactor"], boosts[1]["dftTimeFactor"])
@@ -598,8 +599,8 @@ func _apply_forward_force(_delta : float) -> void:
 	
 	apply_central_force(60 * _calculate_force_vector(forward, vel) * _delta)
 	#print(force_vector)
-	DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
-	audio_player.bend_pitch("DRIVE", vel)
+	#DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
+	
 
 func _apply_air_resistance(_delta: float) -> void:
 	var forward := -center.global_basis.z
