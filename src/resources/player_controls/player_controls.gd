@@ -1,6 +1,8 @@
 ## a class that defines a player's controls
 class_name PlayerControls extends Resource
 
+@export var device_id : int
+
 @export var actions : Dictionary[String, String] = {
 	"forward" : "",
 	"backwards" : "",
@@ -12,7 +14,7 @@ class_name PlayerControls extends Resource
 	"spin" : "",
 	"store" : "",
 	"start" : "",
-	"leave" : ""
+	"leave" : "",
 }
 
 ## Creates new actions from base control scheme

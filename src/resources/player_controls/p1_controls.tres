@@ -4,16 +4,17 @@
 
 [resource]
 script = ExtResource("1_k7xhu")
+device_id = 16
 actions = Dictionary[String, String]({
-"backwards": "keys1_backwards",
-"down": "keys1_down",
-"drift": "keys1_drift",
-"forward": "keys1_forward",
+"backwards": "keys_spin",
+"down": "keys_down",
+"drift": "keys_drift",
+"forward": "keys_drift",
 "leave": "",
-"left": "keys1_left",
-"right": "keys1_right",
-"spin": "keys1_spin",
-"start": "keys1_start",
-"store": "keys1_store",
-"up": "keys1_up"
+"left": "keys_left",
+"right": "keys_right",
+"spin": "keys_spin",
+"start": "keys_start",
+"store": "keys_store",
+"up": "keys_up"
 })

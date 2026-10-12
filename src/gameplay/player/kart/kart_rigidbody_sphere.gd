@@ -204,7 +204,11 @@ func get_wall_normal() -> Vector3:
 #endregion
 
 func _handle_input() -> void:
-	var move_vector := Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["backwards"],controls.actions["forward"])
+	var move_vector : Vector2
+	if controls.device_id == 16:
+		move_vector = Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["down"],controls.actions["up"])
+	else:
+		move_vector = Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["backwards"],controls.actions["forward"])
 	input_acceleration = move_vector.y
 	input_steering = move_vector.x if abs(move_vector.x) > 0.05 else 0
 

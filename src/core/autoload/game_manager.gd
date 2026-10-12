@@ -74,15 +74,13 @@ func _process(_delta: float) -> void:
 
 #region game setup
 func load_keyboard_controls() -> void:
-	var keys1_controls : PlayerControls = preload(ScenePaths.CONTROLS.p1)
-	keyboardControls[keys1_controls] = 0
-	
-	var keys2_controls : PlayerControls = preload(ScenePaths.CONTROLS.p2)
-	keyboardControls[keys2_controls] = 0
+	var keys_controls : PlayerControls = preload(ScenePaths.CONTROLS.p1)
+	keyboardControls[keys_controls] = 0
 
 func create_new_controls(device : int) -> PlayerControls:
 	var new_controls : PlayerControls = PlayerControls.new()
 	new_controls.duplicate_controls(device)
+	new_controls.device_id = device
 	device_id_list.append(device)
 	return new_controls
 
