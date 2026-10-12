@@ -324,11 +324,23 @@ func _drift_boost_control(delta : float) -> void:
 			new_drift_timer_base = drift_charge_curve.get_point_position(2).x
 			_set_drifting_stage(2)
 		elif drift_timer > drift_charge_curve.get_point_position(3).x and drift_stage < 3 and current_boost_level >= BOOST_LEVEL.TWO:
-			new_drift_timer_base = drift_charge_curve.max_value
+			new_drift_timer_base = drift_charge_curve.get_point_position(3).x
 			_set_drifting_stage(3)
 		elif drift_timer > drift_charge_curve.max_value and drift_stage < 4 and current_boost_level >= BOOST_LEVEL.THREE:
 			_set_drifting_stage(4)
-				
+		
+		#For diminshing returns, I could give every single boost level a curve with y being the multiplier and the x being the amount of times the boost was used
+		match current_boost_level:
+			BOOST_LEVEL.ONE:
+				drift_timer = min(drift_timer, drift_charge_curve.get_point_position(2).x)
+			BOOST_LEVEL.TWO:
+				drift_timer = min(drift_timer, drift_charge_curve.get_point_position(3).x)
+			BOOST_LEVEL.THREE:
+				drift_timer = min(drift_timer, drift_charge_curve.max_value)
+			BOOST_LEVEL.FOUR:
+				drift_timer = min(drift_timer, drift_charge_curve.max_value)
+			_:
+				drift_timer = drift_timer
 				
 			##Boost panel boost
 			#if drift_stage >= 3:
