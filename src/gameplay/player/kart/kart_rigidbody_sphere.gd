@@ -155,19 +155,19 @@ var boost_level_speed_time : Dictionary[BOOST_LEVEL, Dictionary] = {
 		"timeMax" = 0
 	},
 	BOOST_LEVEL.ONE : {
-		"spd_multiplier" = 1,
+		"spd_multiplier" = 0.8,
 		"timeMax" = 1
 	},
 	BOOST_LEVEL.TWO : {
-		"spd_multiplier" : 1.33,
+		"spd_multiplier" : 1.13,
 		"timeMax" : 2
 	},
 	BOOST_LEVEL.THREE : {
-		"spd_multiplier" : 1.66,
+		"spd_multiplier" : 1.46,
 		"timeMax" : 3
 	},
 	BOOST_LEVEL.FOUR : {
-		"spd_multiplier" : 2,
+		"spd_multiplier" : 1.8,
 		"timeMax" : 4
 	},
 }
@@ -338,7 +338,7 @@ func _drift_boost_control(delta : float) -> void:
 	if boost_timer > 0:
 		boost_timer -= delta
 		if on_ground():
-			player.increase_fov(player.base_fov + ((player.base_fov * pow(1.115, boost_actual_speed - kartStats.speed)) / player.base_fov), delta)
+			player.increase_fov(player.base_fov + ((player.base_fov * pow(1.12, boost_actual_speed - kartStats.speed)) / player.base_fov), delta)
 		else:
 			player.reset_fov(delta)
 	else:
@@ -347,7 +347,8 @@ func _drift_boost_control(delta : float) -> void:
 		boost_actual_speed = 0
 		
 	if current_boost_level == BOOST_LEVEL.ZERO:
-		Events.on_get_stored_charge.emit(drift_stage, drift_timer, player.playerId, drift_charge_curve.get_point_position(drift_stage + 1).x, true)
+		if drift_stage <= 2: 
+			Events.on_get_stored_charge.emit(drift_stage, drift_timer, player.playerId, drift_charge_curve.get_point_position(drift_stage + 1).x, true)
 	elif current_boost_level > BOOST_LEVEL.ZERO and boost_timer > 0:
 		Events.on_get_stored_charge.emit(current_boost_level, boost_timer, player.playerId, boost_level_speed_time[current_boost_level]["timeMax"], false)
 
@@ -368,30 +369,39 @@ func remove_drift_charge() -> void:
 	new_drift_timer_base = 0.0
 	boost_panels_drifted_over = 0
 	
-func execute_boost(charge_to_use : int) -> void:
+## Sets boost level to the charge level and then sets the boost
+func execute_boost(charge_to_use : int, remove_drift : bool = true) -> void:
+	var boost_lvl_to_use : BOOST_LEVEL
 	match charge_to_use: 
 		1: # If player is in BOOST_STATE lowveer than current state, put them in new state and erset timer so it won't stack with the new state
 			if current_boost_level < BOOST_LEVEL.ONE:
 				current_boost_level = BOOST_LEVEL.ONE 
+			boost_lvl_to_use = BOOST_LEVEL.ONE
 		2: 
 			if current_boost_level < BOOST_LEVEL.TWO:
 				current_boost_level = BOOST_LEVEL.TWO
+			boost_lvl_to_use = BOOST_LEVEL.TWO
 		3: 
 			if current_boost_level < BOOST_LEVEL.THREE:
 				current_boost_level = BOOST_LEVEL.THREE
+			boost_lvl_to_use = BOOST_LEVEL.THREE
 		4: 
 			if current_boost_level < BOOST_LEVEL.FOUR:
 				current_boost_level = BOOST_LEVEL.FOUR
+			boost_lvl_to_use = BOOST_LEVEL.FOUR
 		_:
 			pass
-	set_boost(boost_level_speed_time[current_boost_level]["spd_multiplier"], boost_level_speed_time[current_boost_level]["timeMax"])
-	remove_drift_charge()
+	_set_boost(boost_level_speed_time[boost_lvl_to_use]["spd_multiplier"], boost_level_speed_time[boost_lvl_to_use]["timeMax"])
+	
+	if remove_drift:
+		remove_drift_charge()
 
 ## Applies the boost stat. The more boosts a player gets, the longer they can extend their boost timer and keep their "actual boost" high. The "actual boost" stat won't restart until the timer reaches zero
-func set_boost(speedMultiplier : float, timeAddition : float) -> void:
+func _set_boost(speedMultiplier : float, timeAddition : float) -> void:
 	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
 	boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[current_boost_level]["timeMax"]) 
+	print(boost_timer)
 	audio_player.play_audio("BOOST")
 	
 
@@ -563,7 +573,7 @@ func _physics_process(delta: float) -> void:
 	audio_player.bend_pitch("DRIVE", -center.global_basis.z.dot(linear_velocity))
 	if on_ground():
 		if tricked:
-			execute_boost(1)
+			execute_boost(2, false)
 		reset_trick()
 		
 		apply_central_force(-get_gravity() * mass) # cancels out gravity

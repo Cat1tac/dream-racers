@@ -52,7 +52,7 @@ func call_bounce(bounce : float = 8) -> void:
 	kart_sphere.apply_bounce_force(bounce)
 
 func apply_boost_panel_boost(boost_level : int) -> void: ## Applies speed boost and from boost panel
-	kart_sphere.execute_boost(boost_level)
+	kart_sphere.execute_boost(boost_level, false)
 	#kart_sphere.start_store_charge_boost_panel_timer()
 
 ## Connecting function that calls a vertical force function in player rigidbody

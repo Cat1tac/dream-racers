@@ -31,6 +31,8 @@ func _update_boost_meter(lvl : int, time : float, player_id : int, timeMax : flo
 	if lvl == -1:
 		lvl = 0
 	if drifting: # do drift meter build
+		if lvl == 4:
+			return
 		texture_progress_bar.value =  min(time * (values_of_clouds[lvl] / timeMax), values_of_clouds[1])
 	else: # do boost time decrease
 		texture_progress_bar.value = time * (values_of_clouds[lvl - 1] / timeMax)

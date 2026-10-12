@@ -226,7 +226,6 @@ forward_boost = 0.7
 
 [node name="Cloud2" parent="Objects/Clouds" unique_id=545699189 instance=ExtResource("9_ehbii")]
 transform = Transform3D(16.365, 0, 0, 0, 16.365, 0, 0, 0, 16.365, 45.732933, 21.123245, -127.71298)
-bounce_height = 12.0
 super_bounce = 0.0
 charge_need_for_super_bounce = -1.0
 forward_boost = 0.5
@@ -235,27 +234,43 @@ forward_boost = 0.5
 
 [node name="Boost_Panel" parent="Objects/Boost Panels" unique_id=1231130700 instance=ExtResource("4_q854r")]
 transform = Transform3D(-3.7745786, 0, 1.3238428, 0, 4, 0, -1.3238428, 0, -3.7745786, 4.4009485, 32.250736, -129.44406)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Boost_Panel6" parent="Objects/Boost Panels" unique_id=1182403030 instance=ExtResource("4_q854r")]
 transform = Transform3D(-0.4353797, 0.045181274, 3.9759781, 1.125715, 3.8375015, 0.07966109, -3.8135557, 1.1276252, -0.4304079, -12.91394, 48.334618, -35.332455)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Boost_Panel7" parent="Objects/Boost Panels" unique_id=1698421707 instance=ExtResource("4_q854r")]
 transform = Transform3D(0.45047808, -0.063976884, 3.974038, -1.0160707, 3.8647294, 0.17739439, -3.8424811, -1.029454, 0.41899318, -11.710724, 48.23115, 16.19672)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Boost_Panel2" parent="Objects/Boost Panels" unique_id=1270672968 instance=ExtResource("4_q854r")]
 transform = Transform3D(-1.862276, 0, 3.5400462, 0, 4, 0, -3.5400462, 0, -1.862276, 24.410452, 32.250736, -151.37277)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Boost_Panel3" parent="Objects/Boost Panels" unique_id=604731394 instance=ExtResource("4_q854r")]
 transform = Transform3D(0.6249587, -0.016059067, 3.950844, -0.13771057, 3.9974473, 0.038032047, -3.948476, -0.14196034, 0.6240072, 53.85707, 32.250736, -154.7136)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Boost_Panel8" parent="Objects/Boost Panels" unique_id=574522124 instance=ExtResource("4_q854r")]
 transform = Transform3D(-0.14408457, -0.016059067, 3.997372, -0.14244749, 3.9974473, 0.010924876, -3.9948652, -0.14196034, -0.14456435, 159.22029, 34.50662, -34.940067)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Boost_Panel4" parent="Objects/Boost Panels" unique_id=55892047 instance=ExtResource("4_q854r")]
 transform = Transform3D(-0.2849902, 0.97633225, -6.4906626, -0.033799294, 3.8788753, 1.6349773, 12.331661, 0.033194907, -0.14552088, -66.617966, -25.647898, 29.143436)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Boost_Panel9" parent="Objects/Boost Panels" unique_id=1900556123 instance=ExtResource("4_q854r")]
 transform = Transform3D(-0.10793586, 0.026907802, -5.9896793, 0.11858231, 5.989629, 0.026336432, 11.58389, -0.061064087, -0.05608003, 85.43142, 9.580391, 87.882935)
+boost_speed_divisor = null
+boost_time_divisor = null
 
 [node name="Dream Catchers" type="Node" parent="Objects" unique_id=756085328]
 

@@ -13,6 +13,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 		hurt_box.call_slowdown()
 		if hurt_box.kart_sphere.tricked:
 			hurt_box.call_slowdown(-trick_forward_boost) #if negative will turn slowdown into boost
+			hurt_box.kart_sphere.execute_boost(1, false)
 		else:
 			hurt_box.call_slowdown(-forward_boost)
 		hurt_box.reset_trick()
