@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/mainmenu_theme.tres" id="1_3q573"]
 [ext_resource type="Script" uid="uid://bh2o8g0u60sxm" path="res://src/ui/scripts/how_to_play_window.gd" id="1_788uv"]
+[ext_resource type="Texture2D" uid="uid://1ej7nguurprq" path="res://assets/ui/ui/Graphic.png" id="3_ioe1w"]
 
 [node name="TabContainer" type="TabContainer" unique_id=920334996]
 anchors_preset = 15
@@ -18,6 +19,18 @@ script = ExtResource("1_788uv")
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 metadata/_tab_index = 0
+
+[node name="GraphicContainer" type="MarginContainer" parent="Controls" unique_id=715460443]
+layout_mode = 2
+theme_override_constants/margin_left = 330
+
+[node name="HowToPlayGraphic" type="TextureRect" parent="Controls/GraphicContainer" unique_id=1742805616]
+custom_minimum_size = Vector2(1200, 800)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_ioe1w")
+expand_mode = 5
 
 [node name="Actions" type="PanelContainer" parent="." unique_id=1530497468]
 visible = false

@@ -1867,7 +1867,7 @@ tracks/18/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1.4142134, 1),
 "update": 0,
-"values": [0.39999998988, 0.79999997976]
+"values": [0.39999998988, 0.9999999747]
 }
 tracks/19/type = "value"
 tracks/19/imported = false
@@ -1879,7 +1879,7 @@ tracks/19/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1.4142134, 1),
 "update": 0,
-"values": [0.39999998988, 0.79999997976]
+"values": [0.39999998988, 0.9999999747]
 }
 tracks/20/type = "value"
 tracks/20/imported = false
@@ -2149,15 +2149,16 @@ shader_parameter/y_position = -2.2352000028647012e-08
 shader_parameter/wave_spd = 0.0
 
 [sub_resource type="Gradient" id="Gradient_gn68n"]
-colors = PackedColorArray(1, 0.84783334, 0.17000002, 1, 0.83, 0.7636, 0.78684, 1)
+offsets = PackedFloat32Array(0, 0.85546875)
+colors = PackedColorArray(1, 0.91200006, 0.120000005, 1, 0.9, 0.86399996, 0.87659997, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_p6ath"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1hbf"]
 gradient = SubResource("Gradient_gn68n")
 fill_from = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5m051"]
 shader = ExtResource("8_6s7ef")
-shader_parameter/start_gradient = SubResource("GradientTexture2D_p6ath")
+shader_parameter/start_gradient = SubResource("GradientTexture2D_d1hbf")
 shader_parameter/use_noise = false
 shader_parameter/noise_spd_x = 0.0
 shader_parameter/noise_spd_y = 0.0
@@ -2762,8 +2763,8 @@ bus = &"Music"
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="." method="_track_back_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2/TrackButton" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="." method="_track_next_button_pressed"]
 
