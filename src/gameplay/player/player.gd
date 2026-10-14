@@ -3,7 +3,7 @@ class_name Player extends Node3D
 @export var playerControls : PlayerControls
 @export var kart_model_scene: PackedScene
 @export var boostChargeArray : Array[KartParticlesManager]
-
+@export var boostExhaustArray : Array[KartParticlesManager]
 @onready var camera_pivot: CameraPivot = $CameraPivot
 @onready var second_camera: Marker3D = %SecondCamera
 @onready var kart_sphere: Kart_Sphere = $Kart_Sphere
@@ -32,6 +32,11 @@ func _ready() -> void:
 	for i in range(len(kart_model_instance.charge_markers)):
 		boostChargeArray[i].reparent(kart_model_instance.charge_markers[i])
 		boostChargeArray[i].global_position = kart_model_instance.charge_markers[i].global_position
+		
+	for i in range(len(kart_model_instance.boost_markers)):
+		boostExhaustArray[i].reparent(kart_model_instance.boost_markers[i])
+		boostExhaustArray[i].global_position = kart_model_instance.boost_markers[i].global_position
+		boostExhaustArray[i].rotation = Vector3.UP * PI
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -4,7 +4,9 @@ class_name Kart_Sphere extends RigidBody3D
 @export var ground_cast : RayCast3D
 @export var snap_cast : RayCast3D
 @export var wall_cast : ShapeCast3D
-@export var particlesManager : Array[KartParticlesManager]
+@export var chargeParticles : Array[KartParticlesManager]
+@export var boostParticles : Array[KartParticlesManager]
+@export var spin_vfx : SpinVFX
 @onready var center: Node3D = %Center
 @onready var spin_hitbox: SpinHitbox = %SpinHitbox
 @onready var spin_hurt_box: SpinHurtBox = %SpinHurtBox
@@ -76,7 +78,35 @@ var drift_direction : float
 	5:{"dftSpdFactor" : 1.5, "dftTimeFactor" : 1.5, "spinSpdFactor" : 0.8, "spinTimeFactor" : 0.8},
 	6:{"dftSpdFactor" : 2, "dftTimeFactor" : 2, "spinSpdFactor" : 1.0, "spinTimeFactor" : 1.0}}
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var boost_max_time := 1.5 # will be state adjustable
-#TODO Implement a boost curve
+
+@export var boost_level_speed_time : Dictionary[BOOST_LEVEL, Dictionary] = {
+	BOOST_LEVEL.ZERO : {
+		"spd_multiplier" : 0,
+		"timeMax" : 0,
+		"uses" : 0
+	},
+	BOOST_LEVEL.ONE : {
+		"spd_multiplier" : 0.8,
+		"timeMax" : 1,
+		"uses" : 0
+	},
+	BOOST_LEVEL.TWO : {
+		"spd_multiplier" : 1.13,
+		"timeMax" : 2,
+		"uses" : 0
+	},
+	BOOST_LEVEL.THREE : {
+		"spd_multiplier" : 1.46,
+		"timeMax" : 3,
+		"uses" : 0
+	},
+	BOOST_LEVEL.FOUR : {
+		"spd_multiplier" : 1.8,
+		"timeMax" : 4,
+		"uses" : 0
+	},
+}
+@export var stale_charge_curve : Curve
 
 #region variables
 var tween : Tween
@@ -147,31 +177,7 @@ enum BOOST_LEVEL {
 	TWO,
 	THREE,
 	FOUR
-}
-
-var boost_level_speed_time : Dictionary[BOOST_LEVEL, Dictionary] = {
-	BOOST_LEVEL.ZERO : {
-		"spd_multiplier" = 0,
-		"timeMax" = 0
-	},
-	BOOST_LEVEL.ONE : {
-		"spd_multiplier" = 0.8,
-		"timeMax" = 1
-	},
-	BOOST_LEVEL.TWO : {
-		"spd_multiplier" : 1.13,
-		"timeMax" : 2
-	},
-	BOOST_LEVEL.THREE : {
-		"spd_multiplier" : 1.46,
-		"timeMax" : 3
-	},
-	BOOST_LEVEL.FOUR : {
-		"spd_multiplier" : 1.8,
-		"timeMax" : 4
-	},
-}
-	
+}	
 
 var current_boost_level : BOOST_LEVEL
 #endregion
@@ -317,28 +323,30 @@ func _drift_boost_control(delta : float) -> void:
 				#
 		#else:
 			#Base boost
-		if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
-			new_drift_timer_base = drift_charge_curve.get_point_position(1).x
-			_set_drifting_stage(1)
-		elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
-			new_drift_timer_base = drift_charge_curve.get_point_position(2).x
-			_set_drifting_stage(2)
-		elif drift_timer > drift_charge_curve.get_point_position(3).x and drift_stage < 3 and current_boost_level >= BOOST_LEVEL.TWO:
-			new_drift_timer_base = drift_charge_curve.get_point_position(3).x
-			_set_drifting_stage(3)
-		elif drift_timer > drift_charge_curve.max_value and drift_stage < 4 and current_boost_level >= BOOST_LEVEL.THREE:
-			_set_drifting_stage(4)
+		#if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
+			#new_drift_timer_base = drift_charge_curve.get_point_position(1).x
+			#_set_drifting_stage(1)
+		#elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
+			#new_drift_timer_base = drift_charge_curve.get_point_position(2).x
+			#_set_drifting_stage(2)
+		#elif drift_timer > drift_charge_curve.get_point_position(3).x and drift_stage < 3 and current_boost_level >= BOOST_LEVEL.TWO:
+			#new_drift_timer_base = drift_charge_curve.get_point_position(3).x
+			#_set_drifting_stage(3)
+		#elif drift_timer > drift_charge_curve.max_value and drift_stage < 4 and current_boost_level >= BOOST_LEVEL.THREE:
+			#_set_drifting_stage(4)
 		
 		#For diminshing returns, I could give every single boost level a curve with y being the multiplier and the x being the amount of times the boost was used
 		match current_boost_level:
+			BOOST_LEVEL.ZERO:
+				_allow_boost_to_2()
 			BOOST_LEVEL.ONE:
-				drift_timer = min(drift_timer, drift_charge_curve.get_point_position(2).x)
+				_allow_boost_to_2()
 			BOOST_LEVEL.TWO:
-				drift_timer = min(drift_timer, drift_charge_curve.get_point_position(3).x)
+				_allow_boost_to_3()
 			BOOST_LEVEL.THREE:
-				drift_timer = min(drift_timer, drift_charge_curve.max_value)
+				_allow_boost_to_4()
 			BOOST_LEVEL.FOUR:
-				drift_timer = min(drift_timer, drift_charge_curve.max_value)
+				_allow_boost_to_4()
 			_:
 				drift_timer = drift_timer
 				
@@ -353,6 +361,8 @@ func _drift_boost_control(delta : float) -> void:
 	#Boost timer Countdown
 	if boost_timer > 0:
 		boost_timer -= delta
+		for particles in boostParticles:
+			particles.fade(current_boost_level - 1, boost_timer, boost_level_speed_time[current_boost_level]["timeMax"])
 		if on_ground():
 			player.increase_fov(player.base_fov + ((player.base_fov * pow(1.12, boost_actual_speed - kartStats.speed)) / player.base_fov), delta)
 		else:
@@ -361,6 +371,12 @@ func _drift_boost_control(delta : float) -> void:
 		player.reset_fov(delta)
 		current_boost_level = BOOST_LEVEL.ZERO
 		boost_actual_speed = 0
+		reset_stale_charges_uses()
+		for particles in boostParticles:
+			particles.set_particles(current_boost_level - 1)
+		if drift_stage > 2:
+			drift_stage = 2
+			_set_drifting_stage(2)
 		
 	if current_boost_level == BOOST_LEVEL.ZERO:
 		if drift_stage <= 2: 
@@ -368,14 +384,51 @@ func _drift_boost_control(delta : float) -> void:
 	elif current_boost_level > BOOST_LEVEL.ZERO and boost_timer > 0:
 		Events.on_get_stored_charge.emit(current_boost_level, boost_timer, player.playerId, boost_level_speed_time[current_boost_level]["timeMax"], false)
 
+func _allow_boost_to_2() -> void:
+	if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
+		new_drift_timer_base = drift_charge_curve.get_point_position(1).x
+		_set_drifting_stage(1)
+	elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
+		new_drift_timer_base = drift_charge_curve.get_point_position(2).x
+		_set_drifting_stage(2)
+	drift_timer = min(drift_timer, drift_charge_curve.get_point_position(2).x)
+		
+func _allow_boost_to_3() -> void:
+	if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
+		new_drift_timer_base = drift_charge_curve.get_point_position(1).x
+		_set_drifting_stage(1)
+	elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
+		new_drift_timer_base = drift_charge_curve.get_point_position(2).x
+		_set_drifting_stage(2)
+	elif drift_timer > drift_charge_curve.get_point_position(3).x and drift_stage < 3 and current_boost_level >= BOOST_LEVEL.TWO:
+		new_drift_timer_base = drift_charge_curve.get_point_position(3).x
+		_set_drifting_stage(3)
+	drift_timer = min(drift_timer, drift_charge_curve.get_point_position(3).x)
+
+func _allow_boost_to_4() -> void:
+	if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
+		new_drift_timer_base = drift_charge_curve.get_point_position(1).x
+		_set_drifting_stage(1)
+	elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
+		new_drift_timer_base = drift_charge_curve.get_point_position(2).x
+		_set_drifting_stage(2)
+	elif drift_timer > drift_charge_curve.get_point_position(3).x and drift_stage < 3 and current_boost_level >= BOOST_LEVEL.TWO:
+		new_drift_timer_base = drift_charge_curve.get_point_position(3).x
+		_set_drifting_stage(3)
+	elif drift_timer > drift_charge_curve.max_value and drift_stage < 4 and current_boost_level >= BOOST_LEVEL.THREE:
+		_set_drifting_stage(4)
+
+func reset_stale_charges_uses() -> void:
+	for boost_level in boost_level_speed_time:
+		boost_level_speed_time[boost_level]["uses"] = 0
+
 func _set_drifting_stage(stage : int) -> void:
-	for particle in particlesManager:
-		particle.set_drifting_stage(stage)
+	for particle in chargeParticles:
+		particle.set_particles(stage)
 	drift_stage = stage
 	if drift_stage > 0:
 		audio_player.bend_pitch("CHARGE", drift_stage)
 		audio_player.play_audio("CHARGE")
-		print(str(drift_stage))
 	
 func remove_drift_charge() -> void:
 	_set_drifting_stage(-1)
@@ -386,28 +439,26 @@ func remove_drift_charge() -> void:
 	boost_panels_drifted_over = 0
 	
 ## Sets boost level to the charge level and then sets the boost
-func execute_boost(charge_to_use : int, remove_drift : bool = true) -> void:
+func execute_boost(charge_lvl : int, remove_drift : bool = true) -> void:
 	var boost_lvl_to_use : BOOST_LEVEL
-	match charge_to_use: 
-		1: # If player is in BOOST_STATE lowveer than current state, put them in new state and erset timer so it won't stack with the new state
-			if current_boost_level < BOOST_LEVEL.ONE:
-				current_boost_level = BOOST_LEVEL.ONE 
-			boost_lvl_to_use = BOOST_LEVEL.ONE
-		2: 
-			if current_boost_level < BOOST_LEVEL.TWO:
-				current_boost_level = BOOST_LEVEL.TWO
-			boost_lvl_to_use = BOOST_LEVEL.TWO
-		3: 
-			if current_boost_level < BOOST_LEVEL.THREE:
-				current_boost_level = BOOST_LEVEL.THREE
-			boost_lvl_to_use = BOOST_LEVEL.THREE
-		4: 
-			if current_boost_level < BOOST_LEVEL.FOUR:
-				current_boost_level = BOOST_LEVEL.FOUR
-			boost_lvl_to_use = BOOST_LEVEL.FOUR
-		_:
-			pass
-	_set_boost(boost_level_speed_time[boost_lvl_to_use]["spd_multiplier"], boost_level_speed_time[boost_lvl_to_use]["timeMax"])
+	for level : BOOST_LEVEL in BOOST_LEVEL.values(): # Sets boost to use to charge lvl
+		if level == charge_lvl:
+			boost_lvl_to_use = level
+			break
+			
+	# If player is in BOOST_STATE lower than current state, put them in new state and erset timer so it won't stack with the new state
+	if current_boost_level < boost_lvl_to_use:
+		current_boost_level = boost_lvl_to_use
+		for particles in boostParticles:
+			particles.set_particles(current_boost_level - 1)
+		reset_stale_charges_uses()
+	else:
+		boost_level_speed_time[boost_lvl_to_use]["uses"] = min(boost_level_speed_time[boost_lvl_to_use]["uses"] + 1, stale_charge_curve.max_domain)
+	
+	print("Uses of " + str(boost_lvl_to_use) + " :" + str(boost_level_speed_time[boost_lvl_to_use]["uses"]))
+	var speedMultiplier : float = boost_level_speed_time[boost_lvl_to_use]["spd_multiplier"]
+	var time : float = boost_level_speed_time[boost_lvl_to_use]["timeMax"] * stale_charge_curve.sample(boost_level_speed_time[boost_lvl_to_use]["uses"])
+	_set_boost(speedMultiplier, time)
 	
 	if remove_drift:
 		remove_drift_charge()
@@ -417,7 +468,6 @@ func _set_boost(speedMultiplier : float, timeAddition : float) -> void:
 	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
 	boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[current_boost_level]["timeMax"]) 
-	print(boost_timer)
 	audio_player.play_audio("BOOST")
 	
 
@@ -453,7 +503,10 @@ func _do_spin(delta : float) -> void:
 		if spin_timer < spin_length:
 			new_kart_rotation = Vector3.UP * lerp_angle(new_kart_rotation.y, spin_curve.sample(spin_timer), 1 - pow(0.2, 60 * delta))  
 			spin_timer += delta
+			spin_vfx.show()
+			spin_vfx.show_spin_effect(spin_timer, spin_length, current_boost_level)
 		else:
+			spin_vfx.hide()
 			spin_cooldown_timer = spin_cooldown * 0.5
 			spin_timer = 0.0
 			input_spin = false
@@ -532,6 +585,9 @@ func set_up_kart_stats() -> void:
 	boost_top_speed += kartStats.boost_top_speed
 	#drift_charge_speed (in the drift_boost_control function)
 	boost_max_time += kartStats.boost_time
+	for boost_state : BOOST_LEVEL in boost_level_speed_time:
+		if boost_state != BOOST_LEVEL.ZERO:
+			boost_level_speed_time[boost_state]["timeMax"] += kartStats.boost_time
 
 #region imbedded functions
 func _ready() -> void:

@@ -4,18 +4,18 @@ extends Node3D
 @export var super_bounce : float = 20
 @export var charge_need_for_super_bounce : float = 4
 @export var trick_forward_boost : float = 0.7
-@export var forward_boost : float = 0.4
+@export var normal_forward_boost : float = 0.4
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
 		var hurt_box : SpinHurtBox = area
 		hurt_box.call_vertical_bounce(bounce_height)
 		hurt_box.call_slowdown()
-		if hurt_box.kart_sphere.tricked:
+		if hurt_box.kart_sphere.tricked: # if tricked beforehand, recieve an extra boost of speed
 			hurt_box.call_slowdown(-trick_forward_boost) #if negative will turn slowdown into boost
 			hurt_box.kart_sphere.execute_boost(1, false)
 		else:
-			hurt_box.call_slowdown(-forward_boost)
+			hurt_box.call_slowdown(-normal_forward_boost)
 		hurt_box.reset_trick()
 		
 
@@ -24,6 +24,7 @@ func _on_area_3d_area_exited(area: Area3D) -> void:
 	await get_tree().create_timer(0.2).timeout
 	if area is SpinHurtBox:
 		var hurt_box : SpinHurtBox = area
-		if hurt_box.kart_sphere.charge_level >= charge_need_for_super_bounce and charge_need_for_super_bounce > -1:
+		if hurt_box.kart_sphere.current_boost_level >= charge_need_for_super_bounce and charge_need_for_super_bounce > -1 and hurt_box.kart_sphere.tricked:
 			hurt_box.call_vertical_bounce(super_bounce)
+			hurt_box.call_slowdown(0.5)
 		

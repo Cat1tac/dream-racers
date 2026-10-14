@@ -12,5 +12,4 @@ traction_factor = -0.09999999999999998
 drift_multiplier = 0.19999999999999996
 weight = 0.1
 boost_top_speed = -1.0
-drift_charge_speed = -0.19999999999999996
 boost_time = 0.30000000000000004

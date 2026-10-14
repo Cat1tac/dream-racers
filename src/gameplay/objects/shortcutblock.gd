@@ -11,7 +11,7 @@ func _on_shortcut_collision_area_entered(area: Area3D) -> void:
 	var num_of_spins := 10
 	if area is SpinHitbox:
 		var spinhitbox : SpinHitbox = area
-		if spinhitbox.charge_level >= drift_required && spinhitbox.hitbox_active:
+		if spinhitbox.kart_sphere.current_boost_level >= drift_required && spinhitbox.hitbox_active:
 			spinhitbox.call_spin_boost()
 			spinhitbox.hit_shortcut = true
 			reset_tween()

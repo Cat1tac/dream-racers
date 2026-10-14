@@ -2,6 +2,7 @@ class_name Model extends Node3D
 
 @onready var kart: Node3D = %kart
 @export var charge_markers : Array[Marker3D]
+@export var boost_markers : Array[Marker3D]
 @export var stats : Stats
 
 # Controls animatios for player

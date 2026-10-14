@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b55vp0yk7kpjj"]
 
-[ext_resource type="Texture2D" uid="uid://y3tbrtbyjxui" path="res://assets/textures/kenney_particle-pack/PNG (Transparent)/star_09.png" id="1_mubje"]
+[ext_resource type="Texture2D" uid="uid://y3tbrtbyjxui" path="res://assets/textures/vfx/kenney_particle-pack/PNG (Transparent)/star_09.png" id="1_mubje"]
 [ext_resource type="Script" uid="uid://cn7vhf7ny2fmo" path="res://src/gameplay/player/kart/effects/boost_charge.gd" id="1_ralju"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ralju"]
@@ -291,68 +291,14 @@ tangential_accel_min = -2.2351742e-06
 tangential_accel_max = -2.2351742e-06
 scale_min = 0.0
 scale_curve = SubResource("CurveTexture_7jrrb")
-color = Color(0.8087261, 0.07955188, 0.47254097, 1)
+color = Color(1, 0.8784442, 0.2100836, 1)
 color_initial_ramp = SubResource("GradientTexture1D_bwb3a")
 emission_curve = SubResource("CurveTexture_ea362")
 turbulence_noise_speed_random = 0.0
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gm5w0"]
-emission_shape_scale = Vector3(0.3, 0.3, 0.3)
-emission_shape = 2
-emission_sphere_radius = 2.0
-angle_min = -720.0
-angle_max = 720.0
-angle_curve = SubResource("CurveTexture_xo0uu")
-direction = Vector3(0, 0, 0)
-angular_velocity_min = -1.6093254e-05
-angular_velocity_max = -1.6093254e-05
-radial_velocity_min = -10.000022
-radial_velocity_max = -2.0000224
-radial_velocity_curve = SubResource("CurveTexture_a1v1r")
-gravity = Vector3(0, 0, 0)
-linear_accel_min = -100.0
-linear_accel_max = -2.2351742e-06
-radial_accel_min = -100.0
-radial_accel_max = -2.2351742e-06
-tangential_accel_min = -2.2351742e-06
-tangential_accel_max = -2.2351742e-06
-scale_min = 0.0
-scale_curve = SubResource("CurveTexture_7jrrb")
-color = Color(0.7299619, 0.7359219, 0.13167167, 1)
-color_initial_ramp = SubResource("GradientTexture1D_bwb3a")
-emission_curve = SubResource("CurveTexture_ea362")
-turbulence_noise_speed_random = 0.0
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1ij6h"]
-emission_shape_scale = Vector3(0.3, 0.3, 0.3)
-emission_shape = 2
-emission_sphere_radius = 2.0
-angle_min = -720.0
-angle_max = 720.0
-angle_curve = SubResource("CurveTexture_xo0uu")
-direction = Vector3(0, 0, 0)
-angular_velocity_min = -1.6093254e-05
-angular_velocity_max = -1.6093254e-05
-radial_velocity_min = -10.000022
-radial_velocity_max = -2.0000224
-radial_velocity_curve = SubResource("CurveTexture_a1v1r")
-gravity = Vector3(0, 0, 0)
-linear_accel_min = -100.0
-linear_accel_max = -2.2351742e-06
-radial_accel_min = -100.0
-radial_accel_max = -2.2351742e-06
-tangential_accel_min = -2.2351742e-06
-tangential_accel_max = -2.2351742e-06
-scale_min = 0.0
-scale_curve = SubResource("CurveTexture_7jrrb")
-color = Color(0.8691212, 0.49141264, 1, 1)
-color_initial_ramp = SubResource("GradientTexture1D_bwb3a")
-emission_curve = SubResource("CurveTexture_ea362")
-turbulence_noise_speed_random = 0.0
-
-[node name="BoostCharge" type="Node3D" unique_id=1439352013 node_paths=PackedStringArray("drift_particles")]
+[node name="BoostCharge" type="Node3D" unique_id=1439352013 node_paths=PackedStringArray("particles")]
 script = ExtResource("1_ralju")
-drift_particles = [NodePath("Level_0"), NodePath("Level_1"), NodePath("Level_2"), NodePath("Level_3"), NodePath("Level_4"), NodePath("Level_5"), NodePath("Level_6")]
+particles = [NodePath("Level_0"), NodePath("Level_1"), NodePath("Level_2"), NodePath("Level_3"), NodePath("Level_4")]
 
 [node name="Level_0" type="GPUParticles3D" parent="." unique_id=862393408]
 visible = false
@@ -369,7 +315,6 @@ draw_pass_1 = SubResource("QuadMesh_ea362")
 [node name="Level_1" type="GPUParticles3D" parent="." unique_id=1185620877]
 visible = false
 material_override = SubResource("StandardMaterial3D_ralju")
-emitting = false
 amount = 150
 lifetime = 0.5
 randomness = 1.0
@@ -405,35 +350,10 @@ draw_pass_1 = SubResource("QuadMesh_ea362")
 [node name="Level_4" type="GPUParticles3D" parent="." unique_id=1980906170]
 visible = false
 material_override = SubResource("StandardMaterial3D_ralju")
-emitting = false
 amount = 150
 lifetime = 0.4
 randomness = 1.0
 fixed_fps = 0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_ralju")
-draw_pass_1 = SubResource("QuadMesh_ea362")
-
-[node name="Level_5" type="GPUParticles3D" parent="." unique_id=1690440139]
-visible = false
-material_override = SubResource("StandardMaterial3D_ralju")
-emitting = false
-amount = 150
-lifetime = 0.4
-randomness = 1.0
-fixed_fps = 0
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_gm5w0")
-draw_pass_1 = SubResource("QuadMesh_ea362")
-
-[node name="Level_6" type="GPUParticles3D" parent="." unique_id=1892927160]
-visible = false
-material_override = SubResource("StandardMaterial3D_ralju")
-emitting = false
-amount = 150
-lifetime = 0.4
-randomness = 1.0
-fixed_fps = 0
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_1ij6h")
 draw_pass_1 = SubResource("QuadMesh_ea362")
