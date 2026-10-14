@@ -60,6 +60,9 @@ func _track_4_button_pressed() -> void:
 func _back_button_pressed() -> void:
 	GameManager.set_track(GameManager.SelectedTrack.NONE)
 	
+func _next_button_pressed() -> void:
+	next_button._pressed()
+
 #endregion
 func _show_back_button() -> void:
 	back_button.set_onscreen()

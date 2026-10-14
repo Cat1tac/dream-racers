@@ -1,11 +1,7 @@
 class_name NavButton extends Button
-enum NavButtonType {
-	BACK,
-	NEXT,
-}
-@export var type: NavButtonType
+
 @export_category("Offscreen Position")
-@export var offscreen_vector: Vector2
+@export var offscreen_vector_ratio: Vector2
 
 var tween: Tween
 
@@ -23,12 +19,15 @@ func exit() -> void:
 	_reset_tween()
 	offset_transform_enabled = true
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(self, "offset_transform_position_ratio", offscreen_vector, 0.5)
+	tween.tween_property(self, "offset_transform_position_ratio", offscreen_vector_ratio, 0.5)
+	await tween.finished
+	offset_transform_scale = Vector2.ONE
 	
 func set_offscreen() -> void:
 	hide()
 	offset_transform_enabled = true
-	offset_transform_position_ratio = offscreen_vector
+	offset_transform_position_ratio = offscreen_vector_ratio
+	
 
 func set_onscreen() -> void:
 	show()

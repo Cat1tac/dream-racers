@@ -6,8 +6,6 @@ extends UIState
 @onready var back_button: NavButton = $BackButtonMargin/BackButton
 
 #TODO add way for player to leave game while on main menu (- on controller, spin key on keyboard)
-#TODO make next button work by pressing ui_accept
-#TODO make it so back button works by pressing right button on controllers and spin key on keyboard
 
 func _ready() -> void:
 	Events.on_player_added.connect(_show_character)
