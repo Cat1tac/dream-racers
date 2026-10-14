@@ -13,6 +13,7 @@ script = ExtResource("1_5lvrm")
 transform = Transform3D(0.99809086, 0.061762773, 0, -0.061762773, 0.99809086, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="ShortcutCollision" type="Area3D" parent="." unique_id=2014343250]
+unique_name_in_owner = true
 collision_layer = 16
 collision_mask = 96
 

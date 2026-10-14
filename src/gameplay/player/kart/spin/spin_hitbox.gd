@@ -25,12 +25,7 @@ func set_active(state : bool) -> void:
 	
 #called by dreamcatcher
 func call_spin_boost() -> void:
-	print(charge_level)
 	kart_sphere.dreamcatcher_spin_boost()
-
-#called by dreamcatcher
-func call_bounce(bounce : float = 8) -> void:
-	kart_sphere.apply_bounce_force(bounce)
 
 func _process(delta: float) -> void:
 	DebugDraw.draw_line(global_position, to_global(Vector3(-collision_point.x, collision_point.y, -collision_point.z)), Color(177.84, 24.316, 93.229, 1.0))

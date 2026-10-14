@@ -114,7 +114,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.152203, 2.0855236, 0)
 visible = false
 
 [node name="Shortcutblock2" parent="ShortcutBlocks" unique_id=2008190022 instance=ExtResource("6_4osdo")]
-transform = Transform3D(0.7454528, 0, 0.6665586, 0, 1, 0, -0.6665586, 0, 0.7454528, 9.21219, 6.355823, -12.52895)
+transform = Transform3D(-0.7857406, 0, -0.6185564, 0, 1, 0, 0.6185564, 0, -0.7857406, 9.21219, 6.355823, -12.52895)
 drift_required = 3
 
 [node name="Shortcutblock3" parent="ShortcutBlocks" unique_id=119300142 instance=ExtResource("6_4osdo")]

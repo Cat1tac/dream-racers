@@ -112,16 +112,17 @@ var drift_direction : float
 var tween : Tween
 
 #region Drifing and boosting
-var drift_just_released : bool #bool for if the kart just released drift button
-var drift_buffer_timer : float # increment timer for drift
-var snake_buffer_timer : float # increment timer for snaking
-var snake_penalty_amt : float = 0.5 # penalty for snaking
-var just_started_drift : bool # check whether the kart should start the drift buffer
-var drift_stage : int #level of drift
-var drift_timer : float #increament timer for drift
-var new_drift_timer_base : float #new base timer to start from after snaking
-var boost_timer : float #increament timer for boost
-var boost_actual_speed : float #actual speed of boost
+var drift_just_released : bool ##bool for if the kart just released drift button
+var drift_buffer_timer : float ## increment timer for drift
+var snake_buffer_timer : float ## increment timer for snaking
+var snake_penalty_amt : float = 0.5 ## penalty for snaking
+var currently_snaking : bool ##checks if player is currently snaking
+var just_started_drift : bool ## check whether the kart should start the drift buffer
+var drift_stage : int ##level of drift
+var drift_timer : float ##increament timer for drift
+var new_drift_timer_base : float ##new base timer to start from after snaking
+var boost_timer : float ##increament timer for boost
+var boost_actual_speed : float ##actual speed of boost
 var boost_panels_drifted_over : int = 0
 #endregion
 
@@ -279,6 +280,7 @@ func _drift_boost_control(delta : float) -> void:
 	if drift_just_released: #Controls Drift Boost release and snaking
 		
 		if snake_buffer_timer < snake_buffer:
+			currently_snaking = true
 			if input_drift:
 				drift_direction = sign(input_steering)
 				
@@ -287,8 +289,10 @@ func _drift_boost_control(delta : float) -> void:
 					drift_timer = new_drift_timer_base if drift_timer - 0.3 < new_drift_timer_base else drift_timer - snake_penalty_amt 
 					drift_just_released = false 
 					snake_buffer_timer = 0.0
+					currently_snaking = false
 			snake_buffer_timer += delta
 		else:
+			currently_snaking = false
 			execute_boost(drift_stage)
 	else: #Controls Initial Drift buffer
 		if input_drift and drift_direction == 0: # start drift buffer
@@ -360,7 +364,11 @@ func _drift_boost_control(delta : float) -> void:
 					#_set_drifting_stage(6)
 	#Boost timer Countdown
 	if boost_timer > 0:
-		boost_timer -= delta
+		if currently_snaking and boost_timer < 0.2:
+			# allow for potential extra boost
+			pass
+		else:
+			boost_timer -= delta
 		for particles in boostParticles:
 			particles.fade(current_boost_level - 1, boost_timer, boost_level_speed_time[current_boost_level]["timeMax"])
 		if on_ground():
@@ -665,7 +673,10 @@ func _physics_process(delta: float) -> void:
 		if trick_window_increment > 0:
 			trick_window_increment -= delta
 		
-
+	wall_cast.force_shapecast_update()
+	if on_wall():
+		apply_bounce_force(10, get_wall_normal())
+	
 	_apply_traction(delta)
 	_apply_steering(delta)
 	_do_spin(delta)
@@ -686,10 +697,12 @@ func apply_slowdown_force(slowdown_factor : float) -> void:
 	apply_central_impulse(force_vector)
 	
 ##Bounces car back when hitting a shortcut wall
-func apply_bounce_force(bounce : float) -> void:
+func apply_bounce_force(bounce : float, direction : Vector3) -> void:
 	var forward := -center.global_basis.z
+	var angle_between_wall_and_player := forward.dot(direction) 
 	var vel := forward.dot(linear_velocity)
-	var force_vector : Vector3 = -forward * (vel + bounce) * mass
+	# The more a player is facing the wall the less they get bounced back
+	var force_vector : Vector3 = direction * (vel + (bounce * max(1 - abs(angle_between_wall_and_player), 0.7)))  * mass
 	apply_central_impulse(force_vector)
 	
 func apply_vertical_force(magnitude : float) -> void:
@@ -848,8 +861,8 @@ func _apply_traction(delta : float) -> void:
 	var side_force := instant_side_accel * mass
 
 	var limited_side_force := side_force * traction_factor
-	DebugDraw.draw_line(global_position, global_position + (side * side_speed), Color(121.386, 2.061, 120.434, 1.0))
-	DebugDraw.draw_line(global_position, global_position + (side * limited_side_force), Color(186.332, 3.187, 184.871, 1.0))
+	#DebugDraw.draw_line(global_position, global_position + (side * side_speed), Color(121.386, 2.061, 120.434, 1.0))
+	#DebugDraw.draw_line(global_position, global_position + (side * limited_side_force), Color(186.332, 3.187, 184.871, 1.0))
 	apply_central_force(side * limited_side_force)
 
 func _apply_stop(delta : float) -> void:

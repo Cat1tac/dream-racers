@@ -19,13 +19,13 @@ func _on_shortcut_collision_area_entered(area: Area3D) -> void:
 			tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 			tween.tween_property(shortcutblock, "rotation_degrees", Vector3.UP * 360 * num_of_spins, 5.0)
 		else: 
-			spinhitbox.call_bounce()
+			spinhitbox.kart_sphere.apply_bounce_force(15, global_transform.basis.x)
 	elif area is SpinHurtBox:
 		var spinhurtbox : SpinHurtBox = area
 		if !spinhurtbox.spinIntangiblility:
-			spinhurtbox.call_bounce()
-	
+			spinhurtbox.kart_sphere.apply_bounce_force(15, global_transform.basis.x)
 
+	
 func reset_tween() -> void:
 	if tween:
 		tween.kill()
