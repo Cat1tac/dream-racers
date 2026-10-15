@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://b23kaovaeco1e"]
+
+[ext_resource type="Script" uid="uid://ba3jpkx0os48j" path="res://src/gameplay/objects/items/mini_energy.gd" id="1_0pb2r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uujsa"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1.7440085, 0.4269585, 1.8637407, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uujsa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uujsa"]
+
+[node name="Big Energy" type="Node3D" unique_id=2021759024 node_paths=PackedStringArray("area_3d")]
+script = ExtResource("1_0pb2r")
+time_amt = 0.0
+despawn_length = 2.5
+set_boost_lvl = 3
+area_3d = NodePath("Area3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2016442695]
+material_override = SubResource("StandardMaterial3D_uujsa")
+mesh = SubResource("BoxMesh_uujsa")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1960234278]
+collision_layer = 16
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=972754205]
+shape = SubResource("BoxShape3D_uujsa")

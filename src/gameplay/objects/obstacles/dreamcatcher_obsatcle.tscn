@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b3u6n1wckcnmn"]
 
-[ext_resource type="Script" uid="uid://cxlr84b1gsvew" path="res://src/gameplay/objects/dreamcatcher_obsatcle.gd" id="1_72clq"]
+[ext_resource type="Script" uid="uid://cxlr84b1gsvew" path="res://src/gameplay/objects/obstacles/dreamcatcher_obsatcle.gd" id="1_72clq"]
 [ext_resource type="PackedScene" uid="uid://bf2dqsb4a133k" path="res://assets/models/objects/dreamcatcher.glb" id="1_k3och"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k3och"]

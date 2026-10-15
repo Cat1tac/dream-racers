@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dlg4eepltx0af" path="res://assets/models/vfx/hover_model.glb" id="1_yu0ub"]
 [ext_resource type="Texture2D" uid="uid://07x1wfqylqaj" path="res://assets/textures/vfx/misc/T_VFX_WindNoise1.png" id="2_x6imk"]
+[ext_resource type="Shader" uid="uid://btujybnrsk35h" path="res://src/gameplay/player/kart/effects/hover_vfx.gdshader" id="3_x6imk"]
 
 [sub_resource type="Shader" id="Shader_1b2e5"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
@@ -91,11 +92,25 @@ shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_expqt"]
+render_priority = 0
+shader = ExtResource("3_x6imk")
+shader_parameter/speed = 1.0
+shader_parameter/opacity = 0.75600003591
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uujsa"]
+
 [node name="hover_vfx" type="Node3D" unique_id=1285261471]
 
 [node name="hover_model" parent="." unique_id=1705177512 instance=ExtResource("1_yu0ub")]
+visible = false
 
 [node name="HoverMesh" parent="hover_model" index="0" unique_id=161004735]
 material_override = SubResource("ShaderMaterial_2uteu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=313510132]
+material_override = SubResource("ShaderMaterial_expqt")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_uujsa")
 
 [editable path="hover_model"]

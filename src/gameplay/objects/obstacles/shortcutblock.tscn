@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d3hgqbv7npk6k"]
 
-[ext_resource type="Script" uid="uid://dl4a43c1t33tn" path="res://src/gameplay/objects/shortcutblock.gd" id="1_5lvrm"]
+[ext_resource type="Script" uid="uid://dl4a43c1t33tn" path="res://src/gameplay/objects/obstacles/shortcutblock.gd" id="1_5lvrm"]
 [ext_resource type="PackedScene" uid="uid://b2sgpu0d8wfc5" path="res://assets/models/objects/shortcutblock.glb" id="1_ys8wm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5lvrm"]

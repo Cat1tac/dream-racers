@@ -3,9 +3,11 @@
 [ext_resource type="Script" uid="uid://cprhmbxvp1y2i" path="res://src/tracks/track.gd" id="1_ldwis"]
 [ext_resource type="Shader" uid="uid://dosmjerruklup" path="res://src/tracks/dreamy yggdrasil/dreamy_yggdrasil.gdshader" id="2_q854r"]
 [ext_resource type="PackedScene" uid="uid://o8gbnp303uhr" path="res://src/gameplay/objects/boost_panel.tscn" id="4_q854r"]
-[ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/dreamcatcher_obsatcle.tscn" id="5_ehbii"]
-[ext_resource type="PackedScene" uid="uid://d3hgqbv7npk6k" path="res://src/gameplay/objects/shortcutblock.tscn" id="6_5tsv1"]
+[ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/obstacles/dreamcatcher_obsatcle.tscn" id="5_ehbii"]
+[ext_resource type="PackedScene" uid="uid://d3hgqbv7npk6k" path="res://src/gameplay/objects/obstacles/shortcutblock.tscn" id="6_5tsv1"]
 [ext_resource type="PackedScene" uid="uid://bdpfjicojqli3" path="res://assets/models/objects/Arrow.glb" id="7_on71r"]
+[ext_resource type="PackedScene" uid="uid://b23kaovaeco1e" path="res://src/gameplay/objects/items/big_energy.tscn" id="8_acfsq"]
+[ext_resource type="PackedScene" uid="uid://8h6aoscgguog" path="res://src/gameplay/objects/items/mini_energy.tscn" id="8_bd4lb"]
 [ext_resource type="Material" uid="uid://caar08ko2eudb" path="res://src/shaders/leaf_shader.tres" id="8_ehbii"]
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="9_cmjmi"]
 [ext_resource type="PackedScene" uid="uid://dlybic2qqanel" path="res://src/gameplay/objects/cloud.tscn" id="9_ehbii"]
@@ -310,6 +312,14 @@ transform = Transform3D(1.971086, 0.67125845, -2.3033144, -0.8650795, 2.97931, 0
 [node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=1225917356]
 transform = Transform3D(0.9966793, -0.07036513, -0.040979266, 0.06639898, 0.9936163, -0.09120381, 0.047135085, 0.088179916, 0.99498904, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsb3b")
+
+[node name="Items" type="Node" parent="Objects" unique_id=457498402]
+
+[node name="Big Energy" parent="Objects/Items" unique_id=2021759024 instance=ExtResource("8_acfsq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.17315, -0.95365286, -27.449608)
+
+[node name="Mini Energy" parent="Objects/Items" unique_id=454488651 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.07815, -1.3950531, -23.735209)
 
 [node name="DreamyYggdrasil (with Leaves)2" parent="." unique_id=1475172835 instance=ExtResource("10_5tsv1")]
 

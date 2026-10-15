@@ -541,8 +541,8 @@ func _do_spin(delta : float) -> void:
 		dreamcatcher_acceleration = 0
 		
 func dreamcatcher_spin_boost() -> void:
-	if boost_timer > 0:
-		boost_timer = min(boost_timer + boost_level_speed_time[BOOST_LEVEL.TWO]["timeMax"], boost_level_speed_time[current_boost_level]["timeMax"]) 
+	#if boost_timer > 0:
+		#boost_timer = min(boost_timer + boost_level_speed_time[BOOST_LEVEL.TWO]["timeMax"], boost_level_speed_time[current_boost_level]["timeMax"]) 
 	
 	_set_dreamcatcher_boost(dreamcatcher_speed_multiplier, dreamcatcher_time)
 		
