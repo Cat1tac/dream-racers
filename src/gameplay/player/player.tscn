@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://blm7ue11w2hyr" path="res://src/gameplay/player/kart/spin/spin_hitbox.gd" id="6_rdc6l"]
 [ext_resource type="Script" uid="uid://jxikcugtw0ye" path="res://src/gameplay/player/kart/spin/spin_hurt_box.gd" id="6_xdbtd"]
 [ext_resource type="PackedScene" uid="uid://7og67tw8rgtg" path="res://src/gameplay/player/kart/effects/spin_vfx.tscn" id="6_ymqj1"]
+[ext_resource type="PackedScene" uid="uid://jigux0n5xvrw" path="res://src/gameplay/player/kart/effects/hover_vfx.tscn" id="7_7c3x0"]
 [ext_resource type="Curve" uid="uid://dxngmn0p8jwfa" path="res://src/gameplay/player/kart/curves/drift_charge_curve.tres" id="7_uia4o"]
 [ext_resource type="Script" uid="uid://diukun3gskvpu" path="res://src/gameplay/player/local_lap_logic.gd" id="8_hmrcn"]
 [ext_resource type="PackedScene" uid="uid://c0gmqfmhqhure" path="res://src/gameplay/player/kart/trailing/trail_spawner.tscn" id="8_nem4e"]
@@ -49,8 +50,8 @@ point_count = 2
 [node name="Player" type="Node3D" unique_id=648418637 node_paths=PackedStringArray("boostChargeArray", "boostExhaustArray")]
 script = ExtResource("1_qlg0r")
 playerControls = ExtResource("2_sjr3t")
-boostChargeArray = [NodePath("Center/BoostCharge"), NodePath("Center/BoostCharge2")]
-boostExhaustArray = [NodePath("Center/BoostExhaust"), NodePath("Center/BoostExhaust2")]
+boostChargeArray = [NodePath("Center/VFX/BoostCharge"), NodePath("Center/VFX/BoostCharge2")]
+boostExhaustArray = [NodePath("Center/VFX/BoostExhaust"), NodePath("Center/VFX/BoostExhaust2")]
 
 [node name="Center" type="Node3D" parent="." unique_id=989855784]
 unique_name_in_owner = true
@@ -60,21 +61,26 @@ unique_name_in_owner = true
 process_mode = 4
 visible = false
 
-[node name="BoostCharge" parent="Center" unique_id=1439352013 instance=ExtResource("5_d3trc")]
+[node name="VFX" type="Node3D" parent="Center" unique_id=1650621689]
+
+[node name="BoostCharge" parent="Center/VFX" unique_id=1439352013 instance=ExtResource("5_d3trc")]
 transform = Transform3D(1.15, 0, 7.310897e-08, 0, 1.15, 0, -7.310897e-08, 0, 1.15, -0.80097497, -0.4060729, 0.80661)
 
-[node name="BoostCharge2" parent="Center" unique_id=2022985605 instance=ExtResource("5_d3trc")]
+[node name="BoostCharge2" parent="Center/VFX" unique_id=2022985605 instance=ExtResource("5_d3trc")]
 transform = Transform3D(1.15, 0, 7.310897e-08, 0, 1.15, 0, -7.310897e-08, 0, 1.15, 0.800975, -0.4543729, 0.8066099)
 
-[node name="BoostExhaust" parent="Center" unique_id=422847236 instance=ExtResource("5_wdigr")]
+[node name="BoostExhaust" parent="Center/VFX" unique_id=422847236 instance=ExtResource("5_wdigr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32770693, 0.49512112, -0.9248829)
 
-[node name="BoostExhaust2" parent="Center" unique_id=575663361 instance=ExtResource("5_wdigr")]
+[node name="BoostExhaust2" parent="Center/VFX" unique_id=575663361 instance=ExtResource("5_wdigr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29196155, 0.49512112, -0.9248829)
 
-[node name="SpinVFX" parent="Center" unique_id=2000963426 instance=ExtResource("6_ymqj1")]
+[node name="SpinVFX" parent="Center/VFX" unique_id=2000963426 instance=ExtResource("6_ymqj1")]
 transform = Transform3D(1.505, 0, 0, 0, 1.505, 0, 0, 0, 1.505, 0, 0.23, 0)
 visible = false
+
+[node name="HoverVFX" parent="Center/VFX" unique_id=1285261471 instance=ExtResource("7_7c3x0")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.5, 0)
 
 [node name="GroundRay" type="RayCast3D" parent="Center" unique_id=1613552836]
 target_position = Vector3(0, -1.5, 0)
@@ -173,7 +179,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6859641, 4.8363237)
 current = true
 
-[node name="Kart_Sphere" type="RigidBody3D" parent="." unique_id=1517078465 node_paths=PackedStringArray("player", "ground_cast", "snap_cast", "wall_cast", "chargeParticles", "boostParticles", "spin_vfx")]
+[node name="Kart_Sphere" type="RigidBody3D" parent="." unique_id=1517078465 node_paths=PackedStringArray("player", "ground_cast", "snap_cast", "wall_cast", "chargeParticles", "boostParticles", "spin_vfx", "hover_vfx")]
 unique_name_in_owner = true
 collision_mask = 31
 mass = 50.0
@@ -184,15 +190,18 @@ player = NodePath("..")
 ground_cast = NodePath("../Center/GroundRay")
 snap_cast = NodePath("../Center/SnapRay")
 wall_cast = NodePath("../Center/WallRay")
-chargeParticles = [NodePath("../Center/BoostCharge"), NodePath("../Center/BoostCharge2")]
-boostParticles = [NodePath("../Center/BoostExhaust"), NodePath("../Center/BoostExhaust2")]
-spin_vfx = NodePath("../Center/SpinVFX")
+chargeParticles = [NodePath("../Center/VFX/BoostCharge"), NodePath("../Center/VFX/BoostCharge2")]
+boostParticles = [NodePath("../Center/VFX/BoostExhaust"), NodePath("../Center/VFX/BoostExhaust2")]
+spin_vfx = NodePath("../Center/VFX/SpinVFX")
+hover_vfx = NodePath("../Center/VFX/HoverVFX")
 top_speed = 25.0
 brake_resistance = 15
+ground_resistance = 6
 max_steering_angle_slow = 7.0
 max_steering_angle_fast = 5.5
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
+knockback = 25.0
 boost_max_time = 1.7
 stale_charge_curve = SubResource("Curve_54vdw")
 

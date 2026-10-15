@@ -2,91 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bnfqvk5oadq4d" path="res://node_3d.gd" id="1_474qe"]
 [ext_resource type="PackedScene" uid="uid://cb5hd572ot722" path="res://assets/models/vfx/spin_mesh.glb" id="2_cjh5x"]
-[ext_resource type="Texture2D" uid="uid://nhbh10qahe8l" path="res://assets/textures/vfx/Streak/Streak 12 - 512x512.png" id="3_ouxtk"]
+[ext_resource type="Material" uid="uid://in8sjubsieko" path="res://src/shaders/spin_shader.tres" id="3_qvtto"]
 
 [sub_resource type="Curve" id="Curve_474qe"]
 _limits = [0.62, 0.7227723, 0.0, 1.0]
 _data = [Vector2(0, 0.7227723), 0.0, 0.0, 0, 0, Vector2(0.26785716, 0.62), 0.0, 0.0, 0, 0, Vector2(0.5044643, 0.62), 0.0, 0.0, 0, 0, Vector2(0.7544643, 0.62), 0.0, 0.0, 0, 0, Vector2(1, 0.7227723), 0.0, 0.0, 0, 0]
 point_count = 5
-
-[sub_resource type="Shader" id="Shader_1b2e5"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
-
-shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_schlick_ggx, unshaded;
-
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-uniform ivec2 albedo_texture_size;
-uniform float point_size : hint_range(0.1, 128.0, 0.1);
-
-uniform sampler2D mask;
-uniform sampler2D vertical_mask;
-uniform vec3 emission_color : source_color;
-uniform float y_offest;
-uniform float rotation_speed = 2.;
-
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-
-void vertex() {
-	UV = UV * uv1_scale.xy + uv1_offset.xy;
-}
-
-void fragment() {
-	vec2 base_uv = UV;
-	
-	vec4 mask_tex = texture(mask, base_uv);
-	vec4 v_mask_tex_1 = texture(vertical_mask, base_uv + vec2(0, -0.3 + y_offest + (rotation_speed * TIME)));
-	vec4 v_mask_tex_2 = texture(vertical_mask, base_uv + vec2(0, 0.3 + y_offest + (rotation_speed * TIME)));
-	vec4 albedo_tex = texture(texture_albedo, base_uv + vec2(0, y_offest + (rotation_speed * TIME)));
-	
-	float masked_tex = mask_tex.r * albedo_tex.r * v_mask_tex_1.r * v_mask_tex_2.r;
-	
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	ALPHA = masked_tex;
-	EMISSION *= emission_color;
-	
-
-}
-"
-
-[sub_resource type="Gradient" id="Gradient_m2hau"]
-offsets = PackedFloat32Array(0, 0.14393939, 0.8030303, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tdghu"]
-gradient = SubResource("Gradient_m2hau")
-fill_from = Vector2(0.015306123, 0)
-fill_to = Vector2(0.25, 0)
-
-[sub_resource type="Gradient" id="Gradient_5u13q"]
-offsets = PackedFloat32Array(0.11363637, 0.21969697, 0.8181818, 0.9015151)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3nuyp"]
-gradient = SubResource("Gradient_5u13q")
-fill = 1
-fill_from = Vector2(0.622, 0.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7j0g"]
-render_priority = 0
-shader = SubResource("Shader_1b2e5")
-shader_parameter/albedo = Color(1.997126, 4.8903, 6.079, 1)
-shader_parameter/texture_albedo = ExtResource("3_ouxtk")
-shader_parameter/albedo_texture_size = Vector2i(0, 0)
-shader_parameter/point_size = 1.0
-shader_parameter/mask = SubResource("GradientTexture2D_tdghu")
-shader_parameter/vertical_mask = SubResource("GradientTexture2D_3nuyp")
-shader_parameter/emission_color = Color(0.3156686, 0.8149597, 0.26455072, 1)
-shader_parameter/y_offest = 0.0
-shader_parameter/rotation_speed = 4.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [node name="SpinVFX" type="Node3D" unique_id=2000963426 node_paths=PackedStringArray("spin_vfx")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -105,6 +26,6 @@ vfx_colors = Dictionary[int, Color]({
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2554425, 0)
 
 [node name="SpinMesh" parent="spin_mesh" index="0" unique_id=750243176]
-material_override = SubResource("ShaderMaterial_q7j0g")
+material_override = ExtResource("3_qvtto")
 
 [editable path="spin_mesh"]

@@ -26,8 +26,8 @@ var _current_level : BaseLevel = null
 @onready var transition_root: Control = %TransitionRoot
 @onready var debug_root: Control = %DebugRoot
 
-# HUD element nodes
-@onready var speedometer_uid: String = "uid://cebpjaeco7bpy"
+# Systems
+@onready var world_effects: WorldEffectsSpawner = %"World Effects"
 
 func _ready() -> void:
 	_init_players(GameManager.players_connected)
@@ -71,6 +71,7 @@ func _init_players(playerAmount : int = 1) -> void:
 		player.playerId = i
 		player.kart_model_scene = _get_character_packed_scene(ScenePaths.CHARACTERS[GameManager.player_list[i].selected_character])
 		player.playerControls = GameManager.player_list[i].controls
+		player.world_effects_spawner = world_effects
 		players.append(player)
 		local_huds.append(_init_local_hud(i))
 		

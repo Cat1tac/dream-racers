@@ -1,11 +1,16 @@
 [gd_scene format=3 uid="uid://dl7oklus7v6pk"]
 
 [ext_resource type="Script" uid="uid://cnbwypbisk32" path="res://src/core/main_game/main_game.gd" id="1_3fed5"]
+[ext_resource type="Script" uid="uid://b6xouosg1vqku" path="res://src/core/main_game/effect_spawner.gd" id="2_6yl8a"]
 
 [node name="MainGame" type="Node" unique_id=2114321724]
 script = ExtResource("1_3fed5")
 
 [node name="Systems" type="Node" parent="." unique_id=561549987]
+
+[node name="World Effects" type="Node" parent="Systems" unique_id=1006696500]
+unique_name_in_owner = true
+script = ExtResource("2_6yl8a")
 
 [node name="World" type="Node3D" parent="." unique_id=2025068431]
 process_mode = 1

@@ -7,6 +7,7 @@ class_name Kart_Sphere extends RigidBody3D
 @export var chargeParticles : Array[KartParticlesManager]
 @export var boostParticles : Array[KartParticlesManager]
 @export var spin_vfx : SpinVFX
+@export var hover_vfx : Node3D
 @onready var center: Node3D = %Center
 @onready var spin_hitbox: SpinHitbox = %SpinHitbox
 @onready var spin_hurt_box: SpinHurtBox = %SpinHurtBox
@@ -171,6 +172,8 @@ var kartStats : Stats
 var parent : Player
 
 var kart_scale : Vector3
+var spin_vfx_scale : Vector3
+var hover_vfx_scale : Vector3
 
 enum BOOST_LEVEL {
 	ZERO,
@@ -463,7 +466,7 @@ func execute_boost(charge_lvl : int, remove_drift : bool = true) -> void:
 	else:
 		boost_level_speed_time[boost_lvl_to_use]["uses"] = min(boost_level_speed_time[boost_lvl_to_use]["uses"] + 1, stale_charge_curve.max_domain)
 	
-	print("Uses of " + str(boost_lvl_to_use) + " :" + str(boost_level_speed_time[boost_lvl_to_use]["uses"]))
+	#print("Uses of " + str(boost_lvl_to_use) + " :" + str(boost_level_speed_time[boost_lvl_to_use]["uses"]))
 	var speedMultiplier : float = boost_level_speed_time[boost_lvl_to_use]["spd_multiplier"]
 	var time : float = boost_level_speed_time[boost_lvl_to_use]["timeMax"] * stale_charge_curve.sample(boost_level_speed_time[boost_lvl_to_use]["uses"])
 	_set_boost(speedMultiplier, time)
@@ -576,10 +579,15 @@ func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	spin_hitbox.global_basis= new_basis.orthonormalized()
 	spin_hurt_box.global_basis = new_basis.orthonormalized()
 	trail_spawner.global_basis = new_basis.orthonormalized()
+	hover_vfx.global_basis = new_basis.orthonormalized()
+	spin_vfx.global_basis = new_basis.orthonormalized()
 	
 	kart_model.global_basis = new_basis
 	kart_model.rotation += new_kart_rotation
 	kart_model.scale = kart_scale
+	
+	hover_vfx.scale = hover_vfx_scale
+	spin_vfx.scale = spin_vfx_scale
 
 func set_up_kart_stats() -> void:
 	top_speed += kartStats.speed
@@ -605,7 +613,11 @@ func _ready() -> void:
 	kartStats = player.kart_stats
 	if kartStats:
 		set_up_kart_stats()
-		
+	
+	#vfx
+	hover_vfx_scale = hover_vfx.scale
+	spin_vfx_scale = spin_vfx.scale
+	
 	current_boost_level = BOOST_LEVEL.ZERO
 	kart_scale = kart_model.scale
 	contact_monitor = true
@@ -652,6 +664,7 @@ func _physics_process(delta: float) -> void:
 	Events.on_get_speed.emit(-center.global_basis.z.dot(linear_velocity), drift_timer, player.playerId)
 	audio_player.bend_pitch("DRIVE", -center.global_basis.z.dot(linear_velocity))
 	if on_ground():
+		hover_vfx.show()
 		if tricked:
 			execute_boost(2, false)
 		reset_trick()
@@ -668,6 +681,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			_apply_forward_force(delta)
 	else:
+		hover_vfx.hide()
 		_apply_air_resistance(delta)
 		
 		if trick_window_increment > 0:
@@ -751,7 +765,7 @@ func _calculate_force_vector(forward : Vector3, vel : float) -> Vector3:
 	var final_top_speed : float = top_speed
 	var final_acceleration : float = acceleration
 	
-	if boost_timer == 0:
+	if current_boost_level == BOOST_LEVEL.ZERO:
 		if abs(vel) > 0.05 and input_acceleration == 0: # no input
 			#drag
 			if input_drift:
@@ -892,7 +906,7 @@ func _apply_grounded_snap_force(delta : float) -> void:
 	var ray_length : float = raypos.distance_to(ray_contact_point) - collision_shape_3d.shape.radius
 	
 	var instant_down_accel : float = 2 * (ray_length - up_speed * delta) / delta
-	var limited_down_accel : float = min(150, instant_down_accel) #300 is how fast it can go before it clips through ground
+	var limited_down_accel : float = min(100, instant_down_accel) #300 is how fast it can go before it clips through ground
 	var down_force := -(limited_down_accel * mass)
 	
 	apply_central_force(up * down_force)

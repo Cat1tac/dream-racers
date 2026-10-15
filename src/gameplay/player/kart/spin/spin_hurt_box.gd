@@ -12,10 +12,10 @@ func _on_area_entered(area: Area3D) -> void:
 	if area is SpinHitbox:
 		var spinhitbox : SpinHitbox = area
 		if spinhitbox.hitbox_active and spinhitbox.parent != parent:
-			if !spinIntangiblility:
+			if !spinIntangiblility: # if player is getting hit
 				print("hit")
-				call_knockback(spinhitbox.kart_sphere.kartCharacter.knockback)
-				call_spin_hit_slowdown(spinhitbox.charge_level, spinhitbox.kart_sphere.kartCharacter.weight)
+				call_knockback(to_local(area.global_position).x, spinhitbox.kart_sphere.kartStats.knockback)
+				call_spin_hit_slowdown(spinhitbox.charge_level, spinhitbox.kart_sphere.kartStats.weight)
 				spinhitbox.call_spin_boost()
 				
 	if area.get_collision_layer_value(8):
@@ -29,19 +29,22 @@ func _on_area_exited(area: Area3D) -> void:
 func reset_trick() -> void:
 	kart_sphere.reset_trick()
 
-func call_knockback(opposing_knockback : float) -> void:
+func call_knockback(opposing_player_x_in_local_coords : float, opposing_knockback : float) -> void:
 	shape_cast_3d.force_shapecast_update()
 	if shape_cast_3d.is_colliding():
 		print(to_local(shape_cast_3d.get_collision_point(0)))
 		for i in shape_cast_3d.get_collision_count():
-			var collision_point := to_local(shape_cast_3d.get_collision_point(i))
-			kart_sphere.apply_clash_force(-collision_point, -(kart_sphere.knockback*2 + (kart_sphere.kartCharacter.knockback - opposing_knockback))) 
+			var collision_point := to_local(shape_cast_3d.get_collision_point(i)) # converts point of collision into players local coords
+			collision_point.x = 1 * signf(opposing_player_x_in_local_coords) # makes x either 1 or negative 1
+			var effect_spawn_point := Vector3(signf(collision_point.x) * (abs(collision_point.x) - shape_cast_3d.shape.size.x), collision_point.y, collision_point.z) # x edge of collision shape or te effect
+			parent.world_effects_spawner.spawn_one_shot_effect(WorldEffectsSpawner.EFFECTS.SPINHIT, to_global(effect_spawn_point)) # converts coords back to global so effect can be spaened in right position
+			kart_sphere.apply_clash_force(-collision_point, -(kart_sphere.knockback * 2 + (kart_sphere.kartStats.knockback - opposing_knockback))) 
 
 func call_spin_hit_slowdown(drift_stage : int, opposing_weight : float) -> void:
 	if drift_stage < 0:
 		drift_stage = 0
 	kart_sphere.spin_cooldown_timer = kart_sphere.spin_cooldown
-	kart_sphere.apply_slowdown_force(kart_sphere.spin_hit_slowdown_amounts[drift_stage] + (kart_sphere.kartCharacter.weight - opposing_weight))
+	kart_sphere.apply_slowdown_force(kart_sphere.spin_hit_slowdown_amounts[drift_stage] + (kart_sphere.kartStats.weight - opposing_weight))
 	kart_sphere.remove_drift_charge()
 	
 func call_slowdown(multiplier : float = 0.5) -> void:

@@ -10,6 +10,7 @@ class_name Player extends Node3D
 @onready var center: Node3D = %Center
 @onready var camera_3d: Camera3D = %Camera3D
 
+var world_effects_spawner : WorldEffectsSpawner
 var current_track : Track
 var playerId : int
 var sphere_offset := 0.5

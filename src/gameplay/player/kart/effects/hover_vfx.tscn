@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://jigux0n5xvrw"]
+
+[ext_resource type="PackedScene" uid="uid://dlg4eepltx0af" path="res://assets/models/vfx/hover_model.glb" id="1_yu0ub"]
+[ext_resource type="Texture2D" uid="uid://07x1wfqylqaj" path="res://assets/textures/vfx/misc/T_VFX_WindNoise1.png" id="2_x6imk"]
+
+[sub_resource type="Shader" id="Shader_1b2e5"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_schlick_ggx, unshaded;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform sampler2D mask;
+uniform sampler2D vertical_mask;
+uniform sampler2D horizontal_mask;
+uniform float y_offest;
+uniform float rotation_speed = 2.;
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	vec2 base_uv = UV;
+	
+	vec4 mask_tex = texture(mask, base_uv);
+	vec4 v_mask_tex_1 = texture(vertical_mask, base_uv + vec2(0, -0.3 + y_offest + (rotation_speed * TIME)));
+	vec4 v_mask_tex_2 = texture(vertical_mask, base_uv + vec2(0, 0.3 + y_offest + (rotation_speed * TIME)));
+	vec4 h_mask_tex = texture(horizontal_mask, base_uv);
+	vec4 albedo_tex = texture(texture_albedo, base_uv + vec2(0, y_offest + (rotation_speed * TIME)));
+	
+	float masked_tex = mask_tex.r * albedo_tex.r * v_mask_tex_1.r * v_mask_tex_2.r * h_mask_tex.r;
+	
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	ALPHA = masked_tex;
+	
+
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_d6en7"]
+offsets = PackedFloat32Array(0, 0.25757575, 0.3409091, 0.5378788, 0.79545456, 0.8030303, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_474qe"]
+gradient = SubResource("Gradient_d6en7")
+fill = 1
+fill_from = Vector2(0.7908163, 0)
+fill_to = Vector2(0.96938777, 1)
+
+[sub_resource type="Gradient" id="Gradient_sdspf"]
+offsets = PackedFloat32Array(0, 0.14393939, 0.8030303, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_opxhh"]
+gradient = SubResource("Gradient_sdspf")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_8b2n1"]
+offsets = PackedFloat32Array(0, 0.07575758, 0.36363637, 0.5151515, 0.6136364, 0.8863636, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bch1c"]
+gradient = SubResource("Gradient_8b2n1")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2uteu"]
+render_priority = 0
+shader = SubResource("Shader_1b2e5")
+shader_parameter/albedo = Color(1.4552035, 1.4552035, 1.4552035, 1)
+shader_parameter/texture_albedo = ExtResource("2_x6imk")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/mask = SubResource("GradientTexture2D_opxhh")
+shader_parameter/vertical_mask = SubResource("GradientTexture2D_bch1c")
+shader_parameter/horizontal_mask = SubResource("GradientTexture2D_474qe")
+shader_parameter/y_offest = 0.0
+shader_parameter/rotation_speed = 1.5
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[node name="hover_vfx" type="Node3D" unique_id=1285261471]
+
+[node name="hover_model" parent="." unique_id=1705177512 instance=ExtResource("1_yu0ub")]
+
+[node name="HoverMesh" parent="hover_model" index="0" unique_id=161004735]
+material_override = SubResource("ShaderMaterial_2uteu")
+
+[editable path="hover_model"]
