@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://mw4eni75dngb"]
+
+[ext_resource type="Theme" uid="uid://bo3kocbypqxpd" path="res://src/ui/themes/results_screen.tres" id="1_71kpc"]
+[ext_resource type="Script" uid="uid://cvtlydesm2cpk" path="res://src/ui/scripts/player_result_panel.gd" id="2_8pm52"]
+
+[node name="PlayerPanel" type="PanelContainer" unique_id=513162898]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_71kpc")
+theme_type_variation = &"PlayerPanel"
+script = ExtResource("2_8pm52")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=613244858]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=148463806]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="PlayerPanelLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1580557327]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+theme_type_variation = &"PlayerPanelLabel"
+text = "Character Name Goes Here"
+
+[node name="FinishTimeLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=291102844]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_type_variation = &"PlayerPanelLabel"
+theme_override_font_sizes/font_size = 48
+text = "0:00"

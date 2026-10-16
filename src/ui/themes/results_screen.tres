@@ -1,0 +1,42 @@
+[gd_resource type="Theme" format=3 uid="uid://bo3kocbypqxpd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chrih"]
+bg_color = Color(0.7775879, 0.29098555, 0.44788432, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_attts"]
+bg_color = Color(0, 0, 0, 0.8156863)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljnfw"]
+bg_color = Color(0.91090953, 0.37048733, 0.474141, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[resource]
+HeaderLabel/base_type = &"Label"
+HeaderLabel/font_sizes/font_size = 48
+HeaderPanel/base_type = &"PanelContainer"
+HeaderPanel/styles/panel = SubResource("StyleBoxFlat_chrih")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_attts")
+PlayerPanel/base_type = &"PanelContainer"
+PlayerPanel/font_sizes/font_size = 30
+PlayerPanel/styles/panel = SubResource("StyleBoxFlat_ljnfw")
+PlayerPanelLabel/base_type = &"Label"
+PlayerPanelLabel/font_sizes/font_size = 36

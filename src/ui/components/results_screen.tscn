@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cj6n40p2vgfo7"]
+
+[ext_resource type="Theme" uid="uid://bo3kocbypqxpd" path="res://src/ui/themes/results_screen.tres" id="1_1klhw"]
+[ext_resource type="Script" uid="uid://2178p6mwwxad" path="res://src/ui/scripts/results_screen.gd" id="1_m3dsn"]
+
+[node name="ResultsScreen" type="Control" unique_id=2065009349]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme = ExtResource("1_1klhw")
+script = ExtResource("1_m3dsn")
+
+[node name="ResultsMargin" type="MarginContainer" parent="." unique_id=1724591609]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_right = 300.0
+offset_bottom = 67.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResultsMargin" unique_id=1005046439]
+layout_mode = 2
+
+[node name="HeaderPanel" type="PanelContainer" parent="ResultsMargin/VBoxContainer" unique_id=1495438537]
+custom_minimum_size = Vector2(750, 75)
+layout_mode = 2
+theme_type_variation = &"HeaderPanel"
+
+[node name="ResultsLabel" type="Label" parent="ResultsMargin/VBoxContainer/HeaderPanel" unique_id=42976575]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("1_1klhw")
+theme_type_variation = &"HeaderLabel"
+text = "Results"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayersMargin" type="MarginContainer" parent="ResultsMargin/VBoxContainer" unique_id=1278500169]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="PlayersVBox" type="VBoxContainer" parent="ResultsMargin/VBoxContainer/PlayersMargin" unique_id=868170909]
+layout_mode = 2
+theme_override_constants/separation = 15

@@ -60,7 +60,7 @@ anchor_bottom = 1.0
 offset_top = -83.0
 offset_right = 99.0
 grow_vertical = 0
-theme_override_constants/margin_left = 50
+theme_override_constants/margin_left = 60
 theme_override_constants/margin_bottom = 50
 
 [node name="LapCountHBox" type="HBoxContainer" parent="MarginContainer" unique_id=988266475]

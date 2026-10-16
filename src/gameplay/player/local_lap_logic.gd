@@ -51,7 +51,7 @@ func get_check_order(order: Array) -> void:
 	if len(check_order) == 0:
 		check_order = order
 		checks_needed = len(order)
-		print("LocalLapLogic: kart has recieved checkpoint info")
+		print("LocalLapLogic: kart has received checkpoint info")
 
 func _on_tree_entered() -> void:
 	await Events.on_track_loaded

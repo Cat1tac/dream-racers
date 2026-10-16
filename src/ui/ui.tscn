@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dt5xamoe48268"]
 
-[ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/mainmenu_theme.tres" id="1_jlntk"]
+[ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/themes/mainmenu_theme.tres" id="1_jlntk"]
 [ext_resource type="Script" uid="uid://b14rojhjw7t7j" path="res://src/ui/scripts/ui_manager.gd" id="1_qemve"]
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
@@ -2753,8 +2753,8 @@ bus = &"Music"
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="UILayer/TrackSelect" method="_back_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2/TrackButton" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="." method="_track_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="UILayer/TrackSelect" method="_next_button_pressed"]
