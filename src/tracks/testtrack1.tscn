@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="9_mvbxg"]
 [ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="10_gj6qf"]
+[ext_resource type="PackedScene" uid="uid://ors18lntsr0j" path="res://src/gameplay/objects/burner.tscn" id="11_4osdo"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
 panorama = ExtResource("2_wvh85")
@@ -58,11 +59,11 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 
 [node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("3_5ryjy")]
 
-[node name="@StaticBody3D@20193" parent="testtrack3" index="1" unique_id=102325124]
-collision_layer = 2
+[node name="@StaticBody3D@20104" parent="testtrack3" index="1" unique_id=997573521]
+collision_layer = 6
 
-[node name="@StaticBody3D@20194" parent="testtrack3" index="3" unique_id=1987579914]
-collision_layer = 2
+[node name="@StaticBody3D@20105" parent="testtrack3" index="3" unique_id=1926922112]
+collision_layer = 6
 
 [node name="Boost_Panels" type="Node3D" parent="." unique_id=1827261410]
 transform = Transform3D(0.965459, 0.14834361, -0.21420336, -1.2948174e-08, 0.8221043, 0.569337, 0.26055497, -0.54967153, 0.79370797, 288.66183, 210.33945, 38.24308)
@@ -155,6 +156,11 @@ transform = Transform3D(30.31, 0, 0, 0, 30.31, 0, 0, 0, 30.31, 48.053802, -36.04
 
 [node name="Loop" parent="MusicHolder" index="1" unique_id=1654185185]
 parameters/looping = true
+
+[node name="FlameHazards" type="Node3D" parent="." unique_id=65239811]
+
+[node name="FlameBox" parent="FlameHazards" unique_id=1759877824 instance=ExtResource("11_4osdo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.842529, 2.7627516, 0)
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 

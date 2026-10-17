@@ -307,28 +307,28 @@ transform = Transform3D(3.494975, 0, 0.41898447, 0, 3.52, 0, -0.41898447, 0, 3.4
 [node name="Arrow2" parent="Objects" unique_id=1826455058 instance=ExtResource("7_on71r")]
 transform = Transform3D(1.971086, 0.67125845, -2.3033144, -0.8650795, 2.97931, 0.1279638, 2.2377403, 0.5604906, 2.078315, 114.0841, 44.161167, 2.0620995)
 
-[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=2067495522]
+[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=772273635]
 transform = Transform3D(0.9966793, -0.07036513, -0.040979266, 0.06639898, 0.9936163, -0.09120381, 0.047135085, 0.088179916, 0.99498904, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsb3b")
 
 [node name="DreamyYggdrasil (with Leaves)2" parent="." unique_id=1475172835 instance=ExtResource("10_5tsv1")]
 
-[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=1688496864]
+[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=893849145]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010043144, 0, -0.02722168)
 
-[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=98534127]
+[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=1261430372]
 transform = Transform3D(-11.27874, 2.742221, 25.541407, 5.8808208, -26.878418, 5.4826603, 25.00598, 7.558031, 10.230846, -89.828445, 37.044, -18.374361)
 visible = false
 surface_material_override/0 = ExtResource("8_ehbii")
 
-[node name="@StaticBody3D@20030" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=1747612425]
-collision_layer = 4
+[node name="@StaticBody3D@20124" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=1156713413]
+collision_layer = 6
 
-[node name="@StaticBody3D@20031" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=1185149543]
-collision_layer = 4
+[node name="@StaticBody3D@20125" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=1934492781]
+collision_layer = 6
 
-[node name="@StaticBody3D@20032" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=1249842070]
-collision_layer = 2
+[node name="@StaticBody3D@20126" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=657937131]
+collision_layer = 6
 
 [node name="LapLogic" type="Node" parent="." unique_id=24872241 node_paths=PackedStringArray("track")]
 script = ExtResource("9_cmjmi")
