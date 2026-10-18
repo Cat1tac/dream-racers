@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dsjhfwplcyc6y"]
+
+[ext_resource type="Script" uid="uid://gxbhrvnef7r" path="res://src/gameplay/objects/cannon.gd" id="1_81tyn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
+
+[node name="Cannon" type="StaticBody3D" unique_id=1720239549]
+script = ExtResource("1_81tyn")
+
+[node name="Timer" type="Timer" parent="." unique_id=206634114]
+wait_time = 3.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1720853791]
+shape = SubResource("BoxShape3D_skbuk")
+debug_color = Color(0.98, 0, 0.42466673, 1)
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

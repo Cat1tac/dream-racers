@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="10_gj6qf"]
 [ext_resource type="PackedScene" uid="uid://ors18lntsr0j" path="res://src/gameplay/objects/burner.tscn" id="11_4osdo"]
 [ext_resource type="PackedScene" uid="uid://63spldelsru2" path="res://src/gameplay/objects/piston.tscn" id="11_crods"]
+[ext_resource type="PackedScene" uid="uid://dsjhfwplcyc6y" path="res://src/gameplay/objects/cannon.tscn" id="13_6w1lt"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
 panorama = ExtResource("2_wvh85")
@@ -172,6 +173,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.584587, 1.7491829, 3.6802
 
 [node name="FlameBox2" parent="Hazards/Flames" unique_id=705597199 instance=ExtResource("11_4osdo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.584587, 1.7491829, -6.240433)
+
+[node name="Cannons" type="Node3D" parent="Hazards" unique_id=2013323486]
+
+[node name="Cannon" parent="Hazards/Cannons" unique_id=1720239549 instance=ExtResource("13_6w1lt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.284653, 2.9060292, 0)
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 
