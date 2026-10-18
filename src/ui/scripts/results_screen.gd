@@ -9,12 +9,11 @@ var player_panel_offscreen_vector: Vector2 = Vector2(-2.5, 0)
 
 var tween: Tween
 
+# TODO Implement ranking logic to sort the player panel array by lowest time completed
+## gets all players in the player_list and creates a panel for them
 func _ready() -> void:
 	for player in GameManager.player_list:
-		var player_panel_instance: PlayerPanel = player_panel.instantiate()
-		players_v_box.add_child(player_panel_instance)
-		player_panel_instance.set_character_name(player.selected_character)
-		player_panel_array.append(player_panel_instance)
+		_create_new_player_panel(player)
 
 #region DEBUG
 #func _process(delta: float) -> void:
@@ -30,6 +29,20 @@ func _ready() -> void:
 		#hide_results_screen()
 #endregion
 
+## creates a player panel with the selected character
+func _create_new_player_panel(player: PlayerDefinition) -> void:
+	var player_panel_instance: PlayerPanel = player_panel.instantiate()
+	players_v_box.add_child(player_panel_instance)
+	player_panel_instance.set_character_name(player.selected_character)
+	player_panel_array.append(player_panel_instance)
+
+
+# TODO needs to connect with a signal that emits every time a player finishes
+func _panel_update_finish_time(player: PlayerDefinition) -> void:
+	pass
+	
+
+#region Tweens
 func show_results_screen() -> void:
 	offset_transform_enabled = true
 	show()
@@ -67,3 +80,4 @@ func _reset_tween() -> void:
 	if tween:
 		tween.kill()
 	tween = create_tween()
+#endregion
