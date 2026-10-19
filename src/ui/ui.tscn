@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/themes/mainmenu_theme.tres" id="1_jlntk"]
 [ext_resource type="Script" uid="uid://b14rojhjw7t7j" path="res://src/ui/scripts/ui_manager.gd" id="1_qemve"]
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
+[ext_resource type="Texture2D" uid="uid://dfnx0uwraggs8" path="res://assets/ui/logos/logo1.png" id="3_d1hbf"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
 [ext_resource type="PackedScene" uid="uid://b7iut7u3n03vi" path="res://src/gameplay/player/character/seraphim.tscn" id="5_1kq2p"]
 [ext_resource type="PackedScene" uid="uid://boc2lxjb0h4fk" path="res://src/ui/components/character_button.tscn" id="6_1kq2p"]
@@ -33,7 +34,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_position_ratio")
+tracks/0/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -45,7 +46,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:modulate")
+tracks/1/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -57,7 +58,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_enabled")
+tracks/2/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -69,7 +70,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
+tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -81,7 +82,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
+tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -93,7 +94,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
+tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -105,74 +106,74 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
+tracks/6/path = NodePath("%MainMenu/../../BackgroundLayers/Background:material:shader_parameter/gradient_control")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [0.0]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
+tracks/7/path = NodePath("%MainMenu/../../BackgroundLayers/Sun:material:shader_parameter/gradient_control")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [0.0]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
+tracks/8/path = NodePath("%MainMenu/../../BackgroundLayers/Clouds:material:shader_parameter/gradient_control")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("%MainMenu/../../BackgroundLayers/Background:material:shader_parameter/gradient_control")
+tracks/9/path = NodePath("VBoxContainer/LogoMargin:offset_transform_position_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(0, 0)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("%MainMenu/../../BackgroundLayers/Sun:material:shader_parameter/gradient_control")
+tracks/10/path = NodePath("VBoxContainer/LogoMargin:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("%MainMenu/../../BackgroundLayers/Clouds:material:shader_parameter/gradient_control")
+tracks/11/path = NodePath("VBoxContainer/LogoMargin:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_t30i7"]
@@ -181,31 +182,31 @@ length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_position_ratio")
+tracks/0/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8333333),
-"transitions": PackedFloat32Array(0.3298771, 1),
+"times": PackedFloat32Array(0.33333334, 0.76666665),
+"transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
-"values": [Vector2(-0.5, 0), Vector2(0, 0)]
+"values": [Vector2(-0.4, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:modulate")
+tracks/1/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6666667),
-"transitions": PackedFloat32Array(0.3298768, 1),
+"times": PackedFloat32Array(0.33333334, 0.8000001),
+"transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_enabled")
+tracks/2/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -217,11 +218,11 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
+tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.33333334, 0.76666665),
+"times": PackedFloat32Array(0.6, 1.0333333),
 "transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
 "values": [Vector2(-0.4, 0), Vector2(0, 0)]
@@ -229,11 +230,11 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
+tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.33333334, 0.8000001),
+"times": PackedFloat32Array(0.6, 1.0666667),
 "transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -241,7 +242,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
+tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -253,11 +254,11 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
+tracks/6/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_position_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.6, 1.0333333),
+"times": PackedFloat32Array(0.76666665, 1.2),
 "transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
 "values": [Vector2(-0.4, 0), Vector2(0, 0)]
@@ -265,11 +266,11 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
+tracks/7/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.6, 1.0666667),
+"times": PackedFloat32Array(0.8, 1.2666667),
 "transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -277,7 +278,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
+tracks/8/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_enabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -289,74 +290,74 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_position_ratio")
+tracks/9/path = NodePath("%MainMenu/../../BackgroundLayers/Background:material:shader_parameter/gradient_control")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.76666665, 1.2),
-"transitions": PackedFloat32Array(0.20306323, 1),
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1.3195078, 1),
 "update": 0,
-"values": [Vector2(-0.4, 0), Vector2(0, 0)]
+"values": [0.39999998988, 0.0]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:modulate")
+tracks/10/path = NodePath("%MainMenu/../../BackgroundLayers/Sun:material:shader_parameter/gradient_control")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.8, 1.2666667),
-"transitions": PackedFloat32Array(0.2176377, 1),
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1.3195078, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [0.39999998988, 0.0]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_enabled")
+tracks/11/path = NodePath("%MainMenu/../../BackgroundLayers/Clouds:material:shader_parameter/gradient_control")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1.3195078, 1),
+"update": 0,
+"values": [0.39999998988, 0.0]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("%MainMenu/../../BackgroundLayers/Background:material:shader_parameter/gradient_control")
+tracks/12/path = NodePath("VBoxContainer/LogoMargin:offset_transform_position_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1.3195078, 1),
+"times": PackedFloat32Array(0.03333333, 0.8666667),
+"transitions": PackedFloat32Array(0.3298771, 1),
 "update": 0,
-"values": [0.39999998988, 0.0]
+"values": [Vector2(-0.5, 0), Vector2(0, 0)]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("%MainMenu/../../BackgroundLayers/Sun:material:shader_parameter/gradient_control")
+tracks/13/path = NodePath("VBoxContainer/LogoMargin:modulate")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1.3195078, 1),
+"times": PackedFloat32Array(0.03333333, 0.70000005),
+"transitions": PackedFloat32Array(0.3298768, 1),
 "update": 0,
-"values": [0.39999998988, 0.0]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("%MainMenu/../../BackgroundLayers/Clouds:material:shader_parameter/gradient_control")
+tracks/14/path = NodePath("VBoxContainer/LogoMargin:offset_transform_enabled")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1.3195078, 1),
-"update": 0,
-"values": [0.39999998988, 0.0]
+"times": PackedFloat32Array(0.03333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_gucsq"]
@@ -365,31 +366,31 @@ length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_position_ratio")
+tracks/0/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8333333),
-"transitions": PackedFloat32Array(0.3298771, 1),
+"times": PackedFloat32Array(0.33333334, 0.76666665),
+"transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
-"values": [Vector2(0.5, 0), Vector2(0, 0)]
+"values": [Vector2(0.4, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:modulate")
+tracks/1/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6666667),
-"transitions": PackedFloat32Array(0.3298768, 1),
+"times": PackedFloat32Array(0.33333334, 0.8000001),
+"transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_enabled")
+tracks/2/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -401,11 +402,11 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
+tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.33333334, 0.76666665),
+"times": PackedFloat32Array(0.6, 1.0333333),
 "transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
 "values": [Vector2(0.4, 0), Vector2(0, 0)]
@@ -413,11 +414,11 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
+tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.33333334, 0.8000001),
+"times": PackedFloat32Array(0.6, 1.0666667),
 "transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -425,7 +426,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
+tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -437,11 +438,11 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
+tracks/6/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_position_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.6, 1.0333333),
+"times": PackedFloat32Array(0.79999995, 1.2333333),
 "transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
 "values": [Vector2(0.4, 0), Vector2(0, 0)]
@@ -449,11 +450,11 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
+tracks/7/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.6, 1.0666667),
+"times": PackedFloat32Array(0.8333333, 1.3),
 "transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -461,7 +462,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
+tracks/8/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_enabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -473,31 +474,31 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_position_ratio")
+tracks/9/path = NodePath("VBoxContainer/LogoMargin:offset_transform_position_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.79999995, 1.2333333),
-"transitions": PackedFloat32Array(0.20306323, 1),
+"times": PackedFloat32Array(0, 0.8333333),
+"transitions": PackedFloat32Array(0.3298771, 1),
 "update": 0,
-"values": [Vector2(0.4, 0), Vector2(0, 0)]
+"values": [Vector2(0.5, 0), Vector2(0, 0)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:modulate")
+tracks/10/path = NodePath("VBoxContainer/LogoMargin:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.8333333, 1.3),
-"transitions": PackedFloat32Array(0.2176377, 1),
+"times": PackedFloat32Array(0, 0.6666667),
+"transitions": PackedFloat32Array(0.3298768, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/LogoMargin:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -513,31 +514,31 @@ length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_position_ratio")
+tracks/0/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6666667),
-"transitions": PackedFloat32Array(0.21022424, 0.43527526),
+"times": PackedFloat32Array(-5.9604645e-08, 0.39999992),
+"transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-2, 0)]
+"values": [Vector2(0, 0), Vector2(-1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:modulate")
+tracks/1/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(-0.033333335, 0.4),
-"transitions": PackedFloat32Array(0.46651652, 1),
+"times": PackedFloat32Array(-5.9604645e-08, 0.43333334),
+"transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame:offset_transform_enabled")
+tracks/2/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -549,11 +550,11 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_position_ratio")
+tracks/3/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(-5.9604645e-08, 0.39999992),
+"times": PackedFloat32Array(0.06666663, 0.46666658),
 "transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-1, 0)]
@@ -561,11 +562,11 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:modulate")
+tracks/4/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(-5.9604645e-08, 0.43333334),
+"times": PackedFloat32Array(0.06666663, 0.4),
 "transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -573,7 +574,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/RaceButton:offset_transform_enabled")
+tracks/5/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -585,11 +586,11 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_position_ratio")
+tracks/6/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_position_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.06666663, 0.46666658),
+"times": PackedFloat32Array(0.13333334, 0.5),
 "transitions": PackedFloat32Array(0.20306323, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-1, 0)]
@@ -597,11 +598,11 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:modulate")
+tracks/7/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.06666663, 0.4),
+"times": PackedFloat32Array(0.13333334, 0.46666667),
 "transitions": PackedFloat32Array(0.2176377, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -609,7 +610,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/HowToPlayButton:offset_transform_enabled")
+tracks/8/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_enabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -621,31 +622,31 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_position_ratio")
+tracks/9/path = NodePath("VBoxContainer/LogoMargin:offset_transform_position_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.13333334, 0.5),
-"transitions": PackedFloat32Array(0.20306323, 1),
+"times": PackedFloat32Array(0, 0.56666666),
+"transitions": PackedFloat32Array(0.3298771, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-1, 0)]
+"values": [Vector2(0, 0), Vector2(-1.5, 0)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:modulate")
+tracks/10/path = NodePath("VBoxContainer/LogoMargin:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.13333334, 0.46666667),
-"transitions": PackedFloat32Array(0.2176377, 1),
+"times": PackedFloat32Array(0, 0.43333334),
+"transitions": PackedFloat32Array(0.3298768, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("VBoxContainer/ButtonMargin/ButtonVBox/ExitButton:offset_transform_enabled")
+tracks/11/path = NodePath("VBoxContainer/LogoMargin:offset_transform_enabled")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -662,19 +663,6 @@ _data = {
 &"enter_right": SubResource("Animation_gucsq"),
 &"exit_left": SubResource("Animation_cx7gx")
 }
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wxmc"]
-bg_color = Color(0.9098039, 0.47843137, 0.58431375, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 7
-border_color = Color(0.18740633, 0.08842536, 0.36621106, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-corner_detail = 20
 
 [sub_resource type="Animation" id="Animation_1mh4k"]
 length = 0.001
@@ -2226,35 +2214,20 @@ grow_vertical = 2
 metadata/_edit_lock_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="PanelMargin" type="MarginContainer" parent="UILayer/MainMenu/VBoxContainer" unique_id=625631409]
+[node name="LogoMargin" type="MarginContainer" parent="UILayer/MainMenu/VBoxContainer" unique_id=625631409]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = -30
+theme_override_constants/margin_right = 90
+theme_override_constants/margin_bottom = 40
 
-[node name="(PLACEHOLDER)TitleFrame" type="PanelContainer" parent="UILayer/MainMenu/VBoxContainer/PanelMargin" unique_id=642017524]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8wxmc")
-
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/MainMenu/VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame" unique_id=896040176]
+[node name="Logo" type="TextureRect" parent="UILayer/MainMenu/VBoxContainer/LogoMargin" unique_id=1925233634]
+custom_maximum_size = Vector2(800, 600)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
-
-[node name="TitleLabel(PLACEHOLDER)" type="Label" parent="UILayer/MainMenu/VBoxContainer/PanelMargin/(PLACEHOLDER)TitleFrame/MarginContainer" unique_id=1428684455]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 2
-theme_override_font_sizes/font_size = 90
-text = "Dream 
-    Racers"
+texture = ExtResource("3_d1hbf")
 
 [node name="ButtonMargin" type="MarginContainer" parent="UILayer/MainMenu/VBoxContainer" unique_id=1874748348]
 layout_mode = 2
@@ -2740,6 +2713,7 @@ material = SubResource("ShaderMaterial_5m051")
 
 [node name="Clouds" parent="BackgroundLayers" index="2" unique_id=1379269482]
 material = SubResource("ShaderMaterial_lp5l8")
+offset_bottom = 2160.0
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=156168761]
 stream = ExtResource("21_ba7qp")

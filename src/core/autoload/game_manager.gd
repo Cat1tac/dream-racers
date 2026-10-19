@@ -4,6 +4,8 @@ extends Node
 
 signal all_players_selected_character
 signal load_finished
+signal pause_game
+signal unpause_game
 var path_to_load: NodePath
 
 var loading_layer: PackedScene = preload("uid://c5yhmxdsx1p77")
