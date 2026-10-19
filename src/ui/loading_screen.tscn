@@ -4,6 +4,7 @@
 
 [node name="LoadingLayer" type="CanvasLayer" unique_id=1179346688]
 process_mode = 3
+layer = 100
 
 [node name="LoadingScreen" type="Control" parent="." unique_id=1083171003]
 layout_mode = 3

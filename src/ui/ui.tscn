@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dt5xamoe48268"]
 
-[ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/mainmenu_theme.tres" id="1_jlntk"]
+[ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/themes/mainmenu_theme.tres" id="1_jlntk"]
 [ext_resource type="Script" uid="uid://b14rojhjw7t7j" path="res://src/ui/scripts/ui_manager.gd" id="1_qemve"]
 [ext_resource type="Script" uid="uid://cp1d4g0ts4gle" path="res://src/ui/scripts/main_menu.gd" id="2_8wxmc"]
 [ext_resource type="Script" uid="uid://cvt0e2rfrgy70" path="res://src/ui/scripts/character_select.gd" id="4_7abqo"]
@@ -18,7 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://dwr06xauwjiie" path="res://assets/ui/main menu/gradients/twilight_gradient.tres" id="10_eofyr"]
 [ext_resource type="Texture2D" uid="uid://bksmi6psrdomo" path="res://assets/models/characters/Nyx/batQueenIconFullSize.png" id="10_lp5l8"]
 [ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
-[ext_resource type="Script" uid="uid://j8n80agc0365" path="res://src/ui/scripts/nav_button.gd" id="11_2auc3"]
 [ext_resource type="PackedScene" uid="uid://dkisc0g5e2d7t" path="res://src/ui/components/track_button.tscn" id="11_gq7f2"]
 [ext_resource type="Texture2D" uid="uid://5c7g1b2beiti" path="res://assets/ui/main menu/gradients/sunset_gradient.tres" id="12_5kva4"]
 [ext_resource type="Texture2D" uid="uid://cwx2m4gn17vf5" path="res://assets/ui/main menu/gradients/clouds_night_gradient.tres" id="13_2auc3"]
@@ -1867,7 +1866,7 @@ tracks/18/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1.4142134, 1),
 "update": 0,
-"values": [0.39999998988, 0.79999997976]
+"values": [0.39999998988, 0.9999999747]
 }
 tracks/19/type = "value"
 tracks/19/imported = false
@@ -1879,7 +1878,7 @@ tracks/19/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1.4142134, 1),
 "update": 0,
-"values": [0.39999998988, 0.79999997976]
+"values": [0.39999998988, 0.9999999747]
 }
 tracks/20/type = "value"
 tracks/20/imported = false
@@ -2149,15 +2148,16 @@ shader_parameter/y_position = -2.2352000028647012e-08
 shader_parameter/wave_spd = 0.0
 
 [sub_resource type="Gradient" id="Gradient_gn68n"]
-colors = PackedColorArray(1, 0.84783334, 0.17000002, 1, 0.83, 0.7636, 0.78684, 1)
+offsets = PackedFloat32Array(0, 0.85546875)
+colors = PackedColorArray(1, 0.91200006, 0.120000005, 1, 0.9, 0.86399996, 0.87659997, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_p6ath"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1hbf"]
 gradient = SubResource("Gradient_gn68n")
 fill_from = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5m051"]
 shader = ExtResource("8_6s7ef")
-shader_parameter/start_gradient = SubResource("GradientTexture2D_p6ath")
+shader_parameter/start_gradient = SubResource("GradientTexture2D_d1hbf")
 shader_parameter/use_noise = false
 shader_parameter/noise_spd_x = 0.0
 shader_parameter/noise_spd_y = 0.0
@@ -2332,7 +2332,7 @@ theme_override_constants/margin_top = 6
 
 [node name="BackButton" parent="UILayer/CharacterSelect/BackButtonMargin" unique_id=1394668878 instance=ExtResource("6_2auc3")]
 layout_mode = 2
-offscreen_vector = Vector2(0, -1.5)
+offscreen_vector_ratio = Vector2(0, -1.2)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect" unique_id=674948339]
 layout_mode = 1
@@ -2578,14 +2578,12 @@ offset_top = 35.0
 offset_bottom = -35.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_right = 30
+theme_override_constants/margin_right = 875
 metadata/_edit_use_anchors_ = true
 
 [node name="NextButton" parent="UILayer/CharacterSelect/NextButtonMargin" unique_id=1711733650 instance=ExtResource("10_ba7qp")]
 layout_mode = 2
-offset_transform_position_ratio = Vector2(1.5, 0)
-type = 1
-offscreen_vector = Vector2(2, 0)
+offscreen_vector_ratio = Vector2(7, 0)
 
 [node name="TrackSelect" type="Control" parent="UILayer" unique_id=424881822 node_paths=PackedStringArray("ui_root", "transition_animations", "previous_state")]
 unique_name_in_owner = true
@@ -2724,20 +2722,12 @@ anchor_right = 1.0
 anchor_bottom = 0.5462963
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_right = 30
+theme_override_constants/margin_right = 125
 metadata/_edit_use_anchors_ = true
 
-[node name="NextButton" type="Button" parent="UILayer/TrackSelect/NextButtonMargin" unique_id=1701418014]
-custom_minimum_size = Vector2(150, 100)
+[node name="NextButton" parent="UILayer/TrackSelect/NextButtonMargin" unique_id=204602147 instance=ExtResource("10_ba7qp")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Next"
-script = ExtResource("11_2auc3")
-type = 1
-offscreen_vector = Vector2(2, 0)
-metadata/_custom_type_script = "uid://j8n80agc0365"
+offscreen_vector_ratio = Vector2(3, 0)
 
 [node name="BackgroundLayers" parent="." unique_id=1665049764 instance=ExtResource("7_gucsq")]
 unique_name_in_owner = true
@@ -2760,12 +2750,14 @@ bus = &"Music"
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_char_back_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/NextButtonMargin/NextButton" to="." method="_character_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="." method="_track_back_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="UILayer/TrackSelect" method="_back_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2/TrackButton" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="." method="_track_next_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="UILayer/TrackSelect" method="_next_button_pressed"]
 
 [editable path="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1"]
 [editable path="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2"]

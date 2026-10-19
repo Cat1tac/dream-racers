@@ -53,28 +53,33 @@ offset_top = 176.81488
 offset_right = 340.96484
 offset_bottom = 181.81494
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=988266475]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1993731456]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
+offset_top = -83.0
+offset_right = 99.0
 grow_vertical = 0
-offset_transform_enabled = true
-offset_transform_position = Vector2(65.395, -44.01)
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_bottom = 50
 
-[node name="Lap Count current" type="Label" parent="HBoxContainer" unique_id=1090670641]
+[node name="LapCountHBox" type="HBoxContainer" parent="MarginContainer" unique_id=988266475]
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="Lap Count current" type="Label" parent="MarginContainer/LapCountHBox" unique_id=1090670641]
 unique_name_in_owner = true
 layout_mode = 2
+offset_transform_enabled = true
 text = "1"
 label_settings = SubResource("LabelSettings_4x5ba")
 
-[node name="Lap Count divider" type="Label" parent="HBoxContainer" unique_id=1042930991]
+[node name="Lap Count divider" type="Label" parent="MarginContainer/LapCountHBox" unique_id=1042930991]
 layout_mode = 2
 text = "/"
 label_settings = SubResource("LabelSettings_4x5ba")
 
-[node name="Lap Count Total" type="Label" parent="HBoxContainer" unique_id=29753224]
+[node name="Lap Count Total" type="Label" parent="MarginContainer/LapCountHBox" unique_id=29753224]
 unique_name_in_owner = true
 layout_mode = 2
 text = "3"

@@ -33,7 +33,7 @@ func on_loading_finished() -> void:
 	
 	await tween.finished
 	loading_screen_gone.emit()
-	queue_free()
+	get_parent().queue_free()
 
 func _reset_tween() -> void:
 	if tween:

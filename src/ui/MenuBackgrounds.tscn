@@ -32,7 +32,8 @@ shader_parameter/wave_spd = 0.0
 load_path = "res://.godot/imported/skybggradient.png-23c087b29eb051b48e860b5303950abc.ctex"
 
 [sub_resource type="Gradient" id="Gradient_gn68n"]
-colors = PackedColorArray(1, 0.84783334, 0.17000002, 1, 0.83, 0.7636, 0.78684, 1)
+offsets = PackedFloat32Array(0, 0.85546875)
+colors = PackedColorArray(1, 0.91200006, 0.120000005, 1, 0.9, 0.86399996, 0.87659997, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_p6ath"]
 gradient = SubResource("Gradient_gn68n")

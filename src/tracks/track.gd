@@ -25,7 +25,7 @@ func race_over() -> void:
 	num_players_finished += 1
 	if num_players_finished == GameManager.players_connected:
 		Events.on_race_over.emit()
-		await get_tree().create_timer(2).timeout
+		await get_tree().create_timer(8).timeout # delay until return to main menu
 		GameManager.reset_selections()
 		GameManager.load_into_path("uid://dt5xamoe48268")
 
@@ -37,7 +37,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	if Input.is_key_pressed(KEY_1):
+		race_over()
 	
 func get_default_player_spawn() -> Array[Marker3D]:
 	return player_spawners

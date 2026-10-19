@@ -55,6 +55,8 @@ func _character_next_button_pressed() -> void:
 	track_select.set_initial_focus(track_icon_1)
 	
 func _track_next_button_pressed() -> void:
+	if GameManager.current_track == GameManager.SelectedCharacter.NONE:
+		return
 	main_music.stop()
 	GameManager.load_into_path("uid://dl7oklus7v6pk")
 
