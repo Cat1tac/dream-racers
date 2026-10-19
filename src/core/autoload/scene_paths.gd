@@ -18,7 +18,7 @@ const CHARACTERS : Dictionary = {
 
 const TRACKS : Dictionary = {
 	GameManager.SelectedTrack.TREE : "uid://c1ucv2i1rb8lg",
-	GameManager.SelectedTrack.SHIP : "uid://c2q2o1k875cs4"
+	GameManager.SelectedTrack.SHIP : "uid://c2q2o1k875cs4" #uid://c2q2o1k875cs4 test track 1 | uid://bved20q18x474 baa baa battleship
 }
 
 const UI : Dictionary = {
