@@ -8,6 +8,8 @@ var race_timer: float = 0.0
 var respawn_location: Vector3
 var respawn_rotation: Vector3
 
+var playerControlled: bool = false
+
 @onready var parent: Player = $"../.."
 @onready var player_controller: Kart_Sphere = %Kart_Sphere
 @onready var player: Node3D = %Center
@@ -66,6 +68,8 @@ func _on_tree_entered() -> void:
 		player_controller.isRacing = true
 	else:
 		player_controller.isRacing = true
+	
+	playerControlled = parent.playerControlled #Updates boolean just in case
 
 # Manages Timer
 func _process(delta: float) -> void:

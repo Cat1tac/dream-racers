@@ -4,6 +4,7 @@ class_name Track extends BaseLevel
 
 var lap_count: int
 var checkpoint_list: Array
+var checkpoint_positions: Array
 @export var willCountdown: bool = false # set to false to disable race countdown
 var num_players_finished : int
 
@@ -12,10 +13,11 @@ func update(laps: int, c_list: Array) -> void:
 	checkpoint_list = c_list
 	print("TrackLapLogic: stuff has been updated")
 
+
 func countdown(time: float, message: String) -> void:
 	for n in range(time, 0, -1):
 		Events.on_get_countdown.emit(n)
-		print("GlobalLapLogic: " + str(n))
+		print("TrackLapLogic: " + str(n))
 		await get_tree().create_timer(1).timeout
 	print("TrackLapLogic: " + message)
 	
