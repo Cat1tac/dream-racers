@@ -30,7 +30,8 @@ var _current_level : BaseLevel = null
 @onready var world_effects: WorldEffectsSpawner = %"World Effects"
 
 func _ready() -> void:
-	_init_players(GameManager.players_connected)
+	GameManager.fill_cpus(4)
+	_init_players(GameManager.players_connected, GameManager.cpu_count)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 
 	load_level(_get_selected_track_uid())
@@ -53,8 +54,8 @@ func _get_character_packed_scene(character_uid : String) -> PackedScene:
 
 #region load players and track
 ## Instantiates the players and adds it to the local player subview
-func _init_players(playerAmount : int = 1) -> void:
-	var local_player_view : LocalMultiplayerView = _init_local_player_view(playerAmount)
+func _init_players(playerAmount : int = 1, cpuAmount : int = 0) -> void:
+	var local_player_view : LocalMultiplayerView = _init_local_player_view(playerAmount + cpuAmount)
 	 
 	var player_scene : PackedScene = ResourceLoader.load(PLAYER_SCENE_UID) as PackedScene
 	if player_scene == null:
@@ -74,9 +75,21 @@ func _init_players(playerAmount : int = 1) -> void:
 		player.world_effects_spawner = world_effects
 		players.append(player)
 		local_huds.append(_init_local_hud(i))
+	
+	var cpu_id = playerAmount
+	for i in cpuAmount:
+		var cpu : Player = player_scene.instantiate() as Player
+		cpu.playerId = cpu_id
+		cpu.kart_model_scene = _get_character_packed_scene(ScenePaths.CHARACTERS[GameManager.player_list[cpu_id].selected_character])
+		cpu.world_effects_spawner = world_effects
+		players.append(cpu)
+		cpu_id += 1
 		
+	print("player count (with cpus) is " + str(players.size()))
 	local_player_view.add_players(players)
 	local_player_view.add_local_huds(local_huds)
+	
+	
 
 ## Loads each player hud with speedometer
 func _init_local_hud(id : int) -> Local_Player_HUD:
@@ -147,6 +160,9 @@ func _place_player_at_level_spawn(player : Player) -> void:
 		return
 	if _current_level == null:
 		push_error("Cannot place player into level because level is null")
+		return
+	if !player.is_inside_tree():
+		push_error("Cannot place player in level because it hasn't been added to the scene tree")
 		return
 	
 	var playerLevelSetup : Array[Marker3D] = _current_level.get_default_player_spawn()

@@ -26,6 +26,7 @@ func update_viewports(playerAmount : int = 1) -> void:
 ## Adds players to unhidden subviewports
 func add_players(players : Array[Player]) -> void:
 	for i in range(players.size()):
+		print("Doing thing for player " + str(i + 1))
 		visible_viewports[i].add_child(players[i])
 
 func add_local_huds(huds : Array[Local_Player_HUD]) -> void:
