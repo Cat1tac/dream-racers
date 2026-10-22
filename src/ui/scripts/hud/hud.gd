@@ -29,7 +29,6 @@ func _countdown_finished() -> void:
 	countdown.text = " "
 
 func _race_over() -> void:
-	GameManager.toggle_in_match()
 	countdown.text = "Finish"
 	await get_tree().create_timer(1).timeout
 	countdown.text = " "

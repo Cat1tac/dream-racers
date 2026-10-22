@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://1ej7nguurprq" path="res://assets/ui/ui/Graphic.png" id="3_ioe1w"]
 
 [node name="TabContainer" type="TabContainer" unique_id=920334996]
+custom_minimum_size = Vector2(1000, 1000)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,10 +13,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_3q573")
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 script = ExtResource("1_788uv")
 
 [node name="Controls" type="PanelContainer" parent="." unique_id=151372613]
+visible = false
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 metadata/_tab_index = 0
@@ -33,10 +35,66 @@ texture = ExtResource("3_ioe1w")
 expand_mode = 5
 
 [node name="Actions" type="PanelContainer" parent="." unique_id=1530497468]
-visible = false
 layout_mode = 2
 theme = ExtResource("1_3q573")
 metadata/_tab_index = 1
+
+[node name="BodyMargin" type="MarginContainer" parent="Actions" unique_id=1531469415]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="HeaderVBox" type="VBoxContainer" parent="Actions/BodyMargin" unique_id=1122473211]
+layout_mode = 2
+theme_override_constants/separation = 168
+
+[node name="SpeedGearMargin" type="MarginContainer" parent="Actions/BodyMargin/HeaderVBox" unique_id=1546320324]
+layout_mode = 2
+
+[node name="SpeedGearVBox" type="VBoxContainer" parent="Actions/BodyMargin/HeaderVBox/SpeedGearMargin" unique_id=1372809988]
+layout_mode = 2
+
+[node name="SpeedHeader" type="Label" parent="Actions/BodyMargin/HeaderVBox/SpeedGearMargin/SpeedGearVBox" unique_id=1269916190]
+layout_mode = 2
+theme_type_variation = &"DescriptionHeader"
+text = "Speed & Gear"
+
+[node name="SpeedDescription" type="Label" parent="Actions/BodyMargin/HeaderVBox/SpeedGearMargin/SpeedGearVBox" unique_id=1013386651]
+custom_minimum_size = Vector2(1000, 10)
+layout_mode = 2
+theme_type_variation = &"DescriptionBody"
+text = "Gain speed by: drift charging, spinning into dreamcatchers & players, and tricking on ramps and bounces!
+
+There are 4 Gear Levels, shown in the speedometer. Gear determines your maximum speed
+	Higher Gear → Faster Speed!
+Gear can be increased by drift charging, Gear Level obtained is equal to the charge boost activated.
+Blue (Gear 1) → Orange (Gear 2) → Purple (Gear 3) → Gold (Gear 4)"
+vertical_alignment = 3
+autowrap_mode = 3
+
+[node name="ItemsMargin" type="MarginContainer" parent="Actions/BodyMargin/HeaderVBox" unique_id=1291314435]
+layout_mode = 2
+
+[node name="ItemsVBox" type="VBoxContainer" parent="Actions/BodyMargin/HeaderVBox/ItemsMargin" unique_id=2065887085]
+layout_mode = 2
+
+[node name="ItemsHeader" type="Label" parent="Actions/BodyMargin/HeaderVBox/ItemsMargin/ItemsVBox" unique_id=115641660]
+layout_mode = 2
+theme_type_variation = &"DescriptionHeader"
+text = "Items"
+
+[node name="ItemsDescription" type="Label" parent="Actions/BodyMargin/HeaderVBox/ItemsMargin/ItemsVBox" unique_id=827815098]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"DescriptionBody"
+text = "- Mini-energy: extends Gear time
+
+- Big-energy: gain a Gear 3 boost"
+vertical_alignment = 3
+autowrap_mode = 3
 
 [node name="Obstacles" type="PanelContainer" parent="." unique_id=120569910]
 visible = false

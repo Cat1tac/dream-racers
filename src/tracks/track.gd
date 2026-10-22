@@ -27,8 +27,8 @@ func race_over() -> void:
 		Events.on_race_over.emit()
 		await get_tree().create_timer(8).timeout # delay until return to main menu
 		GameManager.reset_selections()
+		GameManager.toggle_in_match()
 		GameManager.load_into_path("uid://dt5xamoe48268")
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
