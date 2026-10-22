@@ -9,6 +9,7 @@ const PLAYER_VIEW_UID : String = "uid://bqy6omuyhur8a"
 const LOCAL_PLAYER_HUD : String = "uid://y05frtm4j8pc"
 const DEBUG_MENU : String = "uid://csverqobfpghe"
 const HUD : String = "uid://cq1s6le7mmo58"
+const PAUSE : String = "uid://682w8xjtr67w"
 #const TEST_TRACK_1 :String = ScenePaths.TRACKS.test_track_1
 
 var players : Array[Player]
@@ -31,11 +32,14 @@ var _current_level : BaseLevel = null
 
 func _ready() -> void:
 	_init_players(GameManager.players_connected)
+	GameManager.pause_game.connect(pause_game)
+	GameManager.unpause_game.connect(unpause_game)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 
 	load_level(_get_selected_track_uid())
 	#_load_debug()
 	_load_hud()
+	_load_pause()
 
 #region Get what players selected
 func _get_selected_track_uid() -> String:
@@ -161,6 +165,11 @@ func _load_hud() -> void: # TODO clean up instantiation code
 	var hud_instance := hud_scene.instantiate()
 	hud_root.add_child(hud_instance)
 
+func _load_pause() -> void:
+	var pause_scene: PackedScene = ResourceLoader.load(PAUSE)
+	var pause_instance := pause_scene.instantiate()
+	pause_root.add_child(pause_instance)
+
 func _load_debug() -> void:
 	var debug_menu : PackedScene =\
 		ResourceLoader.load(DEBUG_MENU, "PackedScene") as PackedScene
@@ -175,3 +184,11 @@ func _load_debug() -> void:
 		# FUTURE (main menu): SHould have a fall back scene
 	
 	debug_root.add_child(debug_menu_instance)
+
+func pause_game() -> void:
+	for child in get_children():
+			child.get_tree().paused = true
+
+func unpause_game() -> void:
+	for child in get_children():
+			child.get_tree().paused = false

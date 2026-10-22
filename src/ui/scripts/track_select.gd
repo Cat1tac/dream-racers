@@ -20,6 +20,7 @@ func _input(event: InputEvent) -> void:
 	if ui_root.current_state != ui_root.State.TRACK_SELECT:
 		return
 	
+	# custom control handling with PlayerDefintion 
 	# emit the button pressed with ui_select
 	for player : PlayerDefinition in GameManager.player_list:
 		if event.is_action(player.controls.actions["forward"]):

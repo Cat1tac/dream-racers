@@ -59,7 +59,7 @@ func _track_next_button_pressed() -> void:
 		return
 	main_music.stop()
 	GameManager.load_into_path("uid://dl7oklus7v6pk")
-
+	GameManager.toggle_in_match()
 #endregion
 
 #region back transitions

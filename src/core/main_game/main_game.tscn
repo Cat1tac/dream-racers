@@ -4,9 +4,11 @@
 [ext_resource type="Script" uid="uid://b6xouosg1vqku" path="res://src/core/main_game/effect_spawner.gd" id="2_6yl8a"]
 
 [node name="MainGame" type="Node" unique_id=2114321724]
+process_mode = 3
 script = ExtResource("1_3fed5")
 
 [node name="Systems" type="Node" parent="." unique_id=561549987]
+process_mode = 1
 
 [node name="World Effects" type="Node" parent="Systems" unique_id=1006696500]
 unique_name_in_owner = true
@@ -39,15 +41,17 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=1586343594]
-process_mode = 2
+process_mode = 3
 layer = 20
 
 [node name="PauseRoot" type="Control" parent="PauseLayer" unique_id=972711880]
 unique_name_in_owner = true
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=1044580396]
 process_mode = 3

@@ -6,7 +6,6 @@ var instantiated_results_screen: ResultsScreen
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
 	var new_results_screen: ResultsScreen = results_screen.instantiate()
 	add_child(new_results_screen)
 	new_results_screen.hide_results_screen()
@@ -30,6 +29,7 @@ func _countdown_finished() -> void:
 	countdown.text = " "
 
 func _race_over() -> void:
+	GameManager.toggle_in_match()
 	countdown.text = "Finish"
 	await get_tree().create_timer(1).timeout
 	countdown.text = " "

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://mw4eni75dngb"]
 
 [ext_resource type="Theme" uid="uid://bo3kocbypqxpd" path="res://src/ui/themes/results_screen.tres" id="1_71kpc"]
-[ext_resource type="Script" uid="uid://cvtlydesm2cpk" path="res://src/ui/scripts/player_result_panel.gd" id="2_8pm52"]
+[ext_resource type="Script" uid="uid://cvtlydesm2cpk" path="res://src/ui/scripts/results/player_result_panel.gd" id="2_8pm52"]
 
 [node name="PlayerPanel" type="PanelContainer" unique_id=513162898]
 offset_right = 40.0

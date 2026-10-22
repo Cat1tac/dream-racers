@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://boc2lxjb0h4fk"]
 
 [ext_resource type="Texture2D" uid="uid://b3a1pcsmnqdp2" path="res://assets/ui/main menu/Character Select/Black Select Outline.png" id="1_pnv46"]
-[ext_resource type="Script" uid="uid://bw305rlsv6xhe" path="res://src/ui/scripts/character_button.gd" id="1_r81x4"]
+[ext_resource type="Script" uid="uid://bw305rlsv6xhe" path="res://src/ui/scripts/menu/character_button.gd" id="1_r81x4"]
 [ext_resource type="Shader" uid="uid://oiid2lv0emw6" path="res://src/shaders/character_button.gdshader" id="3_uximl"]
 [ext_resource type="Texture2D" uid="uid://dr6q2akj42qlw" path="res://assets/ui/main menu/Character Select/P1 Icon.png" id="4_d6wo8"]
 [ext_resource type="Texture2D" uid="uid://c1qkf4oqfx80w" path="res://assets/ui/main menu/Character Select/P2 Icon.png" id="5_6sbg5"]

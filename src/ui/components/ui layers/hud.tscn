@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cq1s6le7mmo58"]
 
-[ext_resource type="Script" uid="uid://cs37fytxppart" path="res://src/ui/hud.gd" id="1_eqvli"]
+[ext_resource type="Script" uid="uid://cs37fytxppart" path="res://src/ui/scripts/hud/hud.gd" id="1_eqvli"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_x2l1u"]
 font_size = 400

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cj6n40p2vgfo7"]
 
 [ext_resource type="Theme" uid="uid://bo3kocbypqxpd" path="res://src/ui/themes/results_screen.tres" id="1_1klhw"]
-[ext_resource type="Script" uid="uid://2178p6mwwxad" path="res://src/ui/scripts/results_screen.gd" id="1_m3dsn"]
+[ext_resource type="Script" uid="uid://2178p6mwwxad" path="res://src/ui/scripts/results/results_screen.gd" id="1_m3dsn"]
 
 [node name="ResultsScreen" type="Control" unique_id=2065009349]
 layout_mode = 3

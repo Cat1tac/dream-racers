@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dmgpxiaj15x20"]
 
-[ext_resource type="Script" uid="uid://j8n80agc0365" path="res://src/ui/scripts/nav_button.gd" id="1_pl7wq"]
+[ext_resource type="Script" uid="uid://j8n80agc0365" path="res://src/ui/scripts/menu/nav_button.gd" id="1_pl7wq"]
 
 [node name="BackButton" type="Button" unique_id=1394668878]
 custom_minimum_size = Vector2(100, 100)

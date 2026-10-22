@@ -6,6 +6,7 @@ signal all_players_selected_character
 signal load_finished
 signal pause_game
 signal unpause_game
+
 var path_to_load: NodePath
 
 var loading_layer: PackedScene = preload("uid://c5yhmxdsx1p77")
@@ -25,6 +26,8 @@ var device_id_list : Array[int]
 
 
 var is_loading = false
+var is_in_match = false
+var game_paused = false
 
 #region enums
 enum SelectedCharacter {
@@ -128,6 +131,13 @@ func reset_selections() -> void:
 		player.character_select_pressed = false
 		
 	current_track = SelectedTrack.NONE
+
+func toggle_in_match() -> void:
+	if not is_in_match:
+		is_in_match = true
+	else:
+		is_in_match = false
+	
 #endregion
 
 #region loading functions
