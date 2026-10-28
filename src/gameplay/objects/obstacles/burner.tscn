@@ -1,0 +1,223 @@
+[gd_scene format=3 uid="uid://ors18lntsr0j"]
+
+[ext_resource type="Script" uid="uid://bf0o4ej413dvn" path="res://src/gameplay/objects/obstacles/burner.gd" id="1_8hm4q"]
+[ext_resource type="PackedScene" uid="uid://cshh1ejr3wp7s" path="res://assets/models/objects/obstacles/burner.glb" id="2_47mqf"]
+[ext_resource type="Texture2D" uid="uid://cw3axyhyqwh85" path="res://assets/textures/vfx/LeLu's Noise Pack/T_Noise_HU85k.png" id="4_ewnfu"]
+[ext_resource type="Texture2D" uid="uid://vx363hiwvmd1" path="res://assets/textures/vfx/kenney_particle-pack/PNG (Transparent)/scorch_02.png" id="5_7nn2n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eixcs"]
+size = Vector3(2.0453491, 2.775, 10.393394)
+
+[sub_resource type="Shader" id="Shader_3eavq"]
+code = "shader_type spatial;
+render_mode blend_add, unshaded, depth_prepass_alpha, shadows_disabled, cull_disabled;
+uniform sampler2D noisetx: repeat_enable;
+uniform sampler2D add_gradient;
+uniform sampler2D subtract_gradient;
+uniform sampler2D color_gradient;
+uniform sampler2D disappaer_gradient;
+
+uniform sampler2D displacement_tex; 
+uniform sampler2D displacement_mask;
+uniform sampler2D elongate_mask; 
+
+uniform float speed = 1;
+uniform vec2 scale = vec2(1, 1);
+uniform float fill : hint_range(0.0, 1.0, 0.1);
+uniform float displacement_scale = 1;
+uniform float displacement_speed = 1;
+uniform float elongate : hint_range(0.0, 1.0, 0.01);
+
+
+void vertex() {
+	vec3 pos = VERTEX;
+	vec4 displace_mask = texture(displacement_mask, UV);
+	vec4 displacement = texture(displacement_tex, UV + vec2(0, TIME * displacement_speed));
+	vec4 elongate_grad = texture(elongate_mask, UV);
+	
+	pos.xy += displacement_scale * elongate * displace_mask.r * (displacement.r * NORMAL).xy;
+	//pos.y += displacement_scale * displace_mask.r * displacement.r;
+	pos.z *= smoothstep(elongate_grad.r, 1, elongate);
+	VERTEX = pos;
+}
+
+void fragment() {
+	vec4 noise_y = texture(noisetx, (UV * scale) + vec2(0, TIME * speed));
+	vec4 noise_x = texture(noisetx, (UV * scale) + vec2(TIME * speed, 0));
+	vec4 add_tex = texture(add_gradient, UV + vec2(0, TIME * displacement_speed));
+	vec4 sub_tex = texture(subtract_gradient, UV);
+	vec4 disappear_tex = texture(disappaer_gradient, UV);
+	
+	float noise_alpha_pattern = clamp(clamp(noise_y.r + noise_x.r, 0, 1) - sub_tex.r + add_tex.r, 0, 1);
+	vec4 color_tex = texture(color_gradient, UV);
+	
+	ALBEDO = color_tex.rgb;
+	ALPHA = smoothstep(disappear_tex.r, 1, fill) * noise_alpha_pattern;
+	EMISSION = color_tex.rgb * 10.;
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the material.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="Gradient" id="Gradient_1hmva"]
+offsets = PackedFloat32Array(0, 0.5568182, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_748mq"]
+gradient = SubResource("Gradient_1hmva")
+fill_from = Vector2(0.3974359, 0.75213677)
+fill_to = Vector2(0.3931624, 0.22649573)
+
+[sub_resource type="Gradient" id="Gradient_7f5n8"]
+offsets = PackedFloat32Array(0, 0.4848485, 1)
+colors = PackedColorArray(0.8028255, 1.8637407, 0, 1, 0.5500001, 1, 0, 1, 0.31666672, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_56eyd"]
+gradient = SubResource("Gradient_7f5n8")
+use_hdr = true
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_sljhr"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2tqji"]
+gradient = SubResource("Gradient_sljhr")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_t2f1x"]
+offsets = PackedFloat32Array(0, 0.34848484, 1)
+colors = PackedColorArray(0.48570347, 0.48570353, 0.48570347, 1, 1, 1, 1, 1, 0.40069774, 0.40069774, 0.40069768, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uxwsb"]
+gradient = SubResource("Gradient_t2f1x")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_h0n6w"]
+offsets = PackedFloat32Array(0, 0.5151515, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wy4gq"]
+gradient = SubResource("Gradient_h0n6w")
+fill_from = Vector2(1, 0.15306123)
+fill_to = Vector2(1, 0.84183675)
+
+[sub_resource type="Gradient" id="Gradient_ix5js"]
+offsets = PackedFloat32Array(0.9943182, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e6g1a"]
+gradient = SubResource("Gradient_ix5js")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_tgn1v"]
+offsets = PackedFloat32Array(0, 0.121212125, 0.8560606, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8o2v6"]
+gradient = SubResource("Gradient_tgn1v")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 0.13265306)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nb2ps"]
+render_priority = 0
+shader = SubResource("Shader_3eavq")
+shader_parameter/noisetx = ExtResource("4_ewnfu")
+shader_parameter/add_gradient = SubResource("GradientTexture2D_748mq")
+shader_parameter/subtract_gradient = SubResource("GradientTexture2D_8o2v6")
+shader_parameter/color_gradient = SubResource("GradientTexture2D_56eyd")
+shader_parameter/disappaer_gradient = SubResource("GradientTexture2D_2tqji")
+shader_parameter/displacement_tex = SubResource("GradientTexture2D_wy4gq")
+shader_parameter/displacement_mask = SubResource("GradientTexture2D_uxwsb")
+shader_parameter/elongate_mask = SubResource("GradientTexture2D_e6g1a")
+shader_parameter/speed = 3.02
+shader_parameter/scale = Vector2(4.785, 1.045)
+shader_parameter/fill = 1.0
+shader_parameter/displacement_scale = 1.84
+shader_parameter/displacement_speed = 2.725
+shader_parameter/elongate = 0.999999977648
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_expqt"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("5_7nn2n")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_tfanx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.461538, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vmkh1"]
+curve = SubResource("Curve_tfanx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uujsa"]
+emission_shape_scale = Vector3(1, 1, 0)
+emission_shape = 2
+emission_sphere_radius = 4.1
+direction = Vector3(0, 0, -1.355)
+spread = 14.434
+flatness = 0.396
+initial_velocity_min = 17.539999
+initial_velocity_max = 17.539999
+gravity = Vector3(0, 2.61, 0)
+scale_min = 0.5
+scale_max = 0.5
+color = Color(1.4693757, 1.6674376, 0, 1)
+alpha_curve = SubResource("CurveTexture_vmkh1")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ds1u0"]
+orientation = 2
+
+[node name="Burner" type="Node3D" unique_id=2057071634]
+script = ExtResource("1_8hm4q")
+
+[node name="FlameBox" type="Area3D" parent="." unique_id=1759877824]
+collision_layer = 16
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlameBox" unique_id=1340658995]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.13348389, 0.2817421, -10.507408)
+shape = SubResource("BoxShape3D_eixcs")
+debug_color = Color(1, 0.4666667, 0, 1)
+
+[node name="Timer" type="Timer" parent="." unique_id=526424572]
+wait_time = 6.0
+autostart = true
+
+[node name="burner" parent="." unique_id=910642151 instance=ExtResource("2_47mqf")]
+
+[node name="Flame" parent="burner" index="1" unique_id=493201315]
+material_override = SubResource("ShaderMaterial_nb2ps")
+cast_shadow = 0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="burner" unique_id=1619586362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0704045)
+material_override = SubResource("StandardMaterial3D_expqt")
+amount = 6
+lifetime = 1.19
+speed_scale = 3.65
+process_material = SubResource("ParticleProcessMaterial_uujsa")
+draw_pass_1 = SubResource("PlaneMesh_ds1u0")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=790235135]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8703289, -0.028690338, 7.455533)
+light_color = Color(0.84480774, 1.8247963, 0, 1)
+light_energy = 1.263
+shadow_enabled = true
+spot_range = 45.424
+spot_attenuation = -0.31
+spot_angle = 30.89
+spot_angle_attenuation = 0.0980732
+
+[connection signal="area_entered" from="FlameBox" to="." method="_on_area_entered"]
+[connection signal="area_shape_entered" from="FlameBox" to="FlameBox" method="_on_area_shape_entered"]
+
+[editable path="burner"]

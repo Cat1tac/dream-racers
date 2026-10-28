@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dsjhfwplcyc6y"]
 
-[ext_resource type="Script" uid="uid://gxbhrvnef7r" path="res://src/gameplay/objects/cannon.gd" id="1_81tyn"]
+[ext_resource type="Script" uid="uid://gxbhrvnef7r" path="res://src/gameplay/objects/obstacles/cannon.gd" id="1_81tyn"]
+
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 

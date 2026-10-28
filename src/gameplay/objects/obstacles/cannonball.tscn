@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cjncvubqx835r"]
 
-[ext_resource type="Script" uid="uid://dknkda4bggtfy" path="res://src/gameplay/objects/cannonball.gd" id="1_comij"]
+[ext_resource type="Script" uid="uid://dknkda4bggtfy" path="res://src/gameplay/objects/obstacles/cannonball.gd" id="1_comij"]
+
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_skbuk"]
 

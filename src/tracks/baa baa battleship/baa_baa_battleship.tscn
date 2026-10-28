@@ -3,8 +3,16 @@
 [ext_resource type="Script" uid="uid://cprhmbxvp1y2i" path="res://src/tracks/track.gd" id="1_hgstr"]
 [ext_resource type="PackedScene" uid="uid://f1m11f0608mt" path="res://assets/models/tracks/Baa Baa Battleship/battleship.glb" id="1_tftld"]
 [ext_resource type="Shader" uid="uid://dosmjerruklup" path="res://src/tracks/dreamy yggdrasil/dreamy_yggdrasil.gdshader" id="3_olw7k"]
+[ext_resource type="Texture2D" uid="uid://m0gxx26ikp1m" path="res://src/tracks/testtrack3_m64_road2.png" id="3_pqh6l"]
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="4_ey2j6"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="5_nb2ps"]
+[ext_resource type="PackedScene" uid="uid://ors18lntsr0j" path="res://src/gameplay/objects/obstacles/burner.tscn" id="6_nb2ps"]
+[ext_resource type="PackedScene" uid="uid://6nyspco2aa5a" path="res://src/gameplay/objects/obstacles/cannon_explosion.tscn" id="8_86h7a"]
+[ext_resource type="PackedScene" uid="uid://63spldelsru2" path="res://src/gameplay/objects/obstacles/piston.tscn" id="9_86h7a"]
+[ext_resource type="PackedScene" uid="uid://dlybic2qqanel" path="res://src/gameplay/objects/cloud.tscn" id="10_yg7te"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yg7te"]
+albedo_texture = ExtResource("3_pqh6l")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jlutn"]
 shader = ExtResource("3_olw7k")
@@ -53,20 +61,20 @@ player_spawners = [NodePath("Spawns/P1 Spawn"), NodePath("Spawns/P2 Spawn"), Nod
 
 [node name="battleship" parent="." unique_id=1130854066 instance=ExtResource("1_tftld")]
 
-[node name="Cylinder" parent="battleship" index="3" unique_id=947668760]
+[node name="Track" parent="battleship" index="1" unique_id=1439886843]
+material_override = SubResource("StandardMaterial3D_yg7te")
+
+[node name="Track_col" parent="battleship" index="2" unique_id=1525646500]
 collision_layer = 2
 
-[node name="Spiralcol" parent="battleship" index="4" unique_id=1334453444]
-collision_layer = 2
-
-[node name="Roads" parent="battleship" index="5" unique_id=284403889]
-collision_layer = 2
+[node name="Ship_Body_col" parent="battleship" index="3" unique_id=2094854902]
+collision_layer = 4
 
 [node name="Spawns" type="Node3D" parent="." unique_id=114101200]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 23.025312, 0, -7.1762285)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 52.91088, 0, 39.21714)
 
 [node name="P1 Spawn" type="Marker3D" parent="Spawns" unique_id=401921513]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4575583e-06, 1.2707977, -33.345047)
+transform = Transform3D(0.109748766, 0, -0.99395937, 0, 1, 0, 0.99395937, 0, 0.109748766, 234.29695, 21.452457, -79.77054)
 
 [node name="P2 Spawn" type="Marker3D" parent="Spawns" unique_id=699472379]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.387909, 1.709, -26.778723)
@@ -243,6 +251,47 @@ transform = Transform3D(4.4653172, 0.11864354, 2.2465234, -0.08906417, 4.9984508
 
 [node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint22" index="1" unique_id=446360075]
 transform = Transform3D(0.5387707, 0, -0.84245235, 0, 1.0000002, 0, 0.8424523, 0, 0.5387707, -7.352785, 0.25557137, -3.0283105)
+
+[node name="Obstacles" type="Node" parent="." unique_id=559826282]
+
+[node name="Burner1" parent="Obstacles" unique_id=2057071634 instance=ExtResource("6_nb2ps")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.789, 7.752, -108.501)
+
+[node name="Burner2" parent="Obstacles" unique_id=812622138 instance=ExtResource("6_nb2ps")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 19.604, 7.751979, -152.677)
+
+[node name="Cannon Explosion" parent="Obstacles" unique_id=1566947336 instance=ExtResource("8_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -242.98708, 55.552284, -87.83085)
+
+[node name="Piston1" parent="Obstacles" unique_id=1424114555 instance=ExtResource("9_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.966902, 11.090824, -206.4081)
+
+[node name="Piston2" parent="Obstacles" unique_id=1628751673 instance=ExtResource("9_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.966902, 11.090824, -186.37337)
+timing_offset = 2.6
+
+[node name="Piston3" parent="Obstacles" unique_id=1783448577 instance=ExtResource("9_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.755383, 11.090824, -197.08182)
+timing_offset = 3.6
+
+[node name="Piston4" parent="Obstacles" unique_id=2141712537 instance=ExtResource("9_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.30053, 11.090824, -186.37337)
+timing_offset = 2.6
+
+[node name="Piston5" parent="Obstacles" unique_id=531845708 instance=ExtResource("9_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.30053, 11.090824, -206.0796)
+
+[node name="Objects" type="Node" parent="." unique_id=827148083]
+
+[node name="Cloud" parent="Objects" unique_id=2108663503 instance=ExtResource("10_yg7te")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.4045, -2.6074429, -285.56082)
+trick_forward_boost = 2.0
+normal_forward_boost = 1.5
+
+[node name="Cloud2" parent="Objects" unique_id=1080642848 instance=ExtResource("10_yg7te")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -202.4893, -5.7575665, -283.96555)
+trick_forward_boost = 2.0
+normal_forward_boost = 2.0
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 

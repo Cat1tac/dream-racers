@@ -174,6 +174,7 @@ var parent : Player
 var kart_scale : Vector3
 var spin_vfx_scale : Vector3
 var hover_vfx_scale : Vector3
+var neutral_basis : Basis
 
 enum BOOST_LEVEL {
 	ZERO,
@@ -574,13 +575,22 @@ func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
 	new_basis.y = up
 	new_basis.z = forward
 	
-	snap_cast.global_basis = new_basis.orthonormalized()
-	wall_cast.global_basis = new_basis.orthonormalized()
-	spin_hitbox.global_basis= new_basis.orthonormalized()
-	spin_hurt_box.global_basis = new_basis.orthonormalized()
-	trail_spawner.global_basis = new_basis.orthonormalized()
-	hover_vfx.global_basis = new_basis.orthonormalized()
-	spin_vfx.global_basis = new_basis.orthonormalized()
+	if on_ground():
+		snap_cast.global_basis = new_basis.orthonormalized()
+		wall_cast.global_basis = new_basis.orthonormalized()
+		spin_hitbox.global_basis= new_basis.orthonormalized()
+		spin_hurt_box.global_basis = new_basis.orthonormalized()
+		trail_spawner.global_basis = new_basis.orthonormalized()
+		hover_vfx.global_basis = new_basis.orthonormalized()
+		spin_vfx.global_basis = new_basis.orthonormalized()
+	else:
+		snap_cast.global_basis = neutral_basis.orthonormalized()
+		wall_cast.global_basis = neutral_basis.orthonormalized()
+		spin_hitbox.global_basis= neutral_basis.orthonormalized()
+		spin_hurt_box.global_basis = neutral_basis.orthonormalized()
+		trail_spawner.global_basis = neutral_basis.orthonormalized()
+		hover_vfx.global_basis = neutral_basis.orthonormalized()
+		spin_vfx.global_basis = neutral_basis.orthonormalized()
 	
 	kart_model.global_basis = new_basis
 	kart_model.rotation += new_kart_rotation
@@ -624,6 +634,14 @@ func _ready() -> void:
 	max_contacts_reported = 2
 	audio_player.update_top_speed(top_speed)
 	audio_player.play_audio("DRIVE")
+	
+	var up := Vector3.UP # gets normal of new up
+	var forward := -center.global_basis.z # gets forward direction of kart
+	forward = (forward - up * forward.dot(up)).normalized()
+	var right := up.cross(forward).normalized()
+	neutral_basis.x = right
+	neutral_basis.y = up
+	neutral_basis.z = forward
 
 func _process(delta: float) -> void:
 	#base_kart_rotation_y = kart_model.rotation.y

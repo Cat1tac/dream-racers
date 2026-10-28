@@ -3,6 +3,7 @@ extends Node3D
 @export var bounce_height : float = 15
 @export var super_bounce : float = 20
 @export var charge_need_for_super_bounce : float = 4
+## Used instead of normal forward boost
 @export var trick_forward_boost : float = 0.7
 @export var normal_forward_boost : float = 0.4
 

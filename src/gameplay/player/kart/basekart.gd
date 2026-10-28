@@ -52,6 +52,7 @@ func _handle_in_character_select_logic() -> void:
 #region In Race
 func _handle_in_race_logic(_delta : float) -> void:
 	if !tween or !tween.is_running():
+		kart.global_rotation = kart.global_rotation.normalized()
 		if kart.global_rotation != global_rotation:
 			kart.global_rotation = kart.global_rotation.slerp(global_rotation.normalized(), 1 - pow(0.025, 2 * _delta)).normalized()
 		else:
