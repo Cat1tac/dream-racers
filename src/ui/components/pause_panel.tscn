@@ -44,11 +44,13 @@ vertical_alignment = 1
 [node name="ResumeButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=862570093]
 layout_mode = 2
 size_flags_vertical = 4
+focus_neighbor_top = NodePath("../ReturnButton")
 text = "Resume"
 
 [node name="ReturnButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1351220059]
 layout_mode = 2
 size_flags_vertical = 4
+focus_neighbor_bottom = NodePath("../ResumeButton")
 text = "Return to Main Menu"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="_resume_button_pressed"]

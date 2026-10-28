@@ -14,6 +14,9 @@ func _ready() -> void:
 	
 	if GameManager.current_track == GameManager.SelectedTrack.NONE:
 		next_button.exit()
+	
+	for button in find_children("TrackButton", "Button"):
+		button.focus_entered.connect(Audio.play_ui_up)
 
 
 func _input(event: InputEvent) -> void:
@@ -23,19 +26,28 @@ func _input(event: InputEvent) -> void:
 	# custom control handling with PlayerDefintion 
 	# emit the button pressed with ui_select
 	for player : PlayerDefinition in GameManager.player_list:
-		if event.is_action(player.controls.actions["forward"]):
+		if event.is_action_pressed(player.controls.actions["right"]):
+			Audio.play_ui_up()
+		elif event.is_action_pressed(player.controls.actions["left"]):
+			Audio.play_ui_down()
+		
+		if event.is_action_pressed(player.controls.actions["forward"]):
+			Audio.play_ui_select()
 			match get_viewport().gui_get_focus_owner():
 				track_button_1:
 					track_button_1.pressed.emit()
 				track_button_2:
 					track_button_2.pressed.emit()
+				next_button:
+					next_button.pressed.emit()
 		
 		# next button pressed
-		if event.is_action(player.controls.actions["start"]):
+		if event.is_action_pressed(player.controls.actions["start"]):
 			next_button.pressed.emit()
 		
 		# deselect goes back
-		if event.is_action(player.controls.actions["backwards"]):
+		if event.is_action_pressed(player.controls.actions["backwards"]):
+			Audio.play_ui_back()
 			back_button.pressed.emit()
 			back_button.hide()
 			next_button.exit()

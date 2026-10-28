@@ -15,6 +15,7 @@ func enter() -> void:
 
 	await tween.finished
 	
+	#Audio.play_ready_in()
 	# button tween
 	_reset_tween()
 	offset_transform_enabled = true
@@ -33,6 +34,7 @@ func exit() -> void:
 	await tween.finished
 	line.hide()
 	
+	#Audio.play_ready_out()
 	# button tween
 	_reset_tween()
 	offset_transform_enabled = true

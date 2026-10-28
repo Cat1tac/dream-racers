@@ -9,6 +9,12 @@ var accept_input : bool = true
 
 func _ready() -> void:
 	Events.on_how_to_play.connect(_toggle_main_menu_input)
+	
+	# find every button and assign audio on its focus entered
+	for button in find_children("*", "Button"):
+		button.focus_entered.connect(Audio.play_ui_up)
+		button.pressed.connect(Audio.play_ui_select)
+
 
 func _input(event: InputEvent) -> void:
 	if ui_root.current_state != ui_root.State.MAIN_MENU:
@@ -19,17 +25,19 @@ func _input(event: InputEvent) -> void:
 	
 	for player : PlayerDefinition in GameManager.player_list:
 		if race_button.has_focus():
-			if event.is_action(player.controls.actions["forward"]):
+			if event.is_action_pressed(player.controls.actions["forward"]):
 				race_button.pressed.emit()
 		
 		if how_to_play_button.has_focus():
-			if event.is_action(player.controls.actions["forward"]):
+			if event.is_action_pressed(player.controls.actions["forward"]):
+				how_to_play_button.pressed.emit()
 				print("yo")
 				var window_instance : TabContainer = how_to_play_window.instantiate()
 				get_child(0).add_child(window_instance)
 			
 		if exit_button.has_focus():
-			if event.is_action(player.controls.actions["forward"]):
+			if event.is_action_pressed(player.controls.actions["forward"]):
+				exit_button.pressed.emit()
 				get_tree().quit()
 		
 func _toggle_main_menu_input(how_to_play_open : bool) -> void:

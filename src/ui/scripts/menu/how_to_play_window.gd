@@ -13,4 +13,5 @@ func _input(event: InputEvent) -> void:
 		if Input.is_action_just_pressed(player.controls.actions["left"]):
 			current_tab = max(current_tab - 1, 0)
 		if event.is_action(player.controls.actions["backwards"]):
+			Audio.play_ui_back()
 			queue_free()

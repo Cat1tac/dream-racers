@@ -52,8 +52,10 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 		character_buttons[player.character_select_position].hide_indicator(player.id)
 		
 		if Input.is_action_just_pressed(player.controls.actions["right"]):
+			Audio.play_ui_up()
 			player.character_select_position += 1
 		elif Input.is_action_just_pressed(player.controls.actions["left"]):
+			Audio.play_ui_down()
 			player.character_select_position -= 1
 			
 		player.character_select_position = _keep_player_character_select_position_in_range(player.character_select_position)
@@ -64,6 +66,7 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 		
 	# Selecting Character
 	if Input.is_action_just_pressed(player.controls.actions["forward"]) and !player.character_select_pressed:
+		Audio.play_ui_select()
 		if character_views[player.id].model_instance: 
 			player.character_select_pressed = true
 			character_views[player.id].model_instance.selected = true # Changes characters animation
@@ -73,6 +76,7 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 		
 	# Deselecting Character
 	if Input.is_action_just_pressed(player.controls.actions["backwards"]) and player.character_select_pressed:
+		Audio.play_ui_back()
 		if character_views[player.id].model_instance: 
 			player.character_select_pressed = false
 			character_views[player.id].model_instance.selected = false # Changes characters animation
@@ -83,6 +87,7 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 	# Return to Main Menu if no character selected 
 	# BUG left or right and re-entering race will cause an error because the other characters don't have a model
 	elif Input.is_action_just_pressed(player.controls.actions["backwards"]) and not player.character_select_pressed:
+		Audio.play_ui_back()
 		back_button._pressed()
 		ui_root._char_back_button_pressed()
 	

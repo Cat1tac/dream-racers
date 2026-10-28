@@ -17,6 +17,8 @@ func _init() -> void:
 
 func _ready() -> void:
 	resume_button.grab_focus()
+	for button in find_children("*", "Button"):
+		button.focus_entered.connect(Audio.play_ui_up)
 
 # handles unpausing
 func _input(event: InputEvent) -> void:
@@ -26,6 +28,7 @@ func _input(event: InputEvent) -> void:
 			print("UNPAUSE")
 			hide_pause_panel()
 		elif event.is_action_pressed(player.controls.actions["forward"]):
+			Audio.play_ui_select()
 			match get_viewport().gui_get_focus_owner():
 				resume_button:
 					resume_button.pressed.emit()
