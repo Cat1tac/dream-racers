@@ -30,7 +30,7 @@ var _current_level : BaseLevel = null
 @onready var world_effects: WorldEffectsSpawner = %"World Effects"
 
 func _ready() -> void:
-	GameManager.fill_cpus(4)
+	GameManager.fill_cpus(2)
 	_init_players(GameManager.players_connected, GameManager.cpu_count)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 
@@ -55,7 +55,7 @@ func _get_character_packed_scene(character_uid : String) -> PackedScene:
 #region load players and track
 ## Instantiates the players and adds it to the local player subview
 func _init_players(playerAmount : int = 1, cpuAmount : int = 0) -> void:
-	var local_player_view : LocalMultiplayerView = _init_local_player_view(playerAmount + cpuAmount)
+	var local_player_view : LocalMultiplayerView = _init_local_player_view(playerAmount, cpuAmount)
 	 
 	var player_scene : PackedScene = ResourceLoader.load(PLAYER_SCENE_UID) as PackedScene
 	if player_scene == null:
@@ -107,7 +107,7 @@ func _init_local_hud(id : int) -> Local_Player_HUD:
 	return local_hud
 
 ## Returns instantiated player view and adds it to the entity layer
-func _init_local_player_view(playerAmount : int = 1) -> LocalMultiplayerView:
+func _init_local_player_view(playerAmount : int = 1, cpuAmount : int = 1) -> LocalMultiplayerView:
 	var local_player_view_scene : PackedScene = ResourceLoader.load(PLAYER_VIEW_UID) as PackedScene
 	if local_player_view_scene == null:
 		push_error("Could not load local player view scene " + PLAYER_VIEW_UID)
@@ -117,7 +117,7 @@ func _init_local_player_view(playerAmount : int = 1) -> LocalMultiplayerView:
 	if local_player_view == null:
 		push_error("Loaded scene does not exist" + PLAYER_VIEW_UID)
 		
-	local_player_view.update_viewports(playerAmount)
+	local_player_view.update_viewports(playerAmount + cpuAmount)
 	entity_root.add_child(local_player_view)
 	return local_player_view
 	

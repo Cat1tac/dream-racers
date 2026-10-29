@@ -294,6 +294,7 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 			if trick_window_increment > 0 and !tricked:
 				tricked = true
 				_do_trick()
+				sim_spinInput = false
 			pass
 		else:
 			if spin_cooldown_timer <= 0:
@@ -306,6 +307,7 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 				#apply_slowdown_force(0.25)
 				input_spin = true
 				audio_player.play_audio("SPIN")
+				sim_spinInput = false
 
 
 #region Drift / Boost / Store Charge

@@ -1,5 +1,7 @@
 class_name LocalLapLogic extends Area3D
 
+signal check_passed(path: int)
+
 var checks_needed : int # How many checkpoints are in the track (not counting StartLine)
 var laps_done: int
 var progress: Array
@@ -35,7 +37,7 @@ func complete_lap() -> void:
 		player_controller.isRacing = false
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
-# Adds the given id to the progress array if it is the proper id
+## Adds the given id to the progress array if it is the proper id
 func add_checkpoint(check_id: int) -> void:
 	if len(check_order) == progress.size():
 		return
@@ -45,6 +47,7 @@ func add_checkpoint(check_id: int) -> void:
 	if check_id == _needed_check:
 		progress.append(check_id)
 		print("LocalLapLogic: Checkpoint #" + str(progress.size()) + " was crossed.")
+		check_passed.emit()
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
 
@@ -78,8 +81,7 @@ func _process(delta: float) -> void:
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 	#print("LalLogic: " + str(self.global_rotation_degrees))
 
-# Sets player position to the last checkpoint
-# DysFUNCtional (haha get it) since I have yet to figure out rotations
+## Sets player position to the last checkpoint
 func respawn() -> void:
 	player_controller.global_position = respawn_location
 	#player.global_rotation = respawn_rotation
