@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://dswf8nw7ww6va" path="res://src/gameplay/player/tween_camera.gd" id="12_6eivh"]
 [ext_resource type="AudioStream" uid="uid://ci8tpexcd4wm5" path="res://assets/audio/player/Charging.wav" id="13_ymqj1"]
 [ext_resource type="AudioStream" uid="uid://dl88o1u6y7vos" path="res://assets/audio/player/Trick (PH).wav" id="15_7c3x0"]
+[ext_resource type="AudioStream" uid="uid://dub7wtldw4ub" path="res://assets/audio/player/Spin2.wav" id="16_mdkad"]
 [ext_resource type="AudioStream" uid="uid://8wmlre41n33j" path="res://assets/audio/player/Driving (1).wav" id="16_xptrr"]
 [ext_resource type="Script" uid="uid://c7qkj2k8i5siv" path="res://src/gameplay/player/cpu_controls.gd" id="20_trpe4"]
 
@@ -159,10 +160,17 @@ bus = &"Player"
 
 [node name="CrashSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=272184761]
 stream = ExtResource("13_ymqj1")
+bus = &"Player"
 
 [node name="ChargeSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=814048987]
 stream = ExtResource("13_ymqj1")
 volume_db = -2.0
+bus = &"Player"
+
+[node name="SpinSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=253565028]
+stream = ExtResource("16_mdkad")
+volume_db = 80.0
+max_db = 6.0
 bus = &"Player"
 
 [node name="SecondCamera" type="Marker3D" parent="." unique_id=1667103743]

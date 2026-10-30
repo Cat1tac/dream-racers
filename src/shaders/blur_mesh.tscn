@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://kgb3wc42io6t"]
+
+[ext_resource type="Shader" uid="uid://ckfal6urx345p" path="res://src/shaders/blur.gdshader" id="1_t53qi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_68x2q"]
+render_priority = 0
+shader = ExtResource("1_t53qi")
+shader_parameter/blur_amount = 0.0
+shader_parameter/step_amount = Vector3(0, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_u6qfl"]
+material = SubResource("ShaderMaterial_68x2q")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u6qfl"]
+
+[node name="BlurMesh" type="MeshInstance3D" unique_id=633814577]
+extra_cull_margin = 12127.37
+mesh = SubResource("QuadMesh_u6qfl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1850256553]
+mesh = SubResource("BoxMesh_u6qfl")

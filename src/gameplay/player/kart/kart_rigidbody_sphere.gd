@@ -522,7 +522,6 @@ func _do_spin(delta : float) -> void:
 			spin_timer = 0.0
 			input_spin = false
 			spin_hurt_box.setIntangiblility(false)
-			audio_player.play_audio("SPIN")
 			if !spin_hitbox.hit_dreamcatcher: # if hitbox did not hit dreamcatcher remove all charge
 				spin_cooldown_timer = spin_cooldown
 				remove_drift_charge()

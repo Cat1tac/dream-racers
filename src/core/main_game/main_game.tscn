@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cnbwypbisk32" path="res://src/core/main_game/main_game.gd" id="1_3fed5"]
 [ext_resource type="Script" uid="uid://b6xouosg1vqku" path="res://src/core/main_game/effect_spawner.gd" id="2_6yl8a"]
+[ext_resource type="PackedScene" uid="uid://kgb3wc42io6t" path="res://src/shaders/blur_mesh.tscn" id="3_6n4xl"]
 
 [node name="MainGame" type="Node" unique_id=2114321724]
 process_mode = 3
@@ -13,6 +14,8 @@ process_mode = 1
 [node name="World Effects" type="Node" parent="Systems" unique_id=1006696500]
 unique_name_in_owner = true
 script = ExtResource("2_6yl8a")
+
+[node name="BlurMesh" parent="Systems/World Effects" unique_id=633814577 instance=ExtResource("3_6n4xl")]
 
 [node name="World" type="Node3D" parent="." unique_id=2025068431]
 process_mode = 1

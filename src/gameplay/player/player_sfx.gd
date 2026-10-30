@@ -5,7 +5,8 @@ class_name Player_SFX extends Node3D
 @onready var crashing: AudioStreamPlayer3D = $CrashSFX
 @onready var charging: AudioStreamPlayer3D = $ChargeSFX
 @onready var tricking: AudioStreamPlayer3D = $TrickSFX
-# MISSING DRIFT, SPIN, TRICK
+@onready var spinning: AudioStreamPlayer3D = $SpinSFX
+# MISSING DRIFT
 
 
 var player_top_speed: float
@@ -27,7 +28,7 @@ func play_audio(request: String) -> void:
 		"CHARGE":
 			charging.play()
 		"SPIN":
-			#spinning.play()
+			spinning.play()
 			pass
 		"CRASH":
 			crashing.play()

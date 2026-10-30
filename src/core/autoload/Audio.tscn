@@ -19,4 +19,5 @@ ui_back = ExtResource("5_ykyo2")
 
 [node name="UI" type="AudioStreamPlayer" parent="." unique_id=2024923242]
 stream = SubResource("AudioStreamPolyphonic_u6qfl")
+volume_db = 8.0
 bus = &"UI"
