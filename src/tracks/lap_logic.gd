@@ -5,29 +5,31 @@ class_name LapLogic extends Node
 @onready var starting_line: CollisionShape3D = $StartLine/CollisionShape3D
 
 var check_list: Array[int]
+var rot_list: Array
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
-# Updates TrackInfo with relevant information (after getting checkpoint info)
+
 # I've grown quite fond of this name
+## Updates TrackInfo with relevant information (after getting checkpoint info)
 func talk_with_papa() -> void:
-	await get_tree().create_timer(0.1).timeout # Lets checkpoints give info to this scripts before sending it to TrackInfo
+	await get_tree().create_timer(0.1).timeout # Lets checkpoints give info to this script before sending it to TrackInfo
 	## NOTE CHANGE BACK TO 3 AFTER TESTING
-	track.update(3, check_list) # (Number of laps, list of checkpoints)
+	track.update(3, check_list, rot_list) # (Number of laps, list of checkpoints, rotation of checkpoints)
 	Events.on_checkpoints_list_filled.emit()
 
-# recieves the instance id of each checkpoint in tree order (top to bottom)
-func log_checkpoints(check_id : int) -> void:
+## Recieves the instance id of each checkpoint in tree order (top to bottom)
+func log_checkpoints(check_id : int, check_rot) -> void:
 	check_list.append(check_id)
+	rot_list.append(check_rot)
 
-# Tells LocalLapLogic to check for lap completion
+## Tells LocalLapLogic to check for lap completion
 func _on_start_line_area_entered(area: Area3D) -> void:
 		if area is LocalLapLogic:
 			var local_lap_logic : LocalLapLogic = area
 			local_lap_logic.complete_lap()
 			local_lap_logic.respawn_location = starting_line.global_position
 			local_lap_logic.respawn_rotation = starting_line.global_rotation
-			#print("LapLogic: Start Coords: " + str(starting_line.global_position))
 
 # Debug function, prints instance id of each checkpoint in order
 func print_checks() -> void:

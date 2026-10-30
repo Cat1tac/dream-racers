@@ -4,7 +4,7 @@ class_name LocalMultiplayerView extends GridContainer
 var visible_viewports : Array[SubViewport]
 
 ##hides and unhides views
-func update_viewports(playerAmount : int = 1) -> void:
+func update_viewports(playerAmount : int = 1, cpuAmount : int = 0) -> void:
 	# Sets colums in grid
 	if playerAmount == 0:
 		return
@@ -19,9 +19,12 @@ func update_viewports(playerAmount : int = 1) -> void:
 		view.hide()
 	
 	#unhides and fill visible viewports array based on how many players are in the game
-	for player in playerAmount:
+	for player in playerAmount + cpuAmount:
 		playerViews[player].visible = true
 		visible_viewports.append(playerViews[player].get_child(0))
+	
+	for cpu in cpuAmount:
+		playerViews[cpu + playerAmount].visible = false
 	
 ## Adds players to unhidden subviewports
 func add_players(players : Array[Player]) -> void:

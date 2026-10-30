@@ -166,6 +166,11 @@ var trick_window_increment : float # timer that countdown
 #Start Stop Race Boolean
 var isRacing: bool = false
 
+#Simulated Controls
+var sim_turn_vector: float = 0.0
+var sim_move_vector: float = 0.0
+var sim_spinInput: bool = false
+
 #Externals
 var controls : PlayerControls
 var kartStats : Stats
@@ -275,7 +280,34 @@ func _handle_input() -> void:
 			#_execute_boost(stored_charge_level)
 			#_remove_stored_charge()
 		#Events.on_get_stored_charge.emit(stored_charge_level, boost_panels_driven_over_store, player.playerId)
-			
+
+## Handle's evil twin sibling (Simulates real inputs for CPU racers)
+func _simulate_input(horizontal: float, vertical: float) -> void:
+	var move_vector : Vector2
+	move_vector.x = horizontal
+	move_vector.y = vertical
+	input_acceleration = move_vector.y
+	input_steering = move_vector.x
+	
+	if sim_spinInput:
+		if !on_ground():
+			if trick_window_increment > 0 and !tricked:
+				tricked = true
+				_do_trick()
+				sim_spinInput = false
+			pass
+		else:
+			if spin_cooldown_timer <= 0:
+				# resets spins variables and gets speed right before spinning
+				spin_hitbox.hit_dreamcatcher = false
+				spin_hitbox.hit_shortcut = false
+				spin_hurt_box.setIntangiblility(true)
+				var forward := -center.global_basis.z
+				speed_right_before_spin = forward.dot(linear_velocity) if forward.dot(linear_velocity) < top_speed else top_speed
+				#apply_slowdown_force(0.25)
+				input_spin = true
+				audio_player.play_audio("SPIN")
+				sim_spinInput = false
 
 
 #region Drift / Boost / Store Charge
@@ -559,6 +591,10 @@ func _do_trick() -> void:
 func reset_trick() -> void:
 	tricked = false
 	trick_window_increment = trick_window
+
+func _on_local_lap_logic_player_respawned(id: int) -> void:
+	if id == $"..".playerId:
+		reset_trick()
 #endregion
 
 func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
@@ -644,8 +680,10 @@ func _process(delta: float) -> void:
 	current_model_up = current_model_up.lerp(new_up, 1 - pow(t, 2 * delta)) #Smoothly transition to new up
 	_align_mesh_with_normal(delta, current_model_up)
 	
-	if isRacing:
+	if isRacing and player.playerControlled:
 		_handle_input()
+	elif isRacing and !player.playerControlled:
+		_simulate_input(sim_turn_vector, sim_move_vector)
 	else:
 		input_acceleration = 0.0
 		input_steering = 0.0
@@ -655,8 +693,6 @@ func _process(delta: float) -> void:
 	#_decrement_boost_panel_store_charge_timer(delta)
 	_get_charge_level()
 	#Events.on_get_speed.emit(velocity.length(), drift_timer, player.playerId)
-	
-	
 	
 	
 func _physics_process(delta: float) -> void: 

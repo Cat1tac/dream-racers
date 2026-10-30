@@ -18,6 +18,8 @@ var keyboardControls : Dictionary[PlayerControls, int]
 ## updates whenever a player is added
 var players_connected := 0
 
+var cpu_count : int = 0
+
 ## an array containing all players and their attributes (id, character, controls, etc)
 var player_list: Array[PlayerDefinition] = []
 
@@ -99,6 +101,18 @@ func add_player(controls : PlayerControls) -> void:
 	new_player.character_select_pressed = false
 	player_list.append(new_player)
 	Events.on_player_added.emit(new_player, true)
+
+## Fills the rest of the player list with CPUs
+func fill_cpus(max_players: int) -> void:
+	for i in range(max_players - players_connected):
+		var new_cpu : PlayerDefinition = PlayerDefinition.new()
+		new_cpu.id = i + 1
+		if new_cpu.id % 2 == 1:
+			new_cpu.selected_character = SelectedCharacter.NYX
+		else:
+			new_cpu.selected_character = SelectedCharacter.SERAPHIM
+		player_list.append(new_cpu)
+		cpu_count += 1
 
 func remove_player() -> void:
 	players_connected -= 1

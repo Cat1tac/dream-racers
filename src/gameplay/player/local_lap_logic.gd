@@ -1,5 +1,8 @@
 class_name LocalLapLogic extends Area3D
 
+signal check_passed(path: int)
+signal player_respawned(id: int)
+
 var checks_needed : int # How many checkpoints are in the track (not counting StartLine)
 var laps_done: int
 var progress: Array
@@ -8,6 +11,8 @@ var race_timer: float = 0.0
 var respawn_location: Vector3
 var respawn_rotation: Vector3
 
+var playerControlled: bool = false
+
 @onready var parent: Player = $"../.."
 @onready var player_controller: Kart_Sphere = %Kart_Sphere
 @onready var player: Node3D = %Center
@@ -15,7 +20,7 @@ var respawn_rotation: Vector3
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
-# Adds 1 to the laps_done variable if player crossed every checkpoint
+## Adds 1 to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
 	if len(progress) == checks_needed and player_controller.isRacing:
 		progress.clear()
@@ -33,11 +38,13 @@ func complete_lap() -> void:
 		player_controller.isRacing = false
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
-# Adds the given id to the progress array if it is the proper id
+## Adds the given id to the progress array if it is the proper id
 func add_checkpoint(check_id: int) -> void:
 	if len(check_order) == progress.size():
 		return
+	
 	var _needed_check : int = check_order[progress.size()] # This is the value that we are looking for
+	check_passed.emit(check_order.find(check_id))
 	
 	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))
 	if check_id == _needed_check:
@@ -46,7 +53,7 @@ func add_checkpoint(check_id: int) -> void:
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
 
-# Tells each Player instance what the IDs of the checkpoints are
+## Tells each Player instance what the IDs of the checkpoints are
 func get_check_order(order: Array) -> void:
 	if len(check_order) == 0:
 		check_order = order
@@ -66,6 +73,8 @@ func _on_tree_entered() -> void:
 		player_controller.isRacing = true
 	else:
 		player_controller.isRacing = true
+	
+	playerControlled = parent.playerControlled #Updates boolean just in case
 
 # Manages Timer
 func _process(delta: float) -> void:
@@ -74,9 +83,9 @@ func _process(delta: float) -> void:
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 	#print("LalLogic: " + str(self.global_rotation_degrees))
 
-# Sets player position to the last checkpoint
-# DysFUNCtional (haha get it) since I have yet to figure out rotations
+## Sets player position to the last checkpoint
 func respawn() -> void:
 	player_controller.global_position = respawn_location
-	#player.global_rotation = respawn_rotation
+	player.global_rotation = respawn_rotation
 	player_controller.linear_velocity = Vector3(0.0, 0.0, 0.0)
+	player_respawned.emit(parent.playerId)
