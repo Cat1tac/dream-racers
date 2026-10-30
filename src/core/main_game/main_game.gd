@@ -30,7 +30,7 @@ var _current_level : BaseLevel = null
 @onready var world_effects: WorldEffectsSpawner = %"World Effects"
 
 func _ready() -> void:
-	GameManager.fill_cpus(2)
+	GameManager.fill_cpus(4) # <- SET THIS TO 0 TO DISABLE CPU PLAYERS
 	_init_players(GameManager.players_connected, GameManager.cpu_count)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 
@@ -85,7 +85,7 @@ func _init_players(playerAmount : int = 1, cpuAmount : int = 0) -> void:
 		players.append(cpu)
 		cpu_id += 1
 		
-	print("player count (with cpus) is " + str(players.size()))
+	print("player count (including CPUs) is " + str(players.size()))
 	local_player_view.add_players(players)
 	local_player_view.add_local_huds(local_huds)
 	
@@ -117,7 +117,7 @@ func _init_local_player_view(playerAmount : int = 1, cpuAmount : int = 1) -> Loc
 	if local_player_view == null:
 		push_error("Loaded scene does not exist" + PLAYER_VIEW_UID)
 		
-	local_player_view.update_viewports(playerAmount + cpuAmount)
+	local_player_view.update_viewports(playerAmount, cpuAmount)
 	entity_root.add_child(local_player_view)
 	return local_player_view
 	

@@ -41,13 +41,14 @@ func complete_lap() -> void:
 func add_checkpoint(check_id: int) -> void:
 	if len(check_order) == progress.size():
 		return
+	
 	var _needed_check : int = check_order[progress.size()] # This is the value that we are looking for
+	check_passed.emit(check_order.find(check_id))
 	
 	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))
 	if check_id == _needed_check:
 		progress.append(check_id)
 		print("LocalLapLogic: Checkpoint #" + str(progress.size()) + " was crossed.")
-		check_passed.emit()
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
 

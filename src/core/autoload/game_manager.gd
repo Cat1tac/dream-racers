@@ -102,7 +102,10 @@ func fill_cpus(max_players: int) -> void:
 	for i in range(max_players - players_connected):
 		var new_cpu : PlayerDefinition = PlayerDefinition.new()
 		new_cpu.id = i + 1
-		new_cpu.selected_character = SelectedCharacter.NYX
+		if new_cpu.id % 2 == 1:
+			new_cpu.selected_character = SelectedCharacter.NYX
+		else:
+			new_cpu.selected_character = SelectedCharacter.SERAPHIM
 		player_list.append(new_cpu)
 		cpu_count += 1
 

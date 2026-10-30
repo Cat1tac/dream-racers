@@ -167,10 +167,10 @@ transform = Transform3D(-0.04515493, 0, -0.9989801, 0, 1, 0, 0.9989801, 0, -0.04
 transform = Transform3D(-0.92289466, 0, -0.38505262, 0, 1, 0, 0.38505262, 0, -0.92289466, 213.7527, 5.1490736, 10.866984)
 
 [node name="Checkpoint14" parent="LapLogic/Checkpoints" unique_id=306684154 instance=ExtResource("8_5ryjy")]
-transform = Transform3D(-0.99998045, 0, -0.006264478, 0, 1, 0, 0.006264478, 0, -0.99998045, 193.61356, 3.1647806, 18.472343)
+transform = Transform3D(-0.9948124, 0, 0.101727076, 0, 1, 0, -0.101727076, 0, -0.9948124, 193.61356, 3.1647806, 18.472343)
 
 [node name="Checkpoint15" parent="LapLogic/Checkpoints" unique_id=1457370079 instance=ExtResource("8_5ryjy")]
-transform = Transform3D(-0.6543627, 0, -0.7561809, 0, 1, 0, 0.7561809, 0, -0.6543627, 166.71742, 4.985121, 36.442116)
+transform = Transform3D(-0.43719247, 0, -0.8993679, 0, 1, 0, 0.8993679, 0, -0.43719247, 166.71742, 4.985121, 36.442116)
 
 [node name="Checkpoint16" parent="LapLogic/Checkpoints" unique_id=698693201 instance=ExtResource("8_5ryjy")]
 transform = Transform3D(-0.99991786, -0.00023273368, 0.012814015, -0.00022464577, 0.99999976, 0.00063260953, -0.012814194, 0.00062967895, -0.99991775, 144.00034, 5.317519, 58.718014)

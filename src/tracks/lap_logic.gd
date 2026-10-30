@@ -15,7 +15,7 @@ var rot_list: Array
 func talk_with_papa() -> void:
 	await get_tree().create_timer(0.1).timeout # Lets checkpoints give info to this script before sending it to TrackInfo
 	## NOTE CHANGE BACK TO 3 AFTER TESTING
-	track.update(1, check_list, rot_list) # (Number of laps, list of checkpoints, rotation of checkpoints)
+	track.update(3, check_list, rot_list) # (Number of laps, list of checkpoints, rotation of checkpoints)
 	Events.on_checkpoints_list_filled.emit()
 
 ## Recieves the instance id of each checkpoint in tree order (top to bottom)

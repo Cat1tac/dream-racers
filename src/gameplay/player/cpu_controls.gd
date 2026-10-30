@@ -86,13 +86,12 @@ func spin() -> void:
 #endregion
 
 ## Updates the checkpoint rotation the CPU refers to
-func _on_local_lap_logic_check_passed() -> void:
-	if current_checkpoint + 1 == len(checkpoint_rotations):
+func _on_local_lap_logic_check_passed(check_index: int) -> void:
+	if check_index + 1 >= len(checkpoint_rotations):
 		current_checkpoint = 0
 	else:
-		current_checkpoint += 1
+		current_checkpoint = check_index + 1
 
-# The 2nd Cousin 3 times removed of get_check_order() from LocalLapLogic
 ## Gives the CPU the rotation of all checkpoints
 func get_check_rotations(arr: Array) -> void:
 	checkpoint_rotations = arr
