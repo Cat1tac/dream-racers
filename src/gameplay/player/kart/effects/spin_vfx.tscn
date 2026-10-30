@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://7og67tw8rgtg"]
 
-[ext_resource type="Script" uid="uid://bnfqvk5oadq4d" path="res://node_3d.gd" id="1_474qe"]
+[ext_resource type="Script" uid="uid://bnfqvk5oadq4d" path="res://src/gameplay/player/kart/effects/spin_vfx.gd" id="1_474qe"]
 [ext_resource type="PackedScene" uid="uid://cb5hd572ot722" path="res://assets/models/vfx/spin_mesh.glb" id="2_cjh5x"]
 [ext_resource type="Material" uid="uid://in8sjubsieko" path="res://src/shaders/spin_shader.tres" id="3_qvtto"]
+
 
 [sub_resource type="Curve" id="Curve_474qe"]
 _limits = [0.62, 0.7227723, 0.0, 1.0]

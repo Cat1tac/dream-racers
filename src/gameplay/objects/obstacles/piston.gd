@@ -9,9 +9,9 @@ extends Node3D
 @export var timing_offset : float = 0
 
 var tween : Tween
-var wind_up_time : float = 1.0
-var slam_time : float = 0.2
-var rise_time : float = 2.0
+@export var wind_up_time : float = 1.0
+@export var slam_time : float = 0.2
+@export var rise_time : float = 2.0
 
 var start_position : Vector3
 
@@ -77,6 +77,7 @@ func _on_slam_box_area_entered(area: Area3D) -> void:
 		if global_position != start_position:
 			print("yar")
 			kart.apply_slowdown_force(1)
+			kart.current_boost_level = kart.BOOST_LEVEL.ZERO
 		else:
 			shape_cast_3d.force_shapecast_update()
 			if shape_cast_3d.is_colliding():

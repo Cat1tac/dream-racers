@@ -1,39 +1,652 @@
 [gd_scene format=3 uid="uid://bved20q18x474"]
 
 [ext_resource type="Script" uid="uid://cprhmbxvp1y2i" path="res://src/tracks/track.gd" id="1_hgstr"]
-[ext_resource type="PackedScene" uid="uid://f1m11f0608mt" path="res://assets/models/tracks/Baa Baa Battleship/battleship.glb" id="1_tftld"]
-[ext_resource type="Shader" uid="uid://dosmjerruklup" path="res://src/tracks/dreamy yggdrasil/dreamy_yggdrasil.gdshader" id="3_olw7k"]
-[ext_resource type="Texture2D" uid="uid://m0gxx26ikp1m" path="res://src/tracks/testtrack3_m64_road2.png" id="3_pqh6l"]
+[ext_resource type="PackedScene" uid="uid://f1m11f0608mt" path="res://assets/models/tracks/Baa Baa Battleship/battleship.glb" id="2_yg7te"]
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="4_ey2j6"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="5_nb2ps"]
 [ext_resource type="PackedScene" uid="uid://ors18lntsr0j" path="res://src/gameplay/objects/obstacles/burner.tscn" id="6_nb2ps"]
+[ext_resource type="Script" uid="uid://dyhuwsxaxhemf" path="res://src/tracks/baa baa battleship/cannon_manager.gd" id="7_on4u4"]
 [ext_resource type="PackedScene" uid="uid://6nyspco2aa5a" path="res://src/gameplay/objects/obstacles/cannon_explosion.tscn" id="8_86h7a"]
 [ext_resource type="PackedScene" uid="uid://63spldelsru2" path="res://src/gameplay/objects/obstacles/piston.tscn" id="9_86h7a"]
+[ext_resource type="PackedScene" uid="uid://8h6aoscgguog" path="res://src/gameplay/objects/items/mini_energy.tscn" id="10_a5x2r"]
 [ext_resource type="PackedScene" uid="uid://dlybic2qqanel" path="res://src/gameplay/objects/cloud.tscn" id="10_yg7te"]
+[ext_resource type="Shader" uid="uid://scvmkum0phgh" path="res://src/shaders/clouds.gdshader" id="11_kggcj"]
+[ext_resource type="PackedScene" uid="uid://b23kaovaeco1e" path="res://src/gameplay/objects/items/big_energy.tscn" id="11_s6wkr"]
+[ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/obstacles/dreamcatcher_obsatcle.tscn" id="12_uot37"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yg7te"]
-albedo_texture = ExtResource("3_pqh6l")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5ms0"]
+albedo_color = Color(0.7666196, 0.76661956, 0.76661956, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jlutn"]
-shader = ExtResource("3_olw7k")
-shader_parameter/color_top = Color(0.08982577, 0.02080142, 0.09787988, 1)
-shader_parameter/color_horizon = Color(0.23222598, 0.00014530674, 0.28795066, 1)
-shader_parameter/color_bottom = Color(0.26336834, 0.2059, 0.29, 1)
-shader_parameter/exponent_factor_top = 10.6390005053525
-shader_parameter/exponent_factor_bottom = 2.2050001047375
-shader_parameter/intensity_amp = 1.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_wlink"]
+size = Vector3(1, 30.63373, 61.588356)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a5x2r"]
+noise_type = 5
+fractal_octaves = 4
+fractal_gain = 0.485
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_a5x2r"]
+noise = SubResource("FastNoiseLite_a5x2r")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uot37"]
+noise_type = 5
+frequency = 0.0101
+fractal_octaves = 4
+fractal_lacunarity = 2.085
+fractal_weighted_strength = 0.57
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s6wkr"]
+noise = SubResource("FastNoiseLite_uot37")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bsj2"]
+render_priority = 0
+shader = ExtResource("11_kggcj")
+shader_parameter/Speed_1 = Vector2(-0.01, 0.025)
+shader_parameter/Cloud_Noise_1 = SubResource("NoiseTexture2D_a5x2r")
+shader_parameter/noise_multiplier = 0.13000000547648
+shader_parameter/Speed_2 = Vector2(-0.03, 0.025)
+shader_parameter/Cloud_Noise_2 = SubResource("NoiseTexture2D_s6wkr")
+shader_parameter/scatter_color = Color(1.2404428, 0.44684538, 1.3125881, 1)
+shader_parameter/base_color = Color(1.7401606, 0.13208875, 1.8247963, 1)
+shader_parameter/cloud_transparency_threshold = 0.15200000722
+shader_parameter/transparency_multiplier = 6.04
+shader_parameter/cloud_thickness = 27.92700132327262
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uujsa"]
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="Shader" id="Shader_yg7te"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx, unshaded;
+
+
+// Varyings
+varying float var_cloud_texture;
+varying float var_max_noise_val;
+
+uniform vec2 Speed_1 = vec2(-0.010000, 0.015000);
+uniform sampler2D Cloud_Noise_1;
+uniform float noise_multiplier : hint_range(0.00999999977648, 10.0) = 0.10000000149012;
+uniform vec2 Speed_2 = vec2(-0.010000, 0.015000);
+uniform sampler2D Cloud_Noise_2;
+uniform vec4 scatter_color : source_color = vec4(0.816633, 0.911976, 0.929008, 1.000000);
+uniform vec4 base_color : source_color = vec4(0.925353, 0.925353, 0.925353, 1.000000);
+uniform float cloud_transparency_threshold : hint_range(0.0, 1.0) = 0.10000000149012;
+uniform float transparency_multiplier = 1.0;
+uniform float cloud_thickness : hint_range(0.10000000149012, 100.0) = 5.0;
+uniform sampler2D depth_tex_frg_30 : hint_depth_texture;
+
+
+
+void vertex() {
+// Input:11
+	vec3 n_out11p0 = VERTEX;
+
+
+// Input:13
+	vec3 n_out13p0 = NORMAL;
+
+
+// Vector2Parameter:3
+	vec2 n_out3p0 = Speed_1;
+
+
+// Input:2
+	float n_out2p0 = TIME;
+
+
+// VectorOp:5
+	vec3 n_out5p0 = vec3(n_out3p0, 0.0) * vec3(n_out2p0);
+
+
+// Input:4
+	vec2 n_out4p0 = UV;
+
+
+// VectorOp:6
+	vec3 n_out6p0 = n_out5p0 + vec3(n_out4p0, 0.0);
+
+
+	vec4 n_out7p0;
+// Texture2D:7
+	n_out7p0 = texture(Cloud_Noise_1, vec2(n_out6p0.xy));
+
+
+	vec3 n_out37p0;
+// Remap:37
+	vec3 n_in37p1 = vec3(0.00000, 0.00000, 0.00000);
+	vec3 n_in37p2 = vec3(1.00000, 1.00000, 1.00000);
+	vec3 n_in37p3 = vec3(0.00000, -1.00000, 0.00000);
+	vec3 n_in37p4 = vec3(1.00000, 1.00000, 1.00000);
+	{
+		vec3 __input_range = n_in37p2 - n_in37p1;
+		vec3 __output_range = n_in37p4 - n_in37p3;
+		n_out37p0 = n_in37p3 + __output_range * ((vec3(n_out7p0.xyz) - n_in37p1) / __input_range);
+	}
+
+
+// FloatParameter:16
+	float n_out16p0 = noise_multiplier;
+
+
+// VectorOp:14
+	vec3 n_out14p0 = n_out37p0 * vec3(n_out16p0);
+
+
+// Vector2Parameter:18
+	vec2 n_out18p0 = Speed_2;
+
+
+// Input:17
+	float n_out17p0 = TIME;
+
+
+// VectorOp:20
+	vec3 n_out20p0 = vec3(n_out18p0, 0.0) * vec3(n_out17p0);
+
+
+// Input:19
+	vec2 n_out19p0 = UV;
+
+
+// VectorOp:21
+	vec3 n_out21p0 = n_out20p0 + vec3(n_out19p0, 0.0);
+
+
+	vec4 n_out31p0;
+// Texture2D:31
+	n_out31p0 = texture(Cloud_Noise_2, vec2(n_out21p0.xy));
+
+
+	vec3 n_out38p0;
+// Remap:38
+	vec3 n_in38p1 = vec3(0.00000, 0.00000, 0.00000);
+	vec3 n_in38p2 = vec3(1.00000, 1.00000, 1.00000);
+	vec3 n_in38p3 = vec3(0.00000, -1.00000, 0.00000);
+	vec3 n_in38p4 = vec3(1.00000, 1.00000, 1.00000);
+	{
+		vec3 __input_range = n_in38p2 - n_in38p1;
+		vec3 __output_range = n_in38p4 - n_in38p3;
+		n_out38p0 = n_in38p3 + __output_range * ((vec3(n_out31p0.xyz) - n_in38p1) / __input_range);
+	}
+
+
+// VectorOp:28
+	vec3 n_out28p0 = vec3(n_out16p0) * n_out38p0;
+
+
+// VectorOp:33
+	vec3 n_out33p0 = n_out14p0 + n_out28p0;
+
+
+// VectorOp:40
+	vec3 n_in40p1 = vec3(2.00000, 2.00000, 2.00000);
+	vec3 n_out40p0 = n_out33p0 / n_in40p1;
+
+
+// VectorFunc:39
+	vec3 n_out39p0 = abs(n_out40p0);
+
+
+// VectorOp:34
+	vec3 n_out34p0 = n_out13p0 * n_out39p0;
+
+
+// VectorOp:35
+	vec3 n_out35p0 = n_out11p0 + n_out34p0;
+
+
+// Output:0
+	VERTEX = n_out35p0;
+
+
+// VectorDecompose:41
+	float n_out41p0 = n_out39p0.x;
+	float n_out41p1 = n_out39p0.y;
+	float n_out41p2 = n_out39p0.z;
+
+
+// VaryingSetter:36
+	var_cloud_texture = n_out41p1;
+
+
+// VaryingSetter:42
+	var_max_noise_val = n_out16p0;
+
+
+}
+
+void fragment() {
+// ColorParameter:7
+	vec4 n_out7p0 = scatter_color;
+
+
+// ColorParameter:8
+	vec4 n_out8p0 = base_color;
+
+
+// VaryingGetter:22
+	float n_out22p0 = var_cloud_texture;
+
+
+// VaryingGetter:29
+	float n_out29p0 = var_max_noise_val;
+
+
+	float n_out28p0;
+// Remap:28
+	float n_in28p1 = 0.00000;
+	float n_in28p3 = 0.00000;
+	float n_in28p4 = 1.00000;
+	{
+		float __input_range = n_out29p0 - n_in28p1;
+		float __output_range = n_in28p4 - n_in28p3;
+		n_out28p0 = n_in28p3 + __output_range * ((n_out22p0 - n_in28p1) / __input_range);
+	}
+
+
+// Mix:23
+	vec3 n_out23p0 = mix(vec3(n_out7p0.xyz), vec3(n_out8p0.xyz), vec3(n_out28p0));
+
+
+// FloatParameter:27
+	float n_out27p0 = cloud_transparency_threshold;
+
+
+// FloatOp:26
+	float n_out26p0 = n_out28p0 + n_out27p0;
+
+
+// FloatParameter:25
+	float n_out25p0 = transparency_multiplier;
+
+
+// FloatOp:24
+	float n_out24p0 = n_out26p0 * n_out25p0;
+
+
+// FloatParameter:31
+	float n_out31p0 = cloud_thickness;
+
+
+	float n_out30p0;
+// ProximityFade:30
+	{
+		float __depth_tex = texture(depth_tex_frg_30, SCREEN_UV).r;
+		vec4 __depth_world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, __depth_tex, 1.0);
+		__depth_world_pos.xyz /= __depth_world_pos.w;
+		n_out30p0 = clamp(1.0 - smoothstep(__depth_world_pos.z + n_out31p0, __depth_world_pos.z, VERTEX.z), 0.0, 1.0);
+	}
+
+
+// FloatOp:32
+	float n_out32p0 = n_out24p0 * n_out30p0;
+
+
+// Output:0
+	ALBEDO = n_out23p0;
+	ALPHA = n_out32p0;
+
+
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_on4u4"]
+frequency = 0.0156
+fractal_octaves = 10
+fractal_lacunarity = 6.96
+fractal_gain = 0.735
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kggcj"]
+noise = SubResource("FastNoiseLite_on4u4")
+seamless = true
+seamless_blend_skirt = 0.343
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_s6wkr"]
+noise_type = 2
+frequency = 0.013
+fractal_octaves = 10
+fractal_lacunarity = 5.1
+fractal_gain = 0.455
+fractal_weighted_strength = 0.5
+cellular_distance_function = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uot37"]
+noise = SubResource("FastNoiseLite_s6wkr")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hvvfl"]
+render_priority = 0
+shader = SubResource("Shader_yg7te")
+shader_parameter/Speed_1 = Vector2(-0.1, 0.29)
+shader_parameter/Cloud_Noise_1 = SubResource("NoiseTexture2D_kggcj")
+shader_parameter/noise_multiplier = 0.21800000965648
+shader_parameter/Speed_2 = Vector2(0.135, -0.27)
+shader_parameter/Cloud_Noise_2 = SubResource("NoiseTexture2D_uot37")
+shader_parameter/scatter_color = Color(1.2011673, 1.8247963, 0, 1)
+shader_parameter/base_color = Color(1.2858567, 1.6988714, 0, 1)
+shader_parameter/cloud_transparency_threshold = 1.0
+shader_parameter/transparency_multiplier = 0.26
+shader_parameter/cloud_thickness = 0.10000000149012
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_expqt"]
+subdivide_width = 500
+subdivide_depth = 500
+
+[sub_resource type="Shader" id="Shader_0o1tg"]
+code = "shader_type sky;
+render_mode use_half_res_pass;
+
+group_uniforms clouds;
+
+uniform sampler2D cloud_shape_sampler : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D cloud_noise_sampler : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D cloud_curves;
+
+uniform int clouds_samples : hint_range(8, 32, 8) = 16;
+uniform int shadow_sample : hint_range(1, 4, 1) = 4;
+
+uniform float clouds_density : hint_range(0.0, 1.0, 0.1) = 0.5;
+uniform float clouds_scale : hint_range(0.5, 1.5, 0.1) = 1.0;
+uniform float clouds_smoothness : hint_range(0.01, 0.1, 0.01) = 0.035;
+uniform vec3 clouds_light_color : source_color;
+uniform float clouds_shadow_intensity : hint_range(0.1, 10.0, 0.1) = 1.0;
+
+group_uniforms high_clouds;
+
+uniform sampler2D high_clouds_sampler;
+uniform float high_clouds_density : hint_range(0.0, 1.0, 0.05) = 0.0;
+
+group_uniforms sky;
+
+uniform vec3 top_color : source_color = vec3(1.0);
+uniform vec3 bottom_color : source_color = vec3(1.0);
+uniform vec3 sun_scatter : source_color = vec3(1.0);
+
+group_uniforms astro;
+
+uniform vec3 astro_tint : source_color;
+uniform sampler2D astro_sampler : repeat_disable, filter_linear_mipmap;
+uniform float astro_scale : hint_range(0.1, 10.0, 0.1) = 1.0;
+uniform float astro_intensity : hint_range(1.0, 3.0, 0.1) = 1.0;
+
+group_uniforms stars;
+
+uniform float stars_intensity : hint_range(0.0, 5.0, 0.1) = 0.0;
+
+group_uniforms shooting_stars;
+
+uniform float shooting_stars_intensity : hint_range(0.0, 10.0, 0.1) = 0.0;
+uniform sampler2D shooting_star_sampler : filter_linear, repeat_disable;
+uniform vec3 shooting_star_tint : source_color;
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+// Voronoi method credit:
+// The MIT License
+// Copyright © 2013 Inigo Quilez
+// https://www.shadertoy.com/view/ldl3Dl
+
+vec3 hash( vec3 x ){
+	x = vec3( dot(x,vec3(127.1,311.7, 74.7)),
+			  dot(x,vec3(269.5,183.3,246.1)),
+			  dot(x,vec3(113.5,271.9,124.6)));
+	return fract(sin(x)*43758.5453123);
+}
+
+vec3 voronoi( in vec3 x ){
+	vec3 p = floor( x );
+	vec3 f = fract( x );
+	
+	float id = 0.0;
+	vec2 res = vec2( 100.0 );
+	for( int k=-1; k<=1; k++ )
+	for( int j=-1; j<=1; j++ )
+	for( int i=-1; i<=1; i++ ) {
+		vec3 b = vec3( float(i), float(j), float(k) );
+		vec3 r = vec3( b ) - f + hash( p + b );
+		float d = dot( r, r );
+		if( d < res.x ) {
+			id = dot( p+b, vec3(1.0,57.0,113.0 ) );
+			res = vec2( d, res.x );
+		} else if( d < res.y ) {
+			res.y = d;
+		}
+    }
+    return vec3( sqrt( res ), abs(id) );
+}
+
+// https://stackoverflow.com/questions/18558910/direction-vector-to-rotation-matrix
+
+mat3 direction_to_matrix(vec3 direction) {
+	vec3 x_axis = normalize(cross(vec3(0.0, 1.0, 0.0), direction));
+	vec3 y_axis = normalize(cross(direction, x_axis));
+	return mat3(vec3(x_axis.x, y_axis.x, direction.x),
+				vec3(x_axis.y, y_axis.y, direction.y),
+				vec3(x_axis.z, y_axis.z, direction.z));
+}
+
+float cloud_density(vec3 p, float progress){
+	float t_o = TIME * 0.001;
+	float t_o_small = TIME * -0.005;
+	float noise = texture(cloud_noise_sampler, p.xy * 4.0 + t_o_small).x * 0.1 + 0.9;
+	float clouds_shape = texture(cloud_shape_sampler, (p.xy + t_o) * clouds_scale).x;
+	float height_curve = texture(cloud_curves, vec2(progress, 0.0)).x;
+	float base_density = 1.0 - clouds_density;
+	float density = 
+	smoothstep(base_density - clouds_smoothness,
+	base_density + clouds_smoothness,
+	clouds_shape * noise * height_curve
+	);
+	return density;
+}
+
+vec2 cloud_ray_march(vec3 direction, vec3 sun_direction){
+	
+	float density = 0.0;
+	float light = 0.0;
+	
+	float height = 0.03;
+	vec3 sample_point = vec3(0.0, 0.0, 2.0);
+	
+	int loop_offset = clouds_samples * 3;
+	
+	for(int i = loop_offset; i < clouds_samples + loop_offset; i++) {
+		float progress = float(i) / float(clouds_samples);
+		sample_point = direction * height * progress;
+		float point_density = cloud_density(sample_point, progress);
+		density += point_density;
+		
+		float point_light = 0.0;
+		for(int f = 0; f < shadow_sample; f++){
+			float shadow_progress = float(f) / float(shadow_sample);
+			vec3 shadow_offset = sun_direction * height * shadow_progress;
+			point_light += cloud_density(sample_point + shadow_offset, progress);
+		}
+		light += point_light;
+	}
+	return vec2(density, light / float(shadow_sample * clouds_samples));
+}
+
+vec3 random_direction(float seed){
+	float phi = rand(seed) * PI;
+	float costheta = rand(seed + 100.0) * 2.0 - 1.0;
+	float theta = acos(costheta);
+	return vec3( sin(theta) * cos(phi), (theta) * sin(phi), cos(theta) );
+}
+
+float get_shooting_star(vec3 eyedir){
+	float shooting_star = 0.0;
+	for(int i = 0; i < 4; i++){
+		float base_rand = rand(float(i));
+		float time = TIME + base_rand * 2.0;
+		float duration = 0.5 + base_rand;
+		float seed = floor(time / duration) * duration + base_rand;
+		float progress = mod(time, duration) / duration;
+		float rand_value = rand(seed + 100.0);
+		float rand_scale = base_rand * 10.0;
+		float a = rand_value * 0.8;
+		mat3 angle = mat3(vec3(cos(a), -sin(a), 0.0), vec3(sin(a), cos(a), 0.0), vec3(0.0, 0.0, 1.0));
+		vec3 shooting_dir = direction_to_matrix(random_direction(seed)) * angle * eyedir;
+		vec2 shooting_uv = ((shooting_dir.xy + vec2(0.0, progress * 0.4)) * (8.0 + rand_scale)) + vec2(0.5);
+
+		float shooting_mask = ceil(
+			clamp(shooting_uv.x * (1.0 - shooting_uv.x), 0.0, 1.0) *
+			clamp(shooting_uv.y * (1.0 - shooting_uv.y), 0.0, 1.0)
+			) * ceil(shooting_dir.z);
+			
+		shooting_star = clamp(
+			shooting_star + texture(shooting_star_sampler, shooting_uv).x
+			* sin(progress * PI)
+			* shooting_mask * rand_value,
+		0.0, 1.0);
+	}
+	return clamp(shooting_star, 0.0, 1.0);
+}
+
+void sky() {
+	
+	float horizon_mask = abs(EYEDIR.y);
+	float bottom_mask = smoothstep(0.5, 0.45, SKY_COORDS.y);
+	
+	vec3 dir = direction_to_matrix(LIGHT0_DIRECTION) * EYEDIR;
+	vec2 astro_uv = (-(dir.xy / dir.z) * astro_scale) + vec2(0.5);
+	float astro_mask = ceil(
+		clamp(astro_uv.x * (1.0 - astro_uv.x), 0.0, 1.0) *
+		clamp(astro_uv.y * (1.0 - astro_uv.y), 0.0, 1.0)
+		) * ceil(dir.z);
+	vec4 astro_color = texture(astro_sampler, astro_uv);
+	
+	// Sky color
+	
+	vec3 sky_gradient = mix(bottom_color.rgb, top_color.rgb, clamp(EYEDIR.y, 0.0, 1.0));
+	vec3 sunset_color = sun_scatter * (1.0 - horizon_mask);
+	vec3 sky_color = clamp(sky_gradient + sunset_color, 0.0, 1.0);
+	
+	// Stars
+	
+	if(stars_intensity > 0.0){
+		vec2 stars = voronoi(EYEDIR * 25.0).xz;
+		sky_color += smoothstep(0.025 + ((1.0 + sin(TIME + stars.y)) / 2.0) * 0.05, 0.0, stars.x) * stars_intensity;
+	}
+	
+	// Add shooting stars
+	
+	if(shooting_stars_intensity > 0.0){
+		sky_color += get_shooting_star(EYEDIR) * shooting_stars_intensity * shooting_star_tint;
+	}
+	
+	// Add astro
+	
+	sky_color = mix(sky_color, astro_color.rgb * astro_intensity * astro_tint, astro_color.a * astro_mask * bottom_mask);
+	
+	// Add high clouds
+	
+	if(high_clouds_density > 0.0){
+		vec2 high_clouds_uv = (EYEDIR.xz / clamp(EYEDIR.y, 0.0, 1.0)) * 0.25 + TIME * 0.001;
+		float high_clouds_mask = texture(high_clouds_sampler, high_clouds_uv).x;
+		sky_color = mix(sky_color, clouds_light_color, smoothstep(0.0, 1.0, high_clouds_mask) * horizon_mask * bottom_mask * high_clouds_density);
+	}
+	
+	// clouds
+	if (AT_HALF_RES_PASS) {
+		vec3 clouds_direction = vec3(EYEDIR.xz / clamp(EYEDIR.y, 0.0, 1.0), 1.0);
+		vec2 clouds = EYEDIR.y > 0.0 ? cloud_ray_march(clouds_direction, LIGHT0_DIRECTION) : vec2(0.0);
+		
+		COLOR = mix(bottom_color, clouds_light_color, exp(-clouds.y * clouds_shadow_intensity));
+		ALPHA = (1.0 - exp(-clouds.x * horizon_mask * bottom_mask * 10.0));
+		
+	}else{
+		COLOR.rgb = mix(sky_color, HALF_RES_COLOR.rgb, HALF_RES_COLOR.a);
+	}
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p2r78"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fe1ak"]
+noise = SubResource("FastNoiseLite_p2r78")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yxag8"]
+noise_type = 5
+frequency = 0.0261
+fractal_octaves = 10
+fractal_gain = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yk4dq"]
+noise = SubResource("FastNoiseLite_yxag8")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dfnco"]
+noise_type = 5
+fractal_gain = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nwgio"]
+noise = SubResource("FastNoiseLite_dfnco")
+seamless = true
+seamless_blend_skirt = 1.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vw4qe"]
+noise_type = 5
+fractal_octaves = 10
+fractal_lacunarity = 2.04
+fractal_gain = 0.48
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dqtoi"]
+noise = SubResource("FastNoiseLite_vw4qe")
+seamless = true
+seamless_blend_skirt = 1.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_irq1b"]
+noise_type = 5
+frequency = 0.0619
+fractal_octaves = 10
+fractal_lacunarity = 3.9
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gbj1i"]
+noise = SubResource("FastNoiseLite_irq1b")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hjx5"]
+shader = SubResource("Shader_0o1tg")
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_dqtoi")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_nwgio")
+shader_parameter/cloud_curves = SubResource("NoiseTexture2D_yk4dq")
+shader_parameter/clouds_samples = 16
+shader_parameter/shadow_sample = 4
+shader_parameter/clouds_density = 0.80000001192096
+shader_parameter/clouds_scale = 1.5
+shader_parameter/clouds_smoothness = 0.0999999977648
+shader_parameter/clouds_light_color = Color(0.44, 0.2156, 0.41381997, 1)
+shader_parameter/clouds_shadow_intensity = 4.60000006854552
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_gbj1i")
+shader_parameter/high_clouds_density = 0.0
+shader_parameter/top_color = Color(0.24850002, 0.16, 0.25, 1)
+shader_parameter/bottom_color = Color(0.12, 0.0732, 0.11688, 1)
+shader_parameter/sun_scatter = Color(0.14743307, 0.04730492, 0.11228836, 1)
+shader_parameter/astro_tint = Color(0, 0, 0, 1)
+shader_parameter/astro_sampler = SubResource("NoiseTexture2D_fe1ak")
+shader_parameter/astro_scale = 1.0
+shader_parameter/astro_intensity = 1.0
+shader_parameter/stars_intensity = 0.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
 
 [sub_resource type="Sky" id="Sky_d1fgb"]
-sky_material = SubResource("ShaderMaterial_jlutn")
+sky_material = SubResource("ShaderMaterial_1hjx5")
 
 [sub_resource type="Environment" id="Environment_ey2j6"]
 background_mode = 2
-background_energy_multiplier = 0.82
+background_energy_multiplier = 0.83
 sky = SubResource("Sky_d1fgb")
 ssao_enabled = true
 ssao_radius = 11.22
 ssao_intensity = 5.96
-ssao_power = 0.46167845
+ssao_power = 0.41608867
 ssao_detail = 3.18
 ssao_horizon = 0.25
 glow_enabled = true
@@ -42,39 +655,54 @@ glow_intensity = 3.35
 glow_strength = 0.6
 glow_blend_mode = 0
 glow_hdr_scale = 2.7
-fog_light_energy = 0.06
+fog_enabled = true
+fog_light_energy = 0.02
 fog_sun_scatter = 0.1
-fog_density = 0.005
-fog_aerial_perspective = 0.04
-fog_sky_affect = 0.559
-fog_height_density = -0.03
+fog_density = 0.0
+fog_aerial_perspective = 0.159
+fog_sky_affect = 0.551
+fog_height = 17.35
+fog_height_density = 0.0102
+volumetric_fog_density = 0.0076
+volumetric_fog_albedo = Color(0.55, 0.31900004, 0.53845006, 1)
+volumetric_fog_emission = Color(0.067193784, 0.028087184, 0.06265059, 1)
+volumetric_fog_anisotropy = 0.04
+volumetric_fog_length = 29.29
+volumetric_fog_sky_affect = 0.407
 adjustment_enabled = true
 adjustment_brightness = 1.12
-adjustment_contrast = 1.1
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_wlink"]
-size = Vector3(1, 30.63373, 61.588356)
+adjustment_contrast = 1.23
 
 [node name="Baa Baa Battleship" type="Node3D" unique_id=669950304 node_paths=PackedStringArray("player_spawners")]
 script = ExtResource("1_hgstr")
 player_spawners = [NodePath("Spawns/P1 Spawn"), NodePath("Spawns/P2 Spawn"), NodePath("Spawns/P3 Spawn"), NodePath("Spawns/P4 Spawn")]
 
-[node name="battleship" parent="." unique_id=1130854066 instance=ExtResource("1_tftld")]
+[node name="battleship" parent="." unique_id=1332841673 instance=ExtResource("2_yg7te")]
 
-[node name="Track" parent="battleship" index="1" unique_id=1439886843]
-material_override = SubResource("StandardMaterial3D_yg7te")
+[node name="Ship_Body" parent="battleship" index="0" unique_id=1252309643]
+surface_material_override/0 = SubResource("StandardMaterial3D_u5ms0")
 
-[node name="Track_col" parent="battleship" index="2" unique_id=1525646500]
-collision_layer = 2
+[node name="Track" parent="battleship" index="1" unique_id=1690599938]
+layers = 5
 
-[node name="Ship_Body_col" parent="battleship" index="3" unique_id=2094854902]
+[node name="Castle_col" parent="battleship" index="3" unique_id=1735697446]
 collision_layer = 4
+
+[node name="Ship_Body_col" parent="battleship" index="4" unique_id=1899119030]
+visible = false
+collision_layer = 4
+
+[node name="Ship_inside_walls_col" parent="battleship" index="6" unique_id=1084379335]
+collision_layer = 4
+
+[node name="Track_col" parent="battleship" index="7" unique_id=336720248]
+collision_layer = 2
 
 [node name="Spawns" type="Node3D" parent="." unique_id=114101200]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 52.91088, 0, 39.21714)
 
 [node name="P1 Spawn" type="Marker3D" parent="Spawns" unique_id=401921513]
-transform = Transform3D(0.109748766, 0, -0.99395937, 0, 1, 0, 0.99395937, 0, 0.109748766, 234.29695, 21.452457, -79.77054)
+transform = Transform3D(0.018542038, 0, -0.9998281, 0, 1, 0, 0.9998281, 0, 0.018542038, -96.31741, 8.216474, -183.46445)
 
 [node name="P2 Spawn" type="Marker3D" parent="Spawns" unique_id=699472379]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.387909, 1.709, -26.778723)
@@ -84,9 +712,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.3
 
 [node name="P4 Spawn" type="Marker3D" parent="Spawns" unique_id=1612089629]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.387909, 1.709, -15.826896)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1105706065]
-environment = SubResource("Environment_ey2j6")
 
 [node name="LapLogic" type="Node" parent="." unique_id=137677470 node_paths=PackedStringArray("track")]
 script = ExtResource("4_ey2j6")
@@ -254,44 +879,1216 @@ transform = Transform3D(0.5387707, 0, -0.84245235, 0, 1.0000002, 0, 0.8424523, 0
 
 [node name="Obstacles" type="Node" parent="." unique_id=559826282]
 
-[node name="Burner1" parent="Obstacles" unique_id=2057071634 instance=ExtResource("6_nb2ps")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.789, 7.752, -108.501)
+[node name="Cannon Manager" type="Node3D" parent="Obstacles" unique_id=188941714 node_paths=PackedStringArray("explosions1", "explosions2", "explosionsEnd")]
+script = ExtResource("7_on4u4")
+explosions1 = [NodePath("Cannon Explosion3"), NodePath("Cannon Explosion4")]
+explosions2 = [NodePath("Cannon Explosion5"), NodePath("Cannon Explosion6")]
+explosionsEnd = [NodePath("Cannon Explosion7"), NodePath("Cannon Explosion8")]
 
-[node name="Burner2" parent="Obstacles" unique_id=812622138 instance=ExtResource("6_nb2ps")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 19.604, 7.751979, -152.677)
+[node name="Cannon Explosion3" parent="Obstacles/Cannon Manager" unique_id=1025916071 instance=ExtResource("8_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -287.89417, 56.144028, -152.37642)
 
-[node name="Cannon Explosion" parent="Obstacles" unique_id=1566947336 instance=ExtResource("8_86h7a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -242.98708, 55.552284, -87.83085)
+[node name="Cannon Explosion4" parent="Obstacles/Cannon Manager" unique_id=1566947336 instance=ExtResource("8_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -239.78476, 56.094383, -152.37642)
 
-[node name="Piston1" parent="Obstacles" unique_id=1424114555 instance=ExtResource("9_86h7a")]
+[node name="Cannon Explosion5" parent="Obstacles/Cannon Manager" unique_id=409281584 instance=ExtResource("8_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -239.78476, 56.11686, -86.73304)
+
+[node name="Cannon Explosion6" parent="Obstacles/Cannon Manager" unique_id=2015031805 instance=ExtResource("8_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -289.7907, 56.24334, -86.73304)
+
+[node name="Cannon Explosion7" parent="Obstacles/Cannon Manager" unique_id=463170517 instance=ExtResource("8_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.115143, 0.927845, 126.93611)
+full_scale = 30.0
+
+[node name="Cannon Explosion8" parent="Obstacles/Cannon Manager" unique_id=1440237154 instance=ExtResource("8_86h7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.30878, 0.6407013, 153.74773)
+full_scale = 30.0
+
+[node name="Pistons" type="Node3D" parent="Obstacles" unique_id=522171679]
+
+[node name="Piston1" parent="Obstacles/Pistons" unique_id=1424114555 instance=ExtResource("9_86h7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.966902, 11.090824, -206.4081)
 
-[node name="Piston2" parent="Obstacles" unique_id=1628751673 instance=ExtResource("9_86h7a")]
+[node name="Piston2" parent="Obstacles/Pistons" unique_id=1628751673 instance=ExtResource("9_86h7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.966902, 11.090824, -186.37337)
 timing_offset = 2.6
 
-[node name="Piston3" parent="Obstacles" unique_id=1783448577 instance=ExtResource("9_86h7a")]
+[node name="Piston3" parent="Obstacles/Pistons" unique_id=1783448577 instance=ExtResource("9_86h7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.755383, 11.090824, -197.08182)
 timing_offset = 3.6
+wind_up_time = 0.5
+slam_time = 0.1
+rise_time = 1.0
 
-[node name="Piston4" parent="Obstacles" unique_id=2141712537 instance=ExtResource("9_86h7a")]
+[node name="Piston4" parent="Obstacles/Pistons" unique_id=2141712537 instance=ExtResource("9_86h7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.30053, 11.090824, -186.37337)
 timing_offset = 2.6
 
-[node name="Piston5" parent="Obstacles" unique_id=531845708 instance=ExtResource("9_86h7a")]
+[node name="Piston5" parent="Obstacles/Pistons" unique_id=531845708 instance=ExtResource("9_86h7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.30053, 11.090824, -206.0796)
+
+[node name="Burners" type="Node3D" parent="Obstacles" unique_id=1338854270]
+
+[node name="Burner1" parent="Obstacles/Burners" unique_id=2057071634 instance=ExtResource("6_nb2ps")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.789, 7.752, -108.501)
+
+[node name="Burner2" parent="Obstacles/Burners" unique_id=812622138 instance=ExtResource("6_nb2ps")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 19.604, 7.751979, -152.677)
+
+[node name="Burner3" parent="Obstacles/Burners" unique_id=977023878 instance=ExtResource("6_nb2ps")]
+transform = Transform3D(-0.7592716, 0.65077436, 2.8446253e-08, 3.8213726e-15, 4.3711392e-08, -1.0000002, -0.6507746, -0.7592714, -3.318881e-08, -356.04218, 7.894562, -338.08466)
+always_on = true
+
+[node name="CollisionShape3D" parent="Obstacles/Burners/Burner3/FlameBox" parent_id_path=PackedInt32Array(977023878, 1759877824) index="0" unique_id=1340658995]
+transform = Transform3D(2, -5.9604645e-08, 0, 5.9604645e-08, 2, 0, 0, -3.7252903e-09, 2, -0.1335144, 0.28173828, -10.507408)
+
+[node name="Flame" parent="Obstacles/Burners/Burner3/burner" parent_id_path=PackedInt32Array(977023878, 910642151) index="1" unique_id=493201315]
+transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
+
+[node name="SpotLight3D" parent="Obstacles/Burners/Burner3" index="3" unique_id=790235135]
+transform = Transform3D(-0.15246445, 0.9877825, 0.032242525, 0.98778284, 0.1533665, -0.027635077, -0.032242373, 0.027635254, -0.9990977, 1.7563171, -0.798996, -19.663328)
+spot_range = 24.919
+spot_attenuation = 0.16
+spot_angle = 54.88
+
+[node name="Burner4" parent="Obstacles/Burners" unique_id=1967368030 instance=ExtResource("6_nb2ps")]
+transform = Transform3D(0.7585542, 0.64872897, 0.06121351, 0.030709842, 0.058245502, -0.9978301, -0.6508866, 0.7587876, 0.024259984, -269.15305, 19.890285, -369.68292)
+always_on = true
+
+[node name="Flame" parent="Obstacles/Burners/Burner4/burner" parent_id_path=PackedInt32Array(1967368030, 910642151) index="1" unique_id=493201315]
+transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
+
+[node name="SpotLight3D" parent="Obstacles/Burners/Burner4" index="3" unique_id=790235135]
+transform = Transform3D(-0.14252341, -0.9835906, 0.11061552, -0.97451603, 0.15900317, 0.15822841, -0.17322022, -0.08524532, -0.9811868, -3.139267, -2.9282532, -18.28397)
+spot_range = 24.919
+spot_attenuation = 0.16
+spot_angle = 54.88
+
+[node name="Burner5" parent="Obstacles/Burners" unique_id=532866762 instance=ExtResource("6_nb2ps")]
+transform = Transform3D(0.7585014, 0.6513228, -0.021332394, -0.0319879, 0.004516228, -0.99947834, -0.6508866, 0.7587876, 0.024259984, -316.02948, 30.919582, -282.50034)
+always_on = true
+
+[node name="Flame" parent="Obstacles/Burners/Burner5/burner" parent_id_path=PackedInt32Array(532866762, 910642151) index="1" unique_id=493201315]
+transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
+
+[node name="SpotLight3D" parent="Obstacles/Burners/Burner5" index="3" unique_id=790235135]
+transform = Transform3D(-0.14837596, -0.9811053, -0.124161646, -0.9870331, 0.15469393, -0.042838685, 0.061236374, 0.11619553, -0.9913365, 2.3769836, -2.8009644, -18.44063)
+spot_range = 24.919
+spot_attenuation = 0.16
+spot_angle = 54.88
 
 [node name="Objects" type="Node" parent="." unique_id=827148083]
 
-[node name="Cloud" parent="Objects" unique_id=2108663503 instance=ExtResource("10_yg7te")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.4045, -2.6074429, -285.56082)
+[node name="Clouds" type="Node3D" parent="Objects" unique_id=1239513256]
+
+[node name="Cloud" parent="Objects/Clouds" unique_id=2108663503 instance=ExtResource("10_yg7te")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.4045, 3.0750809, -285.56082)
 trick_forward_boost = 2.0
 normal_forward_boost = 1.5
 
-[node name="Cloud2" parent="Objects" unique_id=1080642848 instance=ExtResource("10_yg7te")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -202.4893, -5.7575665, -283.96555)
+[node name="Cloud2" parent="Objects/Clouds" unique_id=1080642848 instance=ExtResource("10_yg7te")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -202.4893, -1.5208378, -283.96555)
 trick_forward_boost = 2.0
-normal_forward_boost = 2.0
+normal_forward_boost = 1.5
+
+[node name="Mini Energy" type="Node3D" parent="Objects" unique_id=2023284118]
+
+[node name="Mini Energy" parent="Objects/Mini Energy" unique_id=2021759024 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.963135, 5.704796, -73.02007)
+
+[node name="Mini Energy2" parent="Objects/Mini Energy" unique_id=668760283 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.963135, 6.0761566, -83.099724)
+
+[node name="Mini Energy3" parent="Objects/Mini Energy" unique_id=861400586 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.765038, 5.704796, -116.07608)
+
+[node name="Mini Energy4" parent="Objects/Mini Energy" unique_id=1861710510 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.606453, 5.704796, -143.72433)
+
+[node name="Mini Energy5" parent="Objects/Mini Energy" unique_id=646217393 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.921253, 5.704796, -186.10786)
+
+[node name="Mini Energy6" parent="Objects/Mini Energy" unique_id=728811848 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.921253, 5.704796, -206.24939)
+
+[node name="Mini Energy7" parent="Objects/Mini Energy" unique_id=1924366486 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.91655, 5.704796, -186.00705)
+
+[node name="Mini Energy8" parent="Objects/Mini Energy" unique_id=1009868483 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.42302, 5.704796, -206.05553)
+
+[node name="Mini Energy9" parent="Objects/Mini Energy" unique_id=34007290 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.18576, 5.704796, -258.50525)
+
+[node name="Mini Energy10" parent="Objects/Mini Energy" unique_id=1548698463 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.18576, 5.704796, -310.79718)
+
+[node name="Mini Energy12" parent="Objects/Mini Energy" unique_id=1640693147 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(0.4844051, 0, -0.87484384, 0, 1, 0, 0.87484384, 0, 0.4844051, -280.4212, 21.38925, -361.46414)
+
+[node name="Mini Energy13" parent="Objects/Mini Energy" unique_id=499023777 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(0.992555, 0, -0.12179756, 0, 1, 0, 0.12179756, 0, 0.992555, -368.72852, 10.187432, -340.3451)
+
+[node name="Mini Energy14" parent="Objects/Mini Energy" unique_id=718531081 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -246.754, 56.15792, -207.556)
+
+[node name="Mini Energy15" parent="Objects/Mini Energy" unique_id=1413988745 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -283.302, 56.15792, -207.556)
+
+[node name="Mini Energy16" parent="Objects/Mini Energy" unique_id=227582149 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -251.7449, 56.073883, -28.49257)
+
+[node name="Mini Energy17" parent="Objects/Mini Energy" unique_id=2038965877 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -274.80713, 56.073883, -28.49257)
+
+[node name="Mini Energy18" parent="Objects/Mini Energy" unique_id=2046595340 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.467903, 0.9504509, 148.53726)
+
+[node name="Mini Energy19" parent="Objects/Mini Energy" unique_id=857431572 instance=ExtResource("10_a5x2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.08541, 0.714766, 132.75577)
+
+[node name="Big Energy" type="Node3D" parent="Objects" unique_id=301700917]
+
+[node name="Big Energy" parent="Objects/Big Energy" unique_id=82496009 instance=ExtResource("11_s6wkr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.847004, 5.5807533, -197.29924)
+
+[node name="Big Energy2" parent="Objects/Big Energy" unique_id=2135752106 instance=ExtResource("11_s6wkr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -315.3373, 32.54594, -275.1497)
+
+[node name="Big Energy3" parent="Objects/Big Energy" unique_id=1496256071 instance=ExtResource("11_s6wkr")]
+transform = Transform3D(0.8386705, 0.3800955, 0.3900761, -0.14115664, 0.8434311, -0.5183616, -0.5260293, 0.3796727, 0.76101375, -258.52167, 32.331245, 131.59871)
+
+[node name="DreamCatcher" type="Node3D" parent="Objects" unique_id=1079905775]
+
+[node name="DreamcatcherObsatcle" parent="Objects/DreamCatcher" unique_id=186652371 instance=ExtResource("12_uot37")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 111.91469, 5.6893806, -230.43025)
+
+[node name="DreamcatcherObsatcle2" parent="Objects/DreamCatcher" unique_id=1524742880 instance=ExtResource("12_uot37")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 105.001595, 5.6893806, -230.42735)
+
+[node name="DreamcatcherObsatcle3" parent="Objects/DreamCatcher" unique_id=761043026 instance=ExtResource("12_uot37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.31063, 5.6893806, -281.81705)
+
+[node name="DreamcatcherObsatcle4" parent="Objects/DreamCatcher" unique_id=1382389699 instance=ExtResource("12_uot37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.31063, 5.6893806, -288.49823)
+
+[node name="DreamcatcherObsatcle5" parent="Objects/DreamCatcher" unique_id=917093551 instance=ExtResource("12_uot37")]
+transform = Transform3D(0.5913389, -0.05061639, -0.80483305, 0.07743983, 0.99698013, -0.005802881, 0.8026963, -0.058894664, 0.59347284, -275.00873, 21.214542, -365.9976)
+
+[node name="DreamcatcherObsatcle8" parent="Objects/DreamCatcher" unique_id=1929870121 instance=ExtResource("12_uot37")]
+transform = Transform3D(-0.48559186, -0.16962822, -0.85757023, -0.21052489, 0.97481316, -0.07361105, 0.84845734, 0.14479496, -0.50907236, -356.0273, 42.942272, -361.80438)
+
+[node name="DreamcatcherObsatcle7" parent="Objects/DreamCatcher" unique_id=1764614016 instance=ExtResource("12_uot37")]
+transform = Transform3D(-0.99176866, 0.08906601, -0.09198948, 0.09509501, 0.99344885, -0.06337361, 0.08574234, -0.071599714, -0.9937413, -316.70807, 32.36213, -291.07736)
+
+[node name="DreamcatcherObsatcle6" parent="Objects/DreamCatcher" unique_id=744642867 instance=ExtResource("12_uot37")]
+transform = Transform3D(-0.10804054, -0.050616387, -0.99285704, 0.05315807, 0.99698013, -0.05661113, 0.9927242, -0.058894664, -0.10502362, -363.23022, 9.769089, -339.72632)
+
+[node name="DreamcatcherObsatcle9" parent="Objects/DreamCatcher" unique_id=787116664 instance=ExtResource("12_uot37")]
+transform = Transform3D(-4.3711385e-08, 0, 0.9999998, 0, 1, 0, -0.9999999, 0, -4.371138e-08, -275.581, 56.26, -207.556)
+
+[node name="DreamcatcherObsatcle10" parent="Objects/DreamCatcher" unique_id=144397608 instance=ExtResource("12_uot37")]
+transform = Transform3D(-4.3711385e-08, 0, 0.9999999, 0, 0.99999994, 0, -0.9999999, 0, -4.3711385e-08, -253.92825, 56.567787, -207.55608)
+
+[node name="DreamcatcherObsatcle11" parent="Objects/DreamCatcher" unique_id=2044067153 instance=ExtResource("12_uot37")]
+transform = Transform3D(-4.3711385e-08, 0, 0.9999998, 0, 1, 0, -0.9999999, 0, -4.371138e-08, -278.61456, 55.69268, -121.540115)
+
+[node name="DreamcatcherObsatcle12" parent="Objects/DreamCatcher" unique_id=1211394418 instance=ExtResource("12_uot37")]
+transform = Transform3D(-4.3711385e-08, 0, 0.9999999, 0, 0.99999994, 0, -0.9999999, 0, -4.3711385e-08, -250.52814, 56.000065, -120.212875)
+
+[node name="DreamcatcherObsatcle13" parent="Objects/DreamCatcher" unique_id=1074298726 instance=ExtResource("12_uot37")]
+transform = Transform3D(-0.4528613, 0.3772677, 0.8078277, 0.43694177, 0.8837074, -0.1677587, -0.7771732, 0.27700222, -0.565041, -263.94583, 33.034016, 134.45642)
+
+[node name="DreamcatcherObsatcle14" parent="Objects/DreamCatcher" unique_id=1543310151 instance=ExtResource("12_uot37")]
+transform = Transform3D(-0.4528613, 0.3772677, 0.8078277, 0.43694177, 0.8837074, -0.1677587, -0.7771732, 0.27700222, -0.565041, -253.91888, 31.251762, 127.61168)
+
+[node name="Effects" type="Node" parent="." unique_id=710720677]
+
+[node name="Cloud Bed" type="MeshInstance3D" parent="Effects" unique_id=1109386848]
+transform = Transform3D(5000, 0, 0, 0, 500, 0, 0, 0, 5000, -98.5885, -43.86137, -0.23886108)
+layers = 2
+material_override = SubResource("ShaderMaterial_5bsj2")
+mesh = SubResource("PlaneMesh_uujsa")
+
+[node name="Flame Bed" type="MeshInstance3D" parent="Effects" unique_id=1075454595]
+transform = Transform3D(118.775, 0, 0, 0, 75, 0, 0, 0, 134.795, 16.053, -10.430342, -225.33083)
+material_override = SubResource("ShaderMaterial_hvvfl")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_expqt")
+
+[node name="Lighting" type="Node" parent="." unique_id=665852205]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=1105706065]
+environment = SubResource("Environment_ey2j6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1487673673]
+transform = Transform3D(0.041400485, 0.9990964, -0.009618538, -3.7252903e-09, 0.009626792, 0.99995375, 0.99914265, -0.04139857, 0.00039855757, -145.4639, 432.30734, -134.24521)
+light_color = Color(0.78618324, 0.68424416, 0.7312497, 1)
+light_energy = 0.158
+light_specular = 0.0
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.084
+shadow_normal_bias = 10.0
+shadow_opacity = 0.81
+shadow_blur = 10.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 74.4
+sky_mode = 1
+
+[node name="Spot Lights" type="Node3D" parent="Lighting" unique_id=974395635]
+
+[node name="ShipPath" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=2131702839]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 30.657627, 18.941408, -14.932972)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath2" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1452118079]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 30.657627, 18.941406, -45.196415)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath3" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1519659627]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 34.369946, 18.941404, -71.41609)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath4" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=280595795]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 64.29518, 18.941404, -77.030846)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath5" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=571927182]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 97.43559, 18.941404, -77.299904)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath6" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1613142799]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 104.648834, 18.941402, -103.09724)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath7" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1142361445]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 98.294464, 18.9414, -129.33728)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath8" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1762808457]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 72.32168, 18.9414, -129.33728)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath9" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1819466154]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 49.043858, 18.9414, -129.33728)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath10" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1563731003]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 17.611061, 18.9414, -129.33728)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath11" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=810129096]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -22.953121, 18.9414, -134.74065)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath12" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=2004264969]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.92046, 18.9414, -162.21558)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath13" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=719851941]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -29.54991, 18.941399, -190.3484)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath14" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1921205832]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 4.564596, 18.941399, -198.11716)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath15" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=728836370]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 29.117159, 18.941399, -198.11716)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath16" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=832326118]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 52.785324, 18.941399, -198.11716)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath17" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1177011847]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 75.75978, 18.941399, -198.11716)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath18" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1823992380]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 102.94852, 18.941399, -198.11716)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath19" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1883569447]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 109.234665, 18.941397, -221.82028)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath20" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1735776665]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 106.57608, 18.941395, -263.30234)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath21" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=107030827]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 85.67936, 18.941395, -284.888)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath22" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1066638837]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 67.124985, 18.941395, -284.888)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath23" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1796287402]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 42.978897, 18.941395, -284.888)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath24" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1046894612]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 16.049225, 18.941395, -284.888)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath25" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=2070217257]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -9.863319, 18.941395, -284.32205)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath26" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=175260460]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -30.133923, 18.941395, -264.13336)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath27" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1251788600]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -16.983688, 18.941395, -270.97156)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath28" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1428153829]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -58.239037, 18.941395, -264.13336)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath29" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1217452717]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -79.85742, 18.941395, -280.3635)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath30" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=231076408]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -77.84949, 18.941395, -307.3333)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath31" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1743492647]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -55.778076, 18.941395, -307.3333)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath32" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=81751111]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.761425, 18.941395, -307.3333)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath33" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1239637436]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -17.913055, 18.941395, -300.14203)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath34" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1934031124]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 105.95892, 18.941399, -242.18623)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 89.9
+
+[node name="ShipPath35" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1548135876]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 104.57345, 18.941395, -281.30524)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 58.28
+
+[node name="ShipPath36" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1634399480]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -105.73213, 18.941395, -281.30524)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.716
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 58.28
+
+[node name="TowerFirst" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=195953924]
+transform = Transform3D(0.7985627, 0, -0.60191166, 0.60191166, -4.371139e-08, 0.7985627, -2.6310394e-08, -1, -3.4906286e-08, -252.69586, 10.745494, -284.66116)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 34.598
+spot_attenuation = -0.44
+spot_angle = 57.53
+
+[node name="TowerFirst2" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=132504181]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -328.17554, 20.2281, -286.41644)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst13" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1728963306]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -295.00012, 13.413425, -286.41644)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst3" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=439710078]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -361.67047, 25.68598, -329.24063)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst14" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=643049113]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -356.71548, 25.685982, -305.80176)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst4" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=322724523]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -336.79147, 31.95015, -377.55203)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst15" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=2016838176]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -360.1743, 28.67083, -357.64764)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst5" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1339905687]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -284.6851, 35.08458, -371.71646)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst16" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=2108900194]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -309.7136, 35.08458, -371.71646)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst6" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=60451077]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -268.63983, 40.41266, -320.91483)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst18" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=835999736]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -292.9753, 43.68338, -294.60648)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst17" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=703576074]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -270.24548, 38.334084, -347.84866)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst7" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1375645014]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -324.43304, 48.89859, -284.43143)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst8" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1576313799]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -362.77545, 55.032955, -328.11145)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst19" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=598380476]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -357.1576, 55.032955, -360.86673)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.621
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst9" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=10888109]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -336.81738, 60.462162, -376.86407)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst10" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1701057248]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -291.11908, 64.55968, -374.1418)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst11" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=506478433]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -265.53568, 69.56038, -329.13043)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerFirst12" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=2066454941]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -265.53568, 68.15406, -298.19092)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=624697333]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -265.53568, 67.17389, 53.216217)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond2" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=89279336]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -269.42767, 57.124107, 95.32729)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond3" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1879979305]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -266.2847, 51.049652, 115.77033)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond4" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1789497039]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -258.5511, 44.918526, 134.86346)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond5" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1481782350]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -240.77107, 37.07757, 142.70651)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond6" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1365179293]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -221.34521, 30.172653, 148.20483)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond7" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1752443749]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -198.04277, 24.26661, 145.93813)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond8" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=695257206]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -178.71991, 18.15646, 142.42204)
+light_color = Color(0.93116224, 0.2560859, 1.1409998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond9" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=479894273]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -162.18517, 14.564373, 139.23178)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond10" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=1548822730]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -145.49524, 14.564373, 139.23178)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="TowerSecond11" type="SpotLight3D" parent="Lighting/Spot Lights" unique_id=192202421]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -269.42767, 63.130413, 73.51226)
+light_color = Color(0.9288002, 0.23831716, 1.140998, 1)
+light_energy = 0.096
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_bias = 1.915
+shadow_normal_bias = 3.377
+shadow_blur = 0.246
+spot_range = 28.513
+spot_attenuation = 0.06
+spot_angle = 67.3
+
+[node name="OmniLights" type="Node3D" parent="Lighting" unique_id=66948532]
+
+[node name="Fire Light" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=684918294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.100143, 7.9198303, -305.1338)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light9" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=1328228231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.100143, -9.955397, -284.99976)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light8" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=417437087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.100143, 7.9198303, -255.84099)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light2" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=358302316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.94497, -2.6755733, -182.51752)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light3" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=1357121293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.29492, -2.6755733, -215.54051)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light4" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=1115023558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.27569, -2.6755733, -242.75912)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light5" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=1163317131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.98589, -2.6755733, -164.32077)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light6" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=53699833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.817142, -2.6755733, -116.14809)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
+
+[node name="Fire Light7" type="OmniLight3D" parent="Lighting/OmniLights" unique_id=650771154]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.817142, -2.6755733, -151.0086)
+light_color = Color(0.42218107, 0.67505807, 0.20568779, 1)
+light_energy = 1.443
+light_cull_mask = 4294967293
+shadow_enabled = true
+omni_range = 57.953
+omni_attenuation = -0.241
+omni_shadow_mode = 0
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 
@@ -315,3 +2112,9 @@ normal_forward_boost = 2.0
 [editable path="LapLogic/Checkpoints/Checkpoint20"]
 [editable path="LapLogic/Checkpoints/Checkpoint21"]
 [editable path="LapLogic/Checkpoints/Checkpoint22"]
+[editable path="Obstacles/Burners/Burner3"]
+[editable path="Obstacles/Burners/Burner3/burner"]
+[editable path="Obstacles/Burners/Burner4"]
+[editable path="Obstacles/Burners/Burner4/burner"]
+[editable path="Obstacles/Burners/Burner5"]
+[editable path="Obstacles/Burners/Burner5/burner"]

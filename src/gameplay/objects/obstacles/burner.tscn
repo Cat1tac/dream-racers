@@ -27,7 +27,8 @@ uniform float fill : hint_range(0.0, 1.0, 0.1);
 uniform float displacement_scale = 1;
 uniform float displacement_speed = 1;
 uniform float elongate : hint_range(0.0, 1.0, 0.01);
-
+uniform sampler2D depth_tex : hint_depth_texture;
+uniform float proximity_fade : hint_range(0.01, 100, 0.01);
 
 void vertex() {
 	vec3 pos = VERTEX;
@@ -51,8 +52,17 @@ void fragment() {
 	float noise_alpha_pattern = clamp(clamp(noise_y.r + noise_x.r, 0, 1) - sub_tex.r + add_tex.r, 0, 1);
 	vec4 color_tex = texture(color_gradient, UV);
 	
+		float fade;
+	// ProximityFade:30
+	{
+		float __depth_tex = texture(depth_tex, SCREEN_UV).r;
+		vec4 __depth_world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, __depth_tex, 1.0);
+		__depth_world_pos.xyz /= __depth_world_pos.w;
+		fade = clamp(1.0 - smoothstep(__depth_world_pos.z + proximity_fade, __depth_world_pos.z, VERTEX.z), 0.0, 1.0);
+	}
+	
 	ALBEDO = color_tex.rgb;
-	ALPHA = smoothstep(disappear_tex.r, 1, fill) * noise_alpha_pattern;
+	ALPHA = smoothstep(disappear_tex.r, 1, fill) * noise_alpha_pattern * fade;
 	EMISSION = color_tex.rgb * 10.;
 }
 
@@ -138,6 +148,7 @@ shader_parameter/fill = 1.0
 shader_parameter/displacement_scale = 1.84
 shader_parameter/displacement_speed = 2.725
 shader_parameter/elongate = 0.999999977648
+shader_parameter/proximity_fade = 10.729999760163041
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_expqt"]
 transparency = 1
@@ -208,11 +219,12 @@ process_material = SubResource("ParticleProcessMaterial_uujsa")
 draw_pass_1 = SubResource("PlaneMesh_ds1u0")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=790235135]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8703289, -0.028690338, 7.455533)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8703289, -0.028690338, -1.5631304)
 light_color = Color(0.84480774, 1.8247963, 0, 1)
 light_energy = 1.263
+light_cull_mask = 4294967293
 shadow_enabled = true
-spot_range = 45.424
+spot_range = 102.944
 spot_attenuation = -0.31
 spot_angle = 30.89
 spot_angle_attenuation = 0.0980732

@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://c1ucv2i1rb8lg"]
 
 [ext_resource type="Script" uid="uid://cprhmbxvp1y2i" path="res://src/tracks/track.gd" id="1_ldwis"]
-[ext_resource type="Shader" uid="uid://dosmjerruklup" path="res://src/tracks/dreamy yggdrasil/dreamy_yggdrasil.gdshader" id="2_q854r"]
-[ext_resource type="PackedScene" uid="uid://o8gbnp303uhr" path="res://src/gameplay/objects/boost_panel.tscn" id="4_q854r"]
+[ext_resource type="Shader" uid="uid://scvmkum0phgh" path="res://src/shaders/clouds.gdshader" id="2_acfsq"]
 [ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/obstacles/dreamcatcher_obsatcle.tscn" id="5_ehbii"]
 [ext_resource type="PackedScene" uid="uid://d3hgqbv7npk6k" path="res://src/gameplay/objects/obstacles/shortcutblock.tscn" id="6_5tsv1"]
 [ext_resource type="PackedScene" uid="uid://bdpfjicojqli3" path="res://assets/models/objects/Arrow.glb" id="7_on71r"]
@@ -17,17 +16,340 @@
 [ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="12_fa1el"]
 [ext_resource type="AudioStream" uid="uid://d1f2yit8o115y" path="res://src/Sounds/Dream Racers - Yggdrasil v2.mp3" id="13_on71r"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bd4lb"]
-shader = ExtResource("2_q854r")
-shader_parameter/color_top = Color(0.96818, 0.69719285, 1, 1)
-shader_parameter/color_horizon = Color(1, 0.526129, 0.5249286, 1)
-shader_parameter/color_bottom = Color(1, 0.747576, 0.4064268, 1)
-shader_parameter/exponent_factor_top = 10.6390005053525
-shader_parameter/exponent_factor_bottom = 2.2050001047375
-shader_parameter/intensity_amp = 1.0
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0bx2i"]
+noise_type = 5
+fractal_octaves = 4
+fractal_gain = 0.485
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c20le"]
+noise = SubResource("FastNoiseLite_0bx2i")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cy38x"]
+noise_type = 5
+frequency = 0.0101
+fractal_octaves = 4
+fractal_lacunarity = 2.085
+fractal_weighted_strength = 0.57
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yt0g4"]
+noise = SubResource("FastNoiseLite_cy38x")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clfou"]
+render_priority = 0
+shader = ExtResource("2_acfsq")
+shader_parameter/Speed_1 = Vector2(-0.01, 0.025)
+shader_parameter/Cloud_Noise_1 = SubResource("NoiseTexture2D_c20le")
+shader_parameter/noise_multiplier = 0.13000000547648
+shader_parameter/Speed_2 = Vector2(-0.03, 0.025)
+shader_parameter/Cloud_Noise_2 = SubResource("NoiseTexture2D_yt0g4")
+shader_parameter/scatter_color = Color(1.3448817, 0.8927044, 1.4046032, 1)
+shader_parameter/base_color = Color(0.9970717, 0.7660261, 1, 1)
+shader_parameter/cloud_transparency_threshold = 0.15200000722
+shader_parameter/transparency_multiplier = 6.04
+shader_parameter/cloud_thickness = 27.92700132327262
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_guolr"]
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="Shader" id="Shader_0o1tg"]
+code = "shader_type sky;
+render_mode use_half_res_pass;
+
+group_uniforms clouds;
+
+uniform sampler2D cloud_shape_sampler : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D cloud_noise_sampler : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D cloud_curves;
+
+uniform int clouds_samples : hint_range(8, 32, 8) = 16;
+uniform int shadow_sample : hint_range(1, 4, 1) = 4;
+
+uniform float clouds_density : hint_range(0.0, 1.0, 0.1) = 0.5;
+uniform float clouds_scale : hint_range(0.5, 1.5, 0.1) = 1.0;
+uniform float clouds_smoothness : hint_range(0.01, 0.1, 0.01) = 0.035;
+uniform vec3 clouds_light_color : source_color;
+uniform float clouds_shadow_intensity : hint_range(0.1, 10.0, 0.1) = 1.0;
+
+group_uniforms high_clouds;
+
+uniform sampler2D high_clouds_sampler;
+uniform float high_clouds_density : hint_range(0.0, 1.0, 0.05) = 0.0;
+
+group_uniforms sky;
+
+uniform vec3 top_color : source_color = vec3(1.0);
+uniform vec3 bottom_color : source_color = vec3(1.0);
+uniform vec3 sun_scatter : source_color = vec3(1.0);
+
+group_uniforms astro;
+
+uniform vec3 astro_tint : source_color;
+uniform sampler2D astro_sampler : repeat_disable, filter_linear_mipmap;
+uniform float astro_scale : hint_range(0.1, 10.0, 0.1) = 1.0;
+uniform float astro_intensity : hint_range(1.0, 3.0, 0.1) = 1.0;
+
+group_uniforms stars;
+
+uniform float stars_intensity : hint_range(0.0, 5.0, 0.1) = 0.0;
+
+group_uniforms shooting_stars;
+
+uniform float shooting_stars_intensity : hint_range(0.0, 10.0, 0.1) = 0.0;
+uniform sampler2D shooting_star_sampler : filter_linear, repeat_disable;
+uniform vec3 shooting_star_tint : source_color;
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+// Voronoi method credit:
+// The MIT License
+// Copyright © 2013 Inigo Quilez
+// https://www.shadertoy.com/view/ldl3Dl
+
+vec3 hash( vec3 x ){
+	x = vec3( dot(x,vec3(127.1,311.7, 74.7)),
+			  dot(x,vec3(269.5,183.3,246.1)),
+			  dot(x,vec3(113.5,271.9,124.6)));
+	return fract(sin(x)*43758.5453123);
+}
+
+vec3 voronoi( in vec3 x ){
+	vec3 p = floor( x );
+	vec3 f = fract( x );
+	
+	float id = 0.0;
+	vec2 res = vec2( 100.0 );
+	for( int k=-1; k<=1; k++ )
+	for( int j=-1; j<=1; j++ )
+	for( int i=-1; i<=1; i++ ) {
+		vec3 b = vec3( float(i), float(j), float(k) );
+		vec3 r = vec3( b ) - f + hash( p + b );
+		float d = dot( r, r );
+		if( d < res.x ) {
+			id = dot( p+b, vec3(1.0,57.0,113.0 ) );
+			res = vec2( d, res.x );
+		} else if( d < res.y ) {
+			res.y = d;
+		}
+    }
+    return vec3( sqrt( res ), abs(id) );
+}
+
+// https://stackoverflow.com/questions/18558910/direction-vector-to-rotation-matrix
+
+mat3 direction_to_matrix(vec3 direction) {
+	vec3 x_axis = normalize(cross(vec3(0.0, 1.0, 0.0), direction));
+	vec3 y_axis = normalize(cross(direction, x_axis));
+	return mat3(vec3(x_axis.x, y_axis.x, direction.x),
+				vec3(x_axis.y, y_axis.y, direction.y),
+				vec3(x_axis.z, y_axis.z, direction.z));
+}
+
+float cloud_density(vec3 p, float progress){
+	float t_o = TIME * 0.001;
+	float t_o_small = TIME * -0.005;
+	float noise = texture(cloud_noise_sampler, p.xy * 4.0 + t_o_small).x * 0.1 + 0.9;
+	float clouds_shape = texture(cloud_shape_sampler, (p.xy + t_o) * clouds_scale).x;
+	float height_curve = texture(cloud_curves, vec2(progress, 0.0)).x;
+	float base_density = 1.0 - clouds_density;
+	float density = 
+	smoothstep(base_density - clouds_smoothness,
+	base_density + clouds_smoothness,
+	clouds_shape * noise * height_curve
+	);
+	return density;
+}
+
+vec2 cloud_ray_march(vec3 direction, vec3 sun_direction){
+	
+	float density = 0.0;
+	float light = 0.0;
+	
+	float height = 0.03;
+	vec3 sample_point = vec3(0.0, 0.0, 2.0);
+	
+	int loop_offset = clouds_samples * 3;
+	
+	for(int i = loop_offset; i < clouds_samples + loop_offset; i++) {
+		float progress = float(i) / float(clouds_samples);
+		sample_point = direction * height * progress;
+		float point_density = cloud_density(sample_point, progress);
+		density += point_density;
+		
+		float point_light = 0.0;
+		for(int f = 0; f < shadow_sample; f++){
+			float shadow_progress = float(f) / float(shadow_sample);
+			vec3 shadow_offset = sun_direction * height * shadow_progress;
+			point_light += cloud_density(sample_point + shadow_offset, progress);
+		}
+		light += point_light;
+	}
+	return vec2(density, light / float(shadow_sample * clouds_samples));
+}
+
+vec3 random_direction(float seed){
+	float phi = rand(seed) * PI;
+	float costheta = rand(seed + 100.0) * 2.0 - 1.0;
+	float theta = acos(costheta);
+	return vec3( sin(theta) * cos(phi), (theta) * sin(phi), cos(theta) );
+}
+
+float get_shooting_star(vec3 eyedir){
+	float shooting_star = 0.0;
+	for(int i = 0; i < 4; i++){
+		float base_rand = rand(float(i));
+		float time = TIME + base_rand * 2.0;
+		float duration = 0.5 + base_rand;
+		float seed = floor(time / duration) * duration + base_rand;
+		float progress = mod(time, duration) / duration;
+		float rand_value = rand(seed + 100.0);
+		float rand_scale = base_rand * 10.0;
+		float a = rand_value * 0.8;
+		mat3 angle = mat3(vec3(cos(a), -sin(a), 0.0), vec3(sin(a), cos(a), 0.0), vec3(0.0, 0.0, 1.0));
+		vec3 shooting_dir = direction_to_matrix(random_direction(seed)) * angle * eyedir;
+		vec2 shooting_uv = ((shooting_dir.xy + vec2(0.0, progress * 0.4)) * (8.0 + rand_scale)) + vec2(0.5);
+
+		float shooting_mask = ceil(
+			clamp(shooting_uv.x * (1.0 - shooting_uv.x), 0.0, 1.0) *
+			clamp(shooting_uv.y * (1.0 - shooting_uv.y), 0.0, 1.0)
+			) * ceil(shooting_dir.z);
+			
+		shooting_star = clamp(
+			shooting_star + texture(shooting_star_sampler, shooting_uv).x
+			* sin(progress * PI)
+			* shooting_mask * rand_value,
+		0.0, 1.0);
+	}
+	return clamp(shooting_star, 0.0, 1.0);
+}
+
+void sky() {
+	
+	float horizon_mask = abs(EYEDIR.y);
+	float bottom_mask = smoothstep(0.5, 0.45, SKY_COORDS.y);
+	
+	vec3 dir = direction_to_matrix(LIGHT0_DIRECTION) * EYEDIR;
+	vec2 astro_uv = (-(dir.xy / dir.z) * astro_scale) + vec2(0.5);
+	float astro_mask = ceil(
+		clamp(astro_uv.x * (1.0 - astro_uv.x), 0.0, 1.0) *
+		clamp(astro_uv.y * (1.0 - astro_uv.y), 0.0, 1.0)
+		) * ceil(dir.z);
+	vec4 astro_color = texture(astro_sampler, astro_uv);
+	
+	// Sky color
+	
+	vec3 sky_gradient = mix(bottom_color.rgb, top_color.rgb, clamp(EYEDIR.y, 0.0, 1.0));
+	vec3 sunset_color = sun_scatter * (1.0 - horizon_mask);
+	vec3 sky_color = clamp(sky_gradient + sunset_color, 0.0, 1.0);
+	
+	// Stars
+	
+	if(stars_intensity > 0.0){
+		vec2 stars = voronoi(EYEDIR * 25.0).xz;
+		sky_color += smoothstep(0.025 + ((1.0 + sin(TIME + stars.y)) / 2.0) * 0.05, 0.0, stars.x) * stars_intensity;
+	}
+	
+	// Add shooting stars
+	
+	if(shooting_stars_intensity > 0.0){
+		sky_color += get_shooting_star(EYEDIR) * shooting_stars_intensity * shooting_star_tint;
+	}
+	
+	// Add astro
+	
+	sky_color = mix(sky_color, astro_color.rgb * astro_intensity * astro_tint, astro_color.a * astro_mask * bottom_mask);
+	
+	// Add high clouds
+	
+	if(high_clouds_density > 0.0){
+		vec2 high_clouds_uv = (EYEDIR.xz / clamp(EYEDIR.y, 0.0, 1.0)) * 0.25 + TIME * 0.001;
+		float high_clouds_mask = texture(high_clouds_sampler, high_clouds_uv).x;
+		sky_color = mix(sky_color, clouds_light_color, smoothstep(0.0, 1.0, high_clouds_mask) * horizon_mask * bottom_mask * high_clouds_density);
+	}
+	
+	// clouds
+	if (AT_HALF_RES_PASS) {
+		vec3 clouds_direction = vec3(EYEDIR.xz / clamp(EYEDIR.y, 0.0, 1.0), 1.0);
+		vec2 clouds = EYEDIR.y > 0.0 ? cloud_ray_march(clouds_direction, LIGHT0_DIRECTION) : vec2(0.0);
+		
+		COLOR = mix(bottom_color, clouds_light_color, exp(-clouds.y * clouds_shadow_intensity));
+		ALPHA = (1.0 - exp(-clouds.x * horizon_mask * bottom_mask * 10.0));
+		
+	}else{
+		COLOR.rgb = mix(sky_color, HALF_RES_COLOR.rgb, HALF_RES_COLOR.a);
+	}
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yree7"]
+noise_type = 5
+frequency = 0.0261
+fractal_octaves = 10
+fractal_gain = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_avupy"]
+noise = SubResource("FastNoiseLite_yree7")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2xk8x"]
+noise_type = 5
+fractal_gain = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_campp"]
+noise = SubResource("FastNoiseLite_2xk8x")
+seamless = true
+seamless_blend_skirt = 1.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dme41"]
+noise_type = 5
+fractal_octaves = 10
+fractal_lacunarity = 2.04
+fractal_gain = 0.48
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v612a"]
+noise = SubResource("FastNoiseLite_dme41")
+seamless = true
+seamless_blend_skirt = 1.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_exbpp"]
+noise_type = 5
+frequency = 0.0619
+fractal_octaves = 10
+fractal_lacunarity = 3.9
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4vmrv"]
+noise = SubResource("FastNoiseLite_exbpp")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lpdp3"]
+shader = SubResource("Shader_0o1tg")
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_v612a")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_campp")
+shader_parameter/cloud_curves = SubResource("NoiseTexture2D_avupy")
+shader_parameter/clouds_samples = 16
+shader_parameter/shadow_sample = 4
+shader_parameter/clouds_density = 0.70000001043084
+shader_parameter/clouds_scale = 0.60000000149012
+shader_parameter/clouds_smoothness = 0.01999999955296
+shader_parameter/clouds_light_color = Color(0.87458926, 0.53697854, 0.89879876, 1)
+shader_parameter/clouds_shadow_intensity = 0.10000000149012
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_4vmrv")
+shader_parameter/high_clouds_density = 0.55000000819566
+shader_parameter/top_color = Color(0.75547326, 0.32532272, 0.73927844, 1)
+shader_parameter/bottom_color = Color(0.71417165, 0.40975997, 0.71539104, 1)
+shader_parameter/sun_scatter = Color(0.70310307, 0.6872972, 0.9156936, 1)
+shader_parameter/astro_tint = Color(0, 0, 0, 1)
+shader_parameter/astro_scale = 1.0
+shader_parameter/astro_intensity = 1.0
+shader_parameter/stars_intensity = 0.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
 
 [sub_resource type="Sky" id="Sky_d1fgb"]
-sky_material = SubResource("ShaderMaterial_bd4lb")
+sky_material = SubResource("ShaderMaterial_lpdp3")
 
 [sub_resource type="Environment" id="Environment_uujsa"]
 background_mode = 2
@@ -66,6 +388,14 @@ script = ExtResource("1_ldwis")
 player_spawners = [NodePath("P1 Spawn"), NodePath("P2 Spawn"), NodePath("P3 Spawn"), NodePath("P4 Spawn")]
 willCountdown = true
 
+[node name="Effects" type="Node" parent="." unique_id=1100440505]
+
+[node name="Cloud Bed" type="MeshInstance3D" parent="Effects" unique_id=260015042]
+transform = Transform3D(5000, 0, 0, 0, 500, 0, 0, 0, 5000, -98.5885, -76.82836, -0.23886108)
+layers = 2
+material_override = SubResource("ShaderMaterial_clfou")
+mesh = SubResource("PlaneMesh_guolr")
+
 [node name="Lighting" type="Node" parent="." unique_id=1242540067]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=563551130]
@@ -79,6 +409,7 @@ shadow_reverse_cull_face = true
 shadow_blur = 0.06
 directional_shadow_mode = 0
 directional_shadow_max_distance = 120.0
+sky_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=2094468004]
 environment = SubResource("Environment_uujsa")
@@ -221,72 +552,100 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -151
 [node name="Clouds" type="Node" parent="Objects" unique_id=1079521732]
 
 [node name="Cloud" parent="Objects/Clouds" unique_id=2108663503 instance=ExtResource("9_ehbii")]
-transform = Transform3D(0.9997265, 0.021335512, 0.009580045, -0.021219827, 0.9997026, -0.0120192375, -0.009833632, 0.011812664, 0.99988186, 105.68617, 32.695442, -32.822815)
+transform = Transform3D(0.9997265, 0.021335512, 0.009580045, -0.021219827, 0.9997026, -0.0120192375, -0.009833632, 0.011812664, 0.99988186, 105.807945, 38.40185, -32.755386)
 bounce_height = 16.0
 super_bounce = 26.0
 trick_forward_boost = 1.5
 normal_forward_boost = 1.0
 
 [node name="Cloud2" parent="Objects/Clouds" unique_id=545699189 instance=ExtResource("9_ehbii")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.732933, 21.123245, -127.71298)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.732933, 24.839497, -127.71298)
 super_bounce = 0.0
 charge_need_for_super_bounce = -1.0
 
-[node name="Boost Panels" type="Node" parent="Objects" unique_id=57977734]
+[node name="Mini Energy" type="Node" parent="Objects" unique_id=57977734]
 
-[node name="Boost_Panel" parent="Objects/Boost Panels" unique_id=1231130700 instance=ExtResource("4_q854r")]
-transform = Transform3D(-3.7745786, 0, 1.3238428, 0, 4, 0, -1.3238428, 0, -3.7745786, 4.4009485, 32.250736, -129.44406)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy" parent="Objects/Mini Energy" unique_id=454488651 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 10.678995, 32.495003, -138.7533)
 
-[node name="Boost_Panel6" parent="Objects/Boost Panels" unique_id=1182403030 instance=ExtResource("4_q854r")]
-transform = Transform3D(-0.4353797, 0.045181274, 3.9759781, 1.125715, 3.8375015, 0.07966109, -3.8135557, 1.1276252, -0.4304079, -12.91394, 48.334618, -35.332455)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy2" parent="Objects/Mini Energy" unique_id=2021759024 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 20.858744, 32.495003, -132.46655)
 
-[node name="Boost_Panel7" parent="Objects/Boost Panels" unique_id=1698421707 instance=ExtResource("4_q854r")]
-transform = Transform3D(0.45047808, -0.063976884, 3.974038, -1.0160707, 3.8647294, 0.17739439, -3.8424811, -1.029454, 0.41899318, -11.710724, 48.23115, 16.19672)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy5" parent="Objects/Mini Energy" unique_id=964127082 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 22.164688, 64.43396, -41.25283)
 
-[node name="Boost_Panel2" parent="Objects/Boost Panels" unique_id=1270672968 instance=ExtResource("4_q854r")]
-transform = Transform3D(-1.862276, 0, 3.5400462, 0, 4, 0, -3.5400462, 0, -1.862276, 24.410452, 32.250736, -151.37277)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy10" parent="Objects/Mini Energy" unique_id=431539984 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 21.505747, 64.43396, -29.422092)
 
-[node name="Boost_Panel3" parent="Objects/Boost Panels" unique_id=604731394 instance=ExtResource("4_q854r")]
-transform = Transform3D(0.6249587, -0.016059067, 3.950844, -0.13771057, 3.9974473, 0.038032047, -3.948476, -0.14196034, 0.6240072, 53.85707, 32.250736, -154.7136)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy11" parent="Objects/Mini Energy" unique_id=157176086 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.9714929, 0.120936744, 0.20390183, -7.450581e-09, 0.8600953, -0.5101333, -0.23706888, 0.4955909, 0.8355764, -19.184477, 50.06461, -37.574505)
 
-[node name="Boost_Panel8" parent="Objects/Boost Panels" unique_id=574522124 instance=ExtResource("4_q854r")]
-transform = Transform3D(-0.14408457, -0.016059067, 3.997372, -0.14244749, 3.9974473, 0.010924876, -3.9948652, -0.14196034, -0.14456435, 159.22029, 34.50662, -34.940067)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy12" parent="Objects/Mini Energy" unique_id=775860503 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.957672, 0, 0.28786182, 0, 1, 0, -0.28786182, 0, 0.957672, -14.482638, 47.8251, -24.161203)
 
-[node name="Boost_Panel4" parent="Objects/Boost Panels" unique_id=55892047 instance=ExtResource("4_q854r")]
-transform = Transform3D(-0.2849902, 0.97633225, -6.4906626, -0.033799294, 3.8788753, 1.6349773, 12.331661, 0.033194907, -0.14552088, -66.617966, -25.647898, 29.143436)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy8" parent="Objects/Mini Energy" unique_id=1883022573 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 15.981295, 61.528015, 6.3296337)
 
-[node name="Boost_Panel9" parent="Objects/Boost Panels" unique_id=1900556123 instance=ExtResource("4_q854r")]
-transform = Transform3D(-0.10793586, 0.026907802, -5.9896793, 0.11858231, 5.989629, 0.026336432, 11.58389, -0.061064087, -0.05608003, 85.43142, 9.580391, 87.882935)
-boost_speed_divisor = null
-boost_time_divisor = null
+[node name="Mini Energy9" parent="Objects/Mini Energy" unique_id=637660842 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.99845254, -0.007136878, -0.055151332, -4.656613e-10, 0.9917308, -0.1283353, 0.055611193, 0.1281367, 0.99019617, 16.365458, 61.79728, -0.56768847)
+
+[node name="Mini Energy13" parent="Objects/Mini Energy" unique_id=1718145765 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.99845254, 0.033804175, -0.044157475, 9.313226e-10, 0.79403937, 0.6078664, 0.055611193, -0.60692567, 0.79281074, 19.251392, 48.793194, 30.863459)
+
+[node name="Mini Energy14" parent="Objects/Mini Energy" unique_id=1880921355 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.9984525, -0.02735055, -0.048420575, 1.8626451e-09, 0.8706984, -0.49181738, 0.055611193, 0.4910563, 0.8693511, 20.428156, 48.786663, 17.017973)
+
+[node name="Mini Energy15" parent="Objects/Mini Energy" unique_id=2102667047 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.80399036, -0.0074523836, -0.5945957, -0.07362412, 0.99098015, -0.11197232, 0.5900669, 0.13380125, 0.79618996, 14.065946, -37.457195, -26.864109)
+
+[node name="Mini Energy16" parent="Objects/Mini Energy" unique_id=1373650494 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.29927355, -0.34873027, -0.8881569, -0.12546167, 0.908355, -0.39893666, 0.94588286, 0.23082083, 0.22809441, 44.85253, -36.511524, -29.841217)
+
+[node name="Mini Energy17" parent="Objects/Mini Energy" unique_id=1339105806 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.29927355, 0.066332184, -0.95185906, -0.12546167, 0.991655, 0.02965913, 0.94588286, 0.11054563, 0.30509833, 30.042849, -39.42562, -24.119242)
+
+[node name="Mini Energy18" parent="Objects/Mini Energy" unique_id=759995956 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.047836427, 0.06346856, -0.9968367, -0.05142228, 0.9968123, 0.06099938, 0.99753046, 0.048341613, 0.050947666, -188.75752, 0.7537904, 3.6956437)
+
+[node name="Mini Energy7" parent="Objects/Mini Energy" unique_id=2047965534 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.7470854, 0, -0.66472816, 0, 1, 0, 0.66472816, 0, 0.7470854, 100.39579, 32.42984, -98.9094)
+
+[node name="Mini Energy6" parent="Objects/Mini Energy" unique_id=2092606381 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.71398, 0, -0.70016605, 0, 1, 0, 0.70016605, 0, 0.71398, 110.01299, 32.42984, -109.028824)
+
+[node name="Mini Energy3" parent="Objects/Mini Energy" unique_id=682483836 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.6825952, 0.50790626, -0.5254475, -0.5969567, 0.8022735, 0, 0.4215526, 0.31366938, 0.850826, 7.5981326, 36.802814, -34.209656)
+
+[node name="Mini Energy4" parent="Objects/Mini Energy" unique_id=866023870 instance=ExtResource("8_bd4lb")]
+transform = Transform3D(0.70121807, -0.48186958, -0.5254475, 0.566355, 0.8241614, 0, 0.43305355, -0.2975898, 0.850826, 24.307896, 37.097843, -23.81327)
+
+[node name="Big Energy" type="Node" parent="Objects" unique_id=457498402]
+
+[node name="Big Energy" parent="Objects/Big Energy" unique_id=1811748766 instance=ExtResource("8_acfsq")]
+transform = Transform3D(0.9643378, 0, -0.2646745, 0, 1, 0, 0.2646745, 0, 0.9643378, 67.45577, 35.404865, -122.09422)
+
+[node name="Big Energy2" parent="Objects/Big Energy" unique_id=999431699 instance=ExtResource("8_acfsq")]
+transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.66171, 34.888027, -27.248514)
+
+[node name="Big Energy3" parent="Objects/Big Energy" unique_id=1490154330 instance=ExtResource("8_acfsq")]
+transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.68652, 34.723366, -39.884052)
+
+[node name="Big Energy4" parent="Objects/Big Energy" unique_id=1240020464 instance=ExtResource("8_acfsq")]
+transform = Transform3D(0.9938042, 0.025114194, 0.10827154, -0.024960233, 0.9996846, -0.0027772111, -0.108307146, 5.7521454e-05, 0.9941176, 76.531235, 10.18155, 94.498604)
+
+[node name="Big Energy6" parent="Objects/Big Energy" unique_id=46011550 instance=ExtResource("8_acfsq")]
+transform = Transform3D(0.99894977, 0.025114194, 0.03832546, -0.025093528, 0.9996846, -0.0010203139, -0.03833901, 5.7521454e-05, 0.99926496, -171.05142, 0.5394679, 2.0701864)
+
+[node name="Big Energy5" parent="Objects/Big Energy" unique_id=636892459 instance=ExtResource("8_acfsq")]
+transform = Transform3D(0.9772415, 0.025114194, 0.21063869, -0.02453825, 0.9996846, -0.005347938, -0.21070656, 5.7522226e-05, 0.97754943, 74.81473, 10.347866, 82.86943)
 
 [node name="Dream Catchers" type="Node" parent="Objects" unique_id=756085328]
 
 [node name="DreamcatcherObsatcle" parent="Objects/Dream Catchers" unique_id=186652371 instance=ExtResource("5_ehbii")]
 transform = Transform3D(0.9149326, -0.38936657, -0.106263526, 0.3915837, 0.9201425, 0, 0.09777758, -0.041611064, 0.994338, -23.854782, 26.250885, -21.016968)
 
-[node name="DreamcatcherObsatcle4" parent="Objects/Dream Catchers" unique_id=2049259372 instance=ExtResource("5_ehbii")]
-transform = Transform3D(0.9201425, -0.3915837, 0, 0.3002353, 0.70549226, -0.64198077, 0.2513892, 0.5907138, 0.7667209, -43.875557, 21.86608, -29.565136)
-
-[node name="DreamcatcherObsatcle2" parent="Objects/Dream Catchers" unique_id=2003320185 instance=ExtResource("5_ehbii")]
-transform = Transform3D(0.9262607, -0.2794898, -0.2528381, 0.3718822, 0.78671503, 0.49273002, 0.06119863, -0.5504223, 0.8326405, -4.1274576, 32.766113, -14.889589)
-
 [node name="DreamcatcherObsatcle3" parent="Objects/Dream Catchers" unique_id=1200404267 instance=ExtResource("5_ehbii")]
-transform = Transform3D(0.18423611, 0.013569885, 0.9827885, -0.03556741, 0.9993419, -0.0071310666, -0.9822387, -0.03364122, 0.18459758, 19.764494, 34.885166, -37.837498)
+transform = Transform3D(-0.13321395, 0.013569884, 0.9909946, -0.03153781, 0.9993419, -0.01792374, -0.99058574, -0.03364122, -0.13269816, 17.469423, 34.58506, -73.322044)
 
 [node name="DreamcatcherObsatcle6" parent="Objects/Dream Catchers" unique_id=2109710119 instance=ExtResource("5_ehbii")]
 transform = Transform3D(0.9215602, 0.38760766, -0.022080034, -0.38783678, 0.9217014, -0.0070719183, 0.017609926, 0.015080493, 0.9997314, -91.33843, -18.822557, 35.290916)
@@ -294,14 +653,20 @@ transform = Transform3D(0.9215602, 0.38760766, -0.022080034, -0.38783678, 0.9217
 [node name="DreamcatcherObsatcle7" parent="Objects/Dream Catchers" unique_id=892978826 instance=ExtResource("5_ehbii")]
 transform = Transform3D(0.9215602, 0.38760766, -0.022080034, -0.38783678, 0.9217014, -0.0070719183, 0.017609926, 0.015080493, 0.9997314, -91.33843, -18.822557, 22.752773)
 
-[node name="DreamcatcherObsatcle8" parent="Objects/Dream Catchers" unique_id=1142588171 instance=ExtResource("5_ehbii")]
-transform = Transform3D(0.9215602, 0.38760766, -0.022080034, -0.38783678, 0.9217014, -0.0070719183, 0.017609926, 0.015080493, 0.9997314, -126.54307, -9.485877, 27.658604)
+[node name="DreamcatcherObsatcle8" parent="Objects/Dream Catchers" unique_id=378873133 instance=ExtResource("5_ehbii")]
+transform = Transform3D(0.46095166, 0.24082395, 0.8541238, -0.34872836, 0.9342021, -0.07520177, -0.8160346, -0.26319253, 0.51460415, -18.671957, -23.519377, -16.637718)
 
-[node name="DreamcatcherObsatcle5" parent="Objects/Dream Catchers" unique_id=2040558222 instance=ExtResource("5_ehbii")]
-transform = Transform3D(-0.23313318, 0.39603674, 0.8881463, 0.07671063, 0.9179566, -0.38919348, -0.96941495, -0.022603385, -0.24438614, 7.961626, 36.053867, -73.29387)
+[node name="DreamcatcherObsatcle12" parent="Objects/Dream Catchers" unique_id=1701612891 instance=ExtResource("5_ehbii")]
+transform = Transform3D(0.54839575, 0.569856, 0.61198556, -0.12321187, 0.77892506, -0.6148943, -0.82709205, 0.26180172, 0.497372, -31.467321, -18.262188, -23.763565)
 
 [node name="DreamcatcherObsatcle9" parent="Objects/Dream Catchers" unique_id=630550820 instance=ExtResource("5_ehbii")]
-transform = Transform3D(-0.014561211, -0.0690308, 0.9975081, 0.29591763, 0.9526273, 0.07024436, -0.955103, 0.29620326, 0.006556068, 117.904755, 21.035084, 55.120255)
+transform = Transform3D(0.9568464, 0.07607205, -0.28046194, -0.13972934, 0.9666751, -0.21451126, 0.2547973, 0.24444282, 0.93558836, 98.39623, 36.10001, 15.45556)
+
+[node name="DreamcatcherObsatcle10" parent="Objects/Dream Catchers" unique_id=1664392237 instance=ExtResource("5_ehbii")]
+transform = Transform3D(0.9988382, 0.034872815, 0.03327266, 3.7252903e-09, 0.6903129, -0.723511, -0.048199438, 0.7226704, 0.6895103, 34.52597, 50.780647, -44.183933)
+
+[node name="DreamcatcherObsatcle11" parent="Objects/Dream Catchers" unique_id=243364299 instance=ExtResource("5_ehbii")]
+transform = Transform3D(0.9988382, -0.03736779, 0.030443918, 7.450581e-09, 0.63162476, 0.7752743, -0.048199438, -0.77437353, 0.63089037, 34.498936, 51.237644, -25.914083)
 
 [node name="Shortcutblock" parent="Objects/Dream Catchers" unique_id=238529897 instance=ExtResource("6_5tsv1")]
 transform = Transform3D(-3.4767578, 0, -0.5500508, 0, 3.52, 0, 0.5500508, 0, -3.4767578, -23.114998, -2.890499, 42.597294)
@@ -312,14 +677,6 @@ transform = Transform3D(1.971086, 0.67125845, -2.3033144, -0.8650795, 2.97931, 0
 [node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=1225917356]
 transform = Transform3D(0.9966793, -0.07036513, -0.040979266, 0.06639898, 0.9936163, -0.09120381, 0.047135085, 0.088179916, 0.99498904, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsb3b")
-
-[node name="Items" type="Node" parent="Objects" unique_id=457498402]
-
-[node name="Big Energy" parent="Objects/Items" unique_id=2021759024 instance=ExtResource("8_acfsq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.17315, -0.95365286, -27.449608)
-
-[node name="Mini Energy" parent="Objects/Items" unique_id=454488651 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.07815, -1.3950531, -23.735209)
 
 [node name="DreamyYggdrasil (with Leaves)2" parent="." unique_id=1475172835 instance=ExtResource("10_5tsv1")]
 
@@ -338,6 +695,9 @@ collision_layer = 4
 
 [node name="@StaticBody3D@573368" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=656746861]
 collision_layer = 2
+
+[node name="CollisionShape3D" parent="DreamyYggdrasil (with Leaves)2/@StaticBody3D@573368" index="0" unique_id=482678541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037662506, -0.17652512, -0.0873909)
 
 [node name="invisible_Walls" parent="DreamyYggdrasil (with Leaves)2" index="7" unique_id=584523178]
 collision_layer = 4

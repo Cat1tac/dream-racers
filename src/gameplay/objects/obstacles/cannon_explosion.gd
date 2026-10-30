@@ -1,4 +1,4 @@
-extends Node3D
+class_name CannonExplosion extends Node3D
 @onready var warning_decal: Decal = $Decal
 @onready var visuals: Node3D = $Visuals
 @onready var timer: Timer = $Timer
@@ -15,7 +15,7 @@ enum STATES {
 	ON,
 	OFF
 }
-
+var activated : bool
 var currentState : STATES = STATES.OFF
 var fill_change : float
 var _time : float
@@ -23,7 +23,9 @@ var _time : float
 var decal_y : float
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	explosion_mesh.material_override = explosion_mesh.material_override.duplicate_deep()
 	decal_y = warning_decal.global_position.y
+	warning_decal.size = Vector3(full_scale, 1, full_scale)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -55,15 +57,20 @@ func _process(delta: float) -> void:
 			light.show()
 		STATES.OFF:
 			warning_decal.hide()
+			warning_decal.global_position.y = decal_y
 			collision_shape_3d.disabled = true
 			embers.emitting = false
 			fill_change = lerp(fill_change, 0.0, 1 - pow(0.02, delta))
+			if fill_change <= 0.001:
+				visuals.hide()
+				activated = false
 			light.hide()
 	area_3d.scale = visuals.scale
 	explosion_mesh.material_override.set_shader_parameter("fill", fill_change)
 
-func activate_explosion_timer() -> void:
-	timer.start()
+func activate_explosion_timer(time : float = 4.0) -> void:
+	timer.start(time)
+	activated = true
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
@@ -71,3 +78,4 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
 		var kart = area.kart_sphere
 		kart.apply_slowdown_force(0.8)
+		kart.current_boost_level = kart.BOOST_LEVEL.ZERO

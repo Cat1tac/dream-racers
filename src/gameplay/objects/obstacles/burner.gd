@@ -6,7 +6,9 @@ extends Node3D
 @onready var flame: MeshInstance3D = $burner/Flame
 @onready var light: SpotLight3D = $SpotLight3D
 
+@export var always_on : bool = false
 @export var slowdown : float = 0.8
+@export var cycle_length : float = 6.0
 enum STATES {
 	STARTING,
 	ON,
@@ -18,16 +20,21 @@ var just_entered_state : bool
 var elongate_change : float
 var fill_change : float
 # Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	Events.on_countdown_finished.connect(on_race_start)
+	timer.wait_time = cycle_length
+	flame.material_override = flame.material_override.duplicate_deep()
 
 func _process(delta : float) -> void:
-	if timer.wait_time - timer.time_left <= timer.wait_time * 0.3:
-		currentState = STATES.STARTING
-	elif timer.wait_time - timer.time_left <= timer.wait_time * 0.7:
+	if always_on:
 		currentState = STATES.ON
-	elif timer.wait_time - timer.time_left <= timer.wait_time * 1:
-		currentState = STATES.OFF
+	else:
+		if timer.wait_time - timer.time_left <= timer.wait_time * 0.3:
+			currentState = STATES.STARTING
+		elif timer.wait_time - timer.time_left <= timer.wait_time * 0.7:
+			currentState = STATES.ON
+		elif timer.wait_time - timer.time_left <= timer.wait_time * 1:
+			currentState = STATES.OFF
 		 
 	match currentState:
 		STATES.STARTING:
@@ -54,10 +61,9 @@ func _process(delta : float) -> void:
 	flame.material_override.set_shader_parameter("elongate", elongate_change)
 	flame.material_override.set_shader_parameter("fill", fill_change)
 
-func on_race_start() -> void:
-	timer.start()
-
 func _on_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
-		area.kart_sphere.apply_slowdown_force(slowdown)
+		var kart : Kart_Sphere = area.kart_sphere
+		kart.apply_slowdown_force(slowdown)
+		kart.current_boost_level = kart.BOOST_LEVEL.ZERO
 		

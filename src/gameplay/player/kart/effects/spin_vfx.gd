@@ -4,6 +4,9 @@ class_name SpinVFX extends Node3D
 
 @export var vfx_colors : Dictionary[int, Color]
 
+func _ready() -> void:
+	spin_vfx.material_override = spin_vfx.material_override.duplicate_deep()
+
 func show_spin_effect(time : float, max_time : float, level : int) -> void:
 	var spin_material : Material = spin_vfx.material_override as ShaderMaterial
 	spin_material.set_shader_parameter("albedo", vfx_colors[level])
