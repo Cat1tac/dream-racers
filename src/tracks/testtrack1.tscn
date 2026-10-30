@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="9_mvbxg"]
 [ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="10_gj6qf"]
+[ext_resource type="PackedScene" uid="uid://ors18lntsr0j" path="res://src/gameplay/objects/obstacles/burner.tscn" id="11_4osdo"]
+[ext_resource type="PackedScene" uid="uid://63spldelsru2" path="res://src/gameplay/objects/obstacles/piston.tscn" id="11_crods"]
+[ext_resource type="PackedScene" uid="uid://dsjhfwplcyc6y" path="res://src/gameplay/objects/obstacles/cannon.tscn" id="13_6w1lt"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0xm2m"]
 panorama = ExtResource("2_wvh85")

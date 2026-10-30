@@ -1,34 +1,40 @@
 [gd_scene format=3 uid="uid://dlipi61m7gxus"]
 
-[ext_resource type="Shader" uid="uid://scvmkum0phgh" path="res://src/shaders/waves.gdshader" id="1_nwgio"]
+[ext_resource type="Shader" uid="uid://scvmkum0phgh" path="res://src/shaders/clouds.gdshader" id="1_nwgio"]
 
-[sub_resource type="Gradient" id="Gradient_dfnco"]
-offsets = PackedFloat32Array(0.1969697, 0.7651515)
-colors = PackedColorArray(0.24115604, 0.24115604, 0.24115604, 1, 1, 1, 1, 1)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_expqt"]
+noise_type = 5
+fractal_octaves = 4
+fractal_gain = 0.485
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_tfanx"]
-gradient = SubResource("Gradient_dfnco")
-
-[sub_resource type="Gradient" id="Gradient_expqt"]
-interpolation_mode = 2
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uujsa"]
+noise = SubResource("FastNoiseLite_expqt")
+seamless = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vmkh1"]
-noise_type = 4
-fractal_weighted_strength = 0.33
-fractal_ping_pong_strength = 9.425
+noise_type = 5
+frequency = 0.0101
+fractal_octaves = 4
+fractal_lacunarity = 2.085
+fractal_weighted_strength = 0.57
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ds1u0"]
 noise = SubResource("FastNoiseLite_vmkh1")
-color_ramp = SubResource("Gradient_expqt")
 seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_expqt"]
 render_priority = 0
 shader = ExtResource("1_nwgio")
-shader_parameter/albedo = SubResource("GradientTexture1D_tfanx")
-shader_parameter/noise = SubResource("NoiseTexture2D_ds1u0")
-shader_parameter/scroll_spd = Vector2(0.1, 0.1)
-shader_parameter/height_displacement = 0.13999999687072
+shader_parameter/Speed_1 = Vector2(-0.01, 0.015)
+shader_parameter/Cloud_Noise_1 = SubResource("NoiseTexture2D_uujsa")
+shader_parameter/noise_multiplier = 0.1
+shader_parameter/Speed_2 = Vector2(-0.01, 0.015)
+shader_parameter/Cloud_Noise_2 = SubResource("NoiseTexture2D_ds1u0")
+shader_parameter/scatter_color = Color(1.1930753, 1.329229, 1.353256, 1)
+shader_parameter/base_color = Color(18.892157, 18.892157, 18.892157, 1)
+shader_parameter/cloud_transparency_threshold = 1.0
+shader_parameter/transparency_multiplier = 1.0
+shader_parameter/cloud_thickness = 0.10000000149012
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_uujsa"]
 subdivide_width = 100
@@ -39,9 +45,3 @@ subdivide_depth = 100
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=104331114]
 material_override = SubResource("ShaderMaterial_expqt")
 mesh = SubResource("PlaneMesh_uujsa")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="MeshInstance3D" unique_id=62801244]
-transform = Transform3D(1, 0, 0, 0, 0.61840963, 0.785856, 0, -0.785856, 0.61840963, 0, 1.6447594, 1.5829258)
-light_color = Color(0.78990805, 0.00015912026, 0.6865332, 1)
-light_energy = 3.52
-spot_attenuation = 0.0

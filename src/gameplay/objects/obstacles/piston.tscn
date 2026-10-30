@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://63spldelsru2"]
+
+[ext_resource type="Script" uid="uid://c0mymjjoadytp" path="res://src/gameplay/objects/obstacles/piston.gd" id="1_y6gc5"]
+[ext_resource type="PackedScene" uid="uid://dvc3xul52t5m4" path="res://assets/models/objects/obstacles/piston.glb" id="2_1g3o2"]
+[ext_resource type="Texture2D" uid="uid://b7saer66rxi7" path="res://src/tracks/testtrack3_th_bigtree.png" id="3_yw1y8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_crods"]
+size = Vector3(10.055, 2.799, 10.098)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lta63"]
+albedo_texture = ExtResource("3_yw1y8")
+
+[node name="Piston" type="Node3D" unique_id=1628751673]
+script = ExtResource("1_y6gc5")
+
+[node name="Timer" type="Timer" parent="." unique_id=1713741842]
+wait_time = 5.0
+
+[node name="SlamBox" type="Area3D" parent="." unique_id=1764066449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.7070675, 0)
+collision_layer = 16
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SlamBox" unique_id=979024032]
+shape = SubResource("BoxShape3D_crods")
+debug_color = Color(0.995254, 0, 0.11792181, 1)
+
+[node name="piston" parent="." unique_id=566380059 instance=ExtResource("2_1g3o2")]
+
+[node name="Piston" parent="piston" index="0" unique_id=680468846]
+material_override = SubResource("StandardMaterial3D_lta63")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=775449481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.6296844, 0)
+shape = SubResource("BoxShape3D_crods")
+collision_mask = 64
+collide_with_areas = true
+collide_with_bodies = false
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="SlamBox" to="." method="_on_slam_box_area_entered"]
+
+[editable path="piston"]
