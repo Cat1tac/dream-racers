@@ -1,6 +1,7 @@
 class_name LocalLapLogic extends Area3D
 
 signal check_passed(path: int)
+signal player_respawned(id: int)
 
 var checks_needed : int # How many checkpoints are in the track (not counting StartLine)
 var laps_done: int
@@ -19,7 +20,7 @@ var playerControlled: bool = false
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
-# Adds 1 to the laps_done variable if player crossed every checkpoint
+## Adds 1 to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
 	if len(progress) == checks_needed and player_controller.isRacing:
 		progress.clear()
@@ -52,7 +53,7 @@ func add_checkpoint(check_id: int) -> void:
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
 
-# Tells each Player instance what the IDs of the checkpoints are
+## Tells each Player instance what the IDs of the checkpoints are
 func get_check_order(order: Array) -> void:
 	if len(check_order) == 0:
 		check_order = order
@@ -85,5 +86,6 @@ func _process(delta: float) -> void:
 ## Sets player position to the last checkpoint
 func respawn() -> void:
 	player_controller.global_position = respawn_location
-	#player.global_rotation = respawn_rotation
+	player.global_rotation = respawn_rotation
 	player_controller.linear_velocity = Vector3(0.0, 0.0, 0.0)
+	player_respawned.emit(parent.playerId)

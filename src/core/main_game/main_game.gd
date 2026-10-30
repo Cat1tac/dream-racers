@@ -30,7 +30,7 @@ var _current_level : BaseLevel = null
 @onready var world_effects: WorldEffectsSpawner = %"World Effects"
 
 func _ready() -> void:
-	GameManager.fill_cpus(4) # <- SET THIS TO 0 TO DISABLE CPU PLAYERS
+	GameManager.fill_cpus(0) # <- SET THIS TO 0 TO DISABLE CPU PLAYERS
 	_init_players(GameManager.players_connected, GameManager.cpu_count)
 	# There will be a track set up script that will contain all the info on setting up the track
 	#Will contain the selected track, selected character, what control scheme to use for each character, and any track specific settings 

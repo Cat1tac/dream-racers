@@ -21,7 +21,7 @@ var selected_camera : Camera3D
 
 var base_fov : float
 
-## Seperates Players from CPUs for easy manipulation hopefully
+## Seperates Players from CPUs for easy manipulation
 var playerControlled = true
 
 func _ready() -> void:

@@ -592,6 +592,10 @@ func _do_trick() -> void:
 func reset_trick() -> void:
 	tricked = false
 	trick_window_increment = trick_window
+
+func _on_local_lap_logic_player_respawned(id: int) -> void:
+	if id == $"..".playerId:
+		reset_trick()
 #endregion
 
 func _align_mesh_with_normal(_delta : float, normal : Vector3) -> void:
