@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bbjfnkw7rstea"
-path="res://.godot/imported/UI_DOWN.wav-d14737584928617a274d15b389cff306.sample"
+uid="uid://5cgf6db4ejql"
+path="res://.godot/imported/Dream1.wav-02819fd6693bf13c03114760bbbe93ff.sample"
 
 [deps]
 
-source_file="res://assets/audio/sfx/ui/UI_DOWN.wav"
-dest_files=["res://.godot/imported/UI_DOWN.wav-d14737584928617a274d15b389cff306.sample"]
+source_file="res://assets/audio/obstacles/Dream1.wav"
+dest_files=["res://.godot/imported/Dream1.wav-02819fd6693bf13c03114760bbbe93ff.sample"]
 
 [params]
 

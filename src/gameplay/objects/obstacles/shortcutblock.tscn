@@ -2,9 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dl4a43c1t33tn" path="res://src/gameplay/objects/obstacles/shortcutblock.gd" id="1_5lvrm"]
 [ext_resource type="PackedScene" uid="uid://b2sgpu0d8wfc5" path="res://assets/models/objects/shortcutblock.glb" id="1_ys8wm"]
+[ext_resource type="AudioStream" uid="uid://5cgf6db4ejql" path="res://assets/audio/obstacles/Dream1.wav" id="3_xx3j8"]
+[ext_resource type="AudioStream" uid="uid://dja8fwu4fjsmo" path="res://assets/audio/obstacles/Dream2.wav" id="4_1c8pd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5lvrm"]
 size = Vector3(0.45629883, 2.9284668, 3.031372)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r8tr7"]
+streams_count = 2
+stream_0/stream = ExtResource("3_xx3j8")
+stream_1/stream = ExtResource("4_1c8pd")
 
 [node name="Shortcutblock" type="Node3D" unique_id=238529897]
 script = ExtResource("1_5lvrm")
@@ -21,5 +28,11 @@ collision_mask = 96
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00012207031, 0.014770508, -0.03704834)
 shape = SubResource("BoxShape3D_5lvrm")
 debug_color = Color(0.08166675, 0, 0.7, 0.41960785)
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="." unique_id=850128552]
+stream = SubResource("AudioStreamRandomizer_r8tr7")
+pitch_scale = 1.5
+max_distance = 100.0
+bus = &"Obstacle"
 
 [connection signal="area_entered" from="ShortcutCollision" to="." method="_on_shortcut_collision_area_entered"]

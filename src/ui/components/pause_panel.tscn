@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://c0jrdf0qdypgl" path="res://src/ui/themes/pause_menu.tres" id="1_ih1qm"]
 [ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/themes/mainmenu_theme.tres" id="1_ssdop"]
 [ext_resource type="Script" uid="uid://buruflints3tv" path="res://src/ui/scripts/pause/pause_panel.gd" id="2_364fx"]
+[ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="4_qd1u7"]
 
 [node name="PausePanel" type="PanelContainer" unique_id=1989180915]
 process_mode = 3
@@ -52,6 +53,8 @@ layout_mode = 2
 size_flags_vertical = 4
 focus_neighbor_bottom = NodePath("../ResumeButton")
 text = "Return to Main Menu"
+
+[node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("4_qd1u7")]
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="_resume_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ReturnButton" to="." method="_return_button_pressed"]

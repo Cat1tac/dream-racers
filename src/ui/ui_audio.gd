@@ -1,4 +1,4 @@
-## Audio autoload for sfx
+## Audio scene for ui sfx
 extends Node
 
 @export_group("UI SFX")
@@ -10,6 +10,10 @@ extends Node
 #@export_group("Ready SFX")
 #@export var ready_in: AudioStream
 #@export var ready_out: AudioStream
+
+@export_group("Countdown SFX")
+@export var countdown_tick : AudioStream
+@export var countdown_go : AudioStream
 
 @onready var ui: AudioStreamPlayer = $UI
 @onready var ui_audio_player : AudioStreamPlaybackPolyphonic
@@ -39,6 +43,14 @@ func play_ui_back() -> void:
 
 #endregion
 
+#region Countdown
+func play_countdown_tick() -> void:
+	play_ui_audio(countdown_tick)
+
+func play_countdown_go() -> void:
+	play_ui_audio(countdown_go)
+
+#endregion
 #func play_ready_in() -> void:
 	#play_ui_audio(ready_in)
 #

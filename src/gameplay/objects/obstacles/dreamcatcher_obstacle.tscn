@@ -1,10 +1,18 @@
 [gd_scene format=3 uid="uid://b3u6n1wckcnmn"]
 
-[ext_resource type="Script" uid="uid://cxlr84b1gsvew" path="res://src/gameplay/objects/obstacles/dreamcatcher_obsatcle.gd" id="1_72clq"]
+[ext_resource type="Script" uid="uid://cxlr84b1gsvew" path="res://src/gameplay/objects/obstacles/dreamcatcher_obstacle.gd" id="1_72clq"]
 [ext_resource type="PackedScene" uid="uid://bf2dqsb4a133k" path="res://assets/models/objects/dreamcatcher.glb" id="1_k3och"]
+[ext_resource type="AudioStream" uid="uid://5cgf6db4ejql" path="res://assets/audio/obstacles/Dream1.wav" id="3_yebpj"]
+[ext_resource type="AudioStream" uid="uid://dja8fwu4fjsmo" path="res://assets/audio/obstacles/Dream2.wav" id="4_kix6r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k3och"]
 size = Vector3(0.17132568, 1.6541748, 1.647171)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_umj63"]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("3_yebpj")
+stream_1/stream = ExtResource("4_kix6r")
 
 [node name="DreamcatcherObsatcle" type="Node3D" unique_id=186652371]
 script = ExtResource("1_72clq")
@@ -19,5 +27,14 @@ collision_mask = 96
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.006011963, 0.34796143, 0.006706238)
 shape = SubResource("BoxShape3D_k3och")
 debug_color = Color(0.023333311, 0, 0.7, 0.41960785)
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="." unique_id=765814867]
+stream = SubResource("AudioStreamRandomizer_umj63")
+volume_db = -1.0
+unit_size = 20.0
+max_distance = 125.0
+max_polyphony = 10
+bus = &"Obstacle"
+doppler_tracking = 2
 
 [connection signal="area_entered" from="DreamcatcherHurtBox" to="." method="_on_dreamcatcher_hurt_box_area_entered"]

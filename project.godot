@@ -25,7 +25,6 @@ buses/default_bus_layout="uid://d1q4g6kl2l6mq"
 Events="*uid://mecg2e26jov8"
 DebugDraw="*uid://5h3n3kvnlr7n"
 GameManager="*uid://cmkc1rp7kwynn"
-Audio="*uid://casijrb5yn3uj"
 
 [debug]
 

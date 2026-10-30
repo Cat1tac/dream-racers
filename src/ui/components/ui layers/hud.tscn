@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cq1s6le7mmo58"]
 
 [ext_resource type="Script" uid="uid://cs37fytxppart" path="res://src/ui/scripts/hud/hud.gd" id="1_eqvli"]
+[ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="2_sbhy0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_x2l1u"]
 font_size = 400
@@ -35,3 +36,5 @@ offset_bottom = 273.0
 grow_horizontal = 2
 grow_vertical = 2
 label_settings = SubResource("LabelSettings_x2l1u")
+
+[node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("2_sbhy0")]

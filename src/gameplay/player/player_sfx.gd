@@ -8,7 +8,6 @@ class_name Player_SFX extends Node3D
 @onready var spinning: AudioStreamPlayer3D = $SpinSFX
 # MISSING DRIFT
 
-
 var player_top_speed: float
 
 func update_top_speed(speed: float) -> void:
@@ -28,6 +27,7 @@ func play_audio(request: String) -> void:
 		"CHARGE":
 			charging.play()
 		"SPIN":
+			spinning.pitch_scale = randf_range(0.9, 1.1)
 			spinning.play()
 			pass
 		"CRASH":

@@ -7,6 +7,7 @@ var hide_vec2: Vector2 = Vector2(1.0, 0.0)
 
 @onready var resume_button: Button = $MarginContainer/VBoxContainer/ResumeButton
 @onready var return_button: Button = $MarginContainer/VBoxContainer/ReturnButton
+@onready var sfx: Node = $SFX
 
 func _init() -> void:
 	GameManager.pause_game.emit()
@@ -18,7 +19,7 @@ func _init() -> void:
 func _ready() -> void:
 	resume_button.grab_focus()
 	for button in find_children("*", "Button"):
-		button.focus_entered.connect(Audio.play_ui_up)
+		button.focus_entered.connect(sfx.play_ui_up)
 
 # handles unpausing
 func _input(event: InputEvent) -> void:
@@ -28,7 +29,7 @@ func _input(event: InputEvent) -> void:
 			print("UNPAUSE")
 			hide_pause_panel()
 		elif event.is_action_pressed(player.controls.actions["forward"]):
-			Audio.play_ui_select()
+			sfx.play_ui_select()
 			match get_viewport().gui_get_focus_owner():
 				resume_button:
 					resume_button.pressed.emit()

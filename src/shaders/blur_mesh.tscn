@@ -5,8 +5,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_68x2q"]
 render_priority = 0
 shader = ExtResource("1_t53qi")
-shader_parameter/blur_amount = 0.0
-shader_parameter/step_amount = Vector3(0, 0, 0)
+shader_parameter/blur_amount = 2.0000000298024
 
 [sub_resource type="QuadMesh" id="QuadMesh_u6qfl"]
 material = SubResource("ShaderMaterial_68x2q")

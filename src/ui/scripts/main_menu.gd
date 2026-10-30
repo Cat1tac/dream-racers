@@ -4,6 +4,7 @@ extends UIState
 @onready var how_to_play_button: Button = %HowToPlayButton
 @onready var exit_button: Button = %ExitButton
 @onready var how_to_play_window: = preload("uid://cr8hhutactn1a")
+@onready var sfx: Node = %SFX
 
 var accept_input : bool = true
 
@@ -12,8 +13,8 @@ func _ready() -> void:
 	
 	# find every button and assign audio on its focus entered
 	for button in find_children("*", "Button"):
-		button.focus_entered.connect(Audio.play_ui_up)
-		button.pressed.connect(Audio.play_ui_select)
+		button.focus_entered.connect(sfx.play_ui_up)
+		button.pressed.connect(sfx.play_ui_select)
 
 
 func _input(event: InputEvent) -> void:
@@ -31,8 +32,8 @@ func _input(event: InputEvent) -> void:
 		if how_to_play_button.has_focus():
 			if event.is_action_pressed(player.controls.actions["forward"]):
 				how_to_play_button.pressed.emit()
-				print("yo")
 				var window_instance : TabContainer = how_to_play_window.instantiate()
+				window_instance.initial_sfx = %SFX
 				get_child(0).add_child(window_instance)
 			
 		if exit_button.has_focus():

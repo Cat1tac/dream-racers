@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ddf583pk46ddn" path="res://assets/world/backgrounds/citrus_orchard_road_puresky_4k.hdr" id="2_wvh85"]
 [ext_resource type="PackedScene" uid="uid://rtbn8cgsje6q" path="res://src/tracks/testtrack_3.tscn" id="3_5ryjy"]
 [ext_resource type="PackedScene" uid="uid://o8gbnp303uhr" path="res://src/gameplay/objects/boost_panel.tscn" id="4_mvbxg"]
-[ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/obstacles/dreamcatcher_obsatcle.tscn" id="5_gj6qf"]
+[ext_resource type="PackedScene" uid="uid://b3u6n1wckcnmn" path="res://src/gameplay/objects/obstacles/dreamcatcher_obstacle.tscn" id="5_gj6qf"]
 [ext_resource type="PackedScene" uid="uid://d3hgqbv7npk6k" path="res://src/gameplay/objects/obstacles/shortcutblock.tscn" id="6_4osdo"]
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="7_wvh85"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="8_5ryjy"]
@@ -60,12 +60,6 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, -74.028885, 4.1195726, 4.845709)
 
 [node name="testtrack3" parent="." unique_id=255077636 instance=ExtResource("3_5ryjy")]
-
-[node name="@StaticBody3D@20193" parent="testtrack3" index="1" unique_id=102325124]
-collision_layer = 6
-
-[node name="@StaticBody3D@20194" parent="testtrack3" index="3" unique_id=1987579914]
-collision_layer = 6
 
 [node name="Boost_Panels" type="Node3D" parent="." unique_id=1827261410]
 transform = Transform3D(0.965459, 0.14834361, -0.21420336, -1.2948174e-08, 0.8221043, 0.569337, 0.26055497, -0.54967153, 0.79370797, 288.66183, 210.33945, 38.24308)

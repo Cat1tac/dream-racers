@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://casijrb5yn3uj"]
+
+[ext_resource type="Script" uid="uid://b1wbbbt0fufry" path="res://src/ui/ui_audio.gd" id="1_aahwr"]
+[ext_resource type="AudioStream" uid="uid://cmyofobq6bp18" path="res://assets/audio/ui/UI_UP.wav" id="2_bvoap"]
+[ext_resource type="AudioStream" uid="uid://bbjfnkw7rstea" path="res://assets/audio/ui/UI_DOWN.wav" id="3_u4uxb"]
+[ext_resource type="AudioStream" uid="uid://dgcjht07eus2e" path="res://assets/audio/ui/UI_SELECT.wav" id="4_r84a7"]
+[ext_resource type="AudioStream" uid="uid://g4w5mvxvy26n" path="res://assets/audio/ui/UI_BACK.wav" id="5_mv6d6"]
+[ext_resource type="AudioStream" uid="uid://cxnmpmlsfw2y" path="res://assets/audio/ui/Countdown_tick.wav" id="6_02718"]
+[ext_resource type="AudioStream" uid="uid://dxlp1idheyha4" path="res://assets/audio/ui/Countdown_GO.wav" id="7_fssr3"]
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_u6qfl"]
+polyphony = 16
+
+[node name="SFX" type="Node" unique_id=2048488839]
+process_mode = 3
+script = ExtResource("1_aahwr")
+ui_up = ExtResource("2_bvoap")
+ui_down = ExtResource("3_u4uxb")
+ui_select = ExtResource("4_r84a7")
+ui_back = ExtResource("5_mv6d6")
+countdown_tick = ExtResource("6_02718")
+countdown_go = ExtResource("7_fssr3")
+
+[node name="UI" type="AudioStreamPlayer" parent="." unique_id=2024923242]
+stream = SubResource("AudioStreamPolyphonic_u6qfl")
+volume_db = 6.0
+bus = &"UI"

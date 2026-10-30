@@ -689,6 +689,7 @@ func _physics_process(delta: float) -> void:
 	wall_cast.force_shapecast_update()
 	if on_wall():
 		apply_bounce_force(10, get_wall_normal())
+		audio_player.play_audio("CRASH")
 	
 	_apply_traction(delta)
 	_apply_steering(delta)

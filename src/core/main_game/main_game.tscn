@@ -16,6 +16,7 @@ unique_name_in_owner = true
 script = ExtResource("2_6yl8a")
 
 [node name="BlurMesh" parent="Systems/World Effects" unique_id=633814577 instance=ExtResource("3_6n4xl")]
+visible = false
 
 [node name="World" type="Node3D" parent="." unique_id=2025068431]
 process_mode = 1

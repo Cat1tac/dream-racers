@@ -1,6 +1,8 @@
 extends Node3D
 
 @onready var dreamcatcher: Node3D = $dreamcatcher
+@onready var hit_sfx: AudioStreamPlayer3D = $HitSFX
+
 var net : MeshInstance3D
 var spin : bool
 
@@ -14,6 +16,7 @@ func _on_dreamcatcher_hurt_box_area_entered(area: Area3D) -> void:
 	if area is SpinHitbox:
 		var spinhitbox : SpinHitbox = area
 		spinhitbox.call_spin_boost()
+		hit_sfx.play()
 		spinhitbox.hit_dreamcatcher = true
 	elif area is SpinHurtBox:
 		var spinhurtbox : SpinHurtBox = area

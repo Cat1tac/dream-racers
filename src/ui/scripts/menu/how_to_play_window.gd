@@ -1,6 +1,11 @@
 extends TabContainer
+var initial_sfx: Node
+@onready var sfx: Node = %SFX
 
 func _ready() -> void:
+	# fixes onready null behavior when instantiating
+	if initial_sfx:
+		sfx = initial_sfx
 	Events.on_how_to_play.emit(false)
 	
 func _exit_tree() -> void:
@@ -13,5 +18,5 @@ func _input(event: InputEvent) -> void:
 		if Input.is_action_just_pressed(player.controls.actions["left"]):
 			current_tab = max(current_tab - 1, 0)
 		if event.is_action(player.controls.actions["backwards"]):
-			Audio.play_ui_back()
+			sfx.play_ui_back()
 			queue_free()

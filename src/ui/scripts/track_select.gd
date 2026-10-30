@@ -9,6 +9,8 @@ extends UIState
 @onready var track_button_3: TextureButton = $VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton
 @onready var track_button_4: TextureButton = $VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton
 
+@onready var sfx: Node = %SFX
+
 func _ready() -> void:
 	self.visibility_changed.connect(_show_back_button)
 	
@@ -16,7 +18,7 @@ func _ready() -> void:
 		next_button.exit()
 	
 	for button in find_children("TrackButton", "Button"):
-		button.focus_entered.connect(Audio.play_ui_up)
+		button.focus_entered.connect(sfx.play_ui_up)
 
 
 func _input(event: InputEvent) -> void:
@@ -27,12 +29,12 @@ func _input(event: InputEvent) -> void:
 	# emit the button pressed with ui_select
 	for player : PlayerDefinition in GameManager.player_list:
 		if event.is_action_pressed(player.controls.actions["right"]):
-			Audio.play_ui_up()
+			sfx.play_ui_up()
 		elif event.is_action_pressed(player.controls.actions["left"]):
-			Audio.play_ui_down()
+			sfx.play_ui_down()
 		
 		if event.is_action_pressed(player.controls.actions["forward"]):
-			Audio.play_ui_select()
+			sfx.play_ui_select()
 			match get_viewport().gui_get_focus_owner():
 				track_button_1:
 					track_button_1.pressed.emit()
@@ -47,7 +49,7 @@ func _input(event: InputEvent) -> void:
 		
 		# deselect goes back
 		if event.is_action_pressed(player.controls.actions["backwards"]):
-			Audio.play_ui_back()
+			sfx.play_ui_back()
 			back_button.pressed.emit()
 			back_button.hide()
 			next_button.exit()

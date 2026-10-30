@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://buin7q48fmu1j" path="res://assets/models/tracks/Dreamy Yggdrasil/testtrack1.png" id="16_d1hbf"]
 [ext_resource type="Texture2D" uid="uid://b146ox7oemdoq" path="res://assets/ui/main menu/gradients/clouds_sunset_gradient.tres" id="16_gq7f2"]
 [ext_resource type="AudioStream" uid="uid://cgkxsqk1u43dq" path="res://assets/audio/music/general/Menu_Theme_V1_3.ogg" id="21_ba7qp"]
+[ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="29_v0hue"]
 
 [sub_resource type="Animation" id="Animation_7abqo"]
 length = 0.001
@@ -2832,6 +2833,9 @@ metadata/_edit_use_anchors_ = true
 [node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=156168761]
 stream = ExtResource("21_ba7qp")
 bus = &"Music"
+
+[node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("29_v0hue")]
+unique_name_in_owner = true
 
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton" to="." method="_race_button_pressed"]
 [connection signal="visibility_changed" from="UILayer/CharacterSelect" to="UILayer/CharacterSelect" method="_on_visibility_changed"]
