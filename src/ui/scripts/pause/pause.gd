@@ -5,6 +5,8 @@ class_name PAUSE extends Node
 # checks for pause inputs
 func _input(event: InputEvent) -> void:
 	for player : PlayerDefinition in GameManager.player_list:
+		if player.is_cpu:
+			return
 		if event.is_action_pressed(player.controls.actions["start"]) and not GameManager.game_paused:
 			print("PAUSE")
 			var pause_panel_instance: PausePanel = pause_panel.instantiate()

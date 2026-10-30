@@ -28,6 +28,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if kart_sphere.isRacing and !player.playerControlled:
 		
+		if !kart_sphere.on_ground():
+			cancel_turn()
+			return
+		
 		# Double checks rotation values to account for radians ranging from -3.14 to 3.14
 		if abs(hitbox.global_rotation.y - checkpoint_rotations[current_checkpoint]) > 3.14:
 			invertControls = true

@@ -3,8 +3,9 @@ class_name LapLogic extends Node
 @export var track : Track
 @onready var checkpoints: Node = $Checkpoints
 @onready var starting_line: CollisionShape3D = $StartLine/CollisionShape3D
+@export var lap_count : int = 3
 
-var check_list: Array[int]
+var check_list: Array[Checkpoint]
 var rot_list: Array
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
@@ -15,11 +16,11 @@ var rot_list: Array
 func talk_with_papa() -> void:
 	await get_tree().create_timer(0.1).timeout # Lets checkpoints give info to this script before sending it to TrackInfo
 	## NOTE CHANGE BACK TO 3 AFTER TESTING
-	track.update(3, check_list, rot_list) # (Number of laps, list of checkpoints, rotation of checkpoints)
+	track.update(lap_count, check_list, rot_list) # (Number of laps, list of checkpoints, rotation of checkpoints)
 	Events.on_checkpoints_list_filled.emit()
 
 ## Recieves the instance id of each checkpoint in tree order (top to bottom)
-func log_checkpoints(check_id : int, check_rot) -> void:
+func log_checkpoints(check_id : Checkpoint, check_rot) -> void:
 	check_list.append(check_id)
 	rot_list.append(check_rot)
 

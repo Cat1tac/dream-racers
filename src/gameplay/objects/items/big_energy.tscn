@@ -27,4 +27,5 @@ collision_layer = 16
 collision_mask = 64
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=972754205]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("BoxShape3D_uujsa")

@@ -1,6 +1,6 @@
 extends TabContainer
 var initial_sfx: Node
-@onready var sfx: Node = %SFX
+var sfx: Node 
 
 func _ready() -> void:
 	# fixes onready null behavior when instantiating

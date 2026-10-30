@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource("1_bikc5")
+speed = 1.0
 acceleration = 2.0
+boost_top_speed = 1.0

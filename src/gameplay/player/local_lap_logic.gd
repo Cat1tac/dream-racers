@@ -39,11 +39,11 @@ func complete_lap() -> void:
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
 ## Adds the given id to the progress array if it is the proper id
-func add_checkpoint(check_id: int) -> void:
+func add_checkpoint(check_id: Checkpoint) -> void:
 	if len(check_order) == progress.size():
 		return
 	
-	var _needed_check : int = check_order[progress.size()] # This is the value that we are looking for
+	var _needed_check : Checkpoint = check_order[progress.size()] # This is the value that we are looking for
 	check_passed.emit(check_order.find(check_id))
 	
 	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))
@@ -66,13 +66,16 @@ func _on_tree_entered() -> void:
 	if !parent.current_track:
 		await get_tree().create_timer(0.1).timeout
 		get_check_order(parent.current_track.checkpoint_list)
+		Events.on_get_total_laps.emit(parent.current_track.lap_count)
 	else:
 		get_check_order(parent.current_track.checkpoint_list)
+		Events.on_get_total_laps.emit(parent.current_track.lap_count)
 	if parent.current_track.willCountdown:
 		await get_tree().create_timer(4.8).timeout # Total of a 5 second wait from Scene Start
 		player_controller.isRacing = true
 	else:
 		player_controller.isRacing = true
+	
 	
 	playerControlled = parent.playerControlled #Updates boolean just in case
 

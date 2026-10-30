@@ -15,6 +15,7 @@ var lap_update_color: Color = Color(1.0, 0.34, 0.78, 1.0)
 func _ready() -> void:
 	speedometer.scale = Vector2(0.2, 0.2)
 	Events.on_get_lap_count.connect(_update_lap_count)
+	Events.on_get_total_laps.connect(set_lap_count)
 	Events.on_get_time.connect(_update_timer)
 
 func set_ids(player_id : int) -> void:
@@ -25,12 +26,14 @@ func set_ids(player_id : int) -> void:
 #func _process(delta: float) -> void:
 	#if Input.is_action_just_pressed("keys_drift"):
 		#_update_lap_tween()
+func set_lap_count(lap_count : int) -> void:
+	lap_count_total.text = str(lap_count)
 
 func _update_lap_count(num : int, player_id) -> void:
 	if id != player_id:
 		return
 		
-	if num == 3:
+	if num == int(lap_count_total.text):
 		return
 	
 	_update_lap_tween()

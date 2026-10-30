@@ -26,7 +26,7 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xdbtd"]
 height = 0.2
-radius = 0.55
+radius = 0.525
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uia4o"]
 size = Vector3(2, 0.5, 2)
@@ -90,7 +90,8 @@ transform = Transform3D(1.505, 0, 0, 0, 1.505, 0, 0, 0, 1.505, 0, 0.23, 0)
 visible = false
 
 [node name="HoverVFX" parent="Center/VFX" unique_id=1285261471 instance=ExtResource("7_7c3x0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25297192, 0)
+visible = false
 
 [node name="GroundRay" type="RayCast3D" parent="Center" unique_id=1613552836]
 target_position = Vector3(0, -1.5, 0)
@@ -105,7 +106,8 @@ debug_shape_thickness = 5
 [node name="WallRay" type="ShapeCast3D" parent="Center" unique_id=919914270]
 shape = SubResource("CylinderShape3D_xdbtd")
 target_position = Vector3(0, 0, 0)
-collision_mask = 6
+collision_mask = 4
+debug_shape_custom_color = Color(0.68864375, 0.10115535, 0.7097031, 1)
 
 [node name="SpinHitbox" type="Area3D" parent="Center" unique_id=1189610687 node_paths=PackedStringArray("spinhurtbox")]
 unique_name_in_owner = true
@@ -213,21 +215,26 @@ chargeParticles = [NodePath("../Center/VFX/BoostCharge"), NodePath("../Center/VF
 boostParticles = [NodePath("../Center/VFX/BoostExhaust"), NodePath("../Center/VFX/BoostExhaust2")]
 spin_vfx = NodePath("../Center/VFX/SpinVFX")
 hover_vfx = NodePath("../Center/VFX/HoverVFX")
-top_speed = 25.0
+top_speed = 27.0
+reverse_top_speed = 10.0
+trailing_acceleration = 10.0
 brake_resistance = 15
 ground_resistance = 6
 max_steering_angle_slow = 7.0
 max_steering_angle_fast = 5.5
+snake_penalty_amt = 0.3
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
 knockback = 25.0
+boost_acceleration = 30.0
+boost_top_speed = 3.0
 boost_max_time = 1.7
 stale_charge_curve = SubResource("Curve_54vdw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Kart_Sphere" unique_id=199179411]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.0052971863, -0.048706055)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 shape = SubResource("SphereShape3D_nor3r")
-debug_color = Color(0, 0.6149741, 0.6062328, 0.41960785)
+debug_color = Color(0, 0.21553928, 0.21237549, 0.41960785)
 
 [node name="CPU Controls" type="Node" parent="." unique_id=517516124]
 script = ExtResource("20_trpe4")

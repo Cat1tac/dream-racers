@@ -8,6 +8,7 @@ signal on_get_stored_charge
 
 ## gameplay to hud signals
 signal on_get_lap_count
+signal on_get_total_laps
 signal on_get_countdown
 signal on_countdown_finished
 

@@ -45,7 +45,8 @@ var drift_direction : float
 @export_range(0, 1) var traction_factor := 0.3 ## The factor by which the car will slide when turning (0 is no traction, 1 is no slide) (Starts to lose speed while drifitng when traction is less then 0.3)  
 @export var drift_multiplier := 1.5 ## Mulitplier for how much drifting influences turn angle
 @export var drift_buffer := 0.5 ## Time player has to input a direction after starting drift
-@export var snake_buffer := 0.2 ## Time you have to change drift direction after releasing drift
+@export var snake_buffer := 0.15 ## Time you have to change drift direction after releasing drift
+@export var snake_penalty_amt : float = 0.25 ## penalty for snaking
 @export var drift_charge_curve : Curve
 
 @export_group("Spin")
@@ -116,7 +117,7 @@ var tween : Tween
 var drift_just_released : bool ##bool for if the kart just released drift button
 var drift_buffer_timer : float ## increment timer for drift
 var snake_buffer_timer : float ## increment timer for snaking
-var snake_penalty_amt : float = 0.5 ## penalty for snaking
+
 var currently_snaking : bool ##checks if player is currently snaking
 var just_started_drift : bool ## check whether the kart should start the drift buffer
 var drift_stage : int ##level of drift
@@ -349,33 +350,6 @@ func _drift_boost_control(delta : float) -> void:
 	if input_drift and on_ground():
 		drift_timer += abs(angular_speed + kartStats.drift_charge_speed) * delta
 		
-		#if stored_charge_level > 0:
-			#if drift_stage > 2:
-				#drift_timer = 0
-				#_set_drifting_stage(-1)
-			#
-			#if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
-				#new_drift_timer_base = drift_charge_curve.get_point_position(1).x
-				#_set_drifting_stage(1)
-			#elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
-				#new_drift_timer_base = drift_charge_curve.get_point_position(2).x
-				#_set_drifting_stage(2)
-				#
-		#else:
-			#Base boost
-		#if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
-			#new_drift_timer_base = drift_charge_curve.get_point_position(1).x
-			#_set_drifting_stage(1)
-		#elif drift_timer > drift_charge_curve.get_point_position(2).x and drift_stage < 2:
-			#new_drift_timer_base = drift_charge_curve.get_point_position(2).x
-			#_set_drifting_stage(2)
-		#elif drift_timer > drift_charge_curve.get_point_position(3).x and drift_stage < 3 and current_boost_level >= BOOST_LEVEL.TWO:
-			#new_drift_timer_base = drift_charge_curve.get_point_position(3).x
-			#_set_drifting_stage(3)
-		#elif drift_timer > drift_charge_curve.max_value and drift_stage < 4 and current_boost_level >= BOOST_LEVEL.THREE:
-			#_set_drifting_stage(4)
-		
-		#For diminshing returns, I could give every single boost level a curve with y being the multiplier and the x being the amount of times the boost was used
 		match current_boost_level:
 			BOOST_LEVEL.ZERO:
 				_allow_boost_to_2()
@@ -390,14 +364,6 @@ func _drift_boost_control(delta : float) -> void:
 			_:
 				drift_timer = drift_timer
 				
-			##Boost panel boost
-			#if drift_stage >= 3:
-				#if boost_panels_drifted_over == 1 and drift_stage < 4:
-					#_set_drifting_stage(4)
-				#elif boost_panels_drifted_over == 3 and drift_stage < 5:
-					#_set_drifting_stage(5)
-				#elif boost_panels_drifted_over == 6 and drift_stage < 6:
-					#_set_drifting_stage(6)
 	#Boost timer Countdown
 	if boost_timer > 0:
 		if currently_snaking and boost_timer < 0.2:

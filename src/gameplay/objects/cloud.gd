@@ -6,6 +6,7 @@ extends Node3D
 ## Used instead of normal forward boost
 @export var trick_forward_boost : float = 0.7
 @export var normal_forward_boost : float = 0.4
+@export var super_bounce_slowdown : float = 0.5
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
@@ -27,5 +28,5 @@ func _on_area_3d_area_exited(area: Area3D) -> void:
 		var hurt_box : SpinHurtBox = area
 		if hurt_box.kart_sphere.current_boost_level >= charge_need_for_super_bounce and charge_need_for_super_bounce > -1 and hurt_box.kart_sphere.tricked:
 			hurt_box.call_vertical_bounce(super_bounce)
-			hurt_box.call_slowdown(0.5)
+			hurt_box.call_slowdown(super_bounce_slowdown)
 		

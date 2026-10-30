@@ -111,8 +111,22 @@ func fill_cpus(max_players: int) -> void:
 			new_cpu.selected_character = SelectedCharacter.NYX
 		else:
 			new_cpu.selected_character = SelectedCharacter.SERAPHIM
+		new_cpu.is_cpu = true
 		player_list.append(new_cpu)
 		cpu_count += 1
+
+func remove_all_cpus() -> void:
+	cpu_count = 0
+	var cpus_array : Array[PlayerDefinition]
+	for player : PlayerDefinition in player_list:
+		if player.is_cpu:
+			cpus_array.append(player)
+	
+	for cpu in cpus_array:
+		player_list.erase(cpu)
+			
+		
+	print(player_list)
 
 func remove_player() -> void:
 	players_connected -= 1

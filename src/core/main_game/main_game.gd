@@ -31,7 +31,7 @@ var _current_level : BaseLevel = null
 @onready var world_effects: WorldEffectsSpawner = %"World Effects"
 
 func _ready() -> void:
-	GameManager.fill_cpus(0) # <- SET THIS TO 0 TO DISABLE CPU PLAYERS
+	GameManager.fill_cpus(4) # <- SET THIS TO 0 TO DISABLE CPU PLAYERS
 	_init_players(GameManager.players_connected, GameManager.cpu_count)
 	GameManager.pause_game.connect(pause_game)
 	GameManager.unpause_game.connect(unpause_game)

@@ -8,3 +8,4 @@ var controls : PlayerControls
 var selected_character : int
 var character_select_position : int
 var character_select_pressed : bool
+var is_cpu : bool = false
