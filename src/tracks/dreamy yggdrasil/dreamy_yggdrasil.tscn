@@ -716,29 +716,29 @@ transform = Transform3D(-3.4767578, 0, -0.5500508, 0, 3.52, 0, 0.5500508, 0, -3.
 [node name="Arrow2" parent="Objects" unique_id=1826455058 instance=ExtResource("7_on71r")]
 transform = Transform3D(1.971086, 0.67125845, -2.3033144, -0.8650795, 2.97931, 0.1279638, 2.2377403, 0.5604906, 2.078315, 114.0841, 44.161167, 2.0620995)
 
-[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=1225917356]
+[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=2067495522]
 transform = Transform3D(0.9966793, -0.07036513, -0.040979266, 0.06639898, 0.9936163, -0.09120381, 0.047135085, 0.088179916, 0.99498904, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsb3b")
 
 [node name="DreamyYggdrasil (with Leaves)2" parent="." unique_id=1475172835 instance=ExtResource("10_5tsv1")]
 
-[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=314313419]
+[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=1768729806]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010043144, 0, -0.02722168)
 
-[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=157312291]
+[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=479242178]
 transform = Transform3D(-11.27874, 2.742221, 25.541407, 5.8808208, -26.878418, 5.4826603, 25.00598, 7.558031, 10.230846, -89.828445, 37.044, -18.374361)
 surface_material_override/0 = ExtResource("8_ehbii")
 
-[node name="Trunk_col" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=1872040116]
+[node name="Trunk_col" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=1886463421]
 collision_layer = 4
 
-[node name="Walls_col" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=2006387113]
+[node name="Walls_col" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=1555496295]
 collision_layer = 4
 
-[node name="Road_col" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=349985135]
+[node name="Road_col" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=233563953]
 collision_layer = 2
 
-[node name="invisible_Walls" parent="DreamyYggdrasil (with Leaves)2" index="7" unique_id=1403861938]
+[node name="invisible_Walls" parent="DreamyYggdrasil (with Leaves)2" index="7" unique_id=1846341522]
 collision_layer = 4
 
 [node name="LapLogic" type="Node" parent="." unique_id=24872241 node_paths=PackedStringArray("track")]
@@ -759,7 +759,7 @@ shape = SubResource("BoxShape3D_on71r")
 transform = Transform3D(0.99628407, 0, -0.08612797, 0, 1, 0, 0.08612797, 0, 0.99628407, -136.97429, 0.72357845, -22.29158)
 
 [node name="Checkpoint2" parent="LapLogic/Checkpoints" unique_id=1442622332 instance=ExtResource("10_d1fgb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.88883, 3.7963629, -22.29158)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.88883, 4.9619284, -22.29158)
 
 [node name="Checkpoint3" parent="LapLogic/Checkpoints" unique_id=1869354797 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.6076, 17.566248, -22.29158)
@@ -771,7 +771,7 @@ transform = Transform3D(0.99783075, 0, -0.06583136, 0, 1, 0, 0.06583136, 0, 0.99
 transform = Transform3D(-0.039541468, 0, 0.9992179, 0, 1, 0, -0.9992179, 0, -0.039541468, 17.687351, 39.79499, -48.90087)
 
 [node name="Checkpoint6" parent="LapLogic/Checkpoints" unique_id=1379183297 instance=ExtResource("10_d1fgb")]
-transform = Transform3D(-0.21955146, 0, 0.9756009, 0, 1, 0, -0.9756009, 0, -0.21955146, 9.528431, 39.79499, -94.682556)
+transform = Transform3D(-0.21955146, 0, 0.9756009, 0, 1, 0, -0.9756009, 0, -0.21955146, 9.528431, 39.065567, -94.682556)
 
 [node name="Checkpoint7" parent="LapLogic/Checkpoints" unique_id=1815825085 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.15688786, 0, 0.98761636, 0, 1, 0, -0.98761636, 0, 0.15688786, 13.220308, 39.79499, -121.72215)
@@ -882,13 +882,13 @@ transform = Transform3D(-0.99999493, 0, 0.0031899512, 0, 1, 0, -0.0031899512, 0,
 transform = Transform3D(-0.9985917, 0, 0.053052604, 0, 1, 0, -0.053052604, 0, -0.9985917, -134.0575, -2.0213828, 27.007727)
 
 [node name="Checkpoint40" parent="LapLogic/Checkpoints" unique_id=1882655353 instance=ExtResource("10_d1fgb")]
-transform = Transform3D(-0.97257894, 0, 0.23257378, 0, 1, 0, -0.23257378, 0, -0.97257894, -160.92047, -1.371953, 21.287067)
+transform = Transform3D(-0.97257894, 0, 0.23257378, 0, 1, 0, -0.23257378, 0, -0.97257894, -160.92047, 2.5416498, 21.287067)
 
 [node name="Checkpoint41" parent="LapLogic/Checkpoints" unique_id=150130518 instance=ExtResource("10_d1fgb")]
-transform = Transform3D(-0.6625039, 0, 0.7490587, 0, 1, 0, -0.7490587, 0, -0.6625039, -177.82748, -1.371953, 12.209482)
+transform = Transform3D(-0.6625039, 0, 0.7490587, 0, 1, 0, -0.7490587, 0, -0.6625039, -177.82748, 4.2003546, 12.209482)
 
 [node name="Checkpoint42" parent="LapLogic/Checkpoints" unique_id=436444557 instance=ExtResource("10_d1fgb")]
-transform = Transform3D(0.939324, 0, 0.34303167, 0, 1, 0, -0.34303167, 0, 0.939324, -171.9732, -1.371953, -24.240812)
+transform = Transform3D(0.939324, 0, 0.34303167, 0, 1, 0, -0.34303167, 0, 0.939324, -171.9732, 4.314727, -24.240812)
 
 [node name="OutOfBounds" parent="." unique_id=2017124765 instance=ExtResource("11_fa1el")]
 transform = Transform3D(30.505, 0, 0, 0, 30.505, 0, 0, 0, 30.505, 15.436226, -81.31001, -6.1447296)

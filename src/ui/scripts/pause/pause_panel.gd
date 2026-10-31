@@ -24,6 +24,8 @@ func _ready() -> void:
 # handles unpausing
 func _input(event: InputEvent) -> void:
 	for player : PlayerDefinition in GameManager.player_list:
+		if player.is_cpu:
+			return
 		if event.is_action_pressed(player.controls.actions["start"]) and GameManager.game_paused:
 			#get_viewport().set_input_as_handled()
 			print("UNPAUSE")
@@ -45,6 +47,7 @@ func _return_button_pressed() -> void:
 	# set booleans to reset state
 	GameManager.reset_selections()
 	GameManager.game_paused = false
+	GameManager.remove_all_cpus()
 	GameManager.toggle_in_match()
 
 #region Tweens
