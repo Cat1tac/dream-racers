@@ -7,7 +7,7 @@ class_name CPU extends Node
 
 var controls : PlayerControls
 
-var checkpoint_rotations: Array
+var checkpoint_rotations: Array #TODO change all instances of this var to match the refactored lap system
 var current_checkpoint: int = 0
 
 ## Inverts steering if radian differences cross over the 3.14 limit

@@ -2,46 +2,28 @@ class_name LapLogic extends Node
 
 @export var track : Track
 @onready var checkpoints: Node = $Checkpoints
-@onready var starting_line: CollisionShape3D = $StartLine/CollisionShape3D
+@onready var respawn_point: Marker3D = $"StartLine/Respawn Point"
 @export var lap_count : int = 3
-
-var check_list: Array[Checkpoint]
-var rot_list: Array
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
-
-# I've grown quite fond of this name
-## Updates TrackInfo with relevant information (after getting checkpoint info)
-func talk_with_papa() -> void:
-	await get_tree().create_timer(0.1).timeout # Lets checkpoints give info to this script before sending it to TrackInfo
-	## NOTE CHANGE BACK TO 3 AFTER TESTING
-	track.update(lap_count, check_list, rot_list) # (Number of laps, list of checkpoints, rotation of checkpoints)
-	Events.on_checkpoints_list_filled.emit()
-
-## Recieves the instance id of each checkpoint in tree order (top to bottom)
-func log_checkpoints(check_id : Checkpoint, check_rot) -> void:
-	check_list.append(check_id)
-	rot_list.append(check_rot)
+func get_checkpoints() -> Array[Checkpoint]:
+	var temp_checkpoint_array : Array[Checkpoint]
+	for child : Checkpoint in checkpoints.get_children():
+		temp_checkpoint_array.append(child)
+	return temp_checkpoint_array
+		
 
 ## Tells LocalLapLogic to check for lap completion
 func _on_start_line_area_entered(area: Area3D) -> void:
-		if area is LocalLapLogic:
-			var local_lap_logic : LocalLapLogic = area
-			local_lap_logic.complete_lap()
-			local_lap_logic.respawn_location = starting_line.global_position
-			local_lap_logic.respawn_rotation = starting_line.global_rotation
-
-# Debug function, prints instance id of each checkpoint in order
-func print_checks() -> void:
-	var _count := 0
-	for id in check_list:
-		_count += 1
-		#print("LapLogic: check #" + str(_count) + " " + str(id))
+	if area is LocalLapLogic:
+		var local_lap_logic : LocalLapLogic = area
+		local_lap_logic.complete_lap()
+		local_lap_logic.respawn_location = respawn_point.global_position
+		local_lap_logic.respawn_rotation = respawn_point.global_rotation
 
 func _ready() -> void:
-	#print("LapLogic: loading checkpoints...")
-	talk_with_papa()
+	
 	if track.willCountdown:
 		await get_tree().create_timer(2).timeout
-		await track.countdown(3, "race starting")
+		track.countdown(3)

@@ -1,27 +1,29 @@
 class_name Track extends BaseLevel
 
 @export var player_spawners: Array[Marker3D]
+@export var lap_logic : LapLogic
+@export var lap_count : int = 3
+@export var willCountdown: bool = false # set to false to disable race countdown
 
-var lap_count: int
-var checkpoint_list: Array
+const MAIN_MENU : String = "uid://dt5xamoe48268"
+var checkpoints: Array[Checkpoint]
 var checkpoint_positions: Array #is this being used?
 var checkpoint_rotations: Array
-@export var willCountdown: bool = false # set to false to disable race countdown
+
 var num_players_finished : int
 
-func update(laps: int, c_list: Array, r_list) -> void:
-	lap_count = laps
-	checkpoint_list = c_list
-	checkpoint_rotations = r_list
-	print("Track: stuff has been updated")
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	checkpoints = lap_logic.get_checkpoints() 
+	Events.on_send_checkpoints.emit(checkpoints)
+	Events.on_get_total_laps.emit(lap_count)
+	Events.on_starting_respawn.emit(lap_logic.respawn_point)
+	Events.players_finished_race.connect(race_over)
 
-
-func countdown(time: float, message: String) -> void:
+func countdown(time: float) -> void:
 	for n in range(time, 0, -1):
 		Events.on_get_countdown.emit(n)
-		print("TrackLapLogic: " + str(n))
 		await get_tree().create_timer(1).timeout
-	print("TrackLapLogic: " + message)
 	
 	Events.on_countdown_finished.emit()
 
@@ -33,12 +35,7 @@ func race_over() -> void:
 		GameManager.reset_selections()
 		GameManager.toggle_in_match()
 		GameManager.remove_all_cpus()
-		GameManager.load_into_path("uid://dt5xamoe48268")
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	Events.on_track_loaded.emit()
-	Events.players_finished_race.connect(race_over)
+		GameManager.load_into_path(MAIN_MENU)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

@@ -17,7 +17,8 @@ signal on_player_added
 
 ## track signals
 signal on_checkpoints_list_filled
-signal on_track_loaded
+signal on_send_checkpoints
+signal on_starting_respawn
 signal players_finished_race
 signal on_race_over
 

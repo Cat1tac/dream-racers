@@ -3,11 +3,14 @@ class_name LocalLapLogic extends Area3D
 signal check_passed(path: int)
 signal player_respawned(id: int)
 
-var checks_needed : int # How many checkpoints are in the track (not counting StartLine)
-var laps_done: int
-var progress: Array
-var check_order: Array
+var key_checkpoints_passed: Array[Checkpoint] ## Updating aray of key checkpoints player has gone past
+var respawn_checkpoints_passed : Dictionary[Checkpoint, int] ## Updating aray of respawn checkpoints player has gone past
+var respawn_checkpoints : Array[Checkpoint] ##Array of checkpoint player can respawn at (currently all checkpoints)
+var key_checkpoints: Array[Checkpoint] ## Array of all key checkpoints
+var laps_done: int ## number of laps completed
+
 var race_timer: float = 0.0
+var last_respawn_passed : Checkpoint
 var respawn_location: Vector3
 var respawn_rotation: Vector3
 
@@ -22,13 +25,17 @@ var playerControlled: bool = false
 
 ## Adds 1 to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
-	if len(progress) == checks_needed and player_controller.isRacing:
-		progress.clear()
+	if len(key_checkpoints_passed) == len(key_checkpoints) and player_controller.isRacing:
+		key_checkpoints_passed.clear()
+		respawn_checkpoints_passed.clear()
+		last_respawn_passed = null
 		laps_done += 1
 		Events.on_get_lap_count.emit(laps_done, parent.playerId)
 		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:
-		progress.clear()
+		key_checkpoints_passed.clear()
+		respawn_checkpoints_passed.clear()
+		last_respawn_passed = null
 		print("LocalLapLogic: Player does not have enough progress")
 	
 	#does *something* when 3 laps have been done
@@ -38,46 +45,53 @@ func complete_lap() -> void:
 		player_controller.isRacing = false
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
-## Adds the given id to the progress array if it is the proper id
-func add_checkpoint(check_id: Checkpoint) -> void:
-	if len(check_order) == progress.size():
+## Adds checkpoint to the key_checkpoints_passed array
+func add_checkpoint(checkpoint: Checkpoint) -> void:
+	if !checkpoint.is_key_checkpoint:
+		return
+		
+	if len(key_checkpoints) == len(key_checkpoints_passed):
 		return
 	
-	var _needed_check : Checkpoint = check_order[progress.size()] # This is the value that we are looking for
-	check_passed.emit(check_order.find(check_id))
+	var _next_key_checkpoint : Checkpoint = key_checkpoints[key_checkpoints_passed.size()] # This is the value that we are looking for
+	check_passed.emit(key_checkpoints.find(checkpoint))
 	
-	print("Comparing recieved ID: " + str(check_id) + "to the required ID: " + str(_needed_check))
-	if check_id == _needed_check:
-		progress.append(check_id)
-		print("LocalLapLogic: Checkpoint #" + str(progress.size()) + " was crossed.")
+	print("Comparing recieved ID: " + str(checkpoint) + "to the required ID: " + str(_next_key_checkpoint))
+	if checkpoint == _next_key_checkpoint:
+		key_checkpoints_passed.append(checkpoint)
+		print("LocalLapLogic: Checkpoint #" + str(key_checkpoints_passed.size()) + " was crossed.")
 	else:
-		print("LocalLapLogic: Checkpoint ID: " + str(check_id) + " is not a valid checkpoint.")
+		print("LocalLapLogic: Checkpoint ID: " + str(checkpoint) + " is not a valid checkpoint.")
 
-## Tells each Player instance what the IDs of the checkpoints are
-func get_check_order(order: Array) -> void:
-	if len(check_order) == 0:
-		check_order = order
-		checks_needed = len(order)
-		print("LocalLapLogic: kart has received checkpoint info")
+## Updates respawn point if it comes after the previous respawn point passed
+func update_respawn_point(new_respawn_point : Checkpoint) -> void:
+	if respawn_checkpoints_passed.has(new_respawn_point): # if point has been logged then return 
+		return
+	
+	#Compare id of respawn point to last one logged and if its less than it then it will return
+	var new_respawn_point_id : int = respawn_checkpoints.find(new_respawn_point)
+	if last_respawn_passed != null and respawn_checkpoints_passed.has(last_respawn_passed) and respawn_checkpoints_passed[last_respawn_passed] > new_respawn_point_id:
+		return
+	 
+	last_respawn_passed = new_respawn_point
+	respawn_location = last_respawn_passed.res_point.global_position
+	respawn_rotation = last_respawn_passed.res_point.global_rotation
+	respawn_checkpoints_passed[last_respawn_passed] = new_respawn_point_id
 
-func _on_tree_entered() -> void:
-	await Events.on_track_loaded
-	await Events.on_checkpoints_list_filled # Gives time for TrackInfo to update
-	if !parent.current_track:
-		await get_tree().create_timer(0.1).timeout
-		get_check_order(parent.current_track.checkpoint_list)
-		Events.on_get_total_laps.emit(parent.current_track.lap_count)
-	else:
-		get_check_order(parent.current_track.checkpoint_list)
-		Events.on_get_total_laps.emit(parent.current_track.lap_count)
-	if parent.current_track.willCountdown:
-		await get_tree().create_timer(4.8).timeout # Total of a 5 second wait from Scene Start
-		player_controller.isRacing = true
-	else:
-		player_controller.isRacing = true
-	
-	
-	playerControlled = parent.playerControlled #Updates boolean just in case
+## Sets player position to the last checkpoint
+func respawn() -> void:
+	if parent.current_track == null:
+		return
+	player_controller.global_position = respawn_location
+	player.global_rotation = respawn_rotation
+	player_controller.linear_velocity = Vector3(0.0, 0.0, 0.0)
+	player_respawned.emit(parent.playerId)
+
+func _ready() -> void:
+	Events.on_send_checkpoints.connect(_get_all_checkpoints)
+	Events.on_countdown_finished.connect(_start_player_race)
+	Events.on_starting_respawn.connect(_initial_respawn)
+	playerControlled = parent.playerControlled
 
 # Manages Timer
 func _process(delta: float) -> void:
@@ -86,9 +100,18 @@ func _process(delta: float) -> void:
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 	#print("LalLogic: " + str(self.global_rotation_degrees))
 
-## Sets player position to the last checkpoint
-func respawn() -> void:
-	player_controller.global_position = respawn_location
-	player.global_rotation = respawn_rotation
-	player_controller.linear_velocity = Vector3(0.0, 0.0, 0.0)
-	player_respawned.emit(parent.playerId)
+##Puts key checkpoints and respawn checkpoints into their own arrays
+func _get_all_checkpoints(checkpoint_array: Array[Checkpoint]) -> void:
+	for checkpoint in checkpoint_array:
+		if checkpoint.is_key_checkpoint:
+			key_checkpoints.append(checkpoint)
+	respawn_checkpoints = checkpoint_array
+	print("LocalLapLogic: kart has received checkpoint info")
+
+##Sets isRacing to true
+func _start_player_race() -> void:
+	player_controller.isRacing = true
+
+func _initial_respawn(start_line : Marker3D) -> void:
+	respawn_location = start_line.global_position
+	respawn_rotation = start_line.global_rotation

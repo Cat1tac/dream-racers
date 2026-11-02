@@ -675,9 +675,11 @@ adjustment_enabled = true
 adjustment_brightness = 1.12
 adjustment_contrast = 1.23
 
-[node name="Baa Baa Battleship" type="Node3D" unique_id=669950304 node_paths=PackedStringArray("player_spawners")]
+[node name="Baa Baa Battleship" type="Node3D" unique_id=669950304 node_paths=PackedStringArray("player_spawners", "lap_logic")]
 script = ExtResource("1_hgstr")
 player_spawners = [NodePath("Spawns/P1 Spawn"), NodePath("Spawns/P2 Spawn"), NodePath("Spawns/P3 Spawn"), NodePath("Spawns/P4 Spawn")]
+lap_logic = NodePath("LapLogic")
+lap_count = 2
 willCountdown = true
 
 [node name="battleship" parent="." unique_id=1332841673 instance=ExtResource("2_yg7te")]
@@ -728,6 +730,9 @@ collision_layer = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.9497952, -5.163952)
 shape = SubResource("BoxShape3D_wlink")
 
+[node name="Respawn Point" type="Marker3D" parent="LapLogic/StartLine" unique_id=1008561383]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
 [node name="Checkpoints" type="Node" parent="LapLogic" unique_id=295129300]
 
 [node name="Checkpoint" parent="LapLogic/Checkpoints" unique_id=1706071241 instance=ExtResource("5_nb2ps")]
@@ -750,6 +755,7 @@ transform = Transform3D(-0.8161135, 0, 0.57789165, 0, 1, 0, -0.57789165, 0, -0.8
 
 [node name="Checkpoint5" parent="LapLogic/Checkpoints" unique_id=1392742162 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 70.57103, 9.81329, -130.58443)
+is_key_checkpoint = true
 
 [node name="Checkpoint6" parent="LapLogic/Checkpoints" unique_id=1434347481 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.3690186, 9.81329, -130.58443)
@@ -768,6 +774,7 @@ transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 5.528365, 9
 
 [node name="Checkpoint9" parent="LapLogic/Checkpoints" unique_id=1433833450 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 69.710014, 9.81329, -197.00598)
+is_key_checkpoint = true
 
 [node name="Checkpoint57" parent="LapLogic/Checkpoints" unique_id=653181316 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.69601434, 0, 0.7180278, 0, 1, 0, -0.7180278, 0, 0.69601434, 100.08693, 9.81329, -201.44505)
@@ -795,6 +802,7 @@ transform = Transform3D(-0.09817815, 0, -0.9951689, 0, 1, 0, 0.9951689, 0, -0.09
 
 [node name="Checkpoint15" parent="LapLogic/Checkpoints" unique_id=1929353936 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-1.555, 0, -2.3479846e-07, 0, 1.555, 0, 2.3479846e-07, 0, -1.555, -37.774338, 9.81329, -284.2109)
+is_key_checkpoint = true
 
 [node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint15" index="1" unique_id=446360075]
 transform = Transform3D(-4.3711395e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711395e-08, 0, -2.1057916, 14.061935)
@@ -834,6 +842,7 @@ transform = Transform3D(0.94858414, 0, 0.3165251, 0, 1, 0, -0.3165251, 0, 0.9485
 
 [node name="Checkpoint25" parent="LapLogic/Checkpoints" unique_id=1186811347 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.9701658, 0, -0.24244224, 0, 1, 0, 0.24244224, 0, 0.9701658, -301.07172, 19.551582, -378.53473)
+is_key_checkpoint = true
 
 [node name="Checkpoint60" parent="LapLogic/Checkpoints" unique_id=1853945650 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.7815093, 0, -0.6238936, 0, 1, 0, 0.6238936, 0, 0.7815093, -282.00165, 22.237942, -373.76917)
@@ -855,6 +864,7 @@ transform = Transform3D(-0.944166, 0, 0.32947007, 0, 1, 0, -0.32947007, 0, -0.94
 
 [node name="Checkpoint31" parent="LapLogic/Checkpoints" unique_id=1508549525 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-0.68632627, 0, 0.7272938, 0, 1, 0, -0.7272938, 0, -0.68632627, -352.4931, 38.63423, -300.65836)
+is_key_checkpoint = true
 
 [node name="Checkpoint32" parent="LapLogic/Checkpoints" unique_id=588073052 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-0.38920054, 0, 0.92115295, 0, 1, 0, -0.92115295, 0, -0.38920054, -365.43173, 41.432487, -319.04755)
@@ -882,6 +892,7 @@ transform = Transform3D(0.0034177825, 0, -0.999994, 0, 1, 0, 0.999994, 0, 0.0034
 
 [node name="Checkpoint40" parent="LapLogic/Checkpoints" unique_id=416775112 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.0034177825, 0, -0.999994, 0, 1, 0, 0.999994, 0, 0.0034177825, -262.6881, 59.66235, -287.00662)
+is_key_checkpoint = true
 
 [node name="Checkpoint41" parent="LapLogic/Checkpoints" unique_id=794786387 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.0034177825, 0, -0.999994, 0, 1, 0, 0.999994, 0, 0.0034177825, -262.50674, 59.66235, -233.93994)
@@ -903,6 +914,7 @@ transform = Transform3D(0.003282316, 0.2548544, -0.96697384, -0.27875924, 0.9288
 
 [node name="Checkpoint47" parent="LapLogic/Checkpoints" unique_id=141146627 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.62614614, 0.39960688, -0.66951853, -0.3703177, 0.9080653, 0.19565731, 0.6861528, 0.12542452, 0.71656334, -256.01273, 31.855934, 138.26735)
+is_key_checkpoint = true
 
 [node name="Checkpoint48" parent="LapLogic/Checkpoints" unique_id=980197183 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.9571891, 0.28840277, -0.02475065, -0.28945658, 0.9531015, -0.088385105, -0.0019005537, 0.09176548, 0.99577874, -219.62276, 18.584694, 149.74364)
@@ -918,6 +930,7 @@ transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999999, -2.
 
 [node name="Checkpoint59" parent="LapLogic/Checkpoints" unique_id=1498007094 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.7262007, 0, 0.68748254, 0, 0.99999976, 0, -0.6874824, 0, 0.7262008, 21.209595, 2.8458042, 135.48842)
+is_key_checkpoint = true
 
 [node name="Checkpoint52" parent="LapLogic/Checkpoints" unique_id=994931922 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-4.3711378e-08, 0, 0.9999999, 0, 0.99999976, 0, -0.99999976, 0, -4.3711385e-08, 29.896057, 2.4237576, 113.41304)
@@ -2161,7 +2174,6 @@ transform = Transform3D(47.005, 0, 0, 0, 47.005, 0, 0, 0, 47.005, 0, -47.543003,
 [node name="MusicHolder" parent="." unique_id=601645172 instance=ExtResource("15_uot37")]
 
 [node name="Loop" parent="MusicHolder" index="1" unique_id=1654185185]
-volume_db = -10.0
 parameters/looping = true
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
