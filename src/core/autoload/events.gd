@@ -21,6 +21,7 @@ signal on_send_checkpoints
 signal on_starting_respawn
 signal players_finished_race
 signal on_race_over
+signal get_start_line_position(Vector3)
 
 ## ui signals
 signal on_how_to_play

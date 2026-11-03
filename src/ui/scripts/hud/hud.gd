@@ -18,9 +18,9 @@ func _ready() -> void:
 	Events.on_race_over.connect(_race_over)
 
 ## NOTE DEBUG
-func _process(delta: float) -> void:
-	if Input.is_key_pressed(KEY_1):
-		Events.on_race_over.emit()
+#func _process(delta: float) -> void:
+	#if Input.is_key_pressed(KEY_1):
+		#Events.on_race_over.emit()
 
 func _update_countdown_text(num : int) -> void:
 	countdown.text = str(num)

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cfrould2egvdi" path="res://src/gameplay/local_multiplayer/local_hud.gd" id="1_4x5ba"]
 [ext_resource type="PackedScene" uid="uid://cebpjaeco7bpy" path="res://src/ui/components/speedometer.tscn" id="1_y85xy"]
+[ext_resource type="Texture2D" uid="uid://bt413pscm0exh" path="res://assets/textures/vfx/misc/star.png" id="3_qucup"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4x5ba"]
 font_size = 60
@@ -53,33 +54,53 @@ offset_top = 176.81488
 offset_right = 340.96484
 offset_bottom = 181.81494
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1993731456]
+[node name="LapPlaceMargin" type="MarginContainer" parent="." unique_id=308644455]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -83.0
-offset_right = 99.0
+offset_top = -236.0
+offset_right = 363.0
 grow_vertical = 0
-theme_override_constants/margin_left = 60
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_bottom = 40
 
-[node name="LapCountHBox" type="HBoxContainer" parent="MarginContainer" unique_id=988266475]
+[node name="HBoxContainer" type="HBoxContainer" parent="LapPlaceMargin" unique_id=672893442]
+layout_mode = 2
+
+[node name="PlaceLabel" type="Label" parent="LapPlaceMargin/HBoxContainer" unique_id=316979122]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "1st"
+
+[node name="PlaceNumber" type="TextureRect" parent="LapPlaceMargin/HBoxContainer" unique_id=2033637410]
+visible = false
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 2
+texture = ExtResource("3_qucup")
+expand_mode = 1
+
+[node name="LapCountMargin" type="MarginContainer" parent="LapPlaceMargin/HBoxContainer" unique_id=1993731456]
+layout_mode = 2
+theme_override_constants/margin_left = -16
+theme_override_constants/margin_top = 104
+
+[node name="LapCountHBox" type="HBoxContainer" parent="LapPlaceMargin/HBoxContainer/LapCountMargin" unique_id=988266475]
 layout_mode = 2
 offset_transform_enabled = true
 
-[node name="Lap Count current" type="Label" parent="MarginContainer/LapCountHBox" unique_id=1090670641]
+[node name="Lap Count current" type="Label" parent="LapPlaceMargin/HBoxContainer/LapCountMargin/LapCountHBox" unique_id=1090670641]
 unique_name_in_owner = true
 layout_mode = 2
 offset_transform_enabled = true
 text = "1"
 label_settings = SubResource("LabelSettings_4x5ba")
 
-[node name="Lap Count divider" type="Label" parent="MarginContainer/LapCountHBox" unique_id=1042930991]
+[node name="Lap Count divider" type="Label" parent="LapPlaceMargin/HBoxContainer/LapCountMargin/LapCountHBox" unique_id=1042930991]
 layout_mode = 2
 text = "/"
 label_settings = SubResource("LabelSettings_4x5ba")
 
-[node name="Lap Count Total" type="Label" parent="MarginContainer/LapCountHBox" unique_id=29753224]
+[node name="Lap Count Total" type="Label" parent="LapPlaceMargin/HBoxContainer/LapCountMargin/LapCountHBox" unique_id=29753224]
 unique_name_in_owner = true
 layout_mode = 2
 text = "3"
