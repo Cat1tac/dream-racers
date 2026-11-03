@@ -21,7 +21,9 @@
 [ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
 [ext_resource type="PackedScene" uid="uid://dkisc0g5e2d7t" path="res://src/ui/components/menu/track_button.tscn" id="11_gq7f2"]
 [ext_resource type="Texture2D" uid="uid://5c7g1b2beiti" path="res://assets/ui/main menu/gradients/sunset_gradient.tres" id="12_5kva4"]
+[ext_resource type="PackedScene" uid="uid://b4jxtlyw5rb8o" path="res://src/gameplay/player/character/chambo.tscn" id="12_f2dn1"]
 [ext_resource type="Texture2D" uid="uid://cwx2m4gn17vf5" path="res://assets/ui/main menu/gradients/clouds_night_gradient.tres" id="13_2auc3"]
+[ext_resource type="Texture2D" uid="uid://dibqk6plesj4a" path="res://assets/models/characters/Chambo/mouseIconNoBG.png" id="13_oqd2e"]
 [ext_resource type="Texture2D" uid="uid://d4fc7uh24338m" path="res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres" id="14_ba7qp"]
 [ext_resource type="Texture2D" uid="uid://ioi5i16gvoi3" path="res://assets/models/tracks/Dreamy Yggdrasil/world_tree.png" id="15_lp5l8"]
 [ext_resource type="Texture2D" uid="uid://07uowprv713g" path="res://assets/ui/main menu/gradients/cloud_noise_tex.tres" id="15_tlfe1"]
@@ -2497,6 +2499,24 @@ texture = ExtResource("10_lp5l8")
 
 [node name="CharFrame3" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox" unique_id=1116421373 instance=ExtResource("6_1kq2p")]
 layout_mode = 2
+character_model = ExtResource("12_f2dn1")
+character_enum = 3
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3" unique_id=808025807]
+custom_maximum_size = Vector2(250, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_oqd2e")
 
 [node name="CharacterViewMargin" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer" unique_id=2033354532]
 modulate = Color(1, 1, 1, 0)

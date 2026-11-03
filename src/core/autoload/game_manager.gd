@@ -36,6 +36,7 @@ enum SelectedCharacter {
 	NONE,
 	SERAPHIM,
 	NYX,
+	CHAMBO,
 	MUFFIN,
 }
 
