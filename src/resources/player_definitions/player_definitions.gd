@@ -10,8 +10,5 @@ var character_select_position : int
 var character_select_pressed : bool
 var is_cpu : bool = false
 
-var placement : Dictionary[String, Variant] = { 
-	"distance_to_next_key_checkpoint" : 0.0,
-	"current_key_checkpoint" : 0,
-	"current_lap" : 0,
-	}
+## Score determined by current lap * total checkpoints + current checkpoint index
+var score : float = 0.0

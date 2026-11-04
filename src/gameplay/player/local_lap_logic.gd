@@ -22,7 +22,6 @@ var start_line_position : Vector3
 @onready var player_controller: Kart_Sphere = %Kart_Sphere
 @onready var player: Node3D = %Center
 
-
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
 ## Adds 1 to the laps_done variable if player crossed every checkpoint
@@ -102,15 +101,9 @@ func _process(delta: float) -> void:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 	#print("LalLogic: " + str(self.global_rotation_degrees))
-	
-	if Input.is_key_label_pressed(KEY_1) and key_checkpoints_passed.size() > 0:
-		get_latest_checkpoint()
-		
-	if Input.is_key_label_pressed(KEY_2):
-		get_distance_to_next_key_checkpoint()
-	
-	if Input.is_key_label_pressed(KEY_3):
-		print(player_controller.global_position)
+
+	## use playerId to set score individually
+	GameManager.player_list[parent.playerId].score = calculate_score()
 	
 
 ##Puts key checkpoints and respawn checkpoints into their own arrays
@@ -120,28 +113,36 @@ func _get_all_checkpoints(checkpoint_array: Array[Checkpoint]) -> void:
 			key_checkpoints.append(checkpoint)
 	respawn_checkpoints = checkpoint_array
 	print("LocalLapLogic: kart has received checkpoint info")
-
+	
+#region Scoring/Placement Data
 ## Uses the .distance_to function to get the distance to the next key checkpoint from the player
-func get_distance_to_next_key_checkpoint() -> float:
+func get_distance_to_next_key_checkpoint(kart : Kart_Sphere) -> float:
 	# on last checkpoint get distance to start line
 	if key_checkpoints_passed.size() == key_checkpoints.size():
-		print(start_line_position.distance_to(player_controller.global_position))
-		return start_line_position.distance_to(player_controller.global_position) 
+		return start_line_position.distance_to(kart.global_position) 
 		
 	elif key_checkpoints_passed.size() > 0:
-		print(key_checkpoints[key_checkpoints_passed.size()].global_position.distance_to(player_controller.global_position))
-		return key_checkpoints[key_checkpoints_passed.size()].global_position.distance_to(player_controller.global_position)
+		return key_checkpoints[key_checkpoints_passed.size()].global_position.distance_to(kart.global_position)
 	# before first key checkpoint
 	else:
-		print(key_checkpoints[0].global_position.distance_to(player_controller.global_position))
-		return key_checkpoints[0].global_position.distance_to(player_controller.global_position)
+		return key_checkpoints[0].global_position.distance_to(kart.global_position)
 
-func get_latest_checkpoint() -> Checkpoint:
-	print(key_checkpoints_passed[key_checkpoints_passed.size() - 1])
-	return key_checkpoints_passed[key_checkpoints_passed.size() - 1]
+func get_current_checkpoint() -> int:
+	# starting value
+	if key_checkpoints_passed.size() == 0:
+		return 0
+	
+	#print(key_checkpoints_passed.size())
+	return key_checkpoints_passed.size()
+
+## laps * amount of checkpoints + current checkpoint
+func calculate_score() -> float:
+	return self.laps_done * key_checkpoints.size() + get_current_checkpoint()
 
 func set_start_line_position(position: Vector3) -> void:
 	start_line_position = position
+
+#endregion
 ##Sets isRacing to true
 func _start_player_race() -> void:
 	player_controller.isRacing = true

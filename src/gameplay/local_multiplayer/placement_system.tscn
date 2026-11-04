@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dcnxsnn2jbfc6"]
+
+[ext_resource type="Script" uid="uid://erisr74s0goy" path="res://src/gameplay/local_multiplayer/placement_system.gd" id="1_xonsp"]
+
+[node name="PlacementSystem" type="Node" unique_id=1269088763]
+script = ExtResource("1_xonsp")

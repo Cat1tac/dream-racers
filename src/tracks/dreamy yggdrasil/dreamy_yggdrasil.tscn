@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="11_fa1el"]
 [ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="12_fa1el"]
 [ext_resource type="AudioStream" uid="uid://d1f2yit8o115y" path="res://src/Sounds/Dream Racers - Yggdrasil v2.mp3" id="13_on71r"]
+[ext_resource type="PackedScene" uid="uid://dcnxsnn2jbfc6" path="res://src/gameplay/local_multiplayer/placement_system.tscn" id="14_acfsq"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0bx2i"]
 noise_type = 5
@@ -910,6 +911,8 @@ transform = Transform3D(15.205, 0, 0, 0, 15.205, 0, 0, 0, 15.205, 114.57852, -0.
 
 [node name="OutOfBounds3" parent="." unique_id=141583373 instance=ExtResource("11_fa1el")]
 transform = Transform3D(10.455, 0, 0, 0, 10.455, 0, 0, 0, 10.455, -167.01865, -41.742126, -22.172281)
+
+[node name="PlacementSystem" parent="." unique_id=1269088763 instance=ExtResource("14_acfsq")]
 
 [node name="MusicHolder" parent="." unique_id=601645172 instance=ExtResource("12_fa1el")]
 
