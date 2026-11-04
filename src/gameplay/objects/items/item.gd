@@ -36,7 +36,6 @@ func _do_item_effect(area : SpinHurtBox) -> void:
 	var kart : Kart_Sphere = area.kart_sphere
 	
 	if set_boost_lvl > kart.BOOST_LEVEL.ZERO:
-		kart.reset_stale_charges_uses()
 		kart.execute_boost(set_boost_lvl, false)
 		
 	if kart.current_boost_level > kart.BOOST_LEVEL.ZERO:

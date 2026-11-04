@@ -1,6 +1,13 @@
-[gd_resource type="Resource" script_class="Character" format=3 uid="uid://cvguj0xq0vbmt"]
+[gd_resource type="Resource" script_class="Stats" format=3 uid="uid://cvguj0xq0vbmt"]
 
 [ext_resource type="Script" uid="uid://15ad33ohkjn6" path="res://src/resources/character_definitions/characters.gd" id="1_pfwm0"]
 
 [resource]
 script = ExtResource("1_pfwm0")
+speed = -0.9
+acceleration = 3.0
+max_steering_angle_fast = 0.5
+max_steering_angle_slow = 0.5
+drift_multiplier = 0.10000000000000009
+drift_charge_speed = -0.19999999999999996
+boost_time = 0.19999999999999996

@@ -4,13 +4,14 @@
 
 [resource]
 script = ExtResource("1_id6vg")
-speed = 4.0
-air_resistance = 2.5
-max_steering_angle_fast = -1.0
-max_steering_angle_slow = -1.0
-traction_factor = -0.09999999999999998
-drift_multiplier = 0.19999999999999996
+speed = 1.0
+air_resistance = 0.5
+acceleration = -0.30000000000000004
+max_steering_angle_fast = -0.9
+max_steering_angle_slow = -0.9
+drift_multiplier = 0.30000000000000004
 weight = 0.1
 knockback = 2.0
-boost_top_speed = -1.0
-boost_time = 0.30000000000000004
+boost_top_speed = 0.10000000000000009
+drift_charge_speed = 0.10000000000000009
+boost_time = -0.3

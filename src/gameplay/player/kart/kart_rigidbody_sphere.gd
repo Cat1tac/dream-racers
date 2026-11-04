@@ -27,26 +27,26 @@ var input_spin : bool
 var drift_direction : float
 
 @export_group("Speed")
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var top_speed := 20.0 # Will be stat adjustable
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var reverse_top_speed := 7.5
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var top_speed := 27.0 # Will be stat adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var reverse_top_speed := 10.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var acceleration := 8.0 # Will be stat adjustable
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var trailing_speed := 10.0
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var trailing_acceleration := 5.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var trailing_acceleration := 10.0
 
-@export var brake_resistance := 10 ## How much resistance there is to forward movement when pressing in the opposite direction of the velocity
-@export var ground_resistance := 3 ## How mcuh resistance there is to forward movement when coasting
+@export var brake_resistance := 15 ## How much resistance there is to forward movement when pressing in the opposite direction of the velocity
+@export var ground_resistance := 6 ## How mcuh resistance there is to forward movement when coasting
 @export var air_resistance := 5.0 ## How fast you lose speed in the air 
 
 @export_group("Steering")
-@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_slow := 10.0 # will be stat adjustable
-@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_fast := 4.0 # will be state adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_slow := 7.0 # will be stat adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_fast := 5.5 # will be state adjustable
 @export_custom(PROPERTY_HINT_NONE, "suffix:degrees/s") var air_steering_velocity := 50.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:m") var wheel_base := 1.5
 @export_range(0, 1) var traction_factor := 0.3 ## The factor by which the car will slide when turning (0 is no traction, 1 is no slide) (Starts to lose speed while drifitng when traction is less then 0.3)  
 @export var drift_multiplier := 1.5 ## Mulitplier for how much drifting influences turn angle
 @export var drift_buffer := 0.5 ## Time player has to input a direction after starting drift
 @export var snake_buffer := 0.15 ## Time you have to change drift direction after releasing drift
-@export var snake_penalty_amt : float = 0.25 ## penalty for snaking
+@export var snake_penalty_amt : float = 0.3 ## penalty for snaking
 @export var drift_charge_curve : Curve
 
 @export_group("Spin")
@@ -63,13 +63,13 @@ var drift_direction : float
 	6: 0.15
 }
 
-@export var knockback : float = 10 ## How much the player is knocked back when hit by a spin
+@export var knockback : float = 25 ## How much the player is knocked back when hit by a spin
 
 @export var trick_window : float = 0.2 ## How long player has to trick after going into air
 
 @export_group("Boost")
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var boost_acceleration := 25.0
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var boost_top_speed : = 5.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var boost_acceleration := 30.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var boost_top_speed : = 3.0
 @export var dreamcatcher_speed_multiplier := 3
 @export var dreamcatcher_time := 1.5
 @export var boosts : Dictionary = { ## Dictionary containing divisors for drift boost speed/time and spin boost speed/time
@@ -79,7 +79,7 @@ var drift_direction : float
 	4:{"dftSpdFactor" : 1.2, "dftTimeFactor" : 1.2, "spinSpdFactor" : 0.7, "spinTimeFactor" : 0.7},
 	5:{"dftSpdFactor" : 1.5, "dftTimeFactor" : 1.5, "spinSpdFactor" : 0.8, "spinTimeFactor" : 0.8},
 	6:{"dftSpdFactor" : 2, "dftTimeFactor" : 2, "spinSpdFactor" : 1.0, "spinTimeFactor" : 1.0}}
-@export_custom(PROPERTY_HINT_NONE, "suffix:s") var boost_max_time := 1.5 # will be state adjustable
+var boost_time_adjust : float # will be state adjustable
 
 @export var boost_level_speed_time : Dictionary[BOOST_LEVEL, Dictionary] = {
 	BOOST_LEVEL.ZERO : {
@@ -89,22 +89,22 @@ var drift_direction : float
 	},
 	BOOST_LEVEL.ONE : {
 		"spd_multiplier" : 0.8,
-		"timeMax" : 1,
+		"timeMax" : 1 + boost_time_adjust,
 		"uses" : 0
 	},
 	BOOST_LEVEL.TWO : {
 		"spd_multiplier" : 1.13,
-		"timeMax" : 2,
+		"timeMax" : 2 + boost_time_adjust,
 		"uses" : 0
 	},
 	BOOST_LEVEL.THREE : {
 		"spd_multiplier" : 1.46,
-		"timeMax" : 3,
+		"timeMax" : 3 + boost_time_adjust,
 		"uses" : 0
 	},
 	BOOST_LEVEL.FOUR : {
 		"spd_multiplier" : 1.8,
-		"timeMax" : 4,
+		"timeMax" : 4 + boost_time_adjust,
 		"uses" : 0
 	},
 }
@@ -257,31 +257,6 @@ func _handle_input() -> void:
 				input_spin = true
 				audio_player.play_audio("SPIN")
 			
-	#if Input.is_action_just_pressed(controls.actions["store"]):
-		#if stored_charge_level == 0: # Put charge in store
-			#stored_charge_level = drift_stage if drift_stage >= 3 else 0
-			#
-			#if stored_charge_level == 4:
-				#boost_panels_driven_over_store = 1
-			#elif stored_charge_level == 5:
-				#boost_panels_driven_over_store = 3
-			#elif stored_charge_level == 6:
-				#boost_panels_driven_over_store = 6
-				#
-		#elif boost_panels_driven_over_increment > 0 and stored_charge_level >= 3: # increase stored charge
-			#boost_panels_driven_over_store += 1
-			#
-			#if boost_panels_driven_over_store == 1 and stored_charge_level < 4:
-				#stored_charge_level = 4
-			#elif boost_panels_driven_over_store == 3 and stored_charge_level < 5:
-				#stored_charge_level = 5
-			#elif boost_panels_driven_over_store == 6 and stored_charge_level < 6:
-				#stored_charge_level = 6
-				#
-		#elif stored_charge_level >= 3 and boost_panels_driven_over_increment <= 0: # use stored charge
-			#_execute_boost(stored_charge_level)
-			#_remove_stored_charge()
-		#Events.on_get_stored_charge.emit(stored_charge_level, boost_panels_driven_over_store, player.playerId)
 
 ## Handle's evil twin sibling (Simulates real inputs for CPU racers)
 func _simulate_input(horizontal: float, vertical: float) -> void:
@@ -347,7 +322,9 @@ func _drift_boost_control(delta : float) -> void:
 			return
 		
 	#Controls Drift Charge
-	if input_drift and on_ground():
+	var forward := -center.global_basis.z
+	var horizontal_velocity := forward.dot(linear_velocity)
+	if input_drift and on_ground() and horizontal_velocity > top_speed * 0.7:
 		drift_timer += abs(angular_speed + kartStats.drift_charge_speed) * delta
 		
 		match current_boost_level:
@@ -366,7 +343,7 @@ func _drift_boost_control(delta : float) -> void:
 				
 	#Boost timer Countdown
 	if boost_timer > 0:
-		if currently_snaking and boost_timer < 0.2:
+		if currently_snaking and boost_timer < 0.2 or dreamcatcher_boost_timer > 0 or kart_model.tricking:
 			# allow for potential extra boost
 			pass
 		else:
@@ -479,20 +456,6 @@ func _set_boost(speedMultiplier : float, timeAddition : float) -> void:
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
 	boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[current_boost_level]["timeMax"]) 
 	audio_player.play_audio("BOOST")
-	
-
-##Stored Charge
-#func start_store_charge_boost_panel_timer() -> void:
-	#boost_panels_driven_over_increment = boost_panels_driven_over_timer
-#
-#func _decrement_boost_panel_store_charge_timer(delta : float) -> void:
-	#if boost_panels_driven_over_increment > 0.0:
-		#boost_panels_driven_over_increment -= delta
-#
-#func _remove_stored_charge() -> void:
-	#stored_charge_level = 0
-	#boost_panels_driven_over_store = 0
-	#boost_panels_driven_over_increment = 0
 
 func _get_charge_level() -> void:
 	if drift_stage >= stored_charge_level:
@@ -546,7 +509,7 @@ func dreamcatcher_spin_boost() -> void:
 		
 func _set_dreamcatcher_boost(speedMultiplier : float, timeMultiplier : float) -> void:
 	dreamcatcher_boost = boost_top_speed * speedMultiplier
-	dreamcatcher_boost_timer = boost_max_time * timeMultiplier
+	dreamcatcher_boost_timer = (1 + boost_time_adjust) * timeMultiplier
 	dreamcatcher_acceleration = boost_acceleration - acceleration
 #endregion
 
@@ -611,7 +574,7 @@ func set_up_kart_stats() -> void:
 	
 	boost_top_speed += kartStats.boost_top_speed
 	#drift_charge_speed (in the drift_boost_control function)
-	boost_max_time += kartStats.boost_time
+	boost_time_adjust += kartStats.boost_time
 	for boost_state : BOOST_LEVEL in boost_level_speed_time:
 		if boost_state != BOOST_LEVEL.ZERO:
 			boost_level_speed_time[boost_state]["timeMax"] += kartStats.boost_time

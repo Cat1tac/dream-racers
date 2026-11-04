@@ -51,8 +51,8 @@ stream_1/volume = 0.0
 friction = 0.0
 
 [sub_resource type="Curve" id="Curve_54vdw"]
-_limits = [0.0, 1.0, 0.0, 6.0]
-_data = [Vector2(0, 1), 0.0, 6.443745e-08, 0, 0, Vector2(6, 0.1980198), -0.47147566, 0.0, 0, 0]
+_limits = [0.0, 1.0, 0.0, 4.0043774]
+_data = [Vector2(0, 1), 0.0, -0.23934199, 0, 0, Vector2(4.0043774, 0), -0.24308164, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nor3r"]
@@ -215,20 +215,8 @@ chargeParticles = [NodePath("../Center/VFX/BoostCharge"), NodePath("../Center/VF
 boostParticles = [NodePath("../Center/VFX/BoostExhaust"), NodePath("../Center/VFX/BoostExhaust2")]
 spin_vfx = NodePath("../Center/VFX/SpinVFX")
 hover_vfx = NodePath("../Center/VFX/HoverVFX")
-top_speed = 27.0
-reverse_top_speed = 10.0
-trailing_acceleration = 10.0
-brake_resistance = 15
-ground_resistance = 6
-max_steering_angle_slow = 7.0
-max_steering_angle_fast = 5.5
-snake_penalty_amt = 0.3
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
-knockback = 25.0
-boost_acceleration = 30.0
-boost_top_speed = 3.0
-boost_max_time = 1.7
 stale_charge_curve = SubResource("Curve_54vdw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Kart_Sphere" unique_id=199179411]

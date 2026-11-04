@@ -21,7 +21,7 @@ var num_spins : int = 2
 
 var kart_scale : Vector3
 var _turning_position : float = 0.0 #For turning the character
-@export var _tricking : bool #for determinin if character is tricking 
+@export var tricking : bool #for determinin if character is tricking 
 #endregion
 
 #region character select
@@ -61,9 +61,9 @@ func do_trick_anim() -> void:
 	_reset_tween()
 	tween.set_trans(Tween.TRANS_LINEAR)
 	tween.tween_method(set_model_global_rotation, kart.global_rotation, Vector3(global_rotation.x + (TAU * num_spins), global_rotation.y, global_rotation.z + (TAU * (num_spins - 1))) , 0.8)
-	_tricking = true
+	tricking = true
 	await tween.finished
-	_tricking = false
+	tricking = false
 	
 func set_model_global_rotation(current_rotation : Vector3) -> void:
 	kart.global_rotation = current_rotation
