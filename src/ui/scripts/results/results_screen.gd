@@ -34,6 +34,7 @@ func _create_new_player_panel(player: PlayerDefinition) -> void:
 	var player_panel_instance: PlayerPanel = player_panel.instantiate()
 	players_v_box.add_child(player_panel_instance)
 	player_panel_instance.set_character_name(player.selected_character)
+	player_panel_instance.player_id = player.id
 	player_panel_array.append(player_panel_instance)
 
 

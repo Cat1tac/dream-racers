@@ -165,7 +165,11 @@ func toggle_in_match() -> void:
 		is_in_match = true
 	else:
 		is_in_match = false
-	
+
+func reset_scoring() -> void:
+	for player in player_list:
+		player.score = 0.0
+		player.completion_time = 0.0
 #endregion
 
 #region loading functions
@@ -188,6 +192,7 @@ func set_path_to_load(path: NodePath) -> void:
 
 func start_load(path: NodePath) -> void:
 	ResourceLoader.load_threaded_request(path, "", true)
+	reset_scoring()
 
 func _finish_loading() -> void:
 	var new_packed_scene: PackedScene = ResourceLoader.load_threaded_get(path_to_load)

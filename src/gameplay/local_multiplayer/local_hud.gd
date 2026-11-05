@@ -17,6 +17,7 @@ func _ready() -> void:
 	Events.on_get_lap_count.connect(_update_lap_count)
 	Events.on_get_total_laps.connect(set_lap_count)
 	Events.on_get_time.connect(_update_timer)
+	Events.on_player_finished.connect(_update_final_time)
 
 func set_ids(player_id : int) -> void:
 	id = player_id
@@ -39,6 +40,12 @@ func _update_lap_count(num : int, player_id) -> void:
 	_update_lap_tween()
 	lap_count_current.text = str(num + 1)
 
+func _update_final_time() -> void:
+	var time = GameManager.player_list[id].completion_time
+	var minutes : int = int(time) / 60
+	var seconds : int = int (time) % 60
+	time_elapsed.text = "%02d:%02d" % [minutes, seconds]
+	
 func _update_timer(time : float) -> void:
 	var minutes : int = int(time) / 60
 	var seconds : int = int (time) % 60

@@ -5,6 +5,7 @@ signal on_get_steer
 signal on_get_speed
 signal on_get_time
 signal on_get_stored_charge
+signal on_player_finished
 
 ## gameplay to hud signals
 signal on_get_lap_count

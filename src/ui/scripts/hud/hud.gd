@@ -39,5 +39,3 @@ func _race_over() -> void:
 	
 	await get_tree().create_timer(1).timeout
 	instantiated_results_screen.show_results_screen()
-	## RESULTS SCREEN GOES HERE
-	
