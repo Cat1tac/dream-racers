@@ -103,7 +103,7 @@ func _process(delta: float) -> void:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 		## use playerId to set score individually
-		GameManager.player_list[parent.playerId].score = calculate_score()
+		GameManager.player_list[parent.playerId].score = _calculate_score()
 	#print("LalLogic: " + str(self.global_rotation_degrees))
 
 ##Puts key checkpoints and respawn checkpoints into their own arrays
@@ -156,7 +156,7 @@ func get_next_checkpoint_index() -> int:
 		return 0
 
 ## laps * amount of checkpoints + current checkpoint + current progress
-func calculate_score() -> float:
+func _calculate_score() -> float:
 	return self.laps_done * key_checkpoints.size() + get_current_checkpoint_index() + get_progress_to_next_key_checkpoint(self.player_controller)
 
 func set_start_line_position(position: Vector3) -> void:

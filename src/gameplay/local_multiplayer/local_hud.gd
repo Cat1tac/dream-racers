@@ -5,6 +5,9 @@ class_name Local_Player_HUD extends CanvasLayer
 @onready var time_elapsed: Label = %Time
 @export var speedometer : Speedometer
 @onready var lap_count_h_box: HBoxContainer = $MarginContainer/LapCountHBox
+@export var number_textures : Array[CompressedTexture2D]
+@onready var place_number: TextureRect = %PlaceNumber
+
 var id : int
 
 # tween properties
@@ -18,6 +21,7 @@ func _ready() -> void:
 	Events.on_get_total_laps.connect(set_lap_count)
 	Events.on_get_time.connect(_update_timer)
 	Events.on_player_finished.connect(_update_final_time)
+	Events.on_placement_update.connect(_update_place_number)
 
 func set_ids(player_id : int) -> void:
 	id = player_id
@@ -39,6 +43,11 @@ func _update_lap_count(num : int, player_id) -> void:
 	
 	_update_lap_tween()
 	lap_count_current.text = str(num + 1)
+
+func _update_place_number(player_id : int, placement_index : int) -> void:
+	if player_id != id:
+		return
+	place_number.texture = number_textures[placement_index + 1]
 
 func _update_final_time() -> void:
 	var time = GameManager.player_list[id].completion_time

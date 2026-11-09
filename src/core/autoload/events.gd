@@ -12,6 +12,7 @@ signal on_get_lap_count
 signal on_get_total_laps
 signal on_get_countdown
 signal on_countdown_finished
+signal on_placement_update
 
 ## Used to signal a player has joined the game
 signal on_player_added

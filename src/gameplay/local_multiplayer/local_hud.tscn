@@ -2,7 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cfrould2egvdi" path="res://src/gameplay/local_multiplayer/local_hud.gd" id="1_4x5ba"]
 [ext_resource type="PackedScene" uid="uid://cebpjaeco7bpy" path="res://src/ui/components/speedometer.tscn" id="1_y85xy"]
-[ext_resource type="Texture2D" uid="uid://bt413pscm0exh" path="res://assets/textures/vfx/misc/star.png" id="3_qucup"]
+[ext_resource type="Texture2D" uid="uid://cw4ct6it7blr" path="res://assets/ui/numbers/DreamRacers #0.PNG" id="2_ckiw7"]
+[ext_resource type="Texture2D" uid="uid://crtmbvrlpc18q" path="res://assets/ui/numbers/DreamRacers #2.PNG" id="3_5ps7d"]
+[ext_resource type="Texture2D" uid="uid://bwsc0mn580d0d" path="res://assets/ui/numbers/DreamRacers #1.PNG" id="3_qucup"]
+[ext_resource type="Texture2D" uid="uid://dbuxk52qodf07" path="res://assets/ui/numbers/DreamRacers #3.PNG" id="4_8s4bo"]
+[ext_resource type="Texture2D" uid="uid://b3328rni0reh5" path="res://assets/ui/numbers/DreamRacers #4.PNG" id="5_p8qon"]
+[ext_resource type="Texture2D" uid="uid://681dlj6uqobh" path="res://assets/ui/numbers/DreamRacers #5.PNG" id="7_iafy5"]
+[ext_resource type="Texture2D" uid="uid://33ejv6sxwkoq" path="res://assets/ui/numbers/DreamRacers #6.PNG" id="8_y27f1"]
+[ext_resource type="Texture2D" uid="uid://dkulgrefxkeio" path="res://assets/ui/numbers/DreamRacers #7.PNG" id="9_gk5ey"]
+[ext_resource type="Texture2D" uid="uid://i6gjovddrkai" path="res://assets/ui/numbers/DreamRacers #8.PNG" id="10_0fjxb"]
+[ext_resource type="Texture2D" uid="uid://l3fffulk5fga" path="res://assets/ui/numbers/DreamRacers #9.PNG" id="11_w52mv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4x5ba"]
 font_size = 60
@@ -16,6 +25,7 @@ shadow_offset = Vector2(3.085, 4.545)
 [node name="local_hud" type="CanvasLayer" unique_id=1524274057 node_paths=PackedStringArray("speedometer")]
 script = ExtResource("1_4x5ba")
 speedometer = NodePath("local_hud_root/VBoxContainer/HBoxContainer/Speedometer")
+number_textures = Array[CompressedTexture2D]([ExtResource("2_ckiw7"), ExtResource("3_qucup"), ExtResource("3_5ps7d"), ExtResource("4_8s4bo"), ExtResource("5_p8qon"), ExtResource("7_iafy5"), ExtResource("8_y27f1"), ExtResource("9_gk5ey"), ExtResource("10_0fjxb"), ExtResource("11_w52mv")])
 
 [node name="local_hud_root" type="Control" parent="." unique_id=446858653]
 unique_name_in_owner = true
@@ -62,22 +72,20 @@ offset_top = -236.0
 offset_right = 363.0
 grow_vertical = 0
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_bottom = 25
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LapPlaceMargin" unique_id=672893442]
 layout_mode = 2
-
-[node name="PlaceLabel" type="Label" parent="LapPlaceMargin/HBoxContainer" unique_id=316979122]
-layout_mode = 2
-theme_override_font_sizes/font_size = 100
-text = "1st"
+offset_transform_enabled = true
+offset_transform_rotation = -0.17453292
 
 [node name="PlaceNumber" type="TextureRect" parent="LapPlaceMargin/HBoxContainer" unique_id=2033637410]
-visible = false
-custom_minimum_size = Vector2(200, 10)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150.46, 10)
 layout_mode = 2
 texture = ExtResource("3_qucup")
 expand_mode = 1
+stretch_mode = 4
 
 [node name="LapCountMargin" type="MarginContainer" parent="LapPlaceMargin/HBoxContainer" unique_id=1993731456]
 layout_mode = 2
