@@ -684,22 +684,22 @@ willCountdown = true
 
 [node name="battleship" parent="." unique_id=1332841673 instance=ExtResource("2_yg7te")]
 
-[node name="Ship_Body" parent="battleship" index="0" unique_id=1252309643]
+[node name="Ship_Body" parent="battleship" index="0" unique_id=333392513]
 surface_material_override/0 = SubResource("StandardMaterial3D_u5ms0")
 
-[node name="Track" parent="battleship" index="1" unique_id=1690599938]
+[node name="Track" parent="battleship" index="1" unique_id=1371903982]
 layers = 5
 
-[node name="Castle_col" parent="battleship" index="3" unique_id=1735697446]
+[node name="Castle_col" parent="battleship" index="3" unique_id=1499380609]
 collision_layer = 4
 
-[node name="Ship_Body_col" parent="battleship" index="4" unique_id=1899119030]
+[node name="Ship_Body_col" parent="battleship" index="4" unique_id=260665780]
 collision_layer = 4
 
-[node name="Ship_inside_walls_col" parent="battleship" index="6" unique_id=1084379335]
+[node name="Ship_inside_walls_col" parent="battleship" index="6" unique_id=83658644]
 collision_layer = 4
 
-[node name="Track_col" parent="battleship" index="7" unique_id=336720248]
+[node name="Track_col" parent="battleship" index="7" unique_id=476340787]
 collision_layer = 2
 
 [node name="Spawns" type="Node3D" parent="." unique_id=114101200]
@@ -1001,7 +1001,7 @@ always_on = true
 [node name="CollisionShape3D" parent="Obstacles/Burners/Burner3/FlameBox" parent_id_path=PackedInt32Array(977023878, 1759877824) index="0" unique_id=1340658995]
 transform = Transform3D(2, -5.9604645e-08, 0, 5.9604645e-08, 2, 0, 0, -3.7252903e-09, 2, -0.1335144, 0.28173828, -10.507408)
 
-[node name="Flame" parent="Obstacles/Burners/Burner3/burner" parent_id_path=PackedInt32Array(977023878, 910642151) index="1" unique_id=656567234]
+[node name="Flame" parent="Obstacles/Burners/Burner3/burner" parent_id_path=PackedInt32Array(977023878, 910642151) index="1" unique_id=90975128]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner3" index="3" unique_id=790235135]
@@ -1014,7 +1014,7 @@ spot_angle = 54.88
 transform = Transform3D(0.7585542, 0.64872897, 0.06121351, 0.030709842, 0.058245502, -0.9978301, -0.6508866, 0.7587876, 0.024259984, -269.15305, 19.890285, -369.68292)
 always_on = true
 
-[node name="Flame" parent="Obstacles/Burners/Burner4/burner" parent_id_path=PackedInt32Array(1967368030, 910642151) index="1" unique_id=656567234]
+[node name="Flame" parent="Obstacles/Burners/Burner4/burner" parent_id_path=PackedInt32Array(1967368030, 910642151) index="1" unique_id=90975128]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner4" index="3" unique_id=790235135]
@@ -1027,7 +1027,7 @@ spot_angle = 54.88
 transform = Transform3D(0.7585014, 0.6513228, -0.021332394, -0.0319879, 0.004516228, -0.99947834, -0.6508866, 0.7587876, 0.024259984, -316.02948, 30.919582, -282.50034)
 always_on = true
 
-[node name="Flame" parent="Obstacles/Burners/Burner5/burner" parent_id_path=PackedInt32Array(532866762, 910642151) index="1" unique_id=656567234]
+[node name="Flame" parent="Obstacles/Burners/Burner5/burner" parent_id_path=PackedInt32Array(532866762, 910642151) index="1" unique_id=90975128]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner5" index="3" unique_id=790235135]
@@ -1043,18 +1043,14 @@ spot_angle = 54.88
 [node name="Cloud" parent="Objects/Clouds" unique_id=2108663503 instance=ExtResource("10_yg7te")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.74774, 3.0750809, -285.56082)
 bounce_height = 10.0
-super_bounce = 0.0
 charge_need_for_super_bounce = -1.0
-trick_forward_boost = 1.5
-normal_forward_boost = 1.2
+trick_forward_speed = 40.0
+normal_forward_speed = 35.0
 
 [node name="Cloud2" parent="Objects/Clouds" unique_id=1080642848 instance=ExtResource("10_yg7te")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200.04622, -1.5208378, -283.96555)
 bounce_height = 10.0
-super_bounce = 0.0
 charge_need_for_super_bounce = -1.0
-trick_forward_boost = 1.5
-normal_forward_boost = 1.3
 
 [node name="Mini Energy" type="Node3D" parent="Objects" unique_id=2023284118]
 

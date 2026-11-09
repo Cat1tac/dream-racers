@@ -1,23 +1,26 @@
 extends Node3D
 
 @export var bounce_height : float = 15
-@export var super_bounce : float = 20
 @export var charge_need_for_super_bounce : float = 4
 ## Used instead of normal forward boost
-@export var trick_forward_boost : float = 0.7
-@export var normal_forward_boost : float = 0.4
-@export var super_bounce_slowdown : float = 0.5
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var trick_forward_speed : float = 50.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var normal_forward_speed : float = 40.0
+@export var shortcut_endpoint : Marker3D
+## Controls how fast kart will be boosted up on super jump. Should be in frames
+@export_custom(PROPERTY_HINT_NONE, "suffix:frames") var vertical_time : float = 120
+
+## Controls how fast kart will be boosted forward on super jump. Should be in frames
+@export_custom(PROPERTY_HINT_NONE, "suffix:frames") var forward_time : float = 110
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
 		var hurt_box : SpinHurtBox = area
 		hurt_box.call_vertical_bounce(bounce_height)
-		hurt_box.call_slowdown()
 		if hurt_box.kart_sphere.tricked: # if tricked beforehand, recieve an extra boost of speed
-			hurt_box.call_slowdown(-trick_forward_boost) #if negative will turn slowdown into boost
+			hurt_box.kart_sphere.apply_target_forward_speed(trick_forward_speed) #if negative will turn slowdown into boost
 			hurt_box.kart_sphere.execute_boost(1, false)
 		else:
-			hurt_box.call_slowdown(-normal_forward_boost)
+			hurt_box.kart_sphere.apply_target_forward_speed(normal_forward_speed)
 		hurt_box.reset_trick()
 		
 
@@ -27,6 +30,6 @@ func _on_area_3d_area_exited(area: Area3D) -> void:
 	if area is SpinHurtBox:
 		var hurt_box : SpinHurtBox = area
 		if hurt_box.kart_sphere.current_boost_level >= charge_need_for_super_bounce and charge_need_for_super_bounce > -1 and hurt_box.kart_sphere.tricked:
-			hurt_box.call_vertical_bounce(super_bounce)
-			hurt_box.call_slowdown(super_bounce_slowdown)
+			hurt_box.kart_sphere.apply_point_vertical_force(shortcut_endpoint.global_position, vertical_time, get_physics_process_delta_time())
+			hurt_box.kart_sphere.apply_point_forward_force(shortcut_endpoint.global_position, forward_time, get_physics_process_delta_time())
 		

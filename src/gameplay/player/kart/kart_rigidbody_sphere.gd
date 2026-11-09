@@ -709,6 +709,41 @@ func apply_vertical_force(magnitude : float) -> void:
 	print("Touched")
 	apply_central_impulse(force_vector)
 	
+func apply_target_forward_speed(target_speed : float) -> void:
+	var forward := -center.global_basis.z
+	var current_forward_speed := forward.dot(linear_velocity)
+	
+	# Calculates how much more speed is need to reach the point based on current speed
+	var needed_speed : float = target_speed - current_forward_speed
+	var force_vector : Vector3 = forward * needed_speed * mass
+	apply_central_impulse(force_vector)
+	
+##Calculates how much force should be applied to kart in forward direction to end up at a certain point in ~60 frames
+func apply_point_forward_force(endpoint : Vector3, time : float, delta : float) -> void:
+	var distance_to_point : float = global_position.distance_to(endpoint)
+	var target_speed : float = distance_to_point / (time * delta)
+	
+	var forward := -center.global_basis.z
+	var current_forward_speed := forward.dot(linear_velocity)
+	
+	# Calculates how much more speed is need to reach the point based on current speed
+	var needed_speed : float = target_speed - current_forward_speed
+	var force_vector : Vector3 = forward * needed_speed * mass
+	apply_central_impulse(force_vector)
+	
+##Calculates how much force should be applied to kart in the up direction to end up at a certain point in ~60 frames
+func apply_point_vertical_force(endpoint : Vector3, time : float,  delta : float) -> void:
+	var distance_to_point : float = global_position.distance_to(endpoint)
+	var target_speed : float = distance_to_point / (time * delta)
+	
+	var up := center.global_basis.y
+	var current_up_speed := up.dot(linear_velocity)
+	
+	# Calculates how much more speed is need to reach the point based on current speed
+	var needed_speed : float = target_speed - current_up_speed
+	var force_vector : Vector3 = up * needed_speed * mass
+	apply_central_impulse(force_vector)
+	
 func apply_clash_force(collision_point : Vector3, pushback : float = 0) ->  void:
 	var forward := -center.global_basis.z
 	var fwd_vel := forward.dot(linear_velocity)
@@ -726,14 +761,11 @@ func _apply_forward_force(_delta : float) -> void:
 	var up := get_floor_normal().normalized() # gets normal of new up
 	forward = (forward - up * forward.dot(up)).normalized()
 	var vel := forward.dot(linear_velocity)
-	var force_vector : Vector3
-	
 	
 	apply_central_force(60 * _calculate_force_vector(forward, vel) * _delta)
 	#print(force_vector)
 	#DebugDraw.draw_line(global_position, global_position + force_vector, Color(0.0, 0.0, 255, 1.0))
 	
-
 func _apply_air_resistance(_delta: float) -> void:
 	var forward := -center.global_basis.z
 	var vel := forward.dot(linear_velocity)

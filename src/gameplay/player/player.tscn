@@ -52,7 +52,7 @@ friction = 0.0
 
 [sub_resource type="Curve" id="Curve_54vdw"]
 _limits = [0.0, 1.0, 0.0, 4.0043774]
-_data = [Vector2(0, 1), 0.0, -0.23934199, 0, 0, Vector2(4.0043774, 0), -0.24308164, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, -0.45329928, 0, 0, Vector2(4.0043774, 0.1980198), -0.26768515, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nor3r"]
