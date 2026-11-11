@@ -5,8 +5,10 @@ class_name Model extends Node3D
 @export var boost_markers : Array[Marker3D]
 @export var stats : Stats
 
-# Controls animatios for player
+# Controls animation for player
 @export var animation_tree : AnimationTree
+
+@export var skeleton : Skeleton3D
 
 enum STATE {
 	IN_RACE,
@@ -33,7 +35,8 @@ func _ready() -> void:
 	kart_scale = scale
 	kart_model_scale = kart.scale
 	
-
+	_duplicate_shader()
+	
 func _process(_delta: float) -> void:
 	match current_state:
 		STATE.IN_CHARACTER_SELECT: 
@@ -46,6 +49,12 @@ func _reset_tween() -> void:
 	if tween:
 		tween.kill()
 	tween = create_tween()
+
+func _duplicate_shader() -> void:
+	for child : MeshInstance3D in skeleton.get_children():
+		for i in child.get_surface_override_material_count():
+			var duplicated_material = child.get_surface_override_material(i).duplicate_deep()
+			child.set_surface_override_material(i, duplicated_material)
 
 #region In Character Select
 func _handle_in_character_select_logic() -> void:

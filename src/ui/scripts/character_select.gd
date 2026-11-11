@@ -6,9 +6,6 @@ extends UIState
 @onready var back_button: NavButton = $BackButtonMargin/BackButton
 @onready var sfx: Node = %SFX
 
-
-#TODO add way for player to leave game while on main menu (- on controller, spin key on keyboard)
-
 func _ready() -> void:
 	Events.on_player_added.connect(_show_character)
 	self.visibility_changed.connect(_show_back_button)
@@ -17,10 +14,17 @@ func _ready() -> void:
 ## Show the character on initial visibility
 func _on_visibility_changed() -> void:
 	_character_view_visibility_toggle()
+	print("visibilty changed")
+		
 	for player : PlayerDefinition in GameManager.player_list:
-
+		character_buttons[player.character_select_position].unselect(player.id)
 		character_buttons[player.character_select_position].unhide_indicator(player.id)
 		_show_character(player)
+
+func _on_hidden() -> void:
+	for player : PlayerDefinition in GameManager.player_list:
+		character_buttons[player.character_select_position].unselect(player.id)
+		character_buttons[player.character_select_position].hide_indicator(player.id)
 
 func _show_back_button() -> void:
 	back_button.enter()
@@ -45,6 +49,25 @@ func _input(event: InputEvent) -> void:
 		or event.is_action(player.controls.actions["backwards"])
 		or event.is_action(player.controls.actions["start"])):
 			_player_behavior_on_character_select(player)
+		
+		if Input.is_action_just_pressed(player.controls.actions["leave"]):
+			if player.character_select_pressed:
+				return
+			for allplayers in GameManager.player_list:
+				character_buttons[allplayers.character_select_position].hide_indicator(allplayers.id)
+				character_views[allplayers.id].remove_model_in_viewport()
+				if character_views[allplayers.id].model_instance: 
+					allplayers.character_select_pressed = false
+					character_views[allplayers.id].model_instance.selected = false # Changes characters animation
+					character_buttons[allplayers.character_select_position].unselect(allplayers.id) # Puts indicator into unselected state
+					GameManager.remove_character(allplayers)
+			GameManager.validate_character_select()
+			GameManager.remove_player(player)
+			_character_view_visibility_toggle()
+			for allplayer in GameManager.player_list:
+				allplayer.character_select_pressed = false
+				character_buttons[allplayer.character_select_position].unhide_indicator(allplayer.id)
+				_show_character(allplayer)
 	
 ## Moving, select, and deselect
 func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
@@ -90,6 +113,15 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 	# BUG left or right and re-entering race will cause an error because the other characters don't have a model
 	elif Input.is_action_just_pressed(player.controls.actions["backwards"]) and not player.character_select_pressed:
 		sfx.play_ui_back()
+		for allplayers in GameManager.player_list:
+			character_buttons[allplayers.character_select_position].hide_indicator(allplayers.id)
+			if character_views[allplayers.id].model_instance: 
+				allplayers.character_select_pressed = false
+				character_views[allplayers.id].model_instance.selected = false # Changes characters animation
+				character_buttons[allplayers.character_select_position].unselect(allplayers.id) # Puts indicator into unselected state
+				allplayers.selected_character = GameManager.SelectedCharacter.NONE
+				character_views[allplayers.id].remove_model_in_viewport()
+
 		back_button._pressed()
 		ui_root._char_back_button_pressed()
 	
@@ -113,6 +145,7 @@ func _show_character(player : PlayerDefinition, player_added : bool = false) -> 
 	if !visible:
 		return
 	if player_added:
+		character_buttons[player.character_select_position].unselect(player.id)
 		character_buttons[player.character_select_position].unhide_indicator(player.id)
 		_character_view_visibility_toggle()
 		GameManager.validate_character_select()

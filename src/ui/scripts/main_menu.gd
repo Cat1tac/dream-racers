@@ -41,6 +41,9 @@ func _input(event: InputEvent) -> void:
 				exit_button.pressed.emit()
 				get_tree().quit()
 		
+		if Input.is_action_just_pressed(player.controls.actions["leave"]):
+			GameManager.remove_player(player)
+		
 func _toggle_main_menu_input(how_to_play_open : bool) -> void:
 	accept_input = how_to_play_open
 	race_button.disabled = !how_to_play_open

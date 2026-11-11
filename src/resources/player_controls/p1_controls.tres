@@ -10,7 +10,7 @@ actions = Dictionary[String, String]({
 "down": "keys_down",
 "drift": "keys_drift",
 "forward": "keys_drift",
-"leave": "",
+"leave": "keys_leave",
 "left": "keys_left",
 "right": "keys_right",
 "spin": "keys_spin",

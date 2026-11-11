@@ -2858,6 +2858,7 @@ bus = &"Music"
 unique_name_in_owner = true
 
 [connection signal="pressed" from="UILayer/MainMenu/VBoxContainer/ButtonMargin/ButtonVBox/RaceButton" to="." method="_race_button_pressed"]
+[connection signal="hidden" from="UILayer/CharacterSelect" to="UILayer/CharacterSelect" method="_on_hidden"]
 [connection signal="visibility_changed" from="UILayer/CharacterSelect" to="UILayer/CharacterSelect" method="_on_visibility_changed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/BackButtonMargin/BackButton" to="." method="_char_back_button_pressed"]
 [connection signal="pressed" from="UILayer/CharacterSelect/NextButtonMargin/NextButton" to="." method="_character_next_button_pressed"]

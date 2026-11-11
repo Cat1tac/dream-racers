@@ -27,9 +27,9 @@ var player_list: Array[PlayerDefinition] = []
 var device_id_list : Array[int]
 
 
-var is_loading = false
-var is_in_match = false
-var game_paused = false
+var is_loading := false
+var is_in_match := false
+var game_paused := false
 
 #region enums
 enum SelectedCharacter {
@@ -129,9 +129,20 @@ func remove_all_cpus() -> void:
 		
 	print(player_list)
 
-func remove_player() -> void:
+func remove_player(removed_player : PlayerDefinition) -> void:
+	player_list.erase(removed_player)
+	device_id_list.erase(removed_player.controls.device_id)
 	players_connected -= 1
-	player_list.pop_back()
+	if removed_player.controls.device_id == 16:
+		keyboardControls[removed_player.controls] = 0
+	else:
+		removed_player.controls.remove_controls()
+	for player: PlayerDefinition in player_list:
+		player.selected_character = SelectedCharacter.NONE
+		if player.id > removed_player.id:
+			player.id -= 1
+		
+	
 
 ## sets character num and character model scene in player scene
 func set_character(character: SelectedCharacter, player : PlayerDefinition) -> void:

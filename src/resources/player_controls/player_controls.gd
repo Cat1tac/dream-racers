@@ -29,3 +29,8 @@ func duplicate_controls(id : int) -> void:
 				InputMap.action_add_event(new_action, duplicate_event) # adds event to the action
 	
 			actions[input.get_slice("_", 1)] = new_action # stores action strings in the action dictionary
+
+func remove_controls() -> void:
+	for input in InputMap.get_actions():
+		if input.match(str(device_id) + "_controller*"):
+			InputMap.erase_action(input)

@@ -35,7 +35,6 @@ func _ready() -> void:
 #region forward transitions
 func _race_button_pressed() -> void:
 	main_menu.transition_to_state(character_select)
-	
 	is_transitioning = true
 	await main_menu.transition_finished
 	is_transitioning = false
