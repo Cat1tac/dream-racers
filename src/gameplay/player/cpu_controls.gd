@@ -25,8 +25,8 @@ func _ready() -> void:
 		Events.on_countdown_finished.connect(play)
 
 # Decision Making (Also sometimes called 'Artificial Intelligence' or whatever)
-func _process(delta: float) -> void:
-	if kart_sphere.isRacing and !player.playerControlled:
+func _process(_delta: float) -> void:
+	if kart_sphere.currentState == kart_sphere.STATES.RACING and !player.playerControlled:
 		
 		if !kart_sphere.on_ground():
 			cancel_turn()
@@ -53,7 +53,7 @@ func _process(delta: float) -> void:
 				turn_left()
 
 # Sets the CPU in motion on RaceStart
-func play() -> void:
+func play(_delay : int) -> void:
 	accelerate()
 
 #region Movement Functions

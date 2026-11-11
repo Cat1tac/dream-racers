@@ -563,9 +563,10 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -151
 
 [node name="Clouds" type="Node" parent="Objects" unique_id=1079521732]
 
-[node name="Cloud" parent="Objects/Clouds" unique_id=2108663503 instance=ExtResource("9_ehbii")]
+[node name="Cloud" parent="Objects/Clouds" unique_id=2108663503 node_paths=PackedStringArray("shortcut_endpoint") instance=ExtResource("9_ehbii")]
 transform = Transform3D(0.9997265, 0.021335512, 0.009580045, -0.021219827, 0.9997026, -0.0120192375, -0.009833632, 0.011812664, 0.99988186, 108.97641, 37.015034, -32.802414)
 bounce_height = 18.0
+shortcut_endpoint = NodePath("../Cloud1Marker")
 
 [node name="Cloud2" parent="Objects/Clouds" unique_id=545699189 instance=ExtResource("9_ehbii")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.732933, 24.839497, -127.71298)

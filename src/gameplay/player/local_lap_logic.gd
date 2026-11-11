@@ -25,7 +25,7 @@ var playerControlled: bool = false
 
 ## Adds 1 to the laps_done variable if player crossed every checkpoint
 func complete_lap() -> void:
-	if len(key_checkpoints_passed) == len(key_checkpoints) and player_controller.isRacing:
+	if len(key_checkpoints_passed) == len(key_checkpoints) and player_controller.currentState == player_controller.STATES.RACING:
 		key_checkpoints_passed.clear()
 		respawn_checkpoints_passed.clear()
 		last_respawn_passed = null
@@ -42,7 +42,7 @@ func complete_lap() -> void:
 	if laps_done == parent.current_track.lap_count:
 		Events.players_finished_race.emit()
 		print("LocalLapLogic: Three laps have been completed! This player is out of the race!")
-		player_controller.isRacing = false
+		player_controller.currentState = player_controller.STATES.RACE_END
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
 ## Adds checkpoint to the key_checkpoints_passed array
@@ -95,7 +95,7 @@ func _ready() -> void:
 
 # Manages Timer
 func _process(delta: float) -> void:
-	if player_controller.isRacing:
+	if player_controller.currentState == player_controller.STATES.RACING:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 	#print("LalLogic: " + str(self.global_rotation_degrees))
@@ -109,8 +109,10 @@ func _get_all_checkpoints(checkpoint_array: Array[Checkpoint]) -> void:
 	print("LocalLapLogic: kart has received checkpoint info")
 
 ##Sets isRacing to true
-func _start_player_race() -> void:
-	player_controller.isRacing = true
+func _start_player_race(_delay : int) -> void:
+	player_controller.currentState = player_controller.STATES.RACING
+	player_controller.start_boost_window_increament = player_controller.start_boost_increase_window
+	player_controller.pressed_this_window = false
 
 func _initial_respawn(start_line : Marker3D) -> void:
 	respawn_location = start_line.global_position

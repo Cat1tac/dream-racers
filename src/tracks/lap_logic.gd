@@ -23,7 +23,6 @@ func _on_start_line_area_entered(area: Area3D) -> void:
 		local_lap_logic.respawn_rotation = respawn_point.global_rotation
 
 func _ready() -> void:
-	
 	if track.willCountdown:
 		await get_tree().create_timer(2).timeout
 		track.countdown(3)

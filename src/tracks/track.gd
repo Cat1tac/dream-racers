@@ -11,6 +11,7 @@ var checkpoint_positions: Array #is this being used?
 var checkpoint_rotations: Array
 
 var num_players_finished : int
+var delay : int = 10 # frames
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,10 +23,10 @@ func _ready() -> void:
 
 func countdown(time: float) -> void:
 	for n in range(time, 0, -1):
-		Events.on_get_countdown.emit(n)
+		Events.on_get_countdown.emit(n, delay)
 		await get_tree().create_timer(1).timeout
 	
-	Events.on_countdown_finished.emit()
+	Events.on_countdown_finished.emit(delay)
 
 func race_over() -> void:
 	num_players_finished += 1

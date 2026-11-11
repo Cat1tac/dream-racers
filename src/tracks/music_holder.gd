@@ -6,7 +6,8 @@ extends Node
 func _ready() -> void:
 	Events.on_countdown_finished.connect(_play_intro)
 
-func _play_intro() -> void:
+func _play_intro(delay : int) -> void:
+	await get_tree().create_timer((delay * 60 * get_process_delta_time()) / 60).timeout
 	if intro.stream:
 		intro.play()
 	else:

@@ -18,15 +18,17 @@ func _ready() -> void:
 	Events.on_race_over.connect(_race_over)
 
 ## NOTE DEBUG
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_key_pressed(KEY_1):
 		Events.on_race_over.emit()
 
-func _update_countdown_text(num : int) -> void:
+func _update_countdown_text(num : int, delay : int) -> void:
+	await get_tree().create_timer((delay * 60 * get_process_delta_time()) / 60).timeout
 	countdown.text = str(num)
 	sfx.play_countdown_tick()
 	
-func _countdown_finished() -> void:
+func _countdown_finished(delay : int) -> void:
+	await get_tree().create_timer((delay * 60 * get_process_delta_time()) / 60).timeout
 	countdown.text = "GO"
 	sfx.play_countdown_go()
 	await get_tree().create_timer(0.5).timeout

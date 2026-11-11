@@ -189,9 +189,38 @@ enum BOOST_LEVEL {
 	THREE,
 	FOUR
 }	
-
 var current_boost_level : BOOST_LEVEL
+
+#region racing states
+enum STATES {
+	RACE_START, # Used for start boost 
+	RACING, # Used for normal racing
+	RACE_END, # Used for when race is over
+	HIT, # Used for when hit by obstacle
+}
+var currentState : STATES = STATES.RACE_START
 #endregion
+
+#region start boost
+enum COUNTDOWN_STATES {
+	OPEN,
+	LATE,
+	LOCKED
+}
+var currentCountdownState : COUNTDOWN_STATES = COUNTDOWN_STATES.LOCKED
+var successful_start_boost_timings : int
+var countdown_changed : bool
+var previous_countdown_num : int
+var start_boost_increase_window : float = 20 #frames
+var start_boost_window_increament : float
+var late_window : float = 10 #frames
+var late_window_increament : float
+var locked_out : bool
+var pressed_this_window : bool
+#endregion
+#endregion
+
+
 
 #region raycast funcs
 func on_ground() -> bool:
@@ -220,7 +249,63 @@ func get_wall_normal() -> Vector3:
 	return Vector3.ZERO
 #endregion
 
-func _handle_input() -> void:
+#region kart input control
+func _handle_states(delta : float) -> void:
+	match currentState:
+		STATES.RACE_START:
+			if player.playerControlled:
+				_handle_start_boost(delta)
+			input_acceleration = 0.0
+			input_steering = 0.0
+			input_drift = false
+			drift_just_released = true
+		STATES.RACING:
+			if player.playerControlled:
+				_handle_input(delta)
+			elif !player.playerControlled:
+				_simulate_input(sim_turn_vector, sim_move_vector)
+		STATES.RACE_END:
+			input_acceleration = 0.0
+			input_steering = 0.0
+			input_drift = false
+			drift_just_released = true
+		STATES.HIT:
+			pass
+
+func _handle_start_boost(delta : float) -> void:
+	match currentCountdownState:
+		COUNTDOWN_STATES.OPEN: # Player can increase start boost if they weren't locked out
+			if start_boost_window_increament > 0:
+				start_boost_window_increament -= (60 * delta)
+			else:
+				late_window_increament = late_window
+				currentCountdownState = COUNTDOWN_STATES.LATE
+				
+			if Input.is_action_just_pressed(controls.actions["forward"]) or (controls.device_id == 16 and Input.is_action_just_pressed(controls.actions["up"])):
+				if !locked_out:
+					if !pressed_this_window:
+						pressed_this_window = true
+						successful_start_boost_timings += 1
+						print(successful_start_boost_timings)
+						
+		COUNTDOWN_STATES.LATE: # Leway given to player if they were too late in getting a start boost
+			if late_window_increament > 0:
+				late_window_increament -= (60 * delta)
+			else: 
+				currentCountdownState = COUNTDOWN_STATES.LOCKED
+			pressed_this_window = false
+			locked_out = false
+				
+		COUNTDOWN_STATES.LOCKED: # Player will be locked out of the next start boost opportunity if pressed during this state
+			if Input.is_action_just_pressed(controls.actions["forward"]) or (controls.device_id == 16 and Input.is_action_just_pressed(controls.actions["up"])):
+				locked_out = true
+		
+func _update_internal_countdown(_num : int, frames : int) -> void:
+	start_boost_increase_window = frames * 2
+	currentCountdownState = COUNTDOWN_STATES.OPEN
+	start_boost_window_increament = start_boost_increase_window
+
+func _handle_input(delta) -> void:
 	var move_vector : Vector2
 	if controls.device_id == 16:
 		move_vector = Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["down"],controls.actions["up"])
@@ -228,7 +313,15 @@ func _handle_input() -> void:
 		move_vector = Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["backwards"],controls.actions["forward"])
 	input_acceleration = move_vector.y
 	input_steering = move_vector.x if abs(move_vector.x) > 0.05 else 0
-
+	
+	if start_boost_window_increament > 0:
+		start_boost_window_increament -= (60 * delta)
+		if Input.is_action_just_pressed(controls.actions["forward"]) or (controls.device_id == 16 and Input.is_action_just_pressed(controls.actions["up"])):
+			if !locked_out:
+				if !pressed_this_window:
+					execute_boost(successful_start_boost_timings)
+					pressed_this_window = true
+			
 	if Input.is_action_just_pressed(controls.actions["drift"]) && linear_velocity.length() > 0 && input_acceleration >= 0:
 		input_drift = true
 		drift_direction = 0
@@ -256,8 +349,7 @@ func _handle_input() -> void:
 				#apply_slowdown_force(0.25)
 				input_spin = true
 				audio_player.play_audio("SPIN")
-			
-
+	
 ## Handle's evil twin sibling (Simulates real inputs for CPU racers)
 func _simulate_input(horizontal: float, vertical: float) -> void:
 	var move_vector : Vector2
@@ -285,9 +377,10 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 				input_spin = true
 				audio_player.play_audio("SPIN")
 				sim_spinInput = false
+	
+#endregion
 
-
-#region Drift / Boost / Store Charge
+#region Drift / Boost 
 func _drift_boost_control(delta : float) -> void:
 	if drift_just_released: #Controls Drift Boost release and snaking
 		
@@ -582,6 +675,7 @@ func set_up_kart_stats() -> void:
 #region imbedded functions
 func _ready() -> void:
 	await player.ready
+	Events.on_get_countdown.connect(_update_internal_countdown)
 	controls = player.playerControls
 	kart_model = player.kart_model_instance
 	kartStats = player.kart_stats
@@ -627,19 +721,19 @@ func _process(delta: float) -> void:
 	current_model_up = current_model_up.lerp(new_up, 1 - pow(t, 2 * delta)) #Smoothly transition to new up
 	_align_mesh_with_normal(delta, current_model_up)
 	
-	if isRacing and player.playerControlled:
-		_handle_input()
-	elif isRacing and !player.playerControlled:
-		_simulate_input(sim_turn_vector, sim_move_vector)
-	else:
-		input_acceleration = 0.0
-		input_steering = 0.0
-		input_drift = false
-		drift_just_released = true
+	_handle_states(delta)
+	
+	#if isRacing and player.playerControlled:
+		#_handle_input()
+	#elif isRacing and !player.playerControlled:
+		#_simulate_input(sim_turn_vector, sim_move_vector)
+	#else:
+		#input_acceleration = 0.0
+		#input_steering = 0.0
+		#input_drift = false
+		#drift_just_released = true
 	_drift_boost_control(delta)
-	#_decrement_boost_panel_store_charge_timer(delta)
 	_get_charge_level()
-	#Events.on_get_speed.emit(velocity.length(), drift_timer, player.playerId)
 	
 	
 func _physics_process(delta: float) -> void: 
