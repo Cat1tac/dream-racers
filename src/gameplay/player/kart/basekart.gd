@@ -20,6 +20,7 @@ var tween : Tween
 var num_spins : int = 2
 
 var kart_scale : Vector3
+var kart_model_scale : Vector3
 var _turning_position : float = 0.0 #For turning the character
 @export var tricking : bool #for determinin if character is tricking 
 #endregion
@@ -30,6 +31,8 @@ var selected : bool
 
 func _ready() -> void:
 	kart_scale = scale
+	kart_model_scale = kart.scale
+	
 
 func _process(_delta: float) -> void:
 	match current_state:
@@ -64,6 +67,11 @@ func do_trick_anim() -> void:
 	tricking = true
 	await tween.finished
 	tricking = false
+	
+func do_grow_anim(end_scale : Vector3) -> void:
+	_reset_tween()
+	tween.tween_property(kart, "scale", end_scale, 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(kart, "scale", kart_model_scale, 0.3)
 	
 func set_model_global_rotation(current_rotation : Vector3) -> void:
 	kart.global_rotation = current_rotation

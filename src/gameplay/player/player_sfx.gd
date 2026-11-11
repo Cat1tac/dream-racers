@@ -6,6 +6,8 @@ class_name Player_SFX extends Node3D
 @onready var charging: AudioStreamPlayer3D = $ChargeSFX
 @onready var tricking: AudioStreamPlayer3D = $TrickSFX
 @onready var spinning: AudioStreamPlayer3D = $SpinSFX
+@onready var rev: AudioStreamPlayer3D = $RevSFX
+
 # MISSING DRIFT
 
 var player_top_speed: float
@@ -37,6 +39,8 @@ func play_audio(request: String) -> void:
 			pass
 		"TRICK":
 			tricking.play()
+		"REV":
+			rev.play()
 		_:
 			print("AudioError: Tried to play Audio that isn't defined")
 
@@ -71,5 +75,7 @@ func bend_pitch(request: String, modifier: float) -> void:
 		"CHARGE":
 			modifier = (modifier/20) + 0.8
 			charging.pitch_scale = modifier
+		"REV":
+			rev.volume_db += (modifier - 1) * 10
 		_:
 			print("AudioError: Tried to bend pitch of undefined sound")

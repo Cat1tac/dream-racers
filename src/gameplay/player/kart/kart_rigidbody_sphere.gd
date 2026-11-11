@@ -286,7 +286,14 @@ func _handle_start_boost(delta : float) -> void:
 					if !pressed_this_window:
 						pressed_this_window = true
 						successful_start_boost_timings += 1
-						print(successful_start_boost_timings)
+						if successful_start_boost_timings == 1:
+							kart_model.do_grow_anim(kart_model.kart_model_scale * 1.1)
+						elif successful_start_boost_timings == 2:
+							kart_model.do_grow_anim(kart_model.kart_model_scale * 1.15)
+						elif successful_start_boost_timings == 3:
+							kart_model.do_grow_anim(kart_model.kart_model_scale * 1.2)
+						audio_player.play_audio("REV")
+						audio_player.bend_pitch("REV", successful_start_boost_timings)
 						
 		COUNTDOWN_STATES.LATE: # Leway given to player if they were too late in getting a start boost
 			if late_window_increament > 0:
@@ -305,21 +312,21 @@ func _update_internal_countdown(_num : int, frames : int) -> void:
 	currentCountdownState = COUNTDOWN_STATES.OPEN
 	start_boost_window_increament = start_boost_increase_window
 
-func _handle_input(delta) -> void:
+func _handle_input(delta : float) -> void:
 	var move_vector : Vector2
 	if controls.device_id == 16:
 		move_vector = Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["down"],controls.actions["up"])
 	else:
 		move_vector = Input.get_vector(controls.actions["left"],controls.actions["right"],controls.actions["backwards"],controls.actions["forward"])
 	input_acceleration = move_vector.y
-	input_steering = move_vector.x if abs(move_vector.x) > 0.05 else 0
+	input_steering = move_vector.x if abs(move_vector.x) > 0.05 else 0.0
 	
 	if start_boost_window_increament > 0:
 		start_boost_window_increament -= (60 * delta)
 		if Input.is_action_just_pressed(controls.actions["forward"]) or (controls.device_id == 16 and Input.is_action_just_pressed(controls.actions["up"])):
 			if !locked_out:
 				if !pressed_this_window:
-					execute_boost(successful_start_boost_timings)
+					execute_boost(successful_start_boost_timings, true, false)
 					pressed_this_window = true
 			
 	if Input.is_action_just_pressed(controls.actions["drift"]) && linear_velocity.length() > 0 && input_acceleration >= 0:
@@ -519,7 +526,7 @@ func remove_drift_charge() -> void:
 	boost_panels_drifted_over = 0
 	
 ## Sets boost level to the charge level and then sets the boost
-func execute_boost(charge_lvl : int, remove_drift : bool = true) -> void:
+func execute_boost(charge_lvl : int, remove_drift : bool = true, increase_uses : bool = true) -> void:
 	var boost_lvl_to_use : BOOST_LEVEL
 	for level : BOOST_LEVEL in BOOST_LEVEL.values(): # Sets boost to use to charge lvl
 		if level == charge_lvl:
@@ -533,7 +540,8 @@ func execute_boost(charge_lvl : int, remove_drift : bool = true) -> void:
 			particles.set_particles(current_boost_level - 1)
 		reset_stale_charges_uses()
 	else:
-		boost_level_speed_time[boost_lvl_to_use]["uses"] = min(boost_level_speed_time[boost_lvl_to_use]["uses"] + 1, stale_charge_curve.max_domain)
+		if increase_uses:
+			boost_level_speed_time[boost_lvl_to_use]["uses"] = min(boost_level_speed_time[boost_lvl_to_use]["uses"] + 1, stale_charge_curve.max_domain)
 	
 	#print("Uses of " + str(boost_lvl_to_use) + " :" + str(boost_level_speed_time[boost_lvl_to_use]["uses"]))
 	var speedMultiplier : float = boost_level_speed_time[boost_lvl_to_use]["spd_multiplier"]
