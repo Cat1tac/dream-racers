@@ -45,7 +45,8 @@ func complete_lap() -> void:
 		Events.players_finished_race.emit()
 		print("LocalLapLogic: Three laps have been completed! This player is out of the race!")
 		player_controller.isRacing = false
-		Events.on_player_finished.emit()
+		GameManager.player_list[parent.playerId].score + 100
+		Events.on_player_finished.emit(parent.playerId)
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
 ## Adds checkpoint to the key_checkpoints_passed array

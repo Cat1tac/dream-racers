@@ -12,9 +12,7 @@ var tween: Tween
 # TODO Implement ranking logic to sort the player panel array by lowest time completed
 ## gets all players in the player_list and creates a panel for them
 func _ready() -> void:
-	for player in GameManager.player_list:
-		_create_new_player_panel(player)
-
+	Events.on_final_placement.connect(_create_new_player_panel)
 #region DEBUG
 #func _process(delta: float) -> void:
 	#if Input.is_key_pressed(KEY_2):
@@ -29,19 +27,16 @@ func _ready() -> void:
 		#hide_results_screen()
 #endregion
 
-## creates a player panel with the selected character
-func _create_new_player_panel(player: PlayerDefinition) -> void:
+## creates a player panel with the selected character and sorts into placement_index
+func _create_new_player_panel(player_id: int, placement_index : int) -> void:
 	var player_panel_instance: PlayerPanel = player_panel.instantiate()
 	players_v_box.add_child(player_panel_instance)
-	player_panel_instance.set_character_name(player.selected_character)
-	player_panel_instance.player_id = player.id
+	players_v_box.move_child(player_panel_instance, placement_index)
+	player_panel_instance.set_character_name(GameManager.player_list[player_id].selected_character)
+	player_panel_instance.player_id = player_id
+	player_panel_instance.update_timer()
+	player_panel_instance.set_placement_number(placement_index)
 	player_panel_array.append(player_panel_instance)
-
-
-# TODO needs to connect with a signal that emits every time a player finishes
-func _panel_update_finish_time(player: PlayerDefinition) -> void:
-	pass
-	
 
 #region Tweens
 func show_results_screen() -> void:

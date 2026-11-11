@@ -20,7 +20,7 @@ func _ready() -> void:
 	Events.on_get_lap_count.connect(_update_lap_count)
 	Events.on_get_total_laps.connect(set_lap_count)
 	Events.on_get_time.connect(_update_timer)
-	Events.on_player_finished.connect(_update_final_time)
+	Events.on_player_finished.connect(_finished_hud)
 	Events.on_placement_update.connect(_update_place_number)
 
 func set_ids(player_id : int) -> void:
@@ -49,12 +49,14 @@ func _update_place_number(player_id : int, placement_index : int) -> void:
 		return
 	place_number.texture = number_textures[placement_index + 1]
 
-func _update_final_time() -> void:
-	var time = GameManager.player_list[id].completion_time
-	var minutes : int = int(time) / 60
-	var seconds : int = int (time) % 60
-	time_elapsed.text = "%02d:%02d" % [minutes, seconds]
+## hides all hud elements of a player that has finished the race
+func _finished_hud(player_id : int) -> void:
+	if id != player_id:
+		return
 	
+	for child: Control in get_children():
+		child.hide()
+
 func _update_timer(time : float) -> void:
 	var minutes : int = int(time) / 60
 	var seconds : int = int (time) % 60

@@ -6,10 +6,13 @@ var scores_array: Array[float]
 func _ready() -> void:
 	var number_of_players : int = GameManager.player_list.size()
 
-	#Events.players_finished_race.connect(_sort_by_time)
+	Events.on_race_over.connect(_sort_by_time)
 
 ## for dynamic placement
 func _process(_delta: float) -> void:
+	if not GameManager.is_in_match:
+		return
+	
 	for player in GameManager.player_list:
 		player_scores[player.id] = player.score
 		scores_array.append(player.score)
@@ -24,12 +27,20 @@ func _process(_delta: float) -> void:
 		Events.on_placement_update.emit(player.id, placement_index)
 	scores_array.clear()
 
-#func _sort_by_time() -> void:
-	#for player in GameManager.player_list:
-		#placementArray[player.id] = {player.id : player.completion_time}
-	#placementArray.sort_custom(_time_sort)
-
-func _time_sort(player_a : PlayerDefinition, player_b : PlayerDefinition):
-	if player_a.completion_time > player_b.completion_time:
-		return false
-	return true
+## on race completion, players will be sorted by completion time
+func _sort_by_time() -> void:
+	scores_array.clear()
+	
+	for player in GameManager.player_list:
+		player_scores[player.id] = player.completion_time
+		scores_array.append(player.completion_time)
+	
+	scores_array.sort()
+	
+	for player in GameManager.player_list:
+		var time : float = player_scores[player.id]
+		var placement_index : int = scores_array.find(time)
+		Events.on_final_placement.emit(player.id, placement_index)
+		print("player_id: " + str(player.id) + "\nplacement_index: " + str(placement_index))
+	
+	scores_array.clear()

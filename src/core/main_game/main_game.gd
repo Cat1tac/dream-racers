@@ -176,7 +176,7 @@ func _place_player_at_level_spawn(player : Player) -> void:
 #endregion
 
 
-func _load_hud() -> void: # TODO clean up instantiation code
+func _load_hud() -> void:
 	var hud_scene: PackedScene = ResourceLoader.load(HUD)
 	var hud_instance := hud_scene.instantiate()
 	hud_root.add_child(hud_instance)
