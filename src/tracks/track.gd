@@ -6,7 +6,7 @@ class_name Track extends BaseLevel
 @export var willCountdown: bool = false # set to false to disable race countdown
 
 const MAIN_MENU : String = "uid://dt5xamoe48268"
-var checkpoints: Array[Checkpoint]
+var checkpoints: Array
 var checkpoint_positions: Array #is this being used?
 var checkpoint_rotations: Array
 

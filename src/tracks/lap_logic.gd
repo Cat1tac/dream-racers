@@ -7,10 +7,10 @@ class_name LapLogic extends Node
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
-func get_checkpoints() -> Array[Checkpoint]:
-	var temp_checkpoint_array : Array[Checkpoint]
+func get_checkpoints() -> Array:
+	var temp_checkpoint_array : Array
 	for child : Checkpoint in checkpoints.get_children():
-		temp_checkpoint_array.append(child)
+		temp_checkpoint_array.append(child.box_id)
 	return temp_checkpoint_array
 		
 

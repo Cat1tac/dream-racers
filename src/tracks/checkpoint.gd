@@ -1,23 +1,23 @@
 class_name Checkpoint extends Area3D
 
 @onready var lap_logic: LapLogic = $"../.."
-@onready var res_point: Marker3D = $RespawnPoint
 
 @export var is_key_checkpoint : bool 
-# All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
+@export var is_split_path : bool
+
+var box_id: Array
 
 ## send lap_logic.gd each instance ID
 func _ready() -> void:
-	
+	if is_split_path:
+		box_id = [$Zone, $Zone2]
+		$Zone.is_key_checkpoint = is_key_checkpoint
+		$Zone2.is_key_checkpoint = is_key_checkpoint
+	else:
+		box_id = [$Zone]
+		$Zone.is_key_checkpoint = is_key_checkpoint
 	# sets given rotation to an accurate radian value for the CPU racer
 	# since for some reason the global rotations are 90 degrees off
 	var temp_rotation : float = global_rotation.y + 1.57
 	if temp_rotation > 3.14:
 		temp_rotation = temp_rotation - 6.28
-
-## Communicates instance information when checkpoint is crossed
-func _on_area_entered(area: Area3D) -> void:
-		if area is LocalLapLogic:
-			var local_lap_logic : LocalLapLogic = area
-			local_lap_logic.add_checkpoint(self)
-			local_lap_logic.update_respawn_point(self)
