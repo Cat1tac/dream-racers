@@ -3,6 +3,131 @@
 [ext_resource type="Script" uid="uid://dvqjg8mckctmn" path="res://src/gameplay/player/kart/basekart.gd" id="1_o0kbn"]
 [ext_resource type="Resource" uid="uid://cvguj0xq0vbmt" path="res://src/resources/character_definitions/acceleration_character.tres" id="2_juxou"]
 [ext_resource type="PackedScene" uid="uid://cmw4ypmksqpsy" path="res://src/gameplay/player/kart/basekart.tscn" id="3_a1sv2"]
+[ext_resource type="Texture2D" uid="uid://c3wv2ng0yy8ic" path="res://assets/models/characters/Chambo/Chambo Kart.png" id="4_ycxvh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_istft"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+grow = true
+grow_amount = 0.02
+proximity_fade_enabled = true
+proximity_fade_distance = 1.01
+
+[sub_resource type="Shader" id="Shader_nh4bs"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float emission_multiplier : hint_range(0.0, 100.0, 1);
+uniform vec4 emission_color : source_color; 
+uniform sampler2D texture_emission;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform sampler2D color_gradient;
+uniform sampler2D fresnel_gradient;
+uniform bool fresnel_on;
+uniform float fresnel_amount : hint_range(0.0, 100.0, 0.01);
+
+float fresnel(float amount, vec3 normal, vec3 view){
+	//highlights the pixels that are more perpendicular to camera
+	// amount determines how much of an effect it has
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	float basic_fresnel = fresnel(fresnel_amount, NORMAL, VIEW);
+	
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	if (fresnel_on){
+		ALBEDO += (basic_fresnel * texture(fresnel_gradient, vec2(basic_fresnel, 0.0)).rgb * 1.0);
+	}
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+	
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	
+	vec4 emission_tex = texture(texture_emission, base_uv) * emission_color;
+	EMISSION += emission_tex.rgb * emission_multiplier;
+}
+
+void light(){
+	float dotproduct = clamp(dot(NORMAL, LIGHT), -1.0, 1.0);
+	float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.0, 0.05, 0.95);
+	vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+	DIFFUSE_LIGHT += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_lev7c"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
+colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_a1sv2"]
+gradient = SubResource("Gradient_lev7c")
+
+[sub_resource type="Gradient" id="Gradient_a2b7x"]
+offsets = PackedFloat32Array(0.5534884, 0.572093)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_823gs"]
+gradient = SubResource("Gradient_a2b7x")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m7up3"]
+load_path = "res://.godot/imported/Seraphim Kart Emissive.png-14913c16f0b825031d4ab59bb977283f.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7q742"]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_istft")
+shader = SubResource("Shader_nh4bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("4_ycxvh")
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.10000000149012
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/emission_multiplier = 20.0
+shader_parameter/emission_color = Color(0.52940303, 0.37849927, 0.034281995, 1)
+shader_parameter/texture_emission = SubResource("CompressedTexture2D_m7up3")
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_a1sv2")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture1D_823gs")
+shader_parameter/fresnel_on = false
+shader_parameter/fresnel_amount = 99.9999977648
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pvr84"]
 resource_name = "Fur"
@@ -76,7 +201,7 @@ grow_amount = 0.02
 proximity_fade_enabled = true
 proximity_fade_distance = 1.01
 
-[sub_resource type="Shader" id="Shader_nh4bs"]
+[sub_resource type="Shader" id="Shader_m62te"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
 
 shader_type spatial;
@@ -167,7 +292,7 @@ gradient = SubResource("Gradient_o0kbn")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a1sv2"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_juxou")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_m62te")
 shader_parameter/albedo = Color(0.023529412, 0.5137255, 0.18431373, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -238,7 +363,7 @@ gradient = SubResource("Gradient_7q742")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f280a"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_a2b7x")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_m62te")
 shader_parameter/albedo = Color(1, 0.79607844, 0.79607844, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -294,7 +419,7 @@ blend_shape_mode = 0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rrsdh"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_juxou")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_m62te")
 shader_parameter/albedo = Color(0.023529412, 0.5137255, 0.18431373, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -316,7 +441,7 @@ shader_parameter/fresnel_amount = 99.9999977648
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6olt0"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_a2b7x")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_m62te")
 shader_parameter/albedo = Color(1, 0.79607844, 0.79607844, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -408,7 +533,7 @@ gradient = SubResource("Gradient_v1nvm")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_15tgr"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_aw6tr")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_m62te")
 shader_parameter/albedo = Color(0.84313726, 0.84313726, 0.84313726, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -453,7 +578,7 @@ gradient = SubResource("Gradient_wmhk2")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3h0hq"]
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_t6nbx")
-shader = SubResource("Shader_nh4bs")
+shader = SubResource("Shader_m62te")
 shader_parameter/albedo = Color(0, 0, 0, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
@@ -1953,6 +2078,30 @@ current_state = 1
 unique_name_in_owner = true
 transform = Transform3D(0.43871328, 0, -1.0630287, 0, 1.15, 0, 1.0630287, 0, 0.43871328, -0.43730998, 0.31978998, -2.8973198)
 
+[node name="Seat" parent="kart" index="0" unique_id=640102241]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
+[node name="Base" parent="kart" index="1" unique_id=1519399393]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
+[node name="Front" parent="kart" index="2" unique_id=1677741876]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
+[node name="FrontHover" parent="kart" index="3" unique_id=65182859]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
+[node name="BackHover" parent="kart" index="4" unique_id=1794152839]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
+[node name="Thrusters" parent="kart" index="5" unique_id=1172435321]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
+[node name="Pedals" parent="kart" index="6" unique_id=648161991]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
+[node name="Side Panels" parent="kart" index="7" unique_id=198434373]
+surface_material_override/0 = SubResource("ShaderMaterial_7q742")
+
 [node name="Skeleton3D" parent="kart/Armature_002" parent_id_path=PackedInt32Array(2060035001, 904029681) index="0" unique_id=1334792970]
 bones/1/scale = Vector3(1, 0.99999994, 0.99999994)
 
@@ -1969,7 +2118,7 @@ bones/0/name = "Root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, -3.8941437e-07, -3.8941437e-07, 0, -1, 0, 0.99999976, 0, 0, 0, 0)
 bones/0/enabled = true
-bones/0/position = Vector3(-5.848031e-09, 0.00053329463, 0)
+bones/0/position = Vector3(1.5358777e-08, 0.039440714, 0)
 bones/0/rotation = Quaternion(0.7071068, -1.3767877e-07, -1.3767877e-07, 0.7071068)
 bones/0/scale = Vector3(1, 0.99999976, 1)
 bones/1/name = "leg.L"
@@ -1977,70 +2126,70 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(-1, 3.868258e-07, -2.4100714e-07, -2.4100714e-07, 0, 1, 3.868258e-07, 1, 0, 0.081760146, -5.9604645e-08, -0.16194813)
 bones/1/enabled = true
 bones/1/position = Vector3(0.081760146, -5.9604645e-08, -0.16194813)
-bones/1/rotation = Quaternion(5.155469e-08, 0.7071068, 0.7071068, -2.2197248e-07)
+bones/1/rotation = Quaternion(0.089505054, 0.6933038, 0.7087712, -0.09466806)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "leg.R"
 bones/2/parent = 0
 bones/2/rest = Transform3D(-1, 3.8682577e-07, 2.3583003e-07, 2.3583004e-07, 0, 0.99999994, 3.868259e-07, 0.9999997, -9.122516e-14, -0.081760265, -5.9604645e-08, -0.16194807)
 bones/2/enabled = true
 bones/2/position = Vector3(-0.081760265, -5.9604645e-08, -0.16194808)
-bones/2/rotation = Quaternion(2.2014214e-07, 0.7071068, 0.7071068, -5.338508e-08)
+bones/2/rotation = Quaternion(-0.106587246, 0.70769393, 0.6892745, 0.11273553)
 bones/2/scale = Vector3(1, 0.9999997, 0.99999994)
 bones/3/name = "body"
 bones/3/parent = 0
 bones/3/rest = Transform3D(1, -3.8941437e-07, 7.1054274e-14, -7.1054274e-14, 0, 1, -3.8941437e-07, -1, 0, -5.1431577e-08, -5.9604645e-08, -0.13207418)
 bones/3/enabled = true
-bones/3/position = Vector3(-3.472716e-08, -5.9604645e-08, -0.08917792)
-bones/3/rotation = Quaternion(-0.6531472, 1.4743836e-07, 1.2717243e-07, 0.757231)
+bones/3/position = Vector3(-3.828124e-08, -5.9604645e-08, -0.09830465)
+bones/3/rotation = Quaternion(-0.6649349, 1.454271e-07, 1.2946757e-07, 0.7469014)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "head"
 bones/4/parent = 3
 bones/4/rest = Transform3D(1, 6.2135897e-37, -8.526521e-14, -6.2135897e-37, 1, 0, 8.526521e-14, 0, 1, 0, 0.22580588, 0)
 bones/4/enabled = true
 bones/4/position = Vector3(0, 0.22580588, 0)
-bones/4/rotation = Quaternion(-0.076244794, -4.2508504e-14, -3.2505122e-15, 0.99708915)
+bones/4/rotation = Quaternion(-0.060044687, -4.2555684e-14, -2.55986e-15, 0.99819577)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "head.001"
 bones/5/parent = 4
 bones/5/rest = Transform3D(0.7034206, 0.710774, 1.5720627e-07, -0.71077394, 0.70342064, -5.2111552e-08, -1.4762166e-07, -7.508179e-08, 1, 0.13207425, 0.3169781, 4.2588823e-08)
 bones/5/enabled = true
 bones/5/position = Vector3(0.13207425, 0.3169781, 4.2588823e-08)
-bones/5/rotation = Quaternion(-0.003742535, -0.002609625, -0.26118207, 0.96527874)
+bones/5/rotation = Quaternion(-0.010800632, 0.0053680935, -0.3691889, 0.92927617)
 bones/5/scale = Vector3(1, 1.0000001, 1)
 bones/6/name = "head.002"
 bones/6/parent = 4
 bones/6/rest = Transform3D(0.72493905, -0.68881303, 5.6472103e-08, 0.68881303, 0.72493905, 1.4918223e-07, -1.4369749e-07, -6.924931e-08, 1, -0.1358478, 0.30754423, 4.1321297e-08)
 bones/6/enabled = true
 bones/6/position = Vector3(-0.1358478, 0.30754423, 4.1321297e-08)
-bones/6/rotation = Quaternion(0.0033538851, -0.000242494, 0.27551618, 0.96129054)
+bones/6/rotation = Quaternion(0.0027924003, -0.012393184, 0.39202186, 0.91986823)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "shoulder.L"
 bones/7/parent = 3
 bones/7/rest = Transform3D(-0.53464156, 0.845079, 5.259856e-08, -0.8450791, -0.5346415, -5.121913e-08, -1.516284e-08, -7.18338e-08, 1, 0, 0.22580588, 0)
 bones/7/enabled = true
 bones/7/position = Vector3(0, 0.22580588, 0)
-bones/7/rotation = Quaternion(-0.022901537, 0.017102832, 0.7185901, -0.69484633)
+bones/7/rotation = Quaternion(-0.021785375, 0.017578444, 0.7542772, -0.655959)
 bones/7/scale = Vector3(1.0000001, 1, 1)
 bones/8/name = "arm.L"
 bones/8/parent = 7
 bones/8/rest = Transform3D(0.86798394, -0.49659204, -5.085887e-08, 0.49659204, 0.86798394, -8.538341e-08, 8.654542e-08, 4.885532e-08, 0.9999999, 2.9802322e-08, 0.09116691, 5.3290705e-15)
 bones/8/enabled = true
 bones/8/position = Vector3(2.9802322e-08, 0.09116691, 5.3290705e-15)
-bones/8/rotation = Quaternion(-0.043663137, -0.01894642, -0.3343651, 0.941241)
+bones/8/rotation = Quaternion(-0.043654304, -0.016333228, -0.11290197, 0.9925123)
 bones/8/scale = Vector3(0.9999999, 0.9999999, 0.9999999)
 bones/9/name = "shoulder.R"
 bones/9/parent = 3
 bones/9/rest = Transform3D(-0.53464156, -0.845079, -5.259872e-08, 0.8450791, -0.5346415, -5.1219132e-08, 1.5162758e-08, -7.1833945e-08, 1, 0, 0.22580588, 0)
 bones/9/enabled = true
 bones/9/position = Vector3(0, 0.22580588, 0)
-bones/9/rotation = Quaternion(0.022902498, 0.017104376, 0.71858805, 0.69484824)
+bones/9/rotation = Quaternion(0.02178803, 0.017579023, 0.75422, 0.6560247)
 bones/9/scale = Vector3(1.0000001, 1, 1)
 bones/10/name = "arm.R"
 bones/10/parent = 9
 bones/10/rest = Transform3D(0.86798394, 0.49659204, 5.085888e-08, -0.49659204, 0.86798394, -8.538341e-08, -8.654543e-08, 4.885531e-08, 0.9999999, -2.9802322e-08, 0.09116691, 9.769963e-15)
 bones/10/enabled = true
 bones/10/position = Vector3(-2.9802322e-08, 0.09116691, 9.769963e-15)
-bones/10/rotation = Quaternion(-0.043663137, 0.018946417, 0.33436525, 0.94124097)
+bones/10/rotation = Quaternion(-0.04365431, 0.016333228, 0.112902, 0.9925123)
 bones/10/scale = Vector3(0.9999999, 0.9999999, 0.9999999)
 
 [node name="Arms" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=1647684441]

@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://4t6wr7ytl4fm"]
 
-[ext_resource type="Texture2D" uid="uid://di0oqxwaqjq8k" path="res://assets/models/karts/BaseKart/Seraphim Kart.png" id="1_rfnvr"]
+[ext_resource type="Texture2D" uid="uid://mogvaqea86bm" path="res://assets/models/characters/Seraphim/Seraphim Kart 1024.png" id="1_rfnvr"]
 [ext_resource type="Texture2D" uid="uid://bg2740iwsfmcg" path="res://assets/models/karts/BaseKart/Seraphim Kart Emissive.png" id="2_swie1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nh4bs"]
