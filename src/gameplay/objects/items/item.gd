@@ -1,5 +1,9 @@
 class_name Item extends Node3D
 
+@export var animation_player : AnimationPlayer
+@export var sfx : SFX
+
+@export var animation : StringName
 ## changes boost timer by this amount, can set timer above normal max
 @export var time_amt : float = 0.5
 ## how long the item will stay despawned
@@ -9,10 +13,15 @@ class_name Item extends Node3D
 
 @export var area_3d: Area3D
 
+enum SFX {
+	MINI,
+	BIG
+}
+
 var despawn_increment : float
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	animation_player.play(animation)
 	pass # Replace with function body.
 
 
@@ -34,9 +43,13 @@ func _physics_process(delta: float) -> void:
 func _do_item_effect(area : SpinHurtBox) -> void:
 	despawn_increment = despawn_length
 	var kart : Kart_Sphere = area.kart_sphere
-	
+	if sfx == SFX.MINI:
+		kart.audio_player.play_audio(kart.audio_player.SFX.MINI)
+	else:
+		kart.audio_player.play_audio(kart.audio_player.SFX.BIG)
+		
 	if set_boost_lvl > kart.BOOST_LEVEL.ZERO:
-		kart.execute_boost(set_boost_lvl, false)
+		kart.execute_boost(set_boost_lvl, false, false)
 		
 	if kart.current_boost_level > kart.BOOST_LEVEL.ZERO:
 		kart.boost_timer = max(0, kart.boost_timer + time_amt)

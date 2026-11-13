@@ -11,7 +11,7 @@ grow_amount = 0.019
 code = "// NOTE: Shader automatically converted from Godot Engine 4.7.1.stable.mono's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon, unshaded;
 
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
@@ -99,7 +99,7 @@ gradient = SubResource("Gradient_nr37y")
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_qa4xb")
 shader = SubResource("Shader_nh4bs")
-shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo = Color(0.74138474, 0.7413847, 0.74138457, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
 shader_parameter/roughness = 1.0

@@ -6,7 +6,7 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nh4bs"]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+albedo_color = Color(0, 0, 0, 1)
 grow = true
 grow_amount = 0.02
 proximity_fade_enabled = true
@@ -88,8 +88,7 @@ void light(){
 
 [sub_resource type="Gradient" id="Gradient_rfnvr"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
-colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+offsets = PackedFloat32Array(0, 0.20454545)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_swie1"]
 gradient = SubResource("Gradient_rfnvr")

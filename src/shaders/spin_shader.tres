@@ -67,7 +67,7 @@ fill_from = Vector2(0.622, 0.5)
 [resource]
 render_priority = 0
 shader = SubResource("Shader_1b2e5")
-shader_parameter/albedo = Color(1.997126, 4.8903, 6.079, 1)
+shader_parameter/albedo = Color(6.3205843, 15.330214, 18.892157, 1)
 shader_parameter/texture_albedo = ExtResource("1_4nd63")
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 1.0

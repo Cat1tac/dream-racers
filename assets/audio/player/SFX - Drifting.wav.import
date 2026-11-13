@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dgqvft1udwrxl"
+path="res://.godot/imported/SFX - Drifting.wav-d8df94e89d552c7fa0f2294851a3b272.sample"
+
+[deps]
+
+source_file="res://assets/audio/player/SFX - Drifting.wav"
+dest_files=["res://.godot/imported/SFX - Drifting.wav-d8df94e89d552c7fa0f2294851a3b272.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

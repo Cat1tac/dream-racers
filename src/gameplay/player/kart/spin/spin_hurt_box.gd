@@ -4,6 +4,7 @@ class_name SpinHurtBox extends Area3D
 @onready var kart_sphere: Kart_Sphere = %Kart_Sphere
 var parent : Player
 var spinIntangiblility := false
+@onready var player_sfx: Player_SFX = %PlayerSFX
 
 func _ready() -> void:
 	parent = self.get_parent().get_parent()
@@ -14,6 +15,7 @@ func _on_area_entered(area: Area3D) -> void:
 		if spinhitbox.hitbox_active and spinhitbox.parent != parent:
 			if !spinIntangiblility: # if player is getting hit
 				print("hit")
+				player_sfx.play_audio(player_sfx.SFX.HIT)
 				call_knockback(to_local(area.global_position).x, spinhitbox.kart_sphere.kartStats.knockback)
 				call_spin_hit_slowdown(spinhitbox.charge_level, spinhitbox.kart_sphere.kartStats.weight)
 				spinhitbox.call_spin_boost()

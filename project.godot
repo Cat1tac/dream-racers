@@ -13,7 +13,7 @@ config_version=5
 config/name="Dream Racers"
 run/main_scene="uid://dt5xamoe48268"
 config/features=PackedStringArray("4.7", "Forward Plus")
-boot_splash/image="uid://dap40omm61pyj"
+boot_splash/image="uid://vhxxdfk1k3or"
 config/icon="res://icon.svg"
 
 [audio]
@@ -174,6 +174,7 @@ controller_leave={
 
 [layer_names]
 
+3d_render/layer_3="Item Cloud"
 3d_physics/layer_1="Karts"
 3d_physics/layer_2="Road"
 3d_physics/layer_3="Environment"
@@ -191,3 +192,7 @@ controller_leave={
 
 rendering_device/driver="d3d12"
 rendering_device/driver.windows="d3d12"
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=5
+anti_aliasing/quality/screen_space_aa=1
+lights_and_shadows/positional_shadow/atlas_size=256

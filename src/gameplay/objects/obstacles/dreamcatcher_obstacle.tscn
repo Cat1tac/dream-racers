@@ -38,3 +38,5 @@ bus = &"Obstacle"
 doppler_tracking = 2
 
 [connection signal="area_entered" from="DreamcatcherHurtBox" to="." method="_on_dreamcatcher_hurt_box_area_entered"]
+
+[editable path="dreamcatcher"]

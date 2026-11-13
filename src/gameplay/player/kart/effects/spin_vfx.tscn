@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://cb5hd572ot722" path="res://assets/models/vfx/spin_mesh.glb" id="2_cjh5x"]
 [ext_resource type="Material" uid="uid://in8sjubsieko" path="res://src/shaders/spin_shader.tres" id="3_qvtto"]
 
-
 [sub_resource type="Curve" id="Curve_474qe"]
 _limits = [0.62, 0.7227723, 0.0, 1.0]
 _data = [Vector2(0, 0.7227723), 0.0, 0.0, 0, 0, Vector2(0.26785716, 0.62), 0.0, 0.0, 0, 0, Vector2(0.5044643, 0.62), 0.0, 0.0, 0, 0, Vector2(0.7544643, 0.62), 0.0, 0.0, 0, 0, Vector2(1, 0.7227723), 0.0, 0.0, 0, 0]
@@ -26,7 +25,7 @@ vfx_colors = Dictionary[int, Color]({
 [node name="spin_mesh" parent="." unique_id=2123489912 instance=ExtResource("2_cjh5x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2554425, 0)
 
-[node name="SpinMesh" parent="spin_mesh" index="0" unique_id=750243176]
+[node name="SpinMesh" parent="spin_mesh" index="0" unique_id=594320986]
 material_override = ExtResource("3_qvtto")
 
 [editable path="spin_mesh"]

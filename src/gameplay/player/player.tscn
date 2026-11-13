@@ -23,7 +23,10 @@
 [ext_resource type="AudioStream" uid="uid://dub7wtldw4ub" path="res://assets/audio/player/Spin2.wav" id="16_mdkad"]
 [ext_resource type="AudioStream" uid="uid://8wmlre41n33j" path="res://assets/audio/player/Driving (1).wav" id="16_xptrr"]
 [ext_resource type="AudioStream" uid="uid://bclp824drbkd3" path="res://assets/audio/player/Spin1.wav" id="17_wm8do"]
+[ext_resource type="AudioStream" uid="uid://3f0icnqwt7j1" path="res://assets/audio/player/SFX - Hit.wav" id="20_474t2"]
 [ext_resource type="Script" uid="uid://c7qkj2k8i5siv" path="res://src/gameplay/player/cpu_controls.gd" id="20_trpe4"]
+[ext_resource type="AudioStream" uid="uid://d130f8wnnhmsq" path="res://assets/audio/items/SFX - Item Get 1.wav" id="21_qdl3i"]
+[ext_resource type="AudioStream" uid="uid://c5mi3ufccluwf" path="res://assets/audio/items/SFX - Item Get 2.wav" id="22_rf80d"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xdbtd"]
 height = 0.2
@@ -167,6 +170,7 @@ area_mask = 1
 [node name="RevSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=2070969963]
 stream = ExtResource("14_8gay3")
 volume_db = -10.0
+max_db = 6.0
 bus = &"Player"
 area_mask = 1
 
@@ -190,6 +194,15 @@ stream = SubResource("AudioStreamSynchronized_7herw")
 volume_db = 80.0
 max_db = 6.0
 bus = &"Player"
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=1528903368]
+stream = ExtResource("20_474t2")
+
+[node name="MiniEnergySFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=1668355228]
+stream = ExtResource("21_qdl3i")
+
+[node name="BigEnergySFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=1317595081]
+stream = ExtResource("22_rf80d")
 
 [node name="SecondCamera" type="Marker3D" parent="." unique_id=1667103743]
 unique_name_in_owner = true

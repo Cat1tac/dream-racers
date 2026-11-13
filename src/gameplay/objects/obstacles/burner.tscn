@@ -83,7 +83,7 @@ fill_to = Vector2(0.3931624, 0.22649573)
 
 [sub_resource type="Gradient" id="Gradient_7f5n8"]
 offsets = PackedFloat32Array(0, 0.4848485, 1)
-colors = PackedColorArray(0.8028255, 1.8637407, 0, 1, 0.5500001, 1, 0, 1, 0.31666672, 1, 0, 1)
+colors = PackedColorArray(0.41666663, 1, 0, 1, 0.5500001, 1, 0, 1, 0.31666672, 1, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_56eyd"]
 gradient = SubResource("Gradient_7f5n8")
@@ -148,7 +148,7 @@ shader_parameter/fill = 1.0
 shader_parameter/displacement_scale = 1.84
 shader_parameter/displacement_speed = 2.725
 shader_parameter/elongate = 0.999999977648
-shader_parameter/proximity_fade = 10.729999760163041
+shader_parameter/proximity_fade = 10.72999976016304
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_expqt"]
 transparency = 1
@@ -205,7 +205,7 @@ autostart = true
 
 [node name="burner" parent="." unique_id=910642151 instance=ExtResource("2_47mqf")]
 
-[node name="Flame" parent="burner" index="1" unique_id=493201315]
+[node name="Flame" parent="burner" index="1" unique_id=90975128]
 material_override = SubResource("ShaderMaterial_nb2ps")
 cast_shadow = 0
 
@@ -221,11 +221,11 @@ draw_pass_1 = SubResource("PlaneMesh_ds1u0")
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=790235135]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8703289, -0.028690338, -1.5631304)
 light_color = Color(0.84480774, 1.8247963, 0, 1)
-light_energy = 1.263
-light_cull_mask = 4294967293
+light_energy = 1.078
+light_cull_mask = 4294967289
 shadow_enabled = true
 spot_range = 102.944
-spot_attenuation = -0.31
+spot_attenuation = 0.64
 spot_angle = 30.89
 spot_angle_attenuation = 0.0980732
 

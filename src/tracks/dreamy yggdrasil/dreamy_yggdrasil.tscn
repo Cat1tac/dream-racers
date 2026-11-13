@@ -44,8 +44,8 @@ shader_parameter/Cloud_Noise_1 = SubResource("NoiseTexture2D_c20le")
 shader_parameter/noise_multiplier = 0.10000000405148
 shader_parameter/Speed_2 = Vector2(-0.03, 0.025)
 shader_parameter/Cloud_Noise_2 = SubResource("NoiseTexture2D_yt0g4")
-shader_parameter/scatter_color = Color(1.3448817, 0.8927044, 1.4046032, 1)
-shader_parameter/base_color = Color(0.9970717, 0.7660261, 1, 1)
+shader_parameter/scatter_color = Color(0.9241303, 0.41313392, 0.52081615, 1)
+shader_parameter/base_color = Color(0.98739654, 0.54080415, 0.55713904, 1)
 shader_parameter/cloud_transparency_threshold = 0.15200000722
 shader_parameter/transparency_multiplier = 6.04
 shader_parameter/cloud_thickness = 27.92700132327262
@@ -334,13 +334,13 @@ shader_parameter/shadow_sample = 4
 shader_parameter/clouds_density = 0.70000001043084
 shader_parameter/clouds_scale = 0.60000000149012
 shader_parameter/clouds_smoothness = 0.01999999955296
-shader_parameter/clouds_light_color = Color(0.87458926, 0.53697854, 0.89879876, 1)
+shader_parameter/clouds_light_color = Color(0.9669133, 0.5797022, 0.62606895, 1)
 shader_parameter/clouds_shadow_intensity = 0.10000000149012
 shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_4vmrv")
 shader_parameter/high_clouds_density = 0.55000000819566
-shader_parameter/top_color = Color(0.75547326, 0.32532272, 0.73927844, 1)
-shader_parameter/bottom_color = Color(0.71417165, 0.40975997, 0.71539104, 1)
-shader_parameter/sun_scatter = Color(0.70310307, 0.6872972, 0.9156936, 1)
+shader_parameter/top_color = Color(0.8474744, 0.84747446, 0.84747446, 1)
+shader_parameter/bottom_color = Color(0.8504922, 0.30988398, 0.41530824, 1)
+shader_parameter/sun_scatter = Color(0.5522893, 0.15389475, 0.4031773, 1)
 shader_parameter/astro_tint = Color(0, 0, 0, 1)
 shader_parameter/astro_scale = 1.0
 shader_parameter/astro_intensity = 1.0
@@ -355,18 +355,34 @@ sky_material = SubResource("ShaderMaterial_lpdp3")
 background_mode = 2
 background_energy_multiplier = 0.82
 sky = SubResource("Sky_d1fgb")
+ambient_light_source = 2
+ambient_light_color = Color(0.86, 0.57619995, 0.57619995, 1)
+tonemap_mode = 2
+tonemap_exposure = 1.32
+tonemap_white = 15.36
+tonemap_agx_white = 16.5
+tonemap_agx_contrast = 1.0
+ssr_max_steps = 66
+ssr_fade_in = 0.051226653
+ssr_fade_out = 28.840004
+ssr_depth_tolerance = 0.51
 ssao_enabled = true
-ssao_radius = 11.22
+ssao_radius = 4.08
 ssao_intensity = 5.96
-ssao_power = 0.46167845
-ssao_detail = 3.18
-ssao_horizon = 0.25
+ssao_power = 0.4307611
+ssao_detail = 3.05
+ssao_horizon = 1.0
+ssao_sharpness = 1.0
+ssil_radius = 1.23
+ssil_intensity = 8.14
+ssil_sharpness = 0.5
 glow_enabled = true
 glow_normalized = true
-glow_intensity = 3.35
-glow_strength = 0.6
-glow_blend_mode = 0
-glow_hdr_scale = 2.7
+glow_intensity = 1.22
+glow_strength = 1.05
+glow_hdr_threshold = 4.0
+glow_hdr_scale = 2.34
+glow_hdr_luminance_cap = 10.0
 fog_light_energy = 0.06
 fog_sun_scatter = 0.1
 fog_density = 0.005
@@ -374,8 +390,8 @@ fog_aerial_perspective = 0.04
 fog_sky_affect = 0.559
 fog_height_density = -0.03
 adjustment_enabled = true
-adjustment_brightness = 1.12
-adjustment_contrast = 1.1
+adjustment_contrast = 1.05
+adjustment_saturation = 1.36
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsb3b"]
 albedo_color = Color(0.69803923, 0, 0, 1)
@@ -401,15 +417,17 @@ mesh = SubResource("PlaneMesh_guolr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=563551130]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -151.58098, 122.64967, 181.63248)
-light_color = Color(0.38039932, 0.83484656, 0.9999998, 1)
-light_energy = 2.425
+light_color = Color(0.94, 0.8068333, 0.47, 1)
+light_energy = 2.294
 light_angular_distance = 37.43
+light_cull_mask = 4294967293
 shadow_enabled = true
 shadow_normal_bias = 1.505
 shadow_reverse_cull_face = true
 shadow_blur = 0.06
 directional_shadow_mode = 0
 directional_shadow_max_distance = 120.0
+directional_shadow_pancake_size = 10.1
 sky_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=2094468004]
@@ -578,70 +596,70 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.64713, 64.604126, -35.3624
 [node name="Mini Energy" type="Node" parent="Objects" unique_id=57977734]
 
 [node name="Mini Energy" parent="Objects/Mini Energy" unique_id=454488651 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 9.112713, 32.495003, -139.7206)
+transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 9.112713, 33.001255, -139.7206)
 
 [node name="Mini Energy19" parent="Objects/Mini Energy" unique_id=2021759024 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 16.24037, 32.495003, -135.31874)
+transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 16.24037, 33.001255, -135.31874)
 
 [node name="Mini Energy2" parent="Objects/Mini Energy" unique_id=209121376 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 22.560019, 32.495003, -131.4159)
+transform = Transform3D(0.850826, 0, -0.5254475, 0, 1, 0, 0.5254475, 0, 0.850826, 22.560019, 33.001255, -131.4159)
 
 [node name="Mini Energy5" parent="Objects/Mini Energy" unique_id=964127082 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 22.274632, 64.43396, -43.226776)
+transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 22.274632, 65.05311, -43.226776)
 
 [node name="Mini Energy22" parent="Objects/Mini Energy" unique_id=1363523633 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 21.943073, 64.43396, -37.27392)
+transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 21.943073, 65.05311, -37.27392)
 
 [node name="Mini Energy10" parent="Objects/Mini Energy" unique_id=431539984 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 21.505747, 64.43396, -29.422092)
+transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 21.505747, 65.05311, -29.422092)
 
 [node name="Mini Energy11" parent="Objects/Mini Energy" unique_id=157176086 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.9714929, 0.120936744, 0.20390183, -7.450581e-09, 0.8600953, -0.5101333, -0.23706888, 0.4955909, 0.8355764, -19.184477, 50.06461, -37.574505)
+transform = Transform3D(0.9714929, 0.120936744, 0.20390183, -7.450581e-09, 0.8600953, -0.5101333, -0.23706888, 0.4955909, 0.8355764, -19.11254, 50.576225, -37.27971)
 
 [node name="Mini Energy12" parent="Objects/Mini Energy" unique_id=775860503 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.957672, 0, 0.28786182, 0, 1, 0, -0.28786182, 0, 0.957672, -14.482638, 47.8251, -24.161203)
+transform = Transform3D(0.957672, 0, 0.28786182, 0, 1, 0, -0.28786182, 0, 0.957672, -14.482638, 48.419937, -24.161203)
 
 [node name="Mini Energy21" parent="Objects/Mini Energy" unique_id=656830260 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.957672, 0, 0.28786182, 0, 1, 0, -0.28786182, 0, 0.957672, -17.590422, 48.32576, -30.506737)
+transform = Transform3D(0.957672, 0, 0.28786182, 0, 1, 0, -0.28786182, 0, 0.957672, -17.590422, 48.920597, -30.506737)
 
 [node name="Mini Energy8" parent="Objects/Mini Energy" unique_id=1883022573 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 15.981295, 61.528015, 6.3296337)
+transform = Transform3D(0.99845254, 0, -0.055611193, 0, 1, 0, 0.055611193, 0, 0.99845254, 15.981295, 61.865562, 6.3296337)
 
 [node name="Mini Energy9" parent="Objects/Mini Energy" unique_id=637660842 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.99845254, -0.007136878, -0.055151332, -4.656613e-10, 0.9917308, -0.1283353, 0.055611193, 0.1281367, 0.99019617, 16.365458, 61.79728, -0.56768847)
+transform = Transform3D(0.99845254, -0.007136878, -0.055151332, -4.656613e-10, 0.9917308, -0.1283353, 0.055611193, 0.1281367, 0.99019617, 16.363049, 62.132034, -0.5244363)
 
 [node name="Mini Energy13" parent="Objects/Mini Energy" unique_id=1718145765 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.99845254, 0.033804175, -0.044157475, 9.313226e-10, 0.79403937, 0.6078664, 0.055611193, -0.60692567, 0.79281074, 19.251392, 48.793194, 30.863459)
+transform = Transform3D(0.99845254, 0.033804175, -0.044157475, 9.313226e-10, 0.79403937, 0.6078664, 0.055611193, -0.60692567, 0.79281074, 19.271875, 49.274315, 30.495712)
 
 [node name="Mini Energy23" parent="Objects/Mini Energy" unique_id=43577069 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.99845254, 0.004290226, -0.055445455, 0, 0.99701977, 0.07714674, 0.055611193, -0.07702735, 0.995477, 19.65895, 47.538395, 23.546085)
+transform = Transform3D(0.99845254, 0.004290226, -0.055445455, 0, 0.99701977, 0.07714674, 0.055611193, -0.07702735, 0.995477, 19.66155, 48.142506, 23.499413)
 
 [node name="Mini Energy14" parent="Objects/Mini Energy" unique_id=1880921355 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.9984525, -0.02735055, -0.048420575, 1.8626451e-09, 0.8706984, -0.49181738, 0.055611193, 0.4910563, 0.8693511, 20.428156, 48.786663, 17.017973)
+transform = Transform3D(0.9984525, -0.02735055, -0.048420575, 1.8626451e-09, 0.8706984, -0.49181738, 0.055611193, 0.4910563, 0.8693511, 20.411583, 49.31423, 17.315512)
 
 [node name="Mini Energy15" parent="Objects/Mini Energy" unique_id=2102667047 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.80399036, -0.0074523836, -0.5945957, -0.07362412, 0.99098015, -0.11197232, 0.5900669, 0.13380125, 0.79618996, 14.065946, -37.457195, -26.864109)
+transform = Transform3D(0.8039903, 0.09452562, -0.5870813, -0.07362413, 0.9955119, 0.059460785, 0.59006685, -0.004582539, 0.80734146, 13.703962, -36.66988, -26.272657)
 
 [node name="Mini Energy17" parent="Objects/Mini Energy" unique_id=1339105806 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.29927355, 0.066332184, -0.95185906, -0.12546167, 0.991655, 0.02965913, 0.94588286, 0.11054563, 0.30509833, 30.042849, -39.42562, -24.119242)
+transform = Transform3D(0.29927355, 0.066332184, -0.95185906, -0.12546167, 0.991655, 0.02965913, 0.94588286, 0.11054563, 0.30509833, 30.075184, -38.942226, -24.065355)
 
 [node name="Mini Energy24" parent="Objects/Mini Energy" unique_id=741940469 instance=ExtResource("8_bd4lb")]
 transform = Transform3D(0.29927358, -0.17350954, -0.93825907, -0.12546167, 0.96763414, -0.21895997, 0.94588286, 0.18324448, 0.26781854, 36.971073, -38.699986, -27.201122)
 
 [node name="Mini Energy18" parent="Objects/Mini Energy" unique_id=759995956 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.047836427, 0.06346856, -0.9968367, -0.05142228, 0.9968123, 0.06099938, 0.99753046, 0.048341613, 0.050947666, -188.75752, 0.7537904, 3.6956437)
+transform = Transform3D(0.047836427, 0.034622494, -0.99825495, -0.051422283, 0.99815917, 0.03215505, 0.99753046, 0.049794354, 0.049528763, -185.1536, 1.3553315, 2.7543466)
 
 [node name="Mini Energy7" parent="Objects/Mini Energy" unique_id=2047965534 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.7470854, 0, -0.66472816, 0, 1, 0, 0.66472816, 0, 0.7470854, 99.237206, 32.42984, -97.60727)
+transform = Transform3D(0.7470854, 0, -0.66472816, 0, 1, 0, 0.66472816, 0, 0.7470854, 99.237206, 33.511406, -97.60727)
 
 [node name="Mini Energy20" parent="Objects/Mini Energy" unique_id=1061066109 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.7470854, 0, -0.66472816, 0, 1, 0, 0.66472816, 0, 0.7470854, 105.0918, 32.42984, -104.187225)
+transform = Transform3D(0.7470854, 0, -0.66472816, 0, 1, 0, 0.66472816, 0, 0.7470854, 105.0918, 33.511406, -104.187225)
 
 [node name="Mini Energy6" parent="Objects/Mini Energy" unique_id=2092606381 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.71398, 0, -0.70016605, 0, 1, 0, 0.70016605, 0, 0.71398, 110.5478, 32.42984, -109.57418)
+transform = Transform3D(0.71398, 0, -0.70016605, 0, 1, 0, 0.70016605, 0, 0.71398, 110.5478, 33.511406, -109.57418)
 
 [node name="Mini Energy3" parent="Objects/Mini Energy" unique_id=682483836 instance=ExtResource("8_bd4lb")]
-transform = Transform3D(0.6825952, 0.50790626, -0.5254475, -0.5969567, 0.8022735, 0, 0.4215526, 0.31366938, 0.850826, 7.5981326, 36.802814, -34.209656)
+transform = Transform3D(0.6825952, 0.50790626, -0.5254475, -0.5969567, 0.8022735, 0, 0.4215526, 0.31366938, 0.850826, 7.7677608, 37.070755, -34.104897)
 
 [node name="Mini Energy4" parent="Objects/Mini Energy" unique_id=866023870 instance=ExtResource("8_bd4lb")]
 transform = Transform3D(0.70121807, -0.48186958, -0.5254475, 0.566355, 0.8241614, 0, 0.43305355, -0.2975898, 0.850826, 24.307896, 37.097843, -23.81327)
@@ -658,28 +676,28 @@ transform = Transform3D(0.9643378, 0, -0.2646745, 0, 1, 0, 0.2646745, 0, 0.96433
 transform = Transform3D(0.9643378, 0, -0.2646745, 0, 1, 0, 0.2646745, 0, 0.9643378, 67.02426, 35.404865, -120.52202)
 
 [node name="Big Energy2" parent="Objects/Big Energy" unique_id=999431699 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.66083, 34.888027, -26.863735)
+transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.6827, 35.758522, -26.863686)
 
 [node name="Big Energy3" parent="Objects/Big Energy" unique_id=1490154330 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.689, 34.723366, -40.960068)
+transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.71086, 35.59386, -40.96002)
 
 [node name="Big Energy7" parent="Objects/Big Energy" unique_id=1103105216 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.67232, 34.723366, -33.682064)
+transform = Transform3D(0.999682, 0.025114194, -0.002290383, -0.02511426, 0.9996846, -3.637979e-12, 0.0022896605, 5.7521273e-05, 0.99999744, 156.69418, 35.59386, -33.682014)
 
 [node name="Big Energy4" parent="Objects/Big Energy" unique_id=1240020464 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.9938042, 0.025114194, 0.10827154, -0.024960233, 0.9996846, -0.0027772111, -0.108307146, 5.7521454e-05, 0.9941176, 76.57649, 10.180389, 94.914116)
+transform = Transform3D(0.9938042, 0.025114194, 0.10827154, -0.024960233, 0.9996846, -0.0027772111, -0.108307146, 5.7521454e-05, 0.9941176, 76.59586, 10.951448, 94.91416)
 
 [node name="Big Energy6" parent="Objects/Big Energy" unique_id=46011550 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.99894977, 0.025114194, 0.03832546, -0.025093528, 0.9996846, -0.0010203139, -0.03833901, 5.7521454e-05, 0.99926496, -171.05142, 0.5394679, 2.0701864)
+transform = Transform3D(0.99894977, 0.025114194, 0.03832546, -0.025093528, 0.9996846, -0.0010203139, -0.03833901, 5.7521454e-05, 0.99926496, -171.03372, 1.2438875, 2.070227)
 
 [node name="Big Energy5" parent="Objects/Big Energy" unique_id=636892459 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.9772415, 0.025114194, 0.21063869, -0.02453825, 0.9996846, -0.005347938, -0.21070656, 5.7522226e-05, 0.97754943, 74.55259, 10.354522, 81.65289)
+transform = Transform3D(0.9772415, 0.025114194, 0.21063869, -0.02453825, 0.9996846, -0.005347938, -0.21070656, 5.7522226e-05, 0.97754943, 74.57196, 11.125581, 81.65294)
 
 [node name="Big Energy8" parent="Objects/Big Energy" unique_id=810599032 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.9772415, 0.025114194, 0.21063869, -0.02453825, 0.9996846, -0.005347938, -0.21070656, 5.7522226e-05, 0.97754943, 75.96376, 10.318693, 88.20196)
+transform = Transform3D(0.9772415, 0.025114194, 0.21063869, -0.02453825, 0.9996846, -0.005347938, -0.21070656, 5.7522226e-05, 0.97754943, 75.98313, 11.089752, 88.202)
 
 [node name="Big Energy9" parent="Objects/Big Energy" unique_id=2005895545 instance=ExtResource("8_acfsq")]
-transform = Transform3D(0.7499144, -0.6077898, 0.2611898, 0.6244115, 0.7807276, 0.023979764, -0.21849273, 0.14510709, 0.96498966, 43.800404, -36.918896, -30.625935)
+transform = Transform3D(0.7499144, -0.6077898, 0.2611898, 0.6244115, 0.7807276, 0.023979764, -0.21849273, 0.14510709, 0.96498966, 43.40129, -36.40622, -30.530647)
 
 [node name="Dream Catchers" type="Node" parent="Objects" unique_id=756085328]
 

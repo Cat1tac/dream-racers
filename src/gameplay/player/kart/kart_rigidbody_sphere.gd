@@ -292,8 +292,9 @@ func _handle_start_boost(delta : float) -> void:
 							kart_model.do_grow_anim(kart_model.kart_model_scale * 1.15)
 						elif successful_start_boost_timings == 3:
 							kart_model.do_grow_anim(kart_model.kart_model_scale * 1.2)
-						audio_player.play_audio("REV")
-						audio_player.bend_pitch("REV", successful_start_boost_timings)
+						audio_player.bend_pitch(audio_player.SFX.REV, successful_start_boost_timings)
+						audio_player.play_audio(audio_player.SFX.REV)
+						
 						
 		COUNTDOWN_STATES.LATE: # Leway given to player if they were too late in getting a start boost
 			if late_window_increament > 0:
@@ -332,12 +333,12 @@ func _handle_input(delta : float) -> void:
 	if Input.is_action_just_pressed(controls.actions["drift"]) && linear_velocity.length() > 0 && input_acceleration >= 0:
 		input_drift = true
 		drift_direction = 0
-		audio_player.play_audio("DRIFT")
+		audio_player.play_audio(audio_player.SFX.DRIFT)
 		
 	if Input.is_action_just_released(controls.actions["drift"]):
 		input_drift = false
 		drift_just_released = true
-		audio_player.stop_audio("DRIFT")
+		audio_player.stop_audio(audio_player.SFX.DRIFT)
 		 
 	if Input.is_action_just_pressed(controls.actions["spin"]):
 		if !on_ground():
@@ -355,7 +356,7 @@ func _handle_input(delta : float) -> void:
 				speed_right_before_spin = forward.dot(linear_velocity) if forward.dot(linear_velocity) < top_speed else top_speed
 				#apply_slowdown_force(0.25)
 				input_spin = true
-				audio_player.play_audio("SPIN")
+				audio_player.play_audio(audio_player.SFX.SPIN)
 	
 ## Handle's evil twin sibling (Simulates real inputs for CPU racers)
 func _simulate_input(horizontal: float, vertical: float) -> void:
@@ -382,7 +383,7 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 				speed_right_before_spin = forward.dot(linear_velocity) if forward.dot(linear_velocity) < top_speed else top_speed
 				#apply_slowdown_force(0.25)
 				input_spin = true
-				audio_player.play_audio("SPIN")
+				audio_player.play_audio(audio_player.SFX.SPIN)
 				sim_spinInput = false
 	
 #endregion
@@ -443,10 +444,12 @@ func _drift_boost_control(delta : float) -> void:
 				
 	#Boost timer Countdown
 	if boost_timer > 0:
-		if currently_snaking and boost_timer < 0.2 or dreamcatcher_boost_timer > 0 or kart_model.tricking:
+		if (currently_snaking and boost_timer < 0.2) or dreamcatcher_boost_timer > 0 or kart_model.tricking:
 			# allow for potential extra boost
+			print("wth")
 			pass
 		else:
+			
 			boost_timer -= delta
 		for particles in boostParticles:
 			particles.fade(current_boost_level - 1, boost_timer, boost_level_speed_time[current_boost_level]["timeMax"])
@@ -514,8 +517,8 @@ func _set_drifting_stage(stage : int) -> void:
 		particle.set_particles(stage)
 	drift_stage = stage
 	if drift_stage > 0:
-		audio_player.bend_pitch("CHARGE", drift_stage)
-		audio_player.play_audio("CHARGE")
+		audio_player.bend_pitch(audio_player.SFX.CHARGE, drift_stage)
+		audio_player.play_audio(audio_player.SFX.CHARGE)
 	
 func remove_drift_charge() -> void:
 	_set_drifting_stage(-1)
@@ -556,7 +559,7 @@ func _set_boost(speedMultiplier : float, timeAddition : float) -> void:
 	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
 	boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[current_boost_level]["timeMax"]) 
-	audio_player.play_audio("BOOST")
+	audio_player.play_audio(audio_player.SFX.BOOST)
 
 func _get_charge_level() -> void:
 	if drift_stage >= stored_charge_level:
@@ -617,7 +620,7 @@ func _set_dreamcatcher_boost(speedMultiplier : float, timeMultiplier : float) ->
 #region Trick
 func _do_trick() -> void:
 	kart_model.do_trick_anim()
-	audio_player.play_audio("TRICK")
+	audio_player.play_audio(audio_player.SFX.TRICK)
 	
 func reset_trick() -> void:
 	tricked = false
@@ -699,7 +702,7 @@ func _ready() -> void:
 	contact_monitor = true
 	max_contacts_reported = 2
 	audio_player.update_top_speed(top_speed)
-	audio_player.play_audio("DRIVE")
+	audio_player.play_audio(audio_player.SFX.DRIVE)
 	
 	var up := Vector3.UP # gets normal of new up
 	var forward := -center.global_basis.z # gets forward direction of kart
@@ -746,7 +749,7 @@ func _process(delta: float) -> void:
 	
 func _physics_process(delta: float) -> void: 
 	Events.on_get_speed.emit(-center.global_basis.z.dot(linear_velocity), drift_timer, player.playerId)
-	audio_player.bend_pitch("DRIVE", -center.global_basis.z.dot(linear_velocity))
+	audio_player.bend_pitch(audio_player.SFX.DRIVE, -center.global_basis.z.dot(linear_velocity))
 	if on_ground():
 		hover_vfx.show()
 		if tricked:
@@ -774,7 +777,7 @@ func _physics_process(delta: float) -> void:
 	wall_cast.force_shapecast_update()
 	if on_wall():
 		apply_bounce_force(10, get_wall_normal())
-		audio_player.play_audio("CRASH")
+		audio_player.play_audio(audio_player.SFX.CRASH)
 	
 	_apply_traction(delta)
 	_apply_steering(delta)

@@ -8,7 +8,7 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_istft"]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+albedo_color = Color(0, 0.11, 0.04033332, 1)
 grow = true
 grow_amount = 0.02
 proximity_fade_enabled = true
@@ -90,8 +90,7 @@ void light(){
 
 [sub_resource type="Gradient" id="Gradient_lev7c"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
-colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+offsets = PackedFloat32Array(0, 0.23295455)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_a1sv2"]
 gradient = SubResource("Gradient_lev7c")
@@ -195,7 +194,7 @@ bind/10/pose = Transform3D(-0.044400565, 0.9990138, -3.7712386e-08, -0.9990137, 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_juxou"]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+albedo_color = Color(0, 0.11, 0.055, 1)
 grow = true
 grow_amount = 0.02
 proximity_fade_enabled = true
@@ -277,8 +276,7 @@ void light(){
 
 [sub_resource type="Gradient" id="Gradient_ycxvh"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
-colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+offsets = PackedFloat32Array(0, 0.06818182)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_istft"]
 gradient = SubResource("Gradient_ycxvh")
@@ -340,7 +338,7 @@ blend_shape_mode = 0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2b7x"]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+albedo_color = Color(0, 0.10980392, 0.05490196, 1)
 grow = true
 grow_amount = 0.02
 proximity_fade_enabled = true
@@ -348,8 +346,7 @@ proximity_fade_distance = 1.01
 
 [sub_resource type="Gradient" id="Gradient_823gs"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
-colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+offsets = PackedFloat32Array(0, 0.13068181)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_m7up3"]
 gradient = SubResource("Gradient_823gs")
@@ -442,7 +439,7 @@ shader_parameter/fresnel_amount = 99.9999977648
 render_priority = 0
 next_pass = SubResource("StandardMaterial3D_a2b7x")
 shader = SubResource("Shader_m62te")
-shader_parameter/albedo = Color(1, 0.79607844, 0.79607844, 1)
+shader_parameter/albedo = Color(1, 0.68217427, 0.6869124, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.10000000149012
 shader_parameter/roughness = 1.0
@@ -510,7 +507,7 @@ blend_shape_mode = 0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aw6tr"]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+albedo_color = Color(0, 0.10980392, 0.05490196, 1)
 grow = true
 grow_amount = 0.02
 proximity_fade_enabled = true
@@ -518,8 +515,7 @@ proximity_fade_distance = 1.01
 
 [sub_resource type="Gradient" id="Gradient_w4ykw"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
-colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+offsets = PackedFloat32Array(0, 0.09659091)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_06sy1"]
 gradient = SubResource("Gradient_w4ykw")
@@ -555,7 +551,7 @@ shader_parameter/fresnel_amount = 99.9999977648
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6nbx"]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.056570545, 7.495161e-05, 0.11156755, 1)
+albedo_color = Color(0, 0.10980392, 0.05490196, 1)
 grow = true
 grow_amount = 0.02
 proximity_fade_enabled = true
@@ -563,8 +559,7 @@ proximity_fade_distance = 1.01
 
 [sub_resource type="Gradient" id="Gradient_2aixd"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.1585903, 0.2555066, 0.43171805, 0.7004405)
-colors = PackedColorArray(0, 0, 0, 1, 0.25, 0.25, 0.25, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1)
+offsets = PackedFloat32Array(0.011363637, 0.11931818)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_v4n45"]
 gradient = SubResource("Gradient_2aixd")
@@ -2118,7 +2113,7 @@ bones/0/name = "Root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, -3.8941437e-07, -3.8941437e-07, 0, -1, 0, 0.99999976, 0, 0, 0, 0)
 bones/0/enabled = true
-bones/0/position = Vector3(1.5358777e-08, 0.039440714, 0)
+bones/0/position = Vector3(-5.1817484e-09, 0.00047253486, 0)
 bones/0/rotation = Quaternion(0.7071068, -1.3767877e-07, -1.3767877e-07, 0.7071068)
 bones/0/scale = Vector3(1, 0.99999976, 1)
 bones/1/name = "leg.L"
@@ -2126,70 +2121,70 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(-1, 3.868258e-07, -2.4100714e-07, -2.4100714e-07, 0, 1, 3.868258e-07, 1, 0, 0.081760146, -5.9604645e-08, -0.16194813)
 bones/1/enabled = true
 bones/1/position = Vector3(0.081760146, -5.9604645e-08, -0.16194813)
-bones/1/rotation = Quaternion(0.089505054, 0.6933038, 0.7087712, -0.09466806)
+bones/1/rotation = Quaternion(5.155469e-08, 0.7071068, 0.7071068, -2.2197251e-07)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "leg.R"
 bones/2/parent = 0
 bones/2/rest = Transform3D(-1, 3.8682577e-07, 2.3583003e-07, 2.3583004e-07, 0, 0.99999994, 3.868259e-07, 0.9999997, -9.122516e-14, -0.081760265, -5.9604645e-08, -0.16194807)
 bones/2/enabled = true
 bones/2/position = Vector3(-0.081760265, -5.9604645e-08, -0.16194808)
-bones/2/rotation = Quaternion(-0.106587246, 0.70769393, 0.6892745, 0.11273553)
+bones/2/rotation = Quaternion(2.2014214e-07, 0.7071068, 0.7071068, -5.338508e-08)
 bones/2/scale = Vector3(1, 0.9999997, 0.99999994)
 bones/3/name = "body"
 bones/3/parent = 0
 bones/3/rest = Transform3D(1, -3.8941437e-07, 7.1054274e-14, -7.1054274e-14, 0, 1, -3.8941437e-07, -1, 0, -5.1431577e-08, -5.9604645e-08, -0.13207418)
 bones/3/enabled = true
-bones/3/position = Vector3(-3.828124e-08, -5.9604645e-08, -0.09830465)
-bones/3/rotation = Quaternion(-0.6649349, 1.454271e-07, 1.2946757e-07, 0.7469014)
+bones/3/position = Vector3(-3.6812246e-08, -5.9604645e-08, -0.09453233)
+bones/3/rotation = Quaternion(-0.6600817, 1.4626285e-07, 1.2852261e-07, 0.7511938)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "head"
 bones/4/parent = 3
 bones/4/rest = Transform3D(1, 6.2135897e-37, -8.526521e-14, -6.2135897e-37, 1, 0, 8.526521e-14, 0, 1, 0, 0.22580588, 0)
 bones/4/enabled = true
 bones/4/position = Vector3(0, 0.22580588, 0)
-bones/4/rotation = Quaternion(-0.060044687, -4.2555684e-14, -2.55986e-15, 0.99819577)
+bones/4/rotation = Quaternion(-0.06674375, -4.2537537e-14, -2.8454581e-15, 0.9977702)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "head.001"
 bones/5/parent = 4
 bones/5/rest = Transform3D(0.7034206, 0.710774, 1.5720627e-07, -0.71077394, 0.70342064, -5.2111552e-08, -1.4762166e-07, -7.508179e-08, 1, 0.13207425, 0.3169781, 4.2588823e-08)
 bones/5/enabled = true
 bones/5/position = Vector3(0.13207425, 0.3169781, 4.2588823e-08)
-bones/5/rotation = Quaternion(-0.010800632, 0.0053680935, -0.3691889, 0.92927617)
+bones/5/rotation = Quaternion(-0.003034539, -0.0023862817, -0.27695385, 0.96087545)
 bones/5/scale = Vector3(1, 1.0000001, 1)
 bones/6/name = "head.002"
 bones/6/parent = 4
 bones/6/rest = Transform3D(0.72493905, -0.68881303, 5.6472103e-08, 0.68881303, 0.72493905, 1.4918223e-07, -1.4369749e-07, -6.924931e-08, 1, -0.1358478, 0.30754423, 4.1321297e-08)
 bones/6/enabled = true
 bones/6/position = Vector3(-0.1358478, 0.30754423, 4.1321297e-08)
-bones/6/rotation = Quaternion(0.0027924003, -0.012393184, 0.39202186, 0.91986823)
+bones/6/rotation = Quaternion(0.0028367487, 3.582082e-05, 0.2876063, 0.95774454)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "shoulder.L"
 bones/7/parent = 3
 bones/7/rest = Transform3D(-0.53464156, 0.845079, 5.259856e-08, -0.8450791, -0.5346415, -5.121913e-08, -1.516284e-08, -7.18338e-08, 1, 0, 0.22580588, 0)
 bones/7/enabled = true
 bones/7/position = Vector3(0, 0.22580588, 0)
-bones/7/rotation = Quaternion(-0.021785375, 0.017578444, 0.7542772, -0.655959)
+bones/7/rotation = Quaternion(-0.022704741, 0.016777223, 0.71886814, -0.694573)
 bones/7/scale = Vector3(1.0000001, 1, 1)
 bones/8/name = "arm.L"
 bones/8/parent = 7
 bones/8/rest = Transform3D(0.86798394, -0.49659204, -5.085887e-08, 0.49659204, 0.86798394, -8.538341e-08, 8.654542e-08, 4.885532e-08, 0.9999999, 2.9802322e-08, 0.09116691, 5.3290705e-15)
 bones/8/enabled = true
 bones/8/position = Vector3(2.9802322e-08, 0.09116691, 5.3290705e-15)
-bones/8/rotation = Quaternion(-0.043654304, -0.016333228, -0.11290197, 0.9925123)
+bones/8/rotation = Quaternion(-0.042908587, -0.018823173, -0.32046342, 0.94610137)
 bones/8/scale = Vector3(0.9999999, 0.9999999, 0.9999999)
 bones/9/name = "shoulder.R"
 bones/9/parent = 3
 bones/9/rest = Transform3D(-0.53464156, -0.845079, -5.259872e-08, 0.8450791, -0.5346415, -5.1219132e-08, 1.5162758e-08, -7.1833945e-08, 1, 0, 0.22580588, 0)
 bones/9/enabled = true
 bones/9/position = Vector3(0, 0.22580588, 0)
-bones/9/rotation = Quaternion(0.02178803, 0.017579023, 0.75422, 0.6560247)
+bones/9/rotation = Quaternion(0.022705974, 0.016779222, 0.7188659, 0.69457525)
 bones/9/scale = Vector3(1.0000001, 1, 1)
 bones/10/name = "arm.R"
 bones/10/parent = 9
 bones/10/rest = Transform3D(0.86798394, 0.49659204, 5.085888e-08, -0.49659204, 0.86798394, -8.538341e-08, -8.654543e-08, 4.885531e-08, 0.9999999, -2.9802322e-08, 0.09116691, 9.769963e-15)
 bones/10/enabled = true
 bones/10/position = Vector3(-2.9802322e-08, 0.09116691, 9.769963e-15)
-bones/10/rotation = Quaternion(-0.04365431, 0.016333228, 0.112902, 0.9925123)
+bones/10/rotation = Quaternion(-0.042908587, 0.01882317, 0.32046348, 0.9461013)
 bones/10/scale = Vector3(0.9999999, 0.9999999, 0.9999999)
 
 [node name="Arms" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=1647684441]

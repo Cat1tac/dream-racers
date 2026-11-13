@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://3f0icnqwt7j1"
+path="res://.godot/imported/SFX - Hit.wav-2748a2ab2d5905ee0839a074612c86cd.sample"
+
+[deps]
+
+source_file="res://assets/audio/player/SFX - Hit.wav"
+dest_files=["res://.godot/imported/SFX - Hit.wav-2748a2ab2d5905ee0839a074612c86cd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
