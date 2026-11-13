@@ -329,6 +329,7 @@ func _handle_input(delta : float) -> void:
 				if !pressed_this_window:
 					execute_boost(successful_start_boost_timings, true, false)
 					pressed_this_window = true
+					currently_snaking = false
 			
 	if Input.is_action_just_pressed(controls.actions["drift"]) && linear_velocity.length() > 0 && input_acceleration >= 0:
 		input_drift = true
@@ -446,6 +447,7 @@ func _drift_boost_control(delta : float) -> void:
 	if boost_timer > 0:
 		if (currently_snaking and boost_timer < 0.2) or dreamcatcher_boost_timer > 0 or kart_model.tricking:
 			# allow for potential extra boost
+			print(currently_snaking)
 			pass
 		else:
 			
