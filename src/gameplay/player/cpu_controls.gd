@@ -4,18 +4,15 @@ class_name CPU extends Node
 @onready var player: Player = $".."
 @onready var kart_sphere: Kart_Sphere = %Kart_Sphere
 @onready var hitbox: Area3D = %SpinHitbox
+@onready var center: = %Center
 
 var controls : PlayerControls
 
-var checkpoint_rotations: Array #TODO change all instances of this var to match the refactored lap system
+var checkpoint_positions: Array #TODO change all instances of this var to match the refactored lap system
 var current_checkpoint: int = 0
 
 ## Inverts steering if radian differences cross over the 3.14 limit
 var invertControls: bool = false
-
-# MOVE VECTOR KEY (x, y):
-# x is sideways (left is negative, right is positive)
-# y is vertical (forward is positive, back is negative)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,40 +20,31 @@ func _ready() -> void:
 	if player.playerId > (GameManager.players_connected - 1):
 		player.playerControlled = false
 		Events.on_countdown_finished.connect(play)
+	Events.on_send_check_positions.connect(get_check_positions)
 
 # Decision Making (Also sometimes called 'Artificial Intelligence' or whatever)
 func _process(delta: float) -> void:
+	
 	if kart_sphere.isRacing and !player.playerControlled:
-		
-		if !kart_sphere.on_ground():
+		var forward = -center.global_basis.z
+		var position = center.global_position
+		var checkpoint_direction = position.direction_to(checkpoint_positions[current_checkpoint])
+		if checkpoint_direction.dot(forward) > 0.92:
 			cancel_turn()
-			return
-		
-		# Double checks rotation values to account for radians ranging from -3.14 to 3.14
-		if abs(hitbox.global_rotation.y - checkpoint_rotations[current_checkpoint]) > 3.14:
-			invertControls = true
 		else:
-			invertControls = false
-		
-		# CPU only turns if its own rotation doesn't match the next checkpoint's rotation
-		if hitbox.global_rotation.y >= checkpoint_rotations[current_checkpoint] - 0.05 and hitbox.global_rotation.y <= checkpoint_rotations[current_checkpoint] + 0.05:
-			cancel_turn()
-		elif hitbox.global_rotation.y > checkpoint_rotations[current_checkpoint]:
-			if invertControls:
-				turn_left()
-			else:
-				turn_right()
-		else:
-			if invertControls:
+			var right_vector = -center.global_basis.x
+			if right_vector.dot(checkpoint_direction) < 0:
 				turn_right()
 			else:
 				turn_left()
-
 # Sets the CPU in motion on RaceStart
 func play() -> void:
 	accelerate()
 
 #region Movement Functions
+# MOVE VECTOR KEY (x, y):
+# x is sideways (left is negative, right is positive)
+# y is vertical (forward is positive, back is negative)
 
 func accelerate() -> void:
 	kart_sphere.sim_move_vector = 1.0
@@ -83,7 +71,7 @@ func turn_right(timer: float = 0.0) -> void:
 func cancel_turn() -> void:
 	kart_sphere.sim_turn_vector = 0.0
 
-# Soon... not yet, but soon...
+# NOW IS THAT TIME LADIES GENTLEMEN AND EVERYONE IN-BETWEEN
 func spin() -> void:
 	kart_sphere.sim_spinInput = true
 
@@ -91,20 +79,20 @@ func spin() -> void:
 
 ## Updates the checkpoint rotation the CPU refers to
 func _on_local_lap_logic_check_passed(check_index: int) -> void:
-	if check_index + 1 >= len(checkpoint_rotations):
+	if check_index + 1 >= len(checkpoint_positions):
 		current_checkpoint = 0
 	else:
 		current_checkpoint = check_index + 1
 
 ## Gives the CPU the rotation of all checkpoints
-func get_check_rotations(arr: Array) -> void:
-	checkpoint_rotations = arr
+func get_check_positions(arr: Array) -> void:
+	checkpoint_positions = arr
 
 func _on_tree_entered() -> void:
 	await Events.on_checkpoints_list_filled # Gives time for TrackInfo to update
 	if !player.current_track:
 		await get_tree().create_timer(0.1).timeout
-		get_check_rotations(player.current_track.checkpoint_rotations)
+		get_check_positions(player.current_track.checkpoint_positions)
 	else:
-		get_check_rotations(player.current_track.checkpoint_rotations)
+		get_check_positions(player.current_track.checkpoint_positions)
 	print()

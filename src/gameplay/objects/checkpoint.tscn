@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c81evryt8s1e1" path="res://src/tracks/checkpoint.gd" id="1_aiwk1"]
 [ext_resource type="Script" uid="uid://dodgpskpo6lgr" path="res://src/gameplay/objects/checkpoint_zone.gd" id="2_knjhe"]
+[ext_resource type="Script" uid="uid://do0nxyiy7s8dc" path="res://src/gameplay/objects/cpu_area.gd" id="3_nf3ul"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
 size = Vector3(0.155, 5, 10)
@@ -24,6 +25,7 @@ debug_color = Color(0.6986487, 0.30722323, 1, 1)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="cpuArea" type="Area3D" parent="Zone" unique_id=1670768019]
+script = ExtResource("3_nf3ul")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone/cpuArea" unique_id=638819135]
 transform = Transform3D(13.11, 0, 0, 0, 13.11, 0, 0, 0, 13.11, 0, 0, 0)
@@ -31,3 +33,4 @@ shape = SubResource("CylinderShape3D_skbuk")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_entered" from="Zone" to="Zone" method="_on_area_entered"]
+[connection signal="area_entered" from="Zone/cpuArea" to="Zone/cpuArea" method="_on_area_entered"]

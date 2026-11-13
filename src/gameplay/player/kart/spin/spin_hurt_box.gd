@@ -2,6 +2,7 @@ class_name SpinHurtBox extends Area3D
 
 @onready var shape_cast_3d: ShapeCast3D = %ShapeCast3D
 @onready var kart_sphere: Kart_Sphere = %Kart_Sphere
+@onready var cpu_controls = $"../../CPU Controls"
 var parent : Player
 var spinIntangiblility := false
 
@@ -56,6 +57,7 @@ func apply_boost_panel_boost(boost_level : int) -> void: ## Applies speed boost 
 ## Connecting function that calls a vertical force function in player rigidbody
 func call_vertical_bounce(bounce : float = 10) -> void:
 	kart_sphere.apply_vertical_force(bounce)
+	cpu_controls.spin()
 
 #called by kartsphere
 func setIntangiblility(state : bool) -> void:

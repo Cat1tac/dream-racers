@@ -6,7 +6,7 @@ signal player_respawned(id: int)
 var key_checkpoints_passed: Array[CheckpointZone] ## Updating array of key checkpoints player has gone past
 var respawn_checkpoints_passed : Dictionary[CheckpointZone, int] ## Updating array of respawn checkpoints player has gone past
 var respawn_checkpoints : Array ##Array of checkpoint player can respawn at (currently all checkpoints)
-var key_checkpoints: Array ## Array of all key checkpoints
+var key_checkpoints: Array ## Array of all key checkpoints (progress checkpoints)
 var laps_done: int ## number of laps completed
 
 var race_timer: float = 0.0
@@ -49,12 +49,11 @@ func complete_lap() -> void:
 func add_checkpoint(checkpoint: CheckpointZone) -> void:
 	if !checkpoint.is_key_checkpoint:
 		return
-		
+	
 	if len(key_checkpoints) == len(key_checkpoints_passed):
 		return
 	
 	var _next_key_checkpoint = key_checkpoints[key_checkpoints_passed.size()] # This is the value that we are looking for
-	check_passed.emit(key_checkpoints.find(checkpoint))
 	
 	print("Comparing recieved ID: " + str(checkpoint) + "to the required ID: " + str(_next_key_checkpoint))
 	if checkpoint in _next_key_checkpoint:
@@ -62,6 +61,12 @@ func add_checkpoint(checkpoint: CheckpointZone) -> void:
 		print("LocalLapLogic: Checkpoint #" + str(key_checkpoints_passed.size()) + " was crossed.")
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(checkpoint) + " is not a valid checkpoint.")
+
+func add_cpu_zone(checkpoint: CheckpointZone) -> void:
+	var _next_key_checkpoint = respawn_checkpoints[key_checkpoints_passed.size()] # This is the value that we are looking for
+	for i in range(len(respawn_checkpoints)):
+		if checkpoint in respawn_checkpoints[i]:
+			check_passed.emit(i)
 
 ## Updates respawn point if it comes after the previous respawn point passed
 func update_respawn_point(new_respawn_point : CheckpointZone) -> void:

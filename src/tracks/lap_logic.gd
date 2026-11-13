@@ -12,7 +12,12 @@ func get_checkpoints() -> Array:
 	for child : Checkpoint in checkpoints.get_children():
 		temp_checkpoint_array.append(child.box_id)
 	return temp_checkpoint_array
-		
+
+func get_checkpoint_positions() -> Array:
+	var temp_position_array : Array
+	for child : Checkpoint in checkpoints.get_children():
+		temp_position_array.append(child.cpu_position)
+	return temp_position_array
 
 ## Tells LocalLapLogic to check for lap completion
 func _on_start_line_area_entered(area: Area3D) -> void:
