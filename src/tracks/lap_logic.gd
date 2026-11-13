@@ -4,6 +4,7 @@ class_name LapLogic extends Node
 @onready var checkpoints: Node = $Checkpoints
 @onready var respawn_point: Marker3D = $"StartLine/Respawn Point"
 @export var lap_count : int = 3
+@onready var start_line: Area3D = $StartLine
 
 # All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
 
@@ -23,6 +24,7 @@ func _on_start_line_area_entered(area: Area3D) -> void:
 		local_lap_logic.respawn_rotation = respawn_point.global_rotation
 
 func _ready() -> void:
+	Events.get_start_line_position.emit(start_line.global_position)
 	if track.willCountdown:
 		await get_tree().create_timer(2).timeout
 		track.countdown(3)

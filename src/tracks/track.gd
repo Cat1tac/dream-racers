@@ -38,10 +38,10 @@ func race_over() -> void:
 		GameManager.remove_all_cpus()
 		GameManager.load_into_path(MAIN_MENU)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if Input.is_key_pressed(KEY_1):
-		race_over()
+# NOTE DEBUG
+#func _process(_delta: float) -> void:
+	#if Input.is_key_pressed(KEY_1):
+		#race_over()
 	
 func get_default_player_spawn() -> Array[Marker3D]:
 	return player_spawners

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cprhmbxvp1y2i" path="res://src/tracks/track.gd" id="1_hgstr"]
 [ext_resource type="PackedScene" uid="uid://f1m11f0608mt" path="res://assets/models/tracks/Baa Baa Battleship/battleship.glb" id="2_yg7te"]
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="4_ey2j6"]
+[ext_resource type="PackedScene" uid="uid://dcnxsnn2jbfc6" path="res://src/gameplay/local_multiplayer/placement_system.tscn" id="5_hvvfl"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="5_nb2ps"]
 [ext_resource type="PackedScene" uid="uid://ors18lntsr0j" path="res://src/gameplay/objects/obstacles/burner.tscn" id="6_nb2ps"]
 [ext_resource type="Script" uid="uid://dyhuwsxaxhemf" path="res://src/tracks/baa baa battleship/cannon_manager.gd" id="7_on4u4"]
@@ -943,6 +944,8 @@ is_key_checkpoint = true
 
 [node name="Checkpoint52" parent="LapLogic/Checkpoints" unique_id=994931922 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-4.3711378e-08, 0, 0.9999999, 0, 0.99999976, 0, -0.99999976, 0, -4.3711385e-08, 29.896057, 2.4237576, 113.41304)
+
+[node name="PlacementSystem" parent="." unique_id=1269088763 instance=ExtResource("5_hvvfl")]
 
 [node name="Obstacles" type="Node" parent="." unique_id=559826282]
 

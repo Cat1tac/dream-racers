@@ -18,9 +18,9 @@ func _ready() -> void:
 	Events.on_race_over.connect(_race_over)
 
 ## NOTE DEBUG
-func _process(_delta: float) -> void:
-	if Input.is_key_pressed(KEY_1):
-		Events.on_race_over.emit()
+#func _process(delta: float) -> void:
+	#if Input.is_key_pressed(KEY_1):
+		#Events.on_race_over.emit()
 
 func _update_countdown_text(num : int, delay : int) -> void:
 	await get_tree().create_timer((delay * 60 * get_process_delta_time()) / 60).timeout
@@ -41,5 +41,3 @@ func _race_over() -> void:
 	
 	await get_tree().create_timer(1).timeout
 	instantiated_results_screen.show_results_screen()
-	## RESULTS SCREEN GOES HERE
-	

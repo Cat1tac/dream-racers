@@ -2,6 +2,16 @@
 
 [ext_resource type="Theme" uid="uid://bo3kocbypqxpd" path="res://src/ui/themes/results_screen.tres" id="1_71kpc"]
 [ext_resource type="Script" uid="uid://cvtlydesm2cpk" path="res://src/ui/scripts/results/player_result_panel.gd" id="2_8pm52"]
+[ext_resource type="Texture2D" uid="uid://cw4ct6it7blr" path="res://assets/ui/numbers/DreamRacers #0.PNG" id="3_0nj4o"]
+[ext_resource type="Texture2D" uid="uid://bwsc0mn580d0d" path="res://assets/ui/numbers/DreamRacers #1.PNG" id="4_tvd73"]
+[ext_resource type="Texture2D" uid="uid://crtmbvrlpc18q" path="res://assets/ui/numbers/DreamRacers #2.PNG" id="5_mdm11"]
+[ext_resource type="Texture2D" uid="uid://dbuxk52qodf07" path="res://assets/ui/numbers/DreamRacers #3.PNG" id="6_7c0cw"]
+[ext_resource type="Texture2D" uid="uid://b3328rni0reh5" path="res://assets/ui/numbers/DreamRacers #4.PNG" id="7_317ry"]
+[ext_resource type="Texture2D" uid="uid://681dlj6uqobh" path="res://assets/ui/numbers/DreamRacers #5.PNG" id="8_owbi8"]
+[ext_resource type="Texture2D" uid="uid://33ejv6sxwkoq" path="res://assets/ui/numbers/DreamRacers #6.PNG" id="9_o60t4"]
+[ext_resource type="Texture2D" uid="uid://dkulgrefxkeio" path="res://assets/ui/numbers/DreamRacers #7.PNG" id="10_ebrwg"]
+[ext_resource type="Texture2D" uid="uid://i6gjovddrkai" path="res://assets/ui/numbers/DreamRacers #8.PNG" id="11_okgni"]
+[ext_resource type="Texture2D" uid="uid://l3fffulk5fga" path="res://assets/ui/numbers/DreamRacers #9.PNG" id="12_gtd8p"]
 
 [node name="PlayerPanel" type="PanelContainer" unique_id=513162898]
 offset_right = 40.0
@@ -9,6 +19,7 @@ offset_bottom = 40.0
 theme = ExtResource("1_71kpc")
 theme_type_variation = &"PlayerPanel"
 script = ExtResource("2_8pm52")
+placement_numbers = Array[CompressedTexture2D]([ExtResource("3_0nj4o"), ExtResource("4_tvd73"), ExtResource("5_mdm11"), ExtResource("6_7c0cw"), ExtResource("7_317ry"), ExtResource("8_owbi8"), ExtResource("9_o60t4"), ExtResource("10_ebrwg"), ExtResource("11_okgni"), ExtResource("12_gtd8p")])
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=613244858]
 layout_mode = 2
@@ -21,10 +32,19 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 50
 
+[node name="PlacementNumber" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1260602703]
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0.19, 0)
+texture = ExtResource("3_0nj4o")
+expand_mode = 3
+stretch_mode = 4
+
 [node name="PlayerPanelLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1580557327]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 3
 theme_type_variation = &"PlayerPanelLabel"
 text = "Character Name Goes Here"
 
