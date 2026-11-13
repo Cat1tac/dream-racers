@@ -4,7 +4,7 @@ class_name Local_Player_HUD extends CanvasLayer
 @onready var lap_count_total: Label = %"Lap Count Total"
 @onready var time_elapsed: Label = %Time
 @export var speedometer : Speedometer
-@onready var lap_count_h_box: HBoxContainer = $MarginContainer/LapCountHBox
+@onready var lap_count_h_box: HBoxContainer = %LapCountHBox
 @export var number_textures : Array[CompressedTexture2D]
 @onready var place_number: TextureRect = %PlaceNumber
 

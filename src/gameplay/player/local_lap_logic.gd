@@ -30,7 +30,7 @@ func complete_lap() -> void:
 		key_checkpoints_passed.clear()
 		respawn_checkpoints_passed.clear()
 		last_respawn_passed = null
-		laps_done += 3
+		laps_done += 1
 		Events.on_get_lap_count.emit(laps_done, parent.playerId)
 		print("LocalLapLogic: lap #" + str(laps_done) + " completed!! yay!!")
 	else:

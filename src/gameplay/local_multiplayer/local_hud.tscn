@@ -93,6 +93,7 @@ theme_override_constants/margin_left = -16
 theme_override_constants/margin_top = 104
 
 [node name="LapCountHBox" type="HBoxContainer" parent="LapPlaceMargin/HBoxContainer/LapCountMargin" unique_id=988266475]
+unique_name_in_owner = true
 layout_mode = 2
 offset_transform_enabled = true
 

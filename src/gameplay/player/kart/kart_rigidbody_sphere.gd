@@ -446,7 +446,6 @@ func _drift_boost_control(delta : float) -> void:
 	if boost_timer > 0:
 		if (currently_snaking and boost_timer < 0.2) or dreamcatcher_boost_timer > 0 or kart_model.tricking:
 			# allow for potential extra boost
-			print("wth")
 			pass
 		else:
 			

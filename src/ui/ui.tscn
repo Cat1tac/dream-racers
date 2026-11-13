@@ -2588,7 +2588,7 @@ current = true
 size = 2.234
 
 [node name="OmniLight3D" type="OmniLight3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer/SubViewport" unique_id=2095721602]
-transform = Transform3D(0.99577314, -0.09184718, 0, 0.09184718, 0.99577314, 0, 0, 0, 1, -5.3712745, 1.9989603, -6.3174677)
+transform = Transform3D(0.99577314, -0.09184718, 0, 0.09184718, 0.99577314, 0, 0, 0, 1, -5.3712745, 1.9989603, -2.9561062)
 light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
 light_energy = 1.481
 omni_range = 12.599
@@ -2659,7 +2659,7 @@ current = true
 size = 2.234
 
 [node name="OmniLight3D" type="OmniLight3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer/SubViewport" unique_id=1718926674]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.680183, 1.9989603, -14.963948)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.680183, 1.9989603, -15.9574585)
 visible = false
 light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
 light_energy = 1.481
