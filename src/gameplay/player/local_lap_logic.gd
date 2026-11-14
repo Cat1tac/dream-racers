@@ -108,7 +108,7 @@ func _process(delta: float) -> void:
 		var forward = -player_controller.center.global_basis.z
 		var backward = player_controller.center.global_basis.z
 		var reverse_vector = forward.direction_to(key_checkpoints[get_current_checkpoint_index() -1].global_position)
-		print(reverse_vector.dot(forward))
+		#print(reverse_vector.dot(forward))
 	#print("LalLogic: " + str(self.global_rotation_degrees))
 
 ##Puts key checkpoints and respawn checkpoints into their own arrays

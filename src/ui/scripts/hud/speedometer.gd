@@ -17,6 +17,7 @@ func _init() -> void:
 	_set_offscreen()
 
 func _ready() -> void:
+	speed_label.label_settings = speed_label.label_settings.duplicate()
 	start_scale_speed_label = speed_label.offset_transform_scale
 	Events.on_get_boost_lvl.connect(_update_speed_label)
 	Events.on_get_stored_charge.connect(_update_boost_meter)
@@ -53,7 +54,6 @@ func _update_speed_label(boost_lvl: int, player_id : int) -> void:
 			_reset_tween()
 			tween.tween_property(speed_label, "offset_transform_scale", start_scale_speed_label * 0.5, 0.05)
 			tween.tween_property(speed_label, "offset_transform_scale", start_scale_speed_label, 0.2).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-			print(start_scale_speed_label)
 			
 			var tex_to_use : int
 			if boost_lvl <= 1:
