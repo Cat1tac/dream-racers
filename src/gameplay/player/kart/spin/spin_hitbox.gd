@@ -27,9 +27,6 @@ func set_active(state : bool) -> void:
 func call_spin_boost() -> void:
 	kart_sphere.dreamcatcher_spin_boost()
 
-func _process(delta: float) -> void:
-	DebugDraw.draw_line(global_position, to_global(Vector3(-collision_point.x, collision_point.y, -collision_point.z)), Color(177.84, 24.316, 93.229, 1.0))
-
 func _on_area_entered(area: Area3D) -> void:
 	# for clashing with another player 
 	if area is SpinHitbox:

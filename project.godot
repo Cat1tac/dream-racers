@@ -190,6 +190,7 @@ controller_leave={
 
 [rendering]
 
+rendering_device/d3d12/max_resource_descriptors=131072
 rendering_device/driver="d3d12"
 rendering_device/driver.windows="d3d12"
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
