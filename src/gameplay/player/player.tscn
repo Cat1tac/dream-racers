@@ -236,6 +236,7 @@ boostParticles = [NodePath("../Center/VFX/BoostExhaust"), NodePath("../Center/VF
 spin_vfx = NodePath("../Center/VFX/SpinVFX")
 hover_vfx = NodePath("../Center/VFX/HoverVFX")
 top_speed = 28.0
+trailing_acceleration = 20.0
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
 stale_charge_curve = SubResource("Curve_54vdw")

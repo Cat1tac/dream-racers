@@ -23,14 +23,11 @@ var despawn_increment : float
 func _ready() -> void:
 	animation_player.play(animation)
 	collision_shape = area_3d.get_child(0) as CollisionShape3D
-	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if despawn_increment > 0:
-		self.hide()
-		collision_shape.disabled = true
 		despawn_increment -= delta
 	else:
 		self.show()
@@ -42,9 +39,12 @@ func _physics_process(_delta: float) -> void:
 		for area in area_3d.get_overlapping_areas():
 			if area is SpinHurtBox:
 				_do_item_effect(area as SpinHurtBox)
-				
+	
 func _do_item_effect(area : SpinHurtBox) -> void:
 	despawn_increment = despawn_length
+	self.hide()
+	collision_shape.disabled = true
+	
 	var kart : Kart_Sphere = area.kart_sphere
 	if sfx == SFX.MINI:
 		kart.audio_player.play_audio(kart.audio_player.SFX.MINI)

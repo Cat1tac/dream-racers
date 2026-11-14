@@ -16,7 +16,7 @@ spin_vfx = NodePath("spin_mesh/SpinMesh")
 show_curve = SubResource("Curve_474qe")
 vfx_colors = Dictionary[int, Color]({
 0: Color(18.892157, 18.892157, 18.892157, 1),
-1: Color(4.883833, 16.09049, 18.892157, 1),
+1: Color(4.877, 16.075, 18.892, 1),
 2: Color(18.892157, 4.8239684, 0, 1),
 3: Color(14.53401, 2.5491111, 18.892157, 1),
 4: Color(18.892157, 14.959051, 5.7818017, 1)

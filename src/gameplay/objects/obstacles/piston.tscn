@@ -27,7 +27,7 @@ debug_color = Color(0.995254, 0, 0.11792181, 1)
 
 [node name="piston" parent="." unique_id=566380059 instance=ExtResource("2_1g3o2")]
 
-[node name="Piston" parent="piston" index="0" unique_id=680468846]
+[node name="Piston" parent="piston" index="0" unique_id=1000179955]
 material_override = SubResource("StandardMaterial3D_lta63")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=775449481]

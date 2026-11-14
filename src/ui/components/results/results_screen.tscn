@@ -2,6 +2,15 @@
 
 [ext_resource type="Theme" uid="uid://bo3kocbypqxpd" path="res://src/ui/themes/results_screen.tres" id="1_1klhw"]
 [ext_resource type="Script" uid="uid://2178p6mwwxad" path="res://src/ui/scripts/results/results_screen.gd" id="1_m3dsn"]
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="3_pmnuj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xh83b"]
+font = ExtResource("3_pmnuj")
+font_size = 53
+outline_size = 12
+outline_color = Color(0.34200853, 0.091437586, 0.22419238, 1)
+shadow_size = 26
+shadow_color = Color(0.5787913, 0.17580563, 0.3329778, 0.5058824)
 
 [node name="ResultsScreen" type="Control" unique_id=2065009349]
 layout_mode = 3
@@ -40,6 +49,7 @@ size_flags_vertical = 0
 theme = ExtResource("1_1klhw")
 theme_type_variation = &"HeaderLabel"
 text = "Results"
+label_settings = SubResource("LabelSettings_xh83b")
 horizontal_alignment = 1
 vertical_alignment = 1
 

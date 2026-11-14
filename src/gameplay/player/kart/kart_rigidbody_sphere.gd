@@ -447,7 +447,6 @@ func _drift_boost_control(delta : float) -> void:
 	if boost_timer > 0:
 		if (currently_snaking and boost_timer < 0.2) or dreamcatcher_boost_timer > 0 or kart_model.tricking:
 			# allow for potential extra boost
-			print(currently_snaking)
 			pass
 		else:
 			
@@ -565,7 +564,6 @@ func _set_boost(speedMultiplier : float, timeAddition : float, allowOverCharge :
 		boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[BOOST_LEVEL.FOUR]["timeMax"]) 
 	else:
 		boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[current_boost_level]["timeMax"]) 
-	#Allow overcharges below lvl 4
 	
 	audio_player.play_audio(audio_player.SFX.BOOST)
 
@@ -812,7 +810,8 @@ func apply_bounce_force(bounce : float, direction : Vector3) -> void:
 	var angle_between_wall_and_player := forward.dot(direction) 
 	var vel := forward.dot(linear_velocity)
 	# The more a player is facing the wall the less they get bounced back
-	var force_vector : Vector3 = direction * (vel + (bounce * max(1 - abs(angle_between_wall_and_player), 0.7)))  * mass
+	var bounce_magnitude : float = min(10, abs(vel + (bounce * max(1 - abs(angle_between_wall_and_player), 0.7))))
+	var force_vector : Vector3 = direction * bounce_magnitude  * mass
 	apply_central_impulse(force_vector)
 	
 func apply_vertical_force(magnitude : float) -> void:

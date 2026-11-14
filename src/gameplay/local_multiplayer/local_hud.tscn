@@ -12,8 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://dkulgrefxkeio" path="res://assets/ui/numbers/DreamRacers #7.PNG" id="9_gk5ey"]
 [ext_resource type="Texture2D" uid="uid://i6gjovddrkai" path="res://assets/ui/numbers/DreamRacers #8.PNG" id="10_0fjxb"]
 [ext_resource type="Texture2D" uid="uid://l3fffulk5fga" path="res://assets/ui/numbers/DreamRacers #9.PNG" id="11_w52mv"]
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="13_iafy5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4x5ba"]
+font = ExtResource("13_iafy5")
 font_size = 60
 font_color = Color(0.85178113, 0.86646545, 0.9710317, 1)
 outline_size = 11
@@ -80,6 +82,7 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_rotation = -0.17453292
+theme_override_constants/separation = 18
 
 [node name="PlaceNumber" type="TextureRect" parent="LapPlaceMargin/HBoxContainer" unique_id=2033637410]
 unique_name_in_owner = true

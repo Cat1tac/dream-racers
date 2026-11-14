@@ -76,14 +76,14 @@ func _on_slam_box_area_entered(area: Area3D) -> void:
 		print("kart_y: " , area.global_position.y, "\nslam box y: ", slam_box.global_position.y)
 		if global_position != start_position:
 			print("yar")
-			kart.apply_slowdown_force(1)
+			kart._apply_stop(get_physics_process_delta_time())
 			kart.current_boost_level = kart.BOOST_LEVEL.ZERO
 		else:
 			shape_cast_3d.force_shapecast_update()
 			if shape_cast_3d.is_colliding():
 				for i in shape_cast_3d.get_collision_count():
 				# make it so that if the player is to one side of the opponent, their collision box will not use a collision point that is on the opposite side. Instead it will default to 1 of the opposite sign
-					var collision_point = to_local(shape_cast_3d.get_collision_point(i)).normalized()
+					var collision_point := to_local(shape_cast_3d.get_collision_point(i)).normalized()
 					print("area: " + str(to_local(area.global_position)))
 					#collision_point.x = 1 * signf(to_local(area.global_position).x)
 					kart.apply_bounce_force(10, Vector3(collision_point.x, 0, collision_point.z))

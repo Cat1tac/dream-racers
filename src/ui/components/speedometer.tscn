@@ -3,7 +3,11 @@
 [ext_resource type="Script" uid="uid://bj2nen6juufi7" path="res://src/ui/scripts/hud/speedometer.gd" id="1_5ys5r"]
 [ext_resource type="Texture2D" uid="uid://hnosxcwqjhrp" path="res://assets/ui/speedometer/SpeedometerWhole_Unfilled.png" id="1_qvrtp"]
 [ext_resource type="Texture2D" uid="uid://bk4ady2kikvkl" path="res://assets/ui/speedometer/StoredChargeBar.png" id="2_1mw6m"]
+[ext_resource type="Texture2D" uid="uid://ddc8r0ehmnqnv" path="res://assets/ui/speedometer/Dream_Racers_Speedometer_light_blue.png" id="2_cdg4w"]
+[ext_resource type="Texture2D" uid="uid://exs4n0b5oaw0" path="res://assets/ui/speedometer/Dream_Racers_Speedometer_Orange.png" id="3_cvle4"]
 [ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="4_jch6c"]
+[ext_resource type="Texture2D" uid="uid://fa1cq5acha5i" path="res://assets/ui/speedometer/Dream_Racers_Speedometer_Purple.png" id="4_p8mb3"]
+[ext_resource type="Texture2D" uid="uid://didb5feepebcf" path="res://assets/ui/speedometer/Dream_Racers_Speedometer_Yellow.png" id="5_2lqcl"]
 
 [sub_resource type="FontVariation" id="FontVariation_083un"]
 base_font = ExtResource("4_jch6c")
@@ -13,7 +17,7 @@ font = SubResource("FontVariation_083un")
 font_size = 610
 font_color = Color(0.85178113, 0.86646545, 0.9710317, 1)
 outline_size = 130
-outline_color = Color(0.2266917, 3.483463e-05, 0.22668988, 1)
+outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
 shadow_size = 278
 shadow_color = Color(0.13725491, 0, 0.18431373, 0.50980395)
 shadow_offset = Vector2(-0.385, 10.295)
@@ -39,6 +43,8 @@ grow_vertical = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource("1_5ys5r")
+outline_colors = Array[Color]([Color(0.21960784, 0.21960784, 0.21960784, 1), Color(0.105882354, 0.41568628, 0.5686275, 1), Color(0.654902, 0.21568628, 0.07450981, 1), Color(0.4392157, 0.16078432, 0.85490197, 1), Color(0.78039217, 0.6901961, 0, 1)])
+cloud_bar_tex = Array[CompressedTexture2D]([ExtResource("2_cdg4w"), ExtResource("3_cvle4"), ExtResource("4_p8mb3"), ExtResource("5_2lqcl")])
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1504378010]
 unique_name_in_owner = true
@@ -72,11 +78,12 @@ anchor_right = 0.545
 anchor_bottom = 0.8205175
 offset_left = 152.71666
 offset_top = -39.183167
-offset_right = 354.35828
+offset_right = 354.3587
 offset_bottom = 317.29944
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.2617994
+offset_transform_enabled = true
 text = "0"
 label_settings = SubResource("LabelSettings_1mw6m")
 horizontal_alignment = 1

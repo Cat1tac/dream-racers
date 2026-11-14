@@ -12,6 +12,23 @@
 [ext_resource type="Texture2D" uid="uid://dkulgrefxkeio" path="res://assets/ui/numbers/DreamRacers #7.PNG" id="10_ebrwg"]
 [ext_resource type="Texture2D" uid="uid://i6gjovddrkai" path="res://assets/ui/numbers/DreamRacers #8.PNG" id="11_okgni"]
 [ext_resource type="Texture2D" uid="uid://l3fffulk5fga" path="res://assets/ui/numbers/DreamRacers #9.PNG" id="12_gtd8p"]
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="13_tvd73"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mdm11"]
+font = ExtResource("13_tvd73")
+font_size = 53
+outline_size = 12
+outline_color = Color(0.34200853, 0.091437586, 0.22419238, 1)
+shadow_size = 26
+shadow_color = Color(0.5787913, 0.17580563, 0.3329778, 0.5058824)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7c0cw"]
+font = ExtResource("13_tvd73")
+font_size = 53
+outline_size = 12
+outline_color = Color(0.34200853, 0.091437586, 0.22419238, 1)
+shadow_size = 26
+shadow_color = Color(0.5787913, 0.17580563, 0.3329778, 0.5058824)
 
 [node name="PlayerPanel" type="PanelContainer" unique_id=513162898]
 offset_right = 40.0
@@ -47,6 +64,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PlayerPanelLabel"
 text = "Character Name Goes Here"
+label_settings = SubResource("LabelSettings_mdm11")
 
 [node name="FinishTimeLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=291102844]
 unique_name_in_owner = true
@@ -55,3 +73,4 @@ size_flags_horizontal = 10
 theme_type_variation = &"PlayerPanelLabel"
 theme_override_font_sizes/font_size = 48
 text = "0:00"
+label_settings = SubResource("LabelSettings_7c0cw")

@@ -4,15 +4,20 @@ class_name Speedometer extends Control
 @onready var speed_label: Label = %SpeedLabel
 ## delays the pop in of speedometer
 @export_range(0.0, 2.0, 0.1) var enter_time_delay: float 
+@export var outline_colors : Array[Color]
+@export var cloud_bar_tex : Array[CompressedTexture2D]
 
 var id : int
 
 var tween: Tween
+var previous_boost_lvl : int
+var start_scale_speed_label : Vector2
 
 func _init() -> void:
 	_set_offscreen()
 
 func _ready() -> void:
+	start_scale_speed_label = speed_label.offset_transform_scale
 	Events.on_get_boost_lvl.connect(_update_speed_label)
 	Events.on_get_stored_charge.connect(_update_boost_meter)
 	await get_tree().create_timer(enter_time_delay).timeout
@@ -41,8 +46,21 @@ func _update_speed_label(boost_lvl: int, player_id : int) -> void:
 	## rounds and lerps [code]speed[/code] to reduce flickering when between two close int values
 	if player_id == id:
 		#var display_speed: int = roundi(lerpf(speed * 2.23694, 1.0, 0.01))
-		
+		speed_label.label_settings.outline_color = outline_colors[boost_lvl]
 		speed_label.text = str(boost_lvl) #converts to mph
+		if previous_boost_lvl != boost_lvl:
+			previous_boost_lvl = boost_lvl
+			_reset_tween()
+			tween.tween_property(speed_label, "offset_transform_scale", start_scale_speed_label * 0.5, 0.05)
+			tween.tween_property(speed_label, "offset_transform_scale", start_scale_speed_label, 0.2).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+			print(start_scale_speed_label)
+			
+			var tex_to_use : int
+			if boost_lvl <= 1:
+				tex_to_use = 0
+			else:
+				tex_to_use = boost_lvl - 1
+			texture_progress_bar.texture_progress = cloud_bar_tex[tex_to_use]
 
 func _set_offscreen() -> void:
 	offset_transform_enabled = true
