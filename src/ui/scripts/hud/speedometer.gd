@@ -13,7 +13,7 @@ func _init() -> void:
 	_set_offscreen()
 
 func _ready() -> void:
-	Events.on_get_speed.connect(_update_speed_label)
+	Events.on_get_boost_lvl.connect(_update_speed_label)
 	Events.on_get_stored_charge.connect(_update_boost_meter)
 	await get_tree().create_timer(enter_time_delay).timeout
 	_init_pop_in()
@@ -37,12 +37,12 @@ func _update_boost_meter(lvl : int, time : float, player_id : int, timeMax : flo
 	else: # do boost time decrease
 		texture_progress_bar.value = time * (values_of_clouds[lvl - 1] / timeMax)
 
-func _update_speed_label(speed: float, _drift: float, player_id : int) -> void:
+func _update_speed_label(boost_lvl: int, player_id : int) -> void:
 	## rounds and lerps [code]speed[/code] to reduce flickering when between two close int values
 	if player_id == id:
-		var display_speed: int = roundi(lerpf(speed * 2.23694, 1.0, 0.01))
+		#var display_speed: int = roundi(lerpf(speed * 2.23694, 1.0, 0.01))
 		
-		speed_label.text = str(abs(display_speed)) #converts to mph
+		speed_label.text = str(boost_lvl) #converts to mph
 
 func _set_offscreen() -> void:
 	offset_transform_enabled = true

@@ -442,7 +442,7 @@ func _drift_boost_control(delta : float) -> void:
 				_allow_boost_to_4()
 			_:
 				drift_timer = drift_timer
-				
+		
 	#Boost timer Countdown
 	if boost_timer > 0:
 		if (currently_snaking and boost_timer < 0.2) or dreamcatcher_boost_timer > 0 or kart_model.tricking:
@@ -468,12 +468,11 @@ func _drift_boost_control(delta : float) -> void:
 		if drift_stage > 2:
 			drift_stage = 2
 			_set_drifting_stage(2)
-		
-	if current_boost_level == BOOST_LEVEL.ZERO:
-		if drift_stage <= 2: 
-			Events.on_get_stored_charge.emit(drift_stage, drift_timer, player.playerId, drift_charge_curve.get_point_position(drift_stage + 1).x, true)
-	elif current_boost_level > BOOST_LEVEL.ZERO and boost_timer > 0:
+	
+
+	if current_boost_level > BOOST_LEVEL.ZERO and boost_timer > 0:
 		Events.on_get_stored_charge.emit(current_boost_level, boost_timer, player.playerId, boost_level_speed_time[current_boost_level]["timeMax"], false)
+	Events.on_get_boost_lvl.emit(current_boost_level, player.playerId)
 
 func _allow_boost_to_2() -> void:
 	if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
@@ -530,7 +529,7 @@ func remove_drift_charge() -> void:
 	boost_panels_drifted_over = 0
 	
 ## Sets boost level to the charge level and then sets the boost
-func execute_boost(charge_lvl : int, remove_drift : bool = true, increase_uses : bool = true) -> void:
+func execute_boost(charge_lvl : int, remove_drift : bool = true, increase_uses : bool = true, bypass_stale : bool = false, allow_over_charge : bool = false) -> void:
 	var boost_lvl_to_use : BOOST_LEVEL
 	for level : BOOST_LEVEL in BOOST_LEVEL.values(): # Sets boost to use to charge lvl
 		if level == charge_lvl:
@@ -550,16 +549,24 @@ func execute_boost(charge_lvl : int, remove_drift : bool = true, increase_uses :
 	#print("Uses of " + str(boost_lvl_to_use) + " :" + str(boost_level_speed_time[boost_lvl_to_use]["uses"]))
 	var speedMultiplier : float = boost_level_speed_time[boost_lvl_to_use]["spd_multiplier"]
 	var time : float = boost_level_speed_time[boost_lvl_to_use]["timeMax"] * stale_charge_curve.sample(boost_level_speed_time[boost_lvl_to_use]["uses"])
-	_set_boost(speedMultiplier, time)
+	if bypass_stale:
+		time = boost_level_speed_time[boost_lvl_to_use]["timeMax"]
+	_set_boost(speedMultiplier, time, allow_over_charge)
 	
 	if remove_drift:
 		remove_drift_charge()
 
 ## Applies the boost stat. The more boosts a player gets, the longer they can extend their boost timer and keep their "actual boost" high. The "actual boost" stat won't restart until the timer reaches zero
-func _set_boost(speedMultiplier : float, timeAddition : float) -> void:
+func _set_boost(speedMultiplier : float, timeAddition : float, allowOverCharge : bool) -> void:
 	# checks whether the current "boost_actual_speed" is greater than the next "boost actual speed". If not then it will stay as the higher one
 	boost_actual_speed = top_speed + (boost_top_speed * speedMultiplier) if boost_actual_speed < top_speed + (boost_top_speed * speedMultiplier) else boost_actual_speed
-	boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[current_boost_level]["timeMax"]) 
+	
+	if allowOverCharge and current_boost_level < BOOST_LEVEL.FOUR:
+		boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[BOOST_LEVEL.FOUR]["timeMax"]) 
+	else:
+		boost_timer = min(boost_timer + timeAddition, boost_level_speed_time[current_boost_level]["timeMax"]) 
+	#Allow overcharges below lvl 4
+	
 	audio_player.play_audio(audio_player.SFX.BOOST)
 
 func _get_charge_level() -> void:
@@ -754,7 +761,7 @@ func _physics_process(delta: float) -> void:
 	if on_ground():
 		hover_vfx.show()
 		if tricked:
-			execute_boost(2, false)
+			execute_boost(2, false, false, true, true)
 		reset_trick()
 		
 		apply_central_force(-get_gravity() * mass) # cancels out gravity

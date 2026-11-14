@@ -237,7 +237,7 @@ area_3d = NodePath("Area3D")
 [node name="Stack_Cloud" parent="." unique_id=886736233 instance=ExtResource("2_plnd7")]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="Energy" parent="Stack_Cloud" index="0" unique_id=1091087847]
+[node name="Energy" parent="Stack_Cloud" index="0" unique_id=1678003582]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8259698e-09, 0.04177332, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_pijd7")
 
@@ -246,17 +246,17 @@ light_color = Color(0.8753333, 0.32, 1, 1)
 light_cull_mask = 4293918724
 omni_range = 1.587
 
-[node name="Cloud_B" parent="Stack_Cloud/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(886736233, 487104853) index="0" unique_id=1526974364]
+[node name="Cloud_B" parent="Stack_Cloud/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(886736233, 1773442672) index="0" unique_id=22451396]
 layers = 4
 cast_shadow = 0
 surface_material_override/0 = SubResource("ShaderMaterial_h5mak")
 
-[node name="Cloud_M" parent="Stack_Cloud/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(886736233, 487104853) index="1" unique_id=1462798444]
+[node name="Cloud_M" parent="Stack_Cloud/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(886736233, 1773442672) index="1" unique_id=1031583081]
 layers = 4
 cast_shadow = 0
 surface_material_override/0 = SubResource("ShaderMaterial_h5mak")
 
-[node name="Cloud_T" parent="Stack_Cloud/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(886736233, 487104853) index="2" unique_id=1767900911]
+[node name="Cloud_T" parent="Stack_Cloud/Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(886736233, 1773442672) index="2" unique_id=613440555]
 layers = 4
 cast_shadow = 0
 surface_material_override/0 = SubResource("ShaderMaterial_h5mak")

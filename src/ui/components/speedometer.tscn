@@ -3,15 +3,20 @@
 [ext_resource type="Script" uid="uid://bj2nen6juufi7" path="res://src/ui/scripts/hud/speedometer.gd" id="1_5ys5r"]
 [ext_resource type="Texture2D" uid="uid://hnosxcwqjhrp" path="res://assets/ui/speedometer/SpeedometerWhole_Unfilled.png" id="1_qvrtp"]
 [ext_resource type="Texture2D" uid="uid://bk4ady2kikvkl" path="res://assets/ui/speedometer/StoredChargeBar.png" id="2_1mw6m"]
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="4_jch6c"]
+
+[sub_resource type="FontVariation" id="FontVariation_083un"]
+base_font = ExtResource("4_jch6c")
 
 [sub_resource type="LabelSettings" id="LabelSettings_1mw6m"]
-font_size = 400
+font = SubResource("FontVariation_083un")
+font_size = 610
 font_color = Color(0.85178113, 0.86646545, 0.9710317, 1)
-outline_size = 65
-outline_color = Color(0.22669175, 3.47865e-05, 0.22668979, 1)
-shadow_size = 90
+outline_size = 130
+outline_color = Color(0.2266917, 3.483463e-05, 0.22668988, 1)
+shadow_size = 278
 shadow_color = Color(0.13725491, 0, 0.18431373, 0.50980395)
-shadow_offset = Vector2(5.06, 15.89)
+shadow_offset = Vector2(-0.385, 10.295)
 
 [sub_resource type="LabelSettings" id="LabelSettings_cdg4w"]
 font_size = 130
@@ -65,10 +70,10 @@ anchor_left = 0.038000003
 anchor_top = 0.34600002
 anchor_right = 0.545
 anchor_bottom = 0.8205175
-offset_left = 251.1401
-offset_top = -138.18002
-offset_right = 190.07751
-offset_bottom = 50.982544
+offset_left = 152.71666
+offset_top = -39.183167
+offset_right = 354.35828
+offset_bottom = 317.29944
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.2617994
@@ -79,6 +84,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="MPHLabel" type="Label" parent="TextureProgressBar" unique_id=763399812]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.24700001
