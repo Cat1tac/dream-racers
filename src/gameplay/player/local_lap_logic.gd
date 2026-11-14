@@ -100,11 +100,15 @@ func _ready() -> void:
 
 # Manages Timer
 func _process(delta: float) -> void:
-	if player_controller.isRacing:
+	if player_controller.isRacing and GameManager.is_in_match:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 		## use playerId to set score individually
 		GameManager.player_list[parent.playerId].score = _calculate_score()
+		var forward = -player_controller.center.global_basis.z
+		var backward = player_controller.center.global_basis.z
+		var reverse_vector = forward.direction_to(key_checkpoints[get_current_checkpoint_index() -1].global_position)
+		print(reverse_vector.dot(forward))
 	#print("LalLogic: " + str(self.global_rotation_degrees))
 
 ##Puts key checkpoints and respawn checkpoints into their own arrays
@@ -145,7 +149,7 @@ func get_current_checkpoint_index() -> int:
 	if key_checkpoints_passed.size() == 0:
 		return 0
 	
-	return clampi(key_checkpoints_passed.size(), 0, 6)
+	return clampi(key_checkpoints_passed.size(), 0, key_checkpoints.size() - 1)
 
 func get_next_checkpoint_index() -> int:
 	# if within the normal amount of key checkpoints
