@@ -694,22 +694,22 @@ willCountdown = true
 
 [node name="battleship" parent="." unique_id=1332841673 instance=ExtResource("2_yg7te")]
 
-[node name="Ship_Body" parent="battleship" index="0" unique_id=333392513]
+[node name="Ship_Body" parent="battleship" index="0" unique_id=256960084]
 surface_material_override/0 = SubResource("StandardMaterial3D_u5ms0")
 
-[node name="Track" parent="battleship" index="1" unique_id=1371903982]
+[node name="Track" parent="battleship" index="1" unique_id=2128403098]
 layers = 5
 
-[node name="Castle_col" parent="battleship" index="3" unique_id=1499380609]
+[node name="Castle_col" parent="battleship" index="3" unique_id=442715781]
 collision_layer = 4
 
-[node name="Ship_Body_col" parent="battleship" index="4" unique_id=260665780]
+[node name="Ship_Body_col" parent="battleship" index="4" unique_id=1491985901]
 collision_layer = 4
 
-[node name="Ship_inside_walls_col" parent="battleship" index="6" unique_id=83658644]
+[node name="Ship_inside_walls_col" parent="battleship" index="6" unique_id=378429438]
 collision_layer = 4
 
-[node name="Track_col" parent="battleship" index="7" unique_id=476340787]
+[node name="Track_col" parent="battleship" index="7" unique_id=1429067214]
 collision_layer = 2
 
 [node name="Spawns" type="Node3D" parent="." unique_id=114101200]
@@ -750,6 +750,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 28.4
 
 [node name="Checkpoint2" parent="LapLogic/Checkpoints" unique_id=590320438 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 28.460455, 9.81329, -45.313606)
+is_key_checkpoint = true
 
 [node name="Checkpoint3" parent="LapLogic/Checkpoints" unique_id=1859842392 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.9998523, 0, -0.017187107, 0, 1, 0, 0.017187107, 0, 0.9998523, 69.87289, 9.81329, -87.51284)
@@ -775,6 +776,7 @@ transform = Transform3D(-0.74492866, 0, 0.6671442, 0, 1, 0, -0.6671442, 0, -0.74
 
 [node name="Checkpoint7" parent="LapLogic/Checkpoints" unique_id=1556954225 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -31.86428, 9.81329, -164.5768)
+is_key_checkpoint = true
 
 [node name="Checkpoint56" parent="LapLogic/Checkpoints" unique_id=797195144 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.6853701, 0, 0.7281947, 0, 1, 0, -0.7281947, 0, 0.6853701, -23.996576, 9.81329, -190.49178)
@@ -831,6 +833,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.5
 
 [node name="Checkpoint18" parent="LapLogic/Checkpoints" unique_id=211096607 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -237.24306, 2.8233805, -284.2109)
+is_key_checkpoint = true
 
 [node name="Checkpoint19" parent="LapLogic/Checkpoints" unique_id=2080892828 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -265.47742, 2.762597, -284.2109)
@@ -915,6 +918,7 @@ transform = Transform3D(0.0055881017, 0, -1.6349905, 0, 1.635, 0, 1.6349905, 0, 
 
 [node name="Checkpoint44" parent="LapLogic/Checkpoints" unique_id=1679123475 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.0034177992, 0, -0.99999416, 0, 1, 0, 0.99999416, 0, 0.0034177992, -265.79245, 59.66235, 18.990547)
+is_key_checkpoint = true
 
 [node name="Checkpoint45" parent="LapLogic/Checkpoints" unique_id=1510820903 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.0032823212, 0.0009527432, -0.99999416, -0.27875924, 0.960361, 0, 0.9603554, 0.27875763, 0.0034177992, -265.63632, 53.74027, 64.66829)
@@ -934,6 +938,7 @@ transform = Transform3D(0.99858814, -0.045792848, -0.02691243, 0.044640977, 0.99
 
 [node name="Checkpoint50" parent="LapLogic/Checkpoints" unique_id=1725275588 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999999, -114.33442, 2.7048216, 137.5922)
+is_key_checkpoint = true
 
 [node name="Checkpoint51" parent="LapLogic/Checkpoints" unique_id=44112797 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999999, -2.3383865, 2.8458042, 137.5922)
@@ -1013,7 +1018,7 @@ always_on = true
 [node name="CollisionShape3D" parent="Obstacles/Burners/Burner3/FlameBox" parent_id_path=PackedInt32Array(977023878, 1759877824) index="0" unique_id=1340658995]
 transform = Transform3D(2, -5.9604645e-08, 0, 5.9604645e-08, 2, 0, 0, -3.7252903e-09, 2, -0.1335144, 0.28173828, -10.507408)
 
-[node name="Flame" parent="Obstacles/Burners/Burner3/burner" parent_id_path=PackedInt32Array(977023878, 910642151) index="1" unique_id=90975128]
+[node name="Flame" parent="Obstacles/Burners/Burner3/burner" parent_id_path=PackedInt32Array(977023878, 910642151) index="1" unique_id=1576219802]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner3" index="3" unique_id=790235135]
@@ -1026,7 +1031,7 @@ spot_angle = 54.88
 transform = Transform3D(0.7585542, 0.64872897, 0.06121351, 0.030709842, 0.058245502, -0.9978301, -0.6508866, 0.7587876, 0.024259984, -269.15305, 19.890285, -369.68292)
 always_on = true
 
-[node name="Flame" parent="Obstacles/Burners/Burner4/burner" parent_id_path=PackedInt32Array(1967368030, 910642151) index="1" unique_id=90975128]
+[node name="Flame" parent="Obstacles/Burners/Burner4/burner" parent_id_path=PackedInt32Array(1967368030, 910642151) index="1" unique_id=1576219802]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner4" index="3" unique_id=790235135]
@@ -1039,7 +1044,7 @@ spot_angle = 54.88
 transform = Transform3D(0.7585014, 0.6513228, -0.021332394, -0.0319879, 0.004516228, -0.99947834, -0.6508866, 0.7587876, 0.024259984, -316.02948, 30.919582, -282.50034)
 always_on = true
 
-[node name="Flame" parent="Obstacles/Burners/Burner5/burner" parent_id_path=PackedInt32Array(532866762, 910642151) index="1" unique_id=90975128]
+[node name="Flame" parent="Obstacles/Burners/Burner5/burner" parent_id_path=PackedInt32Array(532866762, 910642151) index="1" unique_id=1576219802]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner5" index="3" unique_id=790235135]

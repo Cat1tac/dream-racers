@@ -100,7 +100,7 @@ func _ready() -> void:
 
 # Manages Timer
 func _process(delta: float) -> void:
-	if player_controller.currentState == player_controller.STATES.RACING:
+	if player_controller.currentState == player_controller.STATES.RACING and GameManager.is_in_match:
 		race_timer += delta
 		Events.on_get_time.emit(snapped(race_timer, 0.001))
 		## use playerId to set score individually
@@ -145,7 +145,7 @@ func get_current_checkpoint_index() -> int:
 	if key_checkpoints_passed.size() == 0:
 		return 0
 	
-	return clampi(key_checkpoints_passed.size(), 0, 6)
+	return clampi(key_checkpoints_passed.size(), 0, key_checkpoints.size() - 1)
 
 func get_next_checkpoint_index() -> int:
 	# if within the normal amount of key checkpoints

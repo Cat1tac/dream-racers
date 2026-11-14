@@ -57,10 +57,10 @@ func show_results_screen() -> void:
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD).set_parallel()
 	
 	# tween each player with stagger delay
-	for i in player_panel_array.size():
-		player_panel_array[i].offset_transform_enabled = true
-		player_panel_array[i].show()
-		tween.tween_property(player_panel_array[i], "offset_transform_position_ratio", Vector2.ZERO, 0.3).set_delay(i * 0.08)
+	for child in players_v_box.get_children():
+		child.offset_transform_enabled = true
+		child.show()
+		tween.tween_property(child, "offset_transform_position_ratio", Vector2.ZERO, 0.3).set_delay(child.get_index() * 0.08)
 
 func hide_results_screen() -> void:
 	offset_transform_enabled = true
