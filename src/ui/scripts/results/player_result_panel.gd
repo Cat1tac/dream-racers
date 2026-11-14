@@ -19,7 +19,7 @@ func set_character_name(character: int) -> void:
 		2:
 			player_panel_label.text = "Nyx"
 		3: 
-			player_panel_label.text = "Muffin"
+			player_panel_label.text = "Chambo"
 		_: 
 			player_panel_label.text = "Character Not Found"
 

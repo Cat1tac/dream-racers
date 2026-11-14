@@ -736,7 +736,7 @@ transform = Transform3D(-3.4767578, 0, -0.5500508, 0, 3.52, 0, 0.5500508, 0, -3.
 [node name="Arrow2" parent="Objects" unique_id=1826455058 instance=ExtResource("7_on71r")]
 transform = Transform3D(1.971086, 0.67125845, -2.3033144, -0.8650795, 2.97931, 0.1279638, 2.2377403, 0.5604906, 2.078315, 114.0841, 44.161167, 2.0620995)
 
-[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=1772390452]
+[node name="Arrow" parent="Objects/Arrow2" index="0" unique_id=1904076460]
 transform = Transform3D(0.9966793, -0.07036513, -0.040979266, 0.06639898, 0.9936163, -0.09120381, 0.047135085, 0.088179916, 0.99498904, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_lsb3b")
 
@@ -806,6 +806,7 @@ transform = Transform3D(1.683314, 0, 0.15018082, 0, 1.69, 0, -0.15018082, 0, 1.6
 
 [node name="Checkpoint9" parent="LapLogic/Checkpoints" unique_id=816046364 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.5185908, 0, -0.8550226, 0, 1, 0, 0.8550226, 0, 0.5185908, 69.770195, 39.79499, -132.20088)
+is_key_checkpoint = true
 
 [node name="Checkpoint10" parent="LapLogic/Checkpoints" unique_id=294104067 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.93038315, 0, -0.36658883, 0, 1, 0, 0.36658883, 0, 0.93038315, 100.10248, 39.79499, -105.58828)
@@ -879,6 +880,7 @@ transform = Transform3D(-0.89293635, 0, 0.45018318, 0, 1, 0, -0.45018318, 0, -0.
 
 [node name="Checkpoint29" parent="LapLogic/Checkpoints" unique_id=1803804271 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.0716109, 0, 0.99743277, 0, 1, 0, -0.99743277, 0, -0.0716109, -34.478085, 7.0906906, 50.963776)
+is_key_checkpoint = true
 
 [node name="Checkpoint30" parent="LapLogic/Checkpoints" unique_id=661749362 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.16515669, 0, 0.98626745, 0, 1, 0, -0.98626745, 0, 0.16515669, -34.478085, -4.6745276, 11.158913)

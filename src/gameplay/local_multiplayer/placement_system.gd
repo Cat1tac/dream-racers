@@ -41,6 +41,6 @@ func _sort_by_time() -> void:
 		var time : float = player_scores[player.id]
 		var placement_index : int = scores_array.find(time)
 		Events.on_final_placement.emit(player.id, placement_index)
-		print("player_id: " + str(player.id) + "\nplacement_index: " + str(placement_index))
+		print("player_id: " + str(player.id) + "at placement_index: " + str(placement_index))
 	
 	scores_array.clear()
