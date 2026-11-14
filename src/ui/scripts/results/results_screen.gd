@@ -34,6 +34,7 @@ func _create_new_player_panel(player_id: int, placement_index : int) -> void:
 	players_v_box.move_child(player_panel_instance, placement_index)
 	player_panel_instance.set_character_name(GameManager.player_list[player_id].selected_character)
 	player_panel_instance.player_id = player_id
+	GameManager.player_list[player_id].score + placement_index
 	player_panel_instance.update_timer()
 	player_panel_instance.set_placement_number(placement_index)
 	player_panel_array.append(player_panel_instance)

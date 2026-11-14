@@ -750,6 +750,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 28.4
 
 [node name="Checkpoint2" parent="LapLogic/Checkpoints" unique_id=590320438 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 28.460455, 9.81329, -45.313606)
+is_key_checkpoint = true
 
 [node name="Checkpoint3" parent="LapLogic/Checkpoints" unique_id=1859842392 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(0.9998523, 0, -0.017187107, 0, 1, 0, 0.017187107, 0, 0.9998523, 69.87289, 9.81329, -87.51284)

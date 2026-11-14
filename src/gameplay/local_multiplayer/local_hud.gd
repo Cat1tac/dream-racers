@@ -47,6 +47,7 @@ func _update_lap_count(num : int, player_id) -> void:
 func _update_place_number(player_id : int, placement_index : int) -> void:
 	if player_id != id:
 		return
+	
 	place_number.texture = number_textures[placement_index + 1]
 
 ## hides all hud elements of a player that has finished the race
