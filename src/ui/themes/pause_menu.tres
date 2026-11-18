@@ -1,7 +1,9 @@
 [gd_resource type="Theme" format=3 uid="uid://c0jrdf0qdypgl"]
 
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="1_b3cns"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jmaq3"]
-bg_color = Color(0.45861095, 0.37383214, 0.6729983, 1)
+bg_color = Color(0.5305881, 0.44711828, 0.75125116, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -34,6 +36,23 @@ expand_margin_top = 5.0
 expand_margin_right = 20.0
 expand_margin_bottom = 5.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wmv4b"]
+bg_color = Color(0.38862434, 0.26308206, 0.5110366, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.1962485, 0.113877006, 0.31688794, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 20
+expand_margin_left = 20.0
+expand_margin_top = 5.0
+expand_margin_right = 20.0
+expand_margin_bottom = 5.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3cns"]
 bg_color = Color(0.6318, 0.4836, 0.78, 1)
 border_width_left = 5
@@ -47,10 +66,17 @@ corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
 [resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_focus_color = Color(0.86801994, 0.80861366, 0.93384165, 1)
+Button/colors/font_outline_color = Color(0.33628887, 0.22248995, 0.43842065, 1)
+Button/constants/outline_size = 12
 Button/font_sizes/font_size = 36
+Button/fonts/font = ExtResource("1_b3cns")
 Button/styles/focus = SubResource("StyleBoxFlat_jmaq3")
 Button/styles/hover = SubResource("StyleBoxFlat_jmaq3")
 Button/styles/normal = SubResource("StyleBoxFlat_spsxm")
+Button/styles/pressed = SubResource("StyleBoxFlat_wmv4b")
 HeaderLabel/base_type = &"Label"
 HeaderLabel/font_sizes/font_size = 60
+HeaderLabel/fonts/font = ExtResource("1_b3cns")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_b3cns")

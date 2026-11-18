@@ -2,7 +2,7 @@ extends NavButton
 
 @onready var line: ColorRect = $Line
 
-var line_size: Vector2 = Vector2(5000, 5)
+var line_size: Vector2 = Vector2(8000, 8)
 
 func enter() -> void:
 	show()
@@ -10,7 +10,7 @@ func enter() -> void:
 	
 	# line tween
 	_reset_tween()
-	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(line, "offset_transform_scale", line_size, 0.2)
 
 	await tween.finished
@@ -26,10 +26,11 @@ func enter() -> void:
 	
 
 func exit() -> void:
+	
 	# line tween
 	_reset_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
-	tween.tween_property(line, "offset_transform_scale", Vector2(0, 4), 0.1)
+	tween.tween_property(line, "offset_transform_scale", Vector2(0, 4), 0.2)
 	
 	await tween.finished
 	line.hide()
@@ -42,6 +43,8 @@ func exit() -> void:
 	tween.tween_property(self, "offset_transform_position_ratio", offscreen_vector_ratio, 0.5)
 	tween.tween_property(self, "offset_transform_scale", Vector2.ONE, 0.1)
 	
+	await tween.finished
+	hide()
 	# reset offset scale
 	line.offset_transform_scale = Vector2.ONE
 	

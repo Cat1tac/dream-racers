@@ -1,4 +1,4 @@
-class_name NavButton extends Button
+class_name NavButton extends TextureButton
 
 @export_category("Offscreen Position")
 @export var offscreen_vector_ratio: Vector2

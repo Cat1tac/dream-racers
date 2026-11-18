@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cty00qgrry1cv"]
 
 [ext_resource type="Theme" uid="uid://c0jrdf0qdypgl" path="res://src/ui/themes/pause_menu.tres" id="1_ih1qm"]
-[ext_resource type="Theme" uid="uid://0fbvbawx3yln" path="res://src/ui/themes/mainmenu_theme.tres" id="1_ssdop"]
 [ext_resource type="Script" uid="uid://buruflints3tv" path="res://src/ui/scripts/pause/pause_panel.gd" id="2_364fx"]
 [ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="4_qd1u7"]
 
@@ -36,7 +35,7 @@ theme_override_constants/margin_bottom = 15
 
 [node name="PauseLabel" type="Label" parent="MarginContainer/VBoxContainer/LabelMargin" unique_id=18639524]
 layout_mode = 2
-theme = ExtResource("1_ssdop")
+theme = ExtResource("1_ih1qm")
 theme_type_variation = &"HeaderLabel"
 text = "PAUSED"
 horizontal_alignment = 1

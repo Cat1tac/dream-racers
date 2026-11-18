@@ -1,76 +1,100 @@
 [gd_scene format=3 uid="uid://cwkwov7useclc"]
 
 [ext_resource type="Script" uid="uid://c8lq64rwluv5l" path="res://src/ui/scripts/menu/next_button.gd" id="1_265bg"]
+[ext_resource type="Texture2D" uid="uid://kcreow7p478r" path="res://assets/ui/main menu/READY.png" id="1_bj8b5"]
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="3_gfyeu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_265bg"]
-bg_color = Color(0.9969767, 0.30202687, 0.5264313, 1)
-border_width_left = 8
-border_width_top = 8
-border_width_right = 8
-border_width_bottom = 8
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-expand_margin_left = 30.0
-expand_margin_right = 28.0
-expand_margin_bottom = 20.0
-shadow_color = Color(1, 0.3, 0.52166665, 0.27450982)
-shadow_size = 10
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_praj7"]
-
-[node name="NextButton" type="Button" unique_id=1711733650]
+[node name="NextButton" type="TextureButton" unique_id=120271842]
 process_mode = 3
 z_index = 4
-custom_minimum_size = Vector2(150, 100)
-offset_right = 150.0
-offset_bottom = 100.0
+custom_minimum_size = Vector2(564, 383)
+anchors_preset = -1
+anchor_right = 0.29375
+anchor_bottom = 0.35462964
 pivot_offset_ratio = Vector2(0.5, 0.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 offset_transform_enabled = true
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 60
-theme_override_styles/normal = SubResource("StyleBoxFlat_265bg")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_265bg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_265bg")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_praj7")
-text = "Ready"
+texture_normal = ExtResource("1_bj8b5")
+ignore_texture_size = true
+stretch_mode = 4
 script = ExtResource("1_265bg")
+metadata/_edit_use_anchors_ = true
 
-[node name="PressStartLabel" type="Label" parent="." unique_id=772242078]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=274015971]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -94.5
-offset_top = -26.0
-offset_right = 50.5
-offset_bottom = 8.0
+anchors_preset = -1
+anchor_left = 0.25632572
+anchor_top = 0.04789322
+anchor_right = 0.7436743
+anchor_bottom = 0.95210683
+offset_left = 3.8652039
+offset_top = 93.026695
+offset_right = -3.8652039
+offset_bottom = -93.0267
 grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.99859715, 1)
+grow_vertical = 2
+rotation = 0.39088562
 pivot_offset_ratio = Vector2(0.5, 0.5)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 150
+metadata/_edit_use_anchors_ = true
+
+[node name="PressStartLabel" type="Label" parent="MarginContainer" unique_id=772242078]
+custom_minimum_size = Vector2(176, 29)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.49803922, 0.19215687, 0.6509804, 1)
+theme_override_colors/font_shadow_color = Color(0.8745098, 0.6313726, 0.78039217, 0.49019608)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 4
+theme_override_constants/outline_size = 8
 theme_override_constants/shadow_outline_size = 6
-theme_override_font_sizes/font_size = 24
+theme_override_fonts/font = ExtResource("3_gfyeu")
+theme_override_font_sizes/font_size = 36
 text = "Press Start"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Line" type="ColorRect" parent="." unique_id=233202992]
 z_index = -2
-layout_mode = 0
-offset_left = 100.0
-offset_top = 55.0
-offset_right = 101.0
-offset_bottom = 64.99998
+custom_minimum_size = Vector2(5, 8)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -4.0
+offset_right = 2.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
 offset_transform_enabled = true
-color = Color(1, 1, 1, 0.7411765)
+color = Color(0.98039216, 0.9647059, 1, 0.65882355)
+
+[node name="OutlineTop" type="ColorRect" parent="Line" unique_id=612739697]
+custom_minimum_size = Vector2(50, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_right = 25.0
+offset_bottom = 1.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
+
+[node name="OutlineBottom" type="ColorRect" parent="Line" unique_id=750563948]
+custom_minimum_size = Vector2(50, 1)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)

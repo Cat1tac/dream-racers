@@ -2703,22 +2703,25 @@ size_flags_vertical = 8
 
 [node name="NextButtonMargin" type="MarginContainer" parent="UILayer/CharacterSelect" unique_id=1005794077]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.9447917
-anchor_top = 0.44814816
-anchor_right = 1.0
-anchor_bottom = 0.55185187
-offset_left = 43.0
-offset_top = 35.0
-offset_bottom = -35.0
-grow_horizontal = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -282.0
+offset_top = -191.5
+offset_right = 282.0
+offset_bottom = 191.5
+grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_right = 875
-metadata/_edit_use_anchors_ = true
+theme_override_constants/margin_right = 0
 
 [node name="NextButton" parent="UILayer/CharacterSelect/NextButtonMargin" unique_id=1711733650 instance=ExtResource("10_ba7qp")]
 layout_mode = 2
-offscreen_vector_ratio = Vector2(7, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+stretch_mode = 5
+offscreen_vector_ratio = Vector2(3, 0)
 
 [node name="TrackSelect" type="Control" parent="UILayer" unique_id=424881822 node_paths=PackedStringArray("ui_root", "transition_animations", "previous_state")]
 unique_name_in_owner = true
@@ -2850,15 +2853,17 @@ offset_transform_enabled = false
 
 [node name="NextButtonMargin" type="MarginContainer" parent="UILayer/TrackSelect" unique_id=1112518091]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.9479167
-anchor_top = 0.4537037
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5462963
+anchor_bottom = 0.5
+offset_left = -566.0
+offset_top = -126.0
+offset_right = -2.0
+offset_bottom = 257.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_right = 125
-metadata/_edit_use_anchors_ = true
 
 [node name="NextButton" parent="UILayer/TrackSelect/NextButtonMargin" unique_id=204602147 instance=ExtResource("10_ba7qp")]
 layout_mode = 2
@@ -2866,20 +2871,25 @@ offscreen_vector_ratio = Vector2(3, 0)
 
 [node name="BackgroundLayers" parent="." unique_id=1665049764 instance=ExtResource("7_gucsq")]
 unique_name_in_owner = true
+metadata/_edit_lock_ = true
 
 [node name="Background" parent="BackgroundLayers" index="0" unique_id=1876432076]
 material = SubResource("ShaderMaterial_g1bnb")
+metadata/_edit_lock_ = true
 
 [node name="Sun" parent="BackgroundLayers" index="1" unique_id=533300918]
 material = SubResource("ShaderMaterial_5m051")
+metadata/_edit_lock_ = true
 
 [node name="Clouds" parent="BackgroundLayers" index="2" unique_id=1379269482]
 material = SubResource("ShaderMaterial_lp5l8")
+layout_mode = 1
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0185186
 offset_right = 1920.0
 offset_bottom = 1100.0
-metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=156168761]
 stream = ExtResource("21_ba7qp")
