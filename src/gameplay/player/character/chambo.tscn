@@ -1646,7 +1646,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("%kart:position")
+tracks/2/path = NodePath("../kart:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1658,7 +1658,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("%kart:rotation")
+tracks/3/path = NodePath("../kart:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -2060,60 +2060,63 @@ advance_expression = "current_state == STATE.IN_RACE"
 transitions = ["Start", "On Character Select", SubResource("AnimationNodeStateMachineTransition_3e8qy"), "Start", "In Race", SubResource("AnimationNodeStateMachineTransition_yicwy")]
 graph_offset = Vector2(-29.77027, -16.762545)
 
-[node name="Chambo" type="Node3D" unique_id=322080802 node_paths=PackedStringArray("charge_markers", "boost_markers", "animation_tree", "skeleton")]
+[node name="Chambo" type="Node3D" unique_id=322080802 node_paths=PackedStringArray("charge_markers", "boost_markers", "container", "animation_tree", "skeleton")]
 script = ExtResource("1_o0kbn")
-charge_markers = [NodePath("kart/ChargeRMarker"), NodePath("kart/ChargeLMarker")]
-boost_markers = [NodePath("kart/BoostRMarker"), NodePath("kart/BoostLMarker")]
+charge_markers = [NodePath("Container/kart/ChargeRMarker"), NodePath("Container/kart/ChargeLMarker")]
+boost_markers = [NodePath("Container/kart/BoostRMarker"), NodePath("Container/kart/BoostLMarker")]
 stats = ExtResource("2_juxou")
-animation_tree = NodePath("AnimationTree")
-skeleton = NodePath("Chambo2/Chambo/Skeleton3D")
+container = NodePath("Container")
+animation_tree = NodePath("Container/AnimationTree")
+skeleton = NodePath("Container/Chambo2/Chambo/Skeleton3D")
 current_state = 1
 
-[node name="kart" parent="." unique_id=2060035001 instance=ExtResource("3_a1sv2")]
+[node name="Container" type="Node3D" parent="." unique_id=1107656115]
+
+[node name="kart" parent="Container" unique_id=2060035001 instance=ExtResource("3_a1sv2")]
 unique_name_in_owner = true
 transform = Transform3D(0.43871328, 0, -1.0630287, 0, 1.15, 0, 1.0630287, 0, 0.43871328, -0.43730998, 0.31978998, -2.8973198)
 
-[node name="Seat" parent="kart" index="0" unique_id=640102241]
+[node name="Seat" parent="Container/kart" index="0" unique_id=640102241]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="Base" parent="kart" index="1" unique_id=1519399393]
+[node name="Base" parent="Container/kart" index="1" unique_id=1519399393]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="Front" parent="kart" index="2" unique_id=1677741876]
+[node name="Front" parent="Container/kart" index="2" unique_id=1677741876]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="FrontHover" parent="kart" index="3" unique_id=65182859]
+[node name="FrontHover" parent="Container/kart" index="3" unique_id=65182859]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="BackHover" parent="kart" index="4" unique_id=1794152839]
+[node name="BackHover" parent="Container/kart" index="4" unique_id=1794152839]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="Thrusters" parent="kart" index="5" unique_id=1172435321]
+[node name="Thrusters" parent="Container/kart" index="5" unique_id=1172435321]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="Pedals" parent="kart" index="6" unique_id=648161991]
+[node name="Pedals" parent="Container/kart" index="6" unique_id=648161991]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="Side Panels" parent="kart" index="7" unique_id=198434373]
+[node name="Side Panels" parent="Container/kart" index="7" unique_id=198434373]
 surface_material_override/0 = SubResource("ShaderMaterial_7q742")
 
-[node name="Skeleton3D" parent="kart/Armature_002" parent_id_path=PackedInt32Array(2060035001, 904029681) index="0" unique_id=1334792970]
+[node name="Skeleton3D" parent="Container/kart/Armature_002" parent_id_path=PackedInt32Array(2060035001, 904029681) index="0" unique_id=1334792970]
 bones/1/scale = Vector3(1, 0.99999994, 0.99999994)
 
-[node name="ChargeLMarker" parent="kart" index="10" unique_id=1141162108]
+[node name="ChargeLMarker" parent="Container/kart" index="10" unique_id=1141162108]
 transform = Transform3D(0.99999994, 0, 0, 0, 1.0000001, 0, 0, 0, 0.99999994, 0.71595335, 0, -0.4381405)
 
-[node name="Chambo2" type="Node3D" parent="." unique_id=1958040727]
+[node name="Chambo2" type="Node3D" parent="Container" unique_id=1958040727]
 
-[node name="Chambo" type="Node3D" parent="Chambo2" unique_id=945133572]
+[node name="Chambo" type="Node3D" parent="Container/Chambo2" unique_id=945133572]
 transform = Transform3D(1.1477104, 0, 0.0725296, 0, 1.15, 0, -0.0725296, 0, 1.1477104, -0.33900002, 0, 0.3277)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="Chambo2/Chambo" unique_id=168072780]
+[node name="Skeleton3D" type="Skeleton3D" parent="Container/Chambo2/Chambo" unique_id=168072780]
 bones/0/name = "Root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, -3.8941437e-07, -3.8941437e-07, 0, -1, 0, 0.99999976, 0, 0, 0, 0)
 bones/0/enabled = true
-bones/0/position = Vector3(-5.1817484e-09, 0.00047253486, 0)
+bones/0/position = Vector3(-4.4324127e-09, 0.0004042013, 0)
 bones/0/rotation = Quaternion(0.7071068, -1.3767877e-07, -1.3767877e-07, 0.7071068)
 bones/0/scale = Vector3(1, 0.99999976, 1)
 bones/1/name = "leg.L"
@@ -2121,7 +2124,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(-1, 3.868258e-07, -2.4100714e-07, -2.4100714e-07, 0, 1, 3.868258e-07, 1, 0, 0.081760146, -5.9604645e-08, -0.16194813)
 bones/1/enabled = true
 bones/1/position = Vector3(0.081760146, -5.9604645e-08, -0.16194813)
-bones/1/rotation = Quaternion(5.155469e-08, 0.7071068, 0.7071068, -2.2197251e-07)
+bones/1/rotation = Quaternion(5.155469e-08, 0.7071068, 0.7071068, -2.2197248e-07)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "leg.R"
 bones/2/parent = 0
@@ -2134,107 +2137,107 @@ bones/3/name = "body"
 bones/3/parent = 0
 bones/3/rest = Transform3D(1, -3.8941437e-07, 7.1054274e-14, -7.1054274e-14, 0, 1, -3.8941437e-07, -1, 0, -5.1431577e-08, -5.9604645e-08, -0.13207418)
 bones/3/enabled = true
-bones/3/position = Vector3(-3.6812246e-08, -5.9604645e-08, -0.09453233)
-bones/3/rotation = Quaternion(-0.6600817, 1.4626285e-07, 1.2852261e-07, 0.7511938)
+bones/3/position = Vector3(-3.9490114e-08, -5.9604645e-08, -0.101408996)
+bones/3/rotation = Quaternion(-0.66890866, 1.4473453e-07, 1.3024123e-07, 0.7433446)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "head"
 bones/4/parent = 3
 bones/4/rest = Transform3D(1, 6.2135897e-37, -8.526521e-14, -6.2135897e-37, 1, 0, 8.526521e-14, 0, 1, 0, 0.22580588, 0)
 bones/4/enabled = true
 bones/4/position = Vector3(0, 0.22580588, 0)
-bones/4/rotation = Quaternion(-0.06674375, -4.2537537e-14, -2.8454581e-15, 0.9977702)
+bones/4/rotation = Quaternion(-0.054528434, -4.2569172e-14, -2.3246874e-15, 0.99851227)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "head.001"
 bones/5/parent = 4
 bones/5/rest = Transform3D(0.7034206, 0.710774, 1.5720627e-07, -0.71077394, 0.70342064, -5.2111552e-08, -1.4762166e-07, -7.508179e-08, 1, 0.13207425, 0.3169781, 4.2588823e-08)
 bones/5/enabled = true
 bones/5/position = Vector3(0.13207425, 0.3169781, 4.2588823e-08)
-bones/5/rotation = Quaternion(-0.003034539, -0.0023862817, -0.27695385, 0.96087545)
+bones/5/rotation = Quaternion(-0.00229451, -0.002028041, -0.29708037, 0.9548476)
 bones/5/scale = Vector3(1, 1.0000001, 1)
 bones/6/name = "head.002"
 bones/6/parent = 4
 bones/6/rest = Transform3D(0.72493905, -0.68881303, 5.6472103e-08, 0.68881303, 0.72493905, 1.4918223e-07, -1.4369749e-07, -6.924931e-08, 1, -0.1358478, 0.30754423, 4.1321297e-08)
 bones/6/enabled = true
 bones/6/position = Vector3(-0.1358478, 0.30754423, 4.1321297e-08)
-bones/6/rotation = Quaternion(0.0028367487, 3.582082e-05, 0.2876063, 0.95774454)
+bones/6/rotation = Quaternion(0.002242337, 0.00021932153, 0.30303836, 0.9529757)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "shoulder.L"
 bones/7/parent = 3
 bones/7/rest = Transform3D(-0.53464156, 0.845079, 5.259856e-08, -0.8450791, -0.5346415, -5.121913e-08, -1.516284e-08, -7.18338e-08, 1, 0, 0.22580588, 0)
 bones/7/enabled = true
 bones/7/position = Vector3(0, 0.22580588, 0)
-bones/7/rotation = Quaternion(-0.022704741, 0.016777223, 0.71886814, -0.694573)
+bones/7/rotation = Quaternion(-0.022390814, 0.016266935, 0.7194506, -0.693992)
 bones/7/scale = Vector3(1.0000001, 1, 1)
 bones/8/name = "arm.L"
 bones/8/parent = 7
 bones/8/rest = Transform3D(0.86798394, -0.49659204, -5.085887e-08, 0.49659204, 0.86798394, -8.538341e-08, 8.654542e-08, 4.885532e-08, 0.9999999, 2.9802322e-08, 0.09116691, 5.3290705e-15)
 bones/8/enabled = true
 bones/8/position = Vector3(2.9802322e-08, 0.09116691, 5.3290705e-15)
-bones/8/rotation = Quaternion(-0.042908587, -0.018823173, -0.32046342, 0.94610137)
+bones/8/rotation = Quaternion(-0.041932575, -0.018630302, -0.30249247, 0.95204675)
 bones/8/scale = Vector3(0.9999999, 0.9999999, 0.9999999)
 bones/9/name = "shoulder.R"
 bones/9/parent = 3
 bones/9/rest = Transform3D(-0.53464156, -0.845079, -5.259872e-08, 0.8450791, -0.5346415, -5.1219132e-08, 1.5162758e-08, -7.1833945e-08, 1, 0, 0.22580588, 0)
 bones/9/enabled = true
 bones/9/position = Vector3(0, 0.22580588, 0)
-bones/9/rotation = Quaternion(0.022705974, 0.016779222, 0.7188659, 0.69457525)
+bones/9/rotation = Quaternion(0.022392308, 0.016269363, 0.71944773, 0.6939948)
 bones/9/scale = Vector3(1.0000001, 1, 1)
 bones/10/name = "arm.R"
 bones/10/parent = 9
 bones/10/rest = Transform3D(0.86798394, 0.49659204, 5.085888e-08, -0.49659204, 0.86798394, -8.538341e-08, -8.654543e-08, 4.885531e-08, 0.9999999, -2.9802322e-08, 0.09116691, 9.769963e-15)
 bones/10/enabled = true
 bones/10/position = Vector3(-2.9802322e-08, 0.09116691, 9.769963e-15)
-bones/10/rotation = Quaternion(-0.042908587, 0.01882317, 0.32046348, 0.9461013)
+bones/10/rotation = Quaternion(-0.041932583, 0.018630305, 0.30249247, 0.95204675)
 bones/10/scale = Vector3(0.9999999, 0.9999999, 0.9999999)
 
-[node name="Arms" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=1647684441]
+[node name="Arms" type="MeshInstance3D" parent="Container/Chambo2/Chambo/Skeleton3D" unique_id=1647684441]
 mesh = SubResource("ArrayMesh_cv7wi")
 skin = SubResource("Skin_0aidk")
 skeleton = NodePath("..")
 surface_material_override/0 = SubResource("ShaderMaterial_a1sv2")
 
-[node name="Cheeks" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=1787437606]
+[node name="Cheeks" type="MeshInstance3D" parent="Container/Chambo2/Chambo/Skeleton3D" unique_id=1787437606]
 mesh = SubResource("ArrayMesh_8mty5")
 skin = SubResource("Skin_0aidk")
 skeleton = NodePath("..")
 surface_material_override/0 = SubResource("ShaderMaterial_f280a")
 
-[node name="Ears" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=1076066800]
+[node name="Ears" type="MeshInstance3D" parent="Container/Chambo2/Chambo/Skeleton3D" unique_id=1076066800]
 mesh = SubResource("ArrayMesh_rc45o")
 skin = SubResource("Skin_0aidk")
 skeleton = NodePath("..")
 surface_material_override/0 = SubResource("ShaderMaterial_rrsdh")
 surface_material_override/1 = SubResource("ShaderMaterial_6olt0")
 
-[node name="Head" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=992414602]
+[node name="Head" type="MeshInstance3D" parent="Container/Chambo2/Chambo/Skeleton3D" unique_id=992414602]
 mesh = SubResource("ArrayMesh_y7qh0")
 skin = SubResource("Skin_0aidk")
 skeleton = NodePath("..")
 surface_material_override/0 = SubResource("ShaderMaterial_15tgr")
 surface_material_override/1 = SubResource("ShaderMaterial_3h0hq")
 
-[node name="Legs" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=2052785782]
+[node name="Legs" type="MeshInstance3D" parent="Container/Chambo2/Chambo/Skeleton3D" unique_id=2052785782]
 mesh = SubResource("ArrayMesh_fs6hp")
 skin = SubResource("Skin_0aidk")
 skeleton = NodePath("..")
 surface_material_override/0 = SubResource("ShaderMaterial_rrsdh")
 
-[node name="Torso" type="MeshInstance3D" parent="Chambo2/Chambo/Skeleton3D" unique_id=962387268]
+[node name="Torso" type="MeshInstance3D" parent="Container/Chambo2/Chambo/Skeleton3D" unique_id=962387268]
 mesh = SubResource("ArrayMesh_y27sl")
 skin = SubResource("Skin_0aidk")
 skeleton = NodePath("..")
 surface_material_override/0 = SubResource("ShaderMaterial_rrsdh")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Chambo2" unique_id=1699470604]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Container/Chambo2" unique_id=1699470604]
 libraries/ = SubResource("AnimationLibrary_yqyd1")
 
-[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1429669588]
+[node name="AnimationTree" type="AnimationTree" parent="Container" unique_id=1429669588]
 root_node = NodePath("../Chambo2")
 tree_root = SubResource("AnimationNodeStateMachine_qj6iw")
-advance_expression_base_node = NodePath("..")
+advance_expression_base_node = NodePath("../..")
 anim_player = NodePath("../Chambo2/AnimationPlayer")
 "parameters/In Race/Driving/Turning/blend_position" = 0.0
 "parameters/In Race/Driving/Add2/add_amount" = 1.0
 "parameters/On Character Select/Character_select/Add2/add_amount" = 1.13
 
-[editable path="kart"]
+[editable path="Container/kart"]

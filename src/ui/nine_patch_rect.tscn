@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bx2vs1sdph3dp"]
+
+[ext_resource type="Texture2D" uid="uid://bbwy1243tnie6" path="res://assets/ui/main menu/base images/IMG_3464.PNG" id="1_b7wlo"]
+
+[node name="NinePatchRect" type="NinePatchRect" unique_id=1510842757]
+texture = ExtResource("1_b7wlo")
+region_rect = Rect2(344.14246, 131.58263, 822.26843, 777.98193)

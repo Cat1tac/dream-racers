@@ -28,6 +28,7 @@ func _ready() -> void:
 	_change_camera($CameraPivot/Camera3D)
 	kart_model_instance = kart_model_scene.instantiate() as Model
 	kart_model_instance.current_state = kart_model_instance.STATE.IN_RACE
+	kart_model_instance.center = center
 	kart_stats = kart_model_instance.stats
 	center.add_child(kart_model_instance)
 	base_fov = camera_3d.fov

@@ -15,6 +15,7 @@ func _on_area_entered(area: Area3D) -> void:
 		if spinhitbox.hitbox_active and spinhitbox.parent != parent:
 			if !spinIntangiblility: # if player is getting hit
 				print("hit")
+				spinhitbox.hit_dreamcatcher = true
 				player_sfx.play_audio(player_sfx.SFX.HIT)
 				call_knockback(to_local(area.global_position).x, spinhitbox.kart_sphere.kartStats.knockback)
 				call_spin_hit_slowdown(spinhitbox.charge_level, spinhitbox.kart_sphere.kartStats.weight)
@@ -38,11 +39,19 @@ func call_knockback(opposing_player_x_in_local_coords : float, opposing_knockbac
 		for i in shape_cast_3d.get_collision_count():
 			var collision_point := to_local(shape_cast_3d.get_collision_point(i)) # converts point of collision into players local coords
 			collision_point.x = 1 * signf(opposing_player_x_in_local_coords) # makes x either 1 or negative 1
-			var effect_spawn_point := Vector3(signf(collision_point.x) * (abs(collision_point.x) - shape_cast_3d.shape.size.x), collision_point.y, collision_point.z) # x edge of collision shape or te effect
+			var effect_spawn_point := Vector3(signf(collision_point.x) * (abs(collision_point.x) - shape_cast_3d.shape.size.x), collision_point.y, collision_point.z) # x edge of collision shape for the effect
 			parent.world_effects_spawner.spawn_one_shot_effect(WorldEffectsSpawner.EFFECTS.SPINHIT, to_global(effect_spawn_point)) # converts coords back to global so effect can be spaened in right position
-			kart_sphere.apply_clash_force(-collision_point, -(kart_sphere.knockback * 2 + (kart_sphere.kartStats.knockback - opposing_knockback))) 
+			kart_sphere.apply_clash_force(-collision_point, -(kart_sphere.knockback * 2 + (kart_sphere.kartStats.knockback - opposing_knockback))) # Base knockback x 2 (Defender knockback and Attack knockback)
+			#kart_sphere.kart_model.do_spin_hit_anim(signf(-collision_point.x))
+			
+			
+			kart_sphere.currentState = kart_sphere.STATES.HIT
+			kart_sphere.hit_state_time = kart_sphere.hit_by_time_dict[kart_sphere.HIT_BY.BURNER]
+			kart_sphere.kart_model.do_shake_anim(1 )#kart_sphere.hit_state_time)
+			
 
 func call_spin_hit_slowdown(drift_stage : int, opposing_weight : float) -> void:
+	#TODO Take a closer look at this later to see what behavior must change
 	if drift_stage < 0:
 		drift_stage = 0
 	kart_sphere.spin_cooldown_timer = kart_sphere.spin_cooldown

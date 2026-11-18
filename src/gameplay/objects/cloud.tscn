@@ -128,6 +128,8 @@ size = Vector3(29.218271, 2.6764033, 22.892963)
 
 [node name="Cloud" type="Node3D" unique_id=2108663503]
 script = ExtResource("1_0jiu0")
+vertical_time = 240.0
+forward_time = 220.0
 
 [node name="cloud" parent="." unique_id=20579055 instance=ExtResource("2_xktbf")]
 

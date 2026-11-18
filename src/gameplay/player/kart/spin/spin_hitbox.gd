@@ -11,8 +11,7 @@ var parent : Player
 var hitbox_active := false
 var charge_level : int
 var hit_dreamcatcher := false
-var hit_shortcut := false
-
+var clashed := false
 var collision_point : Vector3
 
 func _ready() -> void:
@@ -39,3 +38,6 @@ func _on_area_entered(area: Area3D) -> void:
 				print("area: " + str(to_local(area.global_position)))
 				collision_point.x = 1 * signf(to_local(area.global_position).x)
 				kart_sphere.apply_clash_force(-collision_point, -kart_sphere.knockback * 2)
+				kart_sphere.kart_model.do_spin_hit_anim(signf(-collision_point.x))
+				clashed = true
+				hit_dreamcatcher = true

@@ -4,7 +4,7 @@ class_name Model extends Node3D
 @export var charge_markers : Array[Marker3D]
 @export var boost_markers : Array[Marker3D]
 @export var stats : Stats
-
+@export var container : Node3D
 # Controls animation for player
 @export var animation_tree : AnimationTree
 
@@ -19,11 +19,13 @@ enum STATE {
 
 #region in-race
 var tween : Tween
-var num_spins : int = 2
-
+var air_num_spins : int = 2
+var ground_num_spins : int = 5
+var spinning : bool = false
 var kart_scale : Vector3
 var kart_model_scale : Vector3
 var _turning_position : float = 0.0 #For turning the character
+var center : Node3D
 @export var tricking : bool #for determinin if character is tricking 
 #endregion
 
@@ -71,19 +73,78 @@ func _handle_in_race_logic(_delta : float) -> void:
 	
 func do_trick_anim() -> void:
 	_reset_tween()
-	tween.set_trans(Tween.TRANS_LINEAR)
-	tween.tween_method(set_model_global_rotation, kart.global_rotation, Vector3(global_rotation.x + (TAU * num_spins), global_rotation.y, global_rotation.z + (TAU * (num_spins - 1))) , 0.8)
+	
+	if spinning:
+		var num_spins : float = container.rotation.y / TAU
+		var one_spin : float = num_spins - floor(num_spins)
+		container.rotation.y = one_spin * TAU
+	
+	spinning = false
+	tween.tween_method(set_kart_global_rotation, kart.global_rotation, Vector3(global_rotation.x + (TAU * air_num_spins), global_rotation.y, global_rotation.z + (TAU * (air_num_spins - 1))) , 0.8)
+	tween.set_parallel()
+	tween.tween_property(container, "rotation", Vector3.ZERO, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tricking = true
 	await tween.finished
 	tricking = false
+	
+func do_spin_anim(duration : float) -> void:
+	if spinning:
+		return
+	spinning = true
+	_reset_tween()
+	tween.tween_method(set_model_rotation, container.rotation, Vector3(container.rotation.x, container.rotation.y + (TAU * ground_num_spins), container.rotation.z),duration)#.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await tween.finished
+	spinning = false
+	container.rotation = Vector3.ZERO
+	
+func do_spin_stop_anim(duration : float) -> void:
+	spinning = false
+	_reset_tween()
+	var num_spins : float = container.rotation.y / TAU
+	var one_spin : float = num_spins - floor(num_spins)
+	container.rotation.y = one_spin * TAU
+	
+	if container.rotation == Vector3.ZERO:
+		tween.tween_property(container, "rotation", container.rotation + (Vector3.UP * TAU), duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		await tween.finished
+		container.rotation = Vector3.ZERO
+	else:
+		tween.tween_property(container, "rotation", Vector3.ZERO, duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	print("playing")
 	
 func do_grow_anim(end_scale : Vector3) -> void:
 	_reset_tween()
 	tween.tween_property(kart, "scale", end_scale, 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(kart, "scale", kart_model_scale, 0.3)
 	
-func set_model_global_rotation(current_rotation : Vector3) -> void:
+func do_spin_hit_anim(direction : float) -> void:
+	container.rotation = Vector3.ZERO
+	_reset_tween()
+	tween.tween_method(func(current_rotation : Vector3) -> void:
+		container.rotation = current_rotation, 
+		container.rotation, 
+		container.rotation + (Vector3.FORWARD * direction * (PI/4)), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT) 
+	tween.tween_property(container, "rotation", Vector3.ZERO, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT) 
+	
+func do_squashed_anim(duration : float) -> void:
+	pass
+
+func do_shake_anim(duration : float) -> void:
+	_reset_tween()
+	tween.tween_property(container, "rotation", container.rotation + Vector3.UP * (PI/3), duration * 0.2)
+	tween.tween_property(container, "rotation", container.rotation + Vector3.UP * -(PI/3), duration * 0.2)
+	tween.tween_property(container, "rotation", container.rotation + Vector3.UP * (PI/5), duration * 0.2)
+	tween.tween_property(container, "rotation", container.rotation + Vector3.UP * -(PI/5), duration * 0.2)
+	tween.tween_property(container, "rotation", Vector3.ZERO, 0.8).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func do_explosion_anim(duration : float) -> void:
+	pass
+	
+func set_kart_global_rotation(current_rotation : Vector3) -> void:
 	kart.global_rotation = current_rotation
+
+func set_model_rotation(current_rotation : Vector3) -> void:
+	container.rotation = current_rotation
 	
 func steer_character(direction : float, drifting : bool, delta : float) -> void:
 	var drifting_amt := 0.0 if !drifting else 0.5

@@ -65,5 +65,7 @@ func _on_area_entered(area: Area3D) -> void:
 	if area is SpinHurtBox:
 		var kart : Kart_Sphere = area.kart_sphere
 		kart.apply_slowdown_force(slowdown)
-		kart.current_boost_level = kart.BOOST_LEVEL.ZERO
+		kart.currentState = kart.STATES.HIT
+		kart.hit_state_time = kart.hit_by_time_dict[kart.HIT_BY.BURNER]
+		kart.kart_model.do_shake_anim(kart.hit_state_time)
 		

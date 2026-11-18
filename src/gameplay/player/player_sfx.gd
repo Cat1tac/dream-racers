@@ -85,7 +85,7 @@ func bend_pitch(request: SFX, modifier: float) -> void:
 	match request:
 		SFX.DRIVE:
 			var _min := 0.4 #Minimum pitch bend value
-			modifier = (modifier/player_top_speed) * 0.6 + _min
+			modifier = abs(modifier/player_top_speed) * 0.6 + _min
 			if modifier > 1.05:
 				modifier += 0.3 # Boosts are more noticable
 			driving.volume_db = -24.0 + modifier * 5

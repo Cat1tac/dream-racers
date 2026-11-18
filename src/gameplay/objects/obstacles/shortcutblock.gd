@@ -14,7 +14,7 @@ func _on_shortcut_collision_area_entered(area: Area3D) -> void:
 		var spinhitbox : SpinHitbox = area
 		if spinhitbox.kart_sphere.current_boost_level >= drift_required && spinhitbox.hitbox_active:
 			spinhitbox.call_spin_boost()
-			spinhitbox.hit_shortcut = true
+			spinhitbox.hit_dreamcatcher = true
 			hit_sfx.play()
 			reset_tween()
 			tween.tween_property(shortcutblock, "rotation_degrees", Vector3.ZERO, 0)

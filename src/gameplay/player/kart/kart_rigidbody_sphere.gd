@@ -38,12 +38,15 @@ var drift_direction : float
 @export var air_resistance := 5.0 ## How fast you lose speed in the air 
 
 @export_group("Steering")
-@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_slow := 7.0 # will be stat adjustable
-@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_fast := 5.5 # will be state adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_slow := 6.5 # will be stat adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:degrees") var max_steering_angle_fast := 4.5 # will be state adjustable
+@export var no_acceleration_input_steering_mulitplier_fast := 1.5  ## controls how much more player can steer if not accelerating
+@export var no_acceleration_input_steering_mulitplier_slow := 1.15
 @export_custom(PROPERTY_HINT_NONE, "suffix:degrees/s") var air_steering_velocity := 50.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:m") var wheel_base := 1.5
 @export_range(0, 1) var traction_factor := 0.3 ## The factor by which the car will slide when turning (0 is no traction, 1 is no slide) (Starts to lose speed while drifitng when traction is less then 0.3)  
-@export var drift_multiplier := 1.5 ## Mulitplier for how much drifting influences turn angle
+@export var drift_multiplier_upper := 1.5 ## Mulitplier for how much drifting influences turn angle
+@export var drift_multiplier_lower : = 1.4
 @export var drift_buffer := 0.5 ## Time player has to input a direction after starting drift
 @export var snake_buffer := 0.15 ## Time you have to change drift direction after releasing drift
 @export var snake_penalty_amt : float = 0.3 ## penalty for snaking
@@ -141,6 +144,7 @@ var is_trailing : bool
 
 #region Spinning and dreamcatcher speed
 var spin_timer : float
+var spin_timer_decremented : bool
 var spin_top_speed_multiplicand : float
 var spin_cooldown_timer : float
 var speed_right_before_spin : float 
@@ -218,6 +222,26 @@ var late_window_increament : float
 var locked_out : bool
 var pressed_this_window : bool
 #endregion
+
+#region hit state
+enum HIT_BY {
+	NONE,
+	BURNER,
+	PISTON,
+	EXPLOSION,
+	NIMBUS
+}
+
+var hit_by_time_dict : Dictionary[HIT_BY, float] = {
+	HIT_BY.BURNER : 1.0,
+	HIT_BY.PISTON : 2.0,
+	HIT_BY.EXPLOSION : 2.0,
+	HIT_BY.NIMBUS : 1.0
+}
+
+var current_hit_by_object : HIT_BY = HIT_BY.NONE
+var hit_state_time : float = 30 #frames
+var hit_state_increament : float
 #endregion
 
 
@@ -270,7 +294,11 @@ func _handle_states(delta : float) -> void:
 			input_drift = false
 			drift_just_released = true
 		STATES.HIT:
-			pass
+			if hit_state_increament > 0:
+				_hit_state()
+				hit_state_increament -= delta
+			else:
+				currentState = STATES.RACING
 
 func _handle_start_boost(delta : float) -> void:
 	match currentCountdownState:
@@ -350,8 +378,9 @@ func _handle_input(delta : float) -> void:
 		else:
 			if spin_cooldown_timer <= 0:
 				# resets spins variables and gets speed right before spinning
+				kart_model.do_spin_anim(spin_length)
+				spin_timer_decremented = false
 				spin_hitbox.hit_dreamcatcher = false
-				spin_hitbox.hit_shortcut = false
 				spin_hurt_box.setIntangiblility(true)
 				var forward := -center.global_basis.z
 				speed_right_before_spin = forward.dot(linear_velocity) if forward.dot(linear_velocity) < top_speed else top_speed
@@ -378,7 +407,6 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 			if spin_cooldown_timer <= 0:
 				# resets spins variables and gets speed right before spinning
 				spin_hitbox.hit_dreamcatcher = false
-				spin_hitbox.hit_shortcut = false
 				spin_hurt_box.setIntangiblility(true)
 				var forward := -center.global_basis.z
 				speed_right_before_spin = forward.dot(linear_velocity) if forward.dot(linear_velocity) < top_speed else top_speed
@@ -386,6 +414,22 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 				input_spin = true
 				audio_player.play_audio(audio_player.SFX.SPIN)
 				sim_spinInput = false
+	
+func _hit_state() -> void:
+	current_boost_level = BOOST_LEVEL.ZERO
+	remove_drift_charge()
+	
+	match current_hit_by_object:
+		HIT_BY.BURNER :
+			pass
+		HIT_BY.PISTON :
+			pass
+		HIT_BY.EXPLOSION :
+			pass
+		HIT_BY.NIMBUS :
+			pass
+		HIT_BY.NONE :
+			pass
 	
 #endregion
 
@@ -584,10 +628,18 @@ func _do_spin(delta : float) -> void:
 	
 	if input_spin:
 		if spin_timer < spin_length:
-			new_kart_rotation = Vector3.UP * lerp_angle(new_kart_rotation.y, spin_curve.sample(spin_timer), 1 - pow(0.2, 60 * delta))  
 			spin_timer += delta
+			
+			if spin_hitbox.hit_dreamcatcher and !spin_timer_decremented:
+				spin_timer_decremented = true
+				spin_timer += 0.5
+			if spin_hitbox.clashed:
+				spin_timer = spin_length
+				
+			#new_kart_rotation = Vector3.UP * lerp_angle(new_kart_rotation.y, spin_curve.sample(spin_timer), 1 - pow(0.2, 60 * delta))  
 			spin_vfx.show()
 			spin_vfx.show_spin_effect(spin_timer, spin_length, current_boost_level)
+			
 		else:
 			spin_vfx.hide()
 			spin_cooldown_timer = spin_cooldown * 0.5
@@ -597,7 +649,11 @@ func _do_spin(delta : float) -> void:
 			if !spin_hitbox.hit_dreamcatcher: # if hitbox did not hit dreamcatcher remove all charge
 				spin_cooldown_timer = spin_cooldown
 				remove_drift_charge()
-				
+			if !kart_model.tricking and !spin_hitbox.clashed:
+				kart_model.do_spin_stop_anim(spin_cooldown_timer)
+			spin_hitbox.clashed = false
+		
+			
 	spin_hitbox.set_active(input_spin)
 			
 	if dreamcatcher_boost_timer > 0:
@@ -679,7 +735,8 @@ func set_up_kart_stats() -> void:
 	max_steering_angle_fast += kartStats.max_steering_angle_fast
 	max_steering_angle_slow += kartStats.max_steering_angle_slow
 	traction_factor += kartStats.traction_factor
-	drift_multiplier += kartStats.drift_multiplier
+	drift_multiplier_upper += kartStats.drift_multiplier
+	drift_multiplier_lower += kartStats.drift_multiplier
 	air_resistance += kartStats.air_resistance
 	
 	boost_top_speed += kartStats.boost_top_speed
@@ -833,7 +890,7 @@ func apply_target_forward_speed(target_speed : float) -> void:
 ##Calculates how much force should be applied to kart in forward direction to end up at a certain point in ~60 frames
 func apply_point_forward_force(endpoint : Vector3, time : float, delta : float) -> void:
 	var distance_to_point : float = global_position.distance_to(endpoint)
-	var target_speed : float = distance_to_point / (time * delta)
+	var target_speed : float = distance_to_point / ((time * 60 * delta) / 60)
 	
 	var forward := -center.global_basis.z
 	var current_forward_speed := forward.dot(linear_velocity)
@@ -846,7 +903,7 @@ func apply_point_forward_force(endpoint : Vector3, time : float, delta : float) 
 ##Calculates how much force should be applied to kart in the up direction to end up at a certain point in ~60 frames
 func apply_point_vertical_force(endpoint : Vector3, time : float,  delta : float) -> void:
 	var distance_to_point : float = global_position.distance_to(endpoint)
-	var target_speed : float = distance_to_point / (time * delta)
+	var target_speed : float = distance_to_point / ((time * 60 * delta) / 60)
 	
 	var up := center.global_basis.y
 	var current_up_speed := up.dot(linear_velocity)
@@ -892,14 +949,18 @@ func _calculate_force_vector(forward : Vector3, vel : float) -> Vector3:
 	var final_top_speed : float = top_speed
 	var final_acceleration : float = acceleration
 	
-	if current_boost_level == BOOST_LEVEL.ZERO:
-		if abs(vel) > 0.05 and input_acceleration == 0: # no input
-			#drag
-			if input_drift:
-				#don't lose as much speed while drifting and not accelerating
-				force_vector = -forward * (ground_resistance/2.0) * signf(vel) * mass
-			else:
-				force_vector = -forward * ground_resistance * signf(vel) * mass
+	#if current_boost_level == BOOST_LEVEL.ZERO:
+	if abs(vel) > 0.05 and input_acceleration == 0: # no input
+		#drag
+		if input_drift:
+			#don't lose as much speed while drifting and not accelerating
+			force_vector = -forward * (ground_resistance/2.0) * signf(vel) * mass
+		else:
+			force_vector = -forward * ground_resistance * signf(vel) * mass
+		
+		if current_boost_level > BOOST_LEVEL.ZERO and abs(vel) < boost_actual_speed / 5.0:
+			pass
+		else:
 			return force_vector
 	
 	if sign(input_acceleration) != sign(vel) and input_acceleration != 0 and sign(vel) != 0: # input and vel are opposite signs
@@ -953,6 +1014,10 @@ func _apply_steering(delta : float) -> void:
 	var max_steering_angle : float = lerp(max_steering_angle_slow, max_steering_angle_fast, clamp(speed / top_speed, 0.0, 1.0))
 	var avg_steering_angle : float = lerp(max_steering_angle_slow, max_steering_angle_fast, 1.0)
 	
+	var drift_multiplier : float = lerp(drift_multiplier_lower, drift_multiplier_upper, clamp(current_boost_level / 4.0, 0.0, 1.0))
+	
+	var no_acceleration_input_steering_mulitplier : float = lerp(no_acceleration_input_steering_mulitplier_slow, no_acceleration_input_steering_mulitplier_fast, clamp(speed / (top_speed + boost_top_speed * boost_level_speed_time[BOOST_LEVEL.FOUR]["spd_multiplier"]), 0.0, 1.0))
+	
 	var y_kart_rotation : float
 	air_y_rotation = ground_y_rotation
 	var steering_angle : float
@@ -964,7 +1029,7 @@ func _apply_steering(delta : float) -> void:
 			y_kart_rotation = (drift_direction * 0.6 + 0.5 * steering) * 10 * deg_to_rad(avg_steering_angle)
 			if input_acceleration == 0:
 				#drift more sharply if not accelerating
-				steering_angle *= 1.15
+				steering_angle *= no_acceleration_input_steering_mulitplier
 		else: #abs(speed) > 1e-2: #Non-drift steering angle
 			steering_angle = max_steering_angle * steering
 			y_kart_rotation = steering * 2 * deg_to_rad(max_steering_angle) 
