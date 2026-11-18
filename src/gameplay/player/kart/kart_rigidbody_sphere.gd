@@ -295,6 +295,7 @@ func _handle_states(delta : float) -> void:
 			drift_just_released = true
 		STATES.HIT:
 			if hit_state_increament > 0:
+				player.reset_fov(delta)
 				hit_state_increament -= delta
 			else:
 				spin_hurt_box.invincible = false
