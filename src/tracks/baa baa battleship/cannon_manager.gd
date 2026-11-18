@@ -17,7 +17,7 @@ func _ready() -> void:
 	current_explosion2 = explosions2.pick_random()
 	current_explosion_end = explosionsEnd.pick_random()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 
 	if !current_explosion_end.activated:
 		current_explosion_end = explosionsEnd.pick_random()
