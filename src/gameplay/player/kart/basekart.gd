@@ -65,12 +65,8 @@ func _handle_in_character_select_logic() -> void:
 
 #region In Race
 func _handle_in_race_logic(_delta : float) -> void:
-	if !tween or !tween.is_running():
-		if kart.global_rotation != global_rotation:
-			kart.global_rotation = kart.global_rotation.slerp(global_rotation, 1 - pow(0.025, 2 * _delta))
-		else:
-			kart.global_rotation = global_rotation
-	
+	pass
+	#
 func do_trick_anim() -> void:
 	_reset_tween()
 	
@@ -80,11 +76,13 @@ func do_trick_anim() -> void:
 		container.rotation.y = one_spin * TAU
 	
 	spinning = false
-	tween.tween_method(set_kart_global_rotation, kart.global_rotation, Vector3(global_rotation.x + (TAU * air_num_spins), global_rotation.y, global_rotation.z + (TAU * (air_num_spins - 1))) , 0.8)
+	tween.tween_property(kart, "rotation", Vector3(kart.rotation.x + (TAU * air_num_spins), kart.rotation.y, kart.rotation.z + (TAU * (air_num_spins - 1))) , 0.8)
 	tween.set_parallel()
 	tween.tween_property(container, "rotation", Vector3.ZERO, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tricking = true
 	await tween.finished
+	_reset_tween()
+	tween.tween_property(kart, "rotation", Vector3.ZERO, 0)
 	tricking = false
 	
 func do_spin_anim(duration : float) -> void:
@@ -92,7 +90,7 @@ func do_spin_anim(duration : float) -> void:
 		return
 	spinning = true
 	_reset_tween()
-	tween.tween_method(set_model_rotation, container.rotation, Vector3(container.rotation.x, container.rotation.y + (TAU * ground_num_spins), container.rotation.z),duration)#.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(container, "rotation", container.rotation + (Vector3.UP * TAU * ground_num_spins),duration)#.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await tween.finished
 	spinning = false
 	container.rotation = Vector3.ZERO
@@ -126,10 +124,20 @@ func do_spin_hit_anim(direction : float) -> void:
 		container.rotation + (Vector3.FORWARD * direction * (PI/4)), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT) 
 	tween.tween_property(container, "rotation", Vector3.ZERO, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT) 
 	
-func do_squashed_anim(duration : float) -> void:
-	pass
+func do_squashed_anim(_duration : float) -> void:
+	_reset_tween()
+	tween.tween_property(container, "scale", Vector3(1, 0.1, 1), 0.05)
+	await get_tree().create_timer(0.5).timeout
+	_reset_tween()
+	tween.set_loops(5)
+	tween.tween_property(container, "scale", Vector3(1, 0.1, 1), 0.1)
+	tween.tween_property(container, "scale", Vector3(1, 0.4, 1), 0.1)
+	await tween.finished
+	_reset_tween()
+	tween.tween_property(container, "scale", Vector3(1, 1, 1), 0.1)
 
 func do_shake_anim(duration : float) -> void:
+	container.rotation = Vector3.ZERO
 	_reset_tween()
 	tween.tween_property(container, "rotation", container.rotation + Vector3.UP * (PI/3), duration * 0.2)
 	tween.tween_property(container, "rotation", container.rotation + Vector3.UP * -(PI/3), duration * 0.2)
@@ -137,11 +145,31 @@ func do_shake_anim(duration : float) -> void:
 	tween.tween_property(container, "rotation", container.rotation + Vector3.UP * -(PI/5), duration * 0.2)
 	tween.tween_property(container, "rotation", Vector3.ZERO, 0.8).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-func do_explosion_anim(duration : float) -> void:
-	pass
+func do_explosion_anim(_duration : float) -> void:
+	container.rotation = Vector3.ZERO
+	_reset_tween()
+	# Sends it up
+	tween.tween_property(container, "position", Vector3.UP * 4, 0.8).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.set_parallel()
+	tween.tween_property(container, "rotation", container.rotation + Vector3.RIGHT * (TAU * 3), 0.8)
+	tween.chain()
+	#send it down
+	tween.tween_property(container, "position", Vector3.ZERO, 0.4)
+	tween.set_parallel()
+	tween.tween_property(container, "rotation", container.rotation + Vector3.RIGHT * (TAU * 5), 0.4)
+	tween.chain()
+	tween.tween_property(container, "rotation", Vector3.ZERO, 0)
+	await tween.finished
+	#Shakes it upon landing
+	_reset_tween()
+	tween.tween_property(container, "rotation", container.rotation + Vector3.RIGHT * (PI/8), 0.15)
+	tween.tween_property(container, "rotation", container.rotation + Vector3.RIGHT * -(PI/9), 0.15)
+	tween.tween_property(container, "rotation", container.rotation + Vector3.RIGHT * (PI/10), 0.15)
+	tween.tween_property(container, "rotation", container.rotation + Vector3.RIGHT * -(PI/11), 0.15)
+	tween.tween_property(container, "rotation", Vector3.ZERO, 0.8).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	
-func set_kart_global_rotation(current_rotation : Vector3) -> void:
-	kart.global_rotation = current_rotation
+func set_kart_rotation(current_rotation : Vector3) -> void:
+	kart.rotation = current_rotation
 
 func set_model_rotation(current_rotation : Vector3) -> void:
 	container.rotation = current_rotation

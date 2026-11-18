@@ -76,6 +76,5 @@ func activate_explosion_timer(time : float = 4.0) -> void:
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	print("hit")
 	if area is SpinHurtBox:
-		var kart = area.kart_sphere
-		kart.apply_slowdown_force(0.8)
-		kart.current_boost_level = kart.BOOST_LEVEL.ZERO
+		var kart : Kart_Sphere = area.kart_sphere
+		kart.do_hit_effect(kart.HIT_BY.EXPLOSION)

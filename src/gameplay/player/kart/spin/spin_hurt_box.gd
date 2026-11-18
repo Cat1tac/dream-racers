@@ -3,7 +3,10 @@ class_name SpinHurtBox extends Area3D
 @onready var shape_cast_3d: ShapeCast3D = %ShapeCast3D
 @onready var kart_sphere: Kart_Sphere = %Kart_Sphere
 var parent : Player
-var spinIntangiblility := false
+## Controls intangibility during spin
+var spinIntangiblility := false 
+## Controls intangibility when not spinning
+var invincible := false
 @onready var player_sfx: Player_SFX = %PlayerSFX
 
 func _ready() -> void:
@@ -13,7 +16,7 @@ func _on_area_entered(area: Area3D) -> void:
 	if area is SpinHitbox:
 		var spinhitbox : SpinHitbox = area
 		if spinhitbox.hitbox_active and spinhitbox.parent != parent:
-			if !spinIntangiblility: # if player is getting hit
+			if !spinIntangiblility and !invincible: # if player is not spinning and not in hit stun
 				print("hit")
 				spinhitbox.hit_dreamcatcher = true
 				player_sfx.play_audio(player_sfx.SFX.HIT)
@@ -42,12 +45,7 @@ func call_knockback(opposing_player_x_in_local_coords : float, opposing_knockbac
 			var effect_spawn_point := Vector3(signf(collision_point.x) * (abs(collision_point.x) - shape_cast_3d.shape.size.x), collision_point.y, collision_point.z) # x edge of collision shape for the effect
 			parent.world_effects_spawner.spawn_one_shot_effect(WorldEffectsSpawner.EFFECTS.SPINHIT, to_global(effect_spawn_point)) # converts coords back to global so effect can be spaened in right position
 			kart_sphere.apply_clash_force(-collision_point, -(kart_sphere.knockback * 2 + (kart_sphere.kartStats.knockback - opposing_knockback))) # Base knockback x 2 (Defender knockback and Attack knockback)
-			#kart_sphere.kart_model.do_spin_hit_anim(signf(-collision_point.x))
-			
-			
-			kart_sphere.currentState = kart_sphere.STATES.HIT
-			kart_sphere.hit_state_time = kart_sphere.hit_by_time_dict[kart_sphere.HIT_BY.BURNER]
-			kart_sphere.kart_model.do_shake_anim(1 )#kart_sphere.hit_state_time)
+			kart_sphere.kart_model.do_spin_hit_anim(signf(-collision_point.x))
 			
 
 func call_spin_hit_slowdown(drift_stage : int, opposing_weight : float) -> void:

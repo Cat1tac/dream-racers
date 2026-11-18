@@ -234,13 +234,13 @@ enum HIT_BY {
 
 var hit_by_time_dict : Dictionary[HIT_BY, float] = {
 	HIT_BY.BURNER : 1.0,
-	HIT_BY.PISTON : 2.0,
-	HIT_BY.EXPLOSION : 2.0,
+	HIT_BY.PISTON : 1.0,
+	HIT_BY.EXPLOSION : 1.2,
 	HIT_BY.NIMBUS : 1.0
 }
 
 var current_hit_by_object : HIT_BY = HIT_BY.NONE
-var hit_state_time : float = 30 #frames
+var hit_state_time : float #frames
 var hit_state_increament : float
 #endregion
 
@@ -295,9 +295,9 @@ func _handle_states(delta : float) -> void:
 			drift_just_released = true
 		STATES.HIT:
 			if hit_state_increament > 0:
-				_hit_state()
 				hit_state_increament -= delta
 			else:
+				spin_hurt_box.invincible = false
 				currentState = STATES.RACING
 
 func _handle_start_boost(delta : float) -> void:
@@ -415,22 +415,38 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 				audio_player.play_audio(audio_player.SFX.SPIN)
 				sim_spinInput = false
 	
-func _hit_state() -> void:
+func do_hit_effect(obstacle : HIT_BY) -> void:
+	if spin_hurt_box.invincible:
+		return
 	current_boost_level = BOOST_LEVEL.ZERO
 	remove_drift_charge()
-	
-	match current_hit_by_object:
+	currentState = STATES.HIT
+	hit_state_increament = hit_by_time_dict[obstacle]
+	spin_hurt_box.invincible = true
+	# reset input values
+	input_acceleration = 0.0
+	input_steering = 0.0
+	input_drift = false
+	# reset boost
+	Events.on_get_stored_charge.emit(current_boost_level, 0, player.playerId, boost_level_speed_time[current_boost_level]["timeMax"], false)
+	Events.on_get_boost_lvl.emit(current_boost_level, player.playerId)
+	for particles in boostParticles:
+			particles.set_particles(current_boost_level - 1)
+	reset_stale_charges_uses()
+	match obstacle:
 		HIT_BY.BURNER :
-			pass
+			apply_slowdown_force(0.8)
+			kart_model.do_shake_anim(hit_state_increament)
 		HIT_BY.PISTON :
-			pass
+			_apply_stop(get_physics_process_delta_time())
+			kart_model.do_squashed_anim(hit_state_increament)
 		HIT_BY.EXPLOSION :
-			pass
+			apply_slowdown_force(0.8)
+			kart_model.do_explosion_anim(hit_state_increament)
 		HIT_BY.NIMBUS :
 			pass
 		HIT_BY.NONE :
 			pass
-	
 #endregion
 
 #region Drift / Boost 
@@ -470,7 +486,7 @@ func _drift_boost_control(delta : float) -> void:
 	#Controls Drift Charge
 	var forward := -center.global_basis.z
 	var horizontal_velocity := forward.dot(linear_velocity)
-	if input_drift and on_ground() and horizontal_velocity > top_speed * 0.7:
+	if input_drift and on_ground() and horizontal_velocity > top_speed * 0.5:
 		drift_timer += abs(angular_speed + kartStats.drift_charge_speed) * delta
 		
 		match current_boost_level:
@@ -517,6 +533,7 @@ func _drift_boost_control(delta : float) -> void:
 		Events.on_get_stored_charge.emit(current_boost_level, boost_timer, player.playerId, boost_level_speed_time[current_boost_level]["timeMax"], false)
 	Events.on_get_boost_lvl.emit(current_boost_level, player.playerId)
 
+#region allow boost to
 func _allow_boost_to_2() -> void:
 	if drift_timer > drift_charge_curve.get_point_position(1).x and drift_stage < 1:
 		new_drift_timer_base = drift_charge_curve.get_point_position(1).x
@@ -550,7 +567,7 @@ func _allow_boost_to_4() -> void:
 		_set_drifting_stage(3)
 	elif drift_timer > drift_charge_curve.max_value and drift_stage < 4 and current_boost_level >= BOOST_LEVEL.THREE:
 		_set_drifting_stage(4)
-
+#endregion
 func reset_stale_charges_uses() -> void:
 	for boost_level in boost_level_speed_time:
 		boost_level_speed_time[boost_level]["uses"] = 0
@@ -797,15 +814,6 @@ func _process(delta: float) -> void:
 	
 	_handle_states(delta)
 	
-	#if isRacing and player.playerControlled:
-		#_handle_input()
-	#elif isRacing and !player.playerControlled:
-		#_simulate_input(sim_turn_vector, sim_move_vector)
-	#else:
-		#input_acceleration = 0.0
-		#input_steering = 0.0
-		#input_drift = false
-		#drift_just_released = true
 	_drift_boost_control(delta)
 	_get_charge_level()
 	

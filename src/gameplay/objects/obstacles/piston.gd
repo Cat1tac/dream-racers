@@ -75,9 +75,7 @@ func _on_slam_box_area_entered(area: Area3D) -> void:
 		var kart : Kart_Sphere = area.kart_sphere
 		print("kart_y: " , area.global_position.y, "\nslam box y: ", slam_box.global_position.y)
 		if global_position != start_position:
-			print("yar")
-			kart._apply_stop(get_physics_process_delta_time())
-			kart.current_boost_level = kart.BOOST_LEVEL.ZERO
+			kart.do_hit_effect(kart.HIT_BY.PISTON)
 		else:
 			shape_cast_3d.force_shapecast_update()
 			if shape_cast_3d.is_colliding():
