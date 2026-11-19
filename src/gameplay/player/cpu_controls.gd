@@ -32,7 +32,6 @@ func _process(delta: float) -> void:
 		if checkpoint_direction.dot(forward) > 0.92: # Is CPU facing the checkpoint?
 			cancel_turn()
 			stop_drift()
-			print("No turn")
 		else:
 			var right_vector = -center.global_basis.x
 			if right_vector.dot(checkpoint_direction) < 0:
@@ -41,14 +40,12 @@ func _process(delta: float) -> void:
 				if drift_direction == "LEFT":
 					cancel_turn()
 				turn_right()
-				print("right turn")
 			else:
 				if right_vector.dot(checkpoint_direction) > 0.4:
 					start_drift("LEFT")
 				if drift_direction == "RIGHT":
 					cancel_turn()
 				turn_left()
-				print("left turn")
 
 		# Attempts a trick if CPU is in the air
 		if !kart_sphere.on_ground() and !cpuTricked:
@@ -56,7 +53,6 @@ func _process(delta: float) -> void:
 			spin()
 		elif kart_sphere.on_ground():
 			cpuTricked = false
-		print(drift_direction)
 		
 # Sets the CPU in motion on RaceStart
 func play() -> void:
@@ -97,12 +93,12 @@ func spin() -> void:
 	kart_sphere.sim_spinInput = true
 
 func start_drift(drift_dir: String) -> void:
-	if !kart_sphere.input_drift:
+	if !kart_sphere.input_drift: #Makes sure the CPU only triggers a "pressed" interaction once
 		kart_sphere.simulate_drift_change(true)
 		drift_direction = drift_dir
 
 func stop_drift() -> void:
-	if kart_sphere.input_drift:
+	if kart_sphere.input_drift: #Makes sure the CPU only triggers a "released" interaction once
 		kart_sphere.simulate_drift_change(false)
 	drift_direction = "NONE"
 
@@ -127,11 +123,3 @@ func _on_tree_entered() -> void:
 	else:
 		get_check_positions(player.current_track.checkpoint_positions)
 	print()
-
-func _on_spin_hitbox_area_entered(area: Area3D) -> void:
-	var _random : int = randi() % 1
-	if _random == 1:
-		spin()
-
-func be_aggressive() -> void:
-	print("Fuck this one Nyx in particular")

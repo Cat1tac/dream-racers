@@ -108,7 +108,6 @@ func _process(delta: float) -> void:
 ##Puts key checkpoints and respawn checkpoints into their own arrays
 func _get_all_checkpoints(checkpoint_array: Array) -> void:
 	for checkpoint in checkpoint_array:
-		print(checkpoint)
 		if checkpoint[0].is_key_checkpoint:
 			key_checkpoints.append(checkpoint)
 	respawn_checkpoints = checkpoint_array
