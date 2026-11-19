@@ -2,19 +2,6 @@
 
 [ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="1_chrih"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vsmrv"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 0.365, 0.365, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_detail = 1
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chrih"]
 bg_color = Color(0.78, 0.2886, 0.44420996, 0.84705883)
 border_width_left = 5
@@ -46,18 +33,16 @@ corner_radius_bottom_left = 50
 
 [resource]
 HeaderLabel/base_type = &"Label"
-HeaderLabel/colors/font_color = Color(0, 0, 0, 1)
-HeaderLabel/colors/font_outline_color = Color(0, 0, 0, 1)
-HeaderLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
+HeaderLabel/colors/font_color = Color(1, 1, 1, 1)
+HeaderLabel/colors/font_outline_color = Color(0.34117648, 0.09019608, 0.22352941, 1)
+HeaderLabel/colors/font_shadow_color = Color(0.5803922, 0.1764706, 0.33333334, 0.5058824)
 HeaderLabel/constants/line_spacing = 0
-HeaderLabel/constants/outline_size = 0
+HeaderLabel/constants/outline_size = 12
 HeaderLabel/constants/shadow_offset_x = 0
 HeaderLabel/constants/shadow_offset_y = 0
-HeaderLabel/constants/shadow_outline_size = 0
+HeaderLabel/constants/shadow_outline_size = 26
 HeaderLabel/font_sizes/font_size = 54
 HeaderLabel/fonts/font = ExtResource("1_chrih")
-HeaderLabel/styles/focus = SubResource("StyleBoxFlat_vsmrv")
-HeaderLabel/styles/normal = SubResource("StyleBoxFlat_vsmrv")
 HeaderPanel/base_type = &"PanelContainer"
 HeaderPanel/styles/panel = SubResource("StyleBoxFlat_chrih")
 Label/colors/font_outline_color = Color(0.34117648, 0.09019608, 0.22352941, 1)
@@ -71,4 +56,4 @@ PlayerPanel/base_type = &"PanelContainer"
 PlayerPanel/font_sizes/font_size = 30
 PlayerPanel/styles/panel = SubResource("StyleBoxFlat_ljnfw")
 PlayerPanelLabel/base_type = &"Label"
-PlayerPanelLabel/font_sizes/font_size = 36
+PlayerPanelLabel/font_sizes/font_size = 38

@@ -121,7 +121,6 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 				character_buttons[allplayers.character_select_position].unselect(allplayers.id) # Puts indicator into unselected state
 				allplayers.selected_character = GameManager.SelectedCharacter.NONE
 				character_views[allplayers.id].remove_model_in_viewport()
-
 		back_button._pressed()
 		ui_root._char_back_button_pressed()
 	

@@ -1,8 +1,9 @@
 extends UIState
 
 @onready var race_button: Button = %RaceButton
-@onready var how_to_play_button: Button = %HowToPlayButton
+@onready var info_button: Button = %InfoButton
 @onready var exit_button: Button = %ExitButton
+@onready var info_menu_uid: String = "uid://dp6d5y1bceddg"
 @onready var how_to_play_window: = preload("uid://cr8hhutactn1a")
 @onready var sfx: Node = %SFX
 
@@ -29,12 +30,10 @@ func _input(event: InputEvent) -> void:
 			if event.is_action_pressed(player.controls.actions["forward"]):
 				race_button.pressed.emit()
 		
-		if how_to_play_button.has_focus():
+		if info_button.has_focus():
 			if event.is_action_pressed(player.controls.actions["forward"]):
-				how_to_play_button.pressed.emit()
-				var window_instance : TabContainer = how_to_play_window.instantiate()
-				window_instance.initial_sfx = %SFX
-				get_child(0).add_child(window_instance)
+				info_button.pressed.emit()
+				GameManager.load_into_path(info_menu_uid, 1)
 			
 		if exit_button.has_focus():
 			if event.is_action_pressed(player.controls.actions["forward"]):
@@ -47,5 +46,5 @@ func _input(event: InputEvent) -> void:
 func _toggle_main_menu_input(how_to_play_open : bool) -> void:
 	accept_input = how_to_play_open
 	race_button.disabled = !how_to_play_open
-	how_to_play_button.disabled = !how_to_play_open
+	info_button.disabled = !how_to_play_open
 	exit_button.disabled = !how_to_play_open

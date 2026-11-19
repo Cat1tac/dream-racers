@@ -1,0 +1,58 @@
+[gd_resource type="Theme" format=3 uid="uid://d17rcjumxbjua"]
+
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="1_g7cvj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7cvj"]
+bg_color = Color(0.4028082, 0.27278757, 0.5896613, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.63092923, 0.2672083, 1, 1)
+corner_radius_top_left = 45
+corner_radius_top_right = 45
+corner_radius_bottom_right = 45
+corner_radius_bottom_left = 45
+expand_margin_left = 40.0
+expand_margin_top = 40.0
+expand_margin_right = 40.0
+expand_margin_bottom = 40.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8tr7"]
+bg_color = Color(0.4028082, 0.27278757, 0.5896613, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+corner_radius_top_left = 45
+corner_radius_top_right = 45
+corner_radius_bottom_right = 45
+corner_radius_bottom_left = 45
+expand_margin_left = 40.0
+expand_margin_top = 40.0
+expand_margin_right = 40.0
+expand_margin_bottom = 40.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2c6gv"]
+bg_color = Color(1, 1, 1, 1)
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0.30588236, 0.2, 0.45490196, 1)
+Button/constants/outline_size = 24
+Button/font_sizes/font_size = 48
+Button/fonts/font = ExtResource("1_g7cvj")
+Button/styles/focus = SubResource("StyleBoxFlat_g7cvj")
+Button/styles/hover = SubResource("StyleBoxFlat_g7cvj")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_g7cvj")
+Button/styles/normal = SubResource("StyleBoxFlat_r8tr7")
+Button/styles/pressed = SubResource("StyleBoxFlat_g7cvj")
+InfoHeader/base_type = &"Label"
+InfoHeader/colors/font_color = Color(1, 1, 1, 1)
+InfoHeader/colors/font_outline_color = Color(0.30484265, 0.1985144, 0.45546323, 1)
+InfoHeader/colors/font_shadow_color = Color(0.4117647, 0.24705882, 0.69411767, 0.3882353)
+InfoHeader/constants/outline_size = 36
+InfoHeader/constants/shadow_outline_size = 60
+InfoHeader/font_sizes/font_size = 100
+Label/fonts/font = ExtResource("1_g7cvj")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_2c6gv")

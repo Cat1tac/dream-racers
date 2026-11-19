@@ -57,7 +57,7 @@ func _track_next_button_pressed() -> void:
 	if GameManager.current_track == GameManager.SelectedCharacter.NONE:
 		return
 	main_music.stop()
-	GameManager.load_into_path("uid://dl7oklus7v6pk")
+	GameManager.load_into_path("uid://dl7oklus7v6pk", 0)
 	GameManager.toggle_in_match()
 #endregion
 

@@ -43,7 +43,7 @@ func _resume_button_pressed() -> void:
 	GameManager.unpause_game.emit()
 
 func _return_button_pressed() -> void:
-	GameManager.load_into_path(main_menu_uid)
+	GameManager.load_into_path(main_menu_uid, 0)
 	# set booleans to reset state
 	GameManager.reset_selections()
 	GameManager.game_paused = false
