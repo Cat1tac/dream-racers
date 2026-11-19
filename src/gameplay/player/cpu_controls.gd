@@ -8,11 +8,11 @@ class_name CPU extends Node
 
 var controls : PlayerControls
 
-var checkpoint_positions: Array #TODO change all instances of this var to match the refactored lap system
+var checkpoint_positions: Array
 var current_checkpoint: int = 0
 
-## Inverts steering if radian differences cross over the 3.14 limit
-var invertControls: bool = false
+var cpuTricked: bool = false
+var drift_direction: String = "NONE"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -20,23 +20,44 @@ func _ready() -> void:
 	if player.playerId > (GameManager.players_connected - 1):
 		player.playerControlled = false
 		Events.on_countdown_finished.connect(play)
-	Events.on_send_check_positions.connect(get_check_positions)
+		Events.on_send_check_positions.connect(get_check_positions)
 
-# Decision Making (Also sometimes called 'Artificial Intelligence' or whatever)
+# Decision Making (Also sometimes called 'Artificial Intelligence' or something)
 func _process(delta: float) -> void:
 	
-	if kart_sphere.isRacing and !player.playerControlled:
+	if kart_sphere.isRacing and !player.playerControlled: # Has the CPU started racing?
 		var forward = -center.global_basis.z
 		var position = center.global_position
 		var checkpoint_direction = position.direction_to(checkpoint_positions[current_checkpoint])
-		if checkpoint_direction.dot(forward) > 0.92:
+		if checkpoint_direction.dot(forward) > 0.92: # Is CPU facing the checkpoint?
 			cancel_turn()
+			stop_drift()
+			print("No turn")
 		else:
 			var right_vector = -center.global_basis.x
 			if right_vector.dot(checkpoint_direction) < 0:
+				if right_vector.dot(checkpoint_direction) < -0.4:
+					start_drift("RIGHT")
+				if drift_direction == "LEFT":
+					cancel_turn()
 				turn_right()
+				print("right turn")
 			else:
+				if right_vector.dot(checkpoint_direction) > 0.4:
+					start_drift("LEFT")
+				if drift_direction == "RIGHT":
+					cancel_turn()
 				turn_left()
+				print("left turn")
+
+		# Attempts a trick if CPU is in the air
+		if !kart_sphere.on_ground() and !cpuTricked:
+			cpuTricked = true
+			spin()
+		elif kart_sphere.on_ground():
+			cpuTricked = false
+		print(drift_direction)
+		
 # Sets the CPU in motion on RaceStart
 func play() -> void:
 	accelerate()
@@ -75,6 +96,16 @@ func cancel_turn() -> void:
 func spin() -> void:
 	kart_sphere.sim_spinInput = true
 
+func start_drift(drift_dir: String) -> void:
+	if !kart_sphere.input_drift:
+		kart_sphere.simulate_drift_change(true)
+		drift_direction = drift_dir
+
+func stop_drift() -> void:
+	if kart_sphere.input_drift:
+		kart_sphere.simulate_drift_change(false)
+	drift_direction = "NONE"
+
 #endregion
 
 ## Updates the checkpoint rotation the CPU refers to
@@ -96,3 +127,11 @@ func _on_tree_entered() -> void:
 	else:
 		get_check_positions(player.current_track.checkpoint_positions)
 	print()
+
+func _on_spin_hitbox_area_entered(area: Area3D) -> void:
+	var _random : int = randi() % 1
+	if _random == 1:
+		spin()
+
+func be_aggressive() -> void:
+	print("Fuck this one Nyx in particular")

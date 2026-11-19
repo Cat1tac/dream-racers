@@ -30,6 +30,7 @@ script = ExtResource("3_nf3ul")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Zone/cpuArea" unique_id=638819135]
 transform = Transform3D(13.11, 0, 0, 0, 13.11, 0, 0, 0, 13.11, 0, 0, 0)
 shape = SubResource("CylinderShape3D_skbuk")
+debug_color = Color(0, 0.5950001, 0.7, 1)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_entered" from="Zone" to="Zone" method="_on_area_entered"]

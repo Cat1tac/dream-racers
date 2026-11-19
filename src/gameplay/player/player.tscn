@@ -240,6 +240,7 @@ debug_color = Color(0, 0.21553928, 0.21237549, 0.41960785)
 script = ExtResource("20_trpe4")
 
 [connection signal="area_entered" from="Center/SpinHitbox" to="Center/SpinHitbox" method="_on_area_entered"]
+[connection signal="area_entered" from="Center/SpinHitbox" to="CPU Controls" method="_on_spin_hitbox_area_entered"]
 [connection signal="area_entered" from="Center/SpinHurtBox" to="Center/SpinHurtBox" method="_on_area_entered"]
 [connection signal="area_exited" from="Center/SpinHurtBox" to="Center/SpinHurtBox" method="_on_area_exited"]
 [connection signal="check_passed" from="Center/LocalLapLogic" to="CPU Controls" method="_on_local_lap_logic_check_passed"]
