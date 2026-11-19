@@ -15,16 +15,19 @@
 [ext_resource type="Shader" uid="uid://cmy3tvafck7h0" path="res://src/shaders/changeGradientColor.gdshader" id="8_6s7ef"]
 [ext_resource type="Script" uid="uid://du4i8k5okij7w" path="res://src/ui/scripts/menu/character_view.gd" id="9_5kva4"]
 [ext_resource type="Texture2D" uid="uid://b5terhl54jqyw" path="res://assets/ui/main menu/gradients/night_gradient.tres" id="9_yo02o"]
+[ext_resource type="Resource" uid="uid://cvguj0xq0vbmt" path="res://src/resources/character_definitions/acceleration_character.tres" id="9_yss6y"]
 [ext_resource type="PackedScene" uid="uid://cwkwov7useclc" path="res://src/ui/components/menu/next_button.tscn" id="10_ba7qp"]
 [ext_resource type="Texture2D" uid="uid://dwr06xauwjiie" path="res://assets/ui/main menu/gradients/twilight_gradient.tres" id="10_eofyr"]
 [ext_resource type="Texture2D" uid="uid://bksmi6psrdomo" path="res://assets/models/characters/Nyx/batQueenIconFullSize.png" id="10_lp5l8"]
 [ext_resource type="Texture2D" uid="uid://bhxa25h4gc0p0" path="res://assets/ui/main menu/gradients/bg_noise_tex.tres" id="11_1kq2p"]
 [ext_resource type="PackedScene" uid="uid://dkisc0g5e2d7t" path="res://src/ui/components/menu/track_button.tscn" id="11_gq7f2"]
 [ext_resource type="Texture2D" uid="uid://5c7g1b2beiti" path="res://assets/ui/main menu/gradients/sunset_gradient.tres" id="12_5kva4"]
+[ext_resource type="Resource" uid="uid://d3eq8jfnvx35g" path="res://src/resources/character_definitions/balanced_character.tres" id="12_7nkoj"]
 [ext_resource type="PackedScene" uid="uid://b4jxtlyw5rb8o" path="res://src/gameplay/player/character/chambo.tscn" id="12_f2dn1"]
 [ext_resource type="Texture2D" uid="uid://cwx2m4gn17vf5" path="res://assets/ui/main menu/gradients/clouds_night_gradient.tres" id="13_2auc3"]
 [ext_resource type="Texture2D" uid="uid://dibqk6plesj4a" path="res://assets/models/characters/Chambo/mouseIconNoBG.png" id="13_oqd2e"]
 [ext_resource type="Texture2D" uid="uid://d4fc7uh24338m" path="res://assets/ui/main menu/gradients/cloud_twilight_gradient.tres" id="14_ba7qp"]
+[ext_resource type="Resource" uid="uid://b6belynq8o81n" path="res://src/resources/character_definitions/maxed_character.tres" id="15_7nkoj"]
 [ext_resource type="Texture2D" uid="uid://ioi5i16gvoi3" path="res://assets/models/tracks/Dreamy Yggdrasil/world_tree.png" id="15_lp5l8"]
 [ext_resource type="Texture2D" uid="uid://07uowprv713g" path="res://assets/ui/main menu/gradients/cloud_noise_tex.tres" id="15_tlfe1"]
 [ext_resource type="Texture2D" uid="uid://b146ox7oemdoq" path="res://assets/ui/main menu/gradients/clouds_sunset_gradient.tres" id="16_gq7f2"]
@@ -2391,7 +2394,6 @@ text = "Press START/SPACE to Join"
 
 [node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("character_buttons", "character_views", "ui_root", "transition_animations", "next_state", "previous_state")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2457,6 +2459,8 @@ theme_override_constants/separation = 131
 layout_mode = 2
 character_model = ExtResource("5_1kq2p")
 character_enum = 1
+character_resource = ExtResource("9_yss6y")
+nametag_name = "Seraphim"
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1" unique_id=509389241]
 custom_maximum_size = Vector2(250, 250)
@@ -2480,6 +2484,8 @@ layout_mode = 2
 offset_transform_enabled = true
 character_model = ExtResource("8_5kva4")
 character_enum = 2
+character_resource = ExtResource("12_7nkoj")
+nametag_name = "Nyx"
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2" unique_id=1040517811]
 custom_maximum_size = Vector2(250, 250)
@@ -2501,6 +2507,8 @@ texture = ExtResource("10_lp5l8")
 layout_mode = 2
 character_model = ExtResource("12_f2dn1")
 character_enum = 3
+character_resource = ExtResource("15_7nkoj")
+nametag_name = "Chambo"
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3" unique_id=808025807]
 custom_maximum_size = Vector2(250, 250)
@@ -2530,13 +2538,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 72
 
-[node name="CharacterViewP1" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504]
+[node name="CharacterViewP1" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504 node_paths=PackedStringArray("stats_page", "name_tag", "stat_bars")]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
 script = ExtResource("9_5kva4")
+stats_page = NodePath("Stats_Page")
+name_tag = NodePath("Nametag")
+stat_bars = [NodePath("Stats_Page/VBoxContainer/Speed_Bar"), NodePath("Stats_Page/VBoxContainer/Accel_Bar"), NodePath("Stats_Page/VBoxContainer/handling_Bar"), NodePath("Stats_Page/VBoxContainer/Weight_Bar"), NodePath("Stats_Page/VBoxContainer/Boost_Bar")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=2054640353]
 layout_mode = 2
@@ -2544,7 +2555,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/SubViewportContainer" unique_id=528571801]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/SubViewportContainer/SubViewport" unique_id=330135955]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -0.5876154, 0.849, 1.055)
@@ -2559,10 +2570,95 @@ visible = false
 light_energy = 12.065
 omni_range = 12.599
 
+[node name="Nametag" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1730578126]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1878547767]
+visible = false
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 8
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="Stats_Page" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1564476823]
+visible = false
+layout_mode = 2
+color = Color(0.55, 0.55, 0.55, 0.78431374)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page" unique_id=717838410]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Speed_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=1255381072]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 35
+text = "Speed"
+
+[node name="Speed_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=1163954414]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+max_value = 1.0
+value = 0.5
+
+[node name="Accel_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=1318107038]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 35
+text = "Acceleration"
+
+[node name="Accel_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=770205211]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+max_value = 1.0
+
+[node name="Handling_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=582663576]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 35
+text = "Handling"
+
+[node name="handling_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=368602143]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+max_value = 1.0
+
+[node name="Weight_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=491136061]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 35
+text = "Weight"
+
+[node name="Weight_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=1556395599]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+max_value = 1.0
+
+[node name="Boost_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=1414243440]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 35
+text = "Boost"
+
+[node name="Boost_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page/VBoxContainer" unique_id=376368007]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+max_value = 1.0
 
 [node name="CharacterViewP2" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=188325276]
 custom_minimum_size = Vector2(500, 500)
@@ -2578,7 +2674,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer" unique_id=1737335371]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer/SubViewport" unique_id=2119217028]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -3.8998504, 0.849, 1.055)
@@ -2613,7 +2709,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/SubViewportContainer" unique_id=420985607]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/SubViewportContainer/SubViewport" unique_id=1095231269]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -7.212, 0.849, 1.055)
@@ -2649,7 +2745,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer" unique_id=1231962504]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer/SubViewport" unique_id=1719388882]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -10.524, 0.849, 1.055)
@@ -2845,6 +2941,8 @@ material = SubResource("ShaderMaterial_5m051")
 
 [node name="Clouds" parent="BackgroundLayers" index="2" unique_id=1379269482]
 material = SubResource("ShaderMaterial_lp5l8")
+layout_mode = 1
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0185186
 offset_right = 1920.0
@@ -2867,8 +2965,8 @@ unique_name_in_owner = true
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="UILayer/TrackSelect" method="_back_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2/TrackButton" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="." method="_track_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="UILayer/TrackSelect" method="_next_button_pressed"]

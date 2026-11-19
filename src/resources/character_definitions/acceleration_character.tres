@@ -8,6 +8,6 @@ speed = -0.9
 acceleration = 3.0
 max_steering_angle_fast = 0.5
 max_steering_angle_slow = 0.5
-drift_multiplier = 0.10000000000000009
+drift_multiplier = 0.10000000000000007
 drift_charge_speed = -0.19999999999999996
 boost_time = 0.19999999999999996

@@ -1,10 +1,6 @@
-[gd_resource type="Resource" script_class="Character" format=3 uid="uid://b6rwp3qk8wqg0"]
+[gd_resource type="Resource" script_class="Stats" format=3 uid="uid://b6rwp3qk8wqg0"]
 
 [ext_resource type="Script" uid="uid://15ad33ohkjn6" path="res://src/resources/character_definitions/characters.gd" id="1_iulia"]
 
 [resource]
 script = ExtResource("1_iulia")
-speed = 1
-acceleration = -1
-weight = 3
-boost = -3

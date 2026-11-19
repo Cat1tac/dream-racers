@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c85t2nbbmxqqg"]
+
+[ext_resource type="Script" uid="uid://dci7b4cdodyp0" path="res://src/ui/stats_page.gd" id="1_ivopo"]
+
+[node name="Stats_Page2" type="ColorRect" unique_id=1871581490]
+anchors_preset = -1
+anchor_right = 0.132
+anchor_bottom = 0.20600002
+offset_right = -253.44
+offset_bottom = -222.48001
+script = ExtResource("1_ivopo")
