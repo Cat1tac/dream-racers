@@ -26,6 +26,7 @@ enum State {
 
 # TODO set & auto detect what UI state is active based on which is visible
 func _ready() -> void:
+	_default_music_bus_fx()
 	main_music.play()
 	switch_music_stage(1)
 	if main_menu.visible:
@@ -123,3 +124,7 @@ func transition_flag(state: UIState) -> void:
 	is_transitioning = true
 	await state.transition_finished
 	is_transitioning = false
+
+func _default_music_bus_fx() -> void:
+	AudioServer.set_bus_effect_enabled(3, 0, false)
+	AudioServer.set_bus_effect_enabled(3, 1, false)

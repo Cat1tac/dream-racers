@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://byllamuj5kk5i"]
+
+[ext_resource type="Theme" uid="uid://d17rcjumxbjua" path="res://src/ui/themes/info_menu.tres" id="1_rtefb"]
+[ext_resource type="Script" uid="uid://dix5gpg0a52po" path="res://src/ui/scripts/info/info_screen.gd" id="1_y8ntq"]
+[ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="3_qa6yi"]
+
+[node name="InfoScreen" type="Control" unique_id=1631472116]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y8ntq")
+
+[node name="MainPanel" type="PanelContainer" parent="." unique_id=491725127]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 960.0
+grow_vertical = 2
+offset_transform_enabled = true
+theme = ExtResource("1_rtefb")
+theme_type_variation = &"SectionMainPanel"
+
+[node name="MainVBox" type="VBoxContainer" parent="MainPanel" unique_id=1531967798]
+layout_mode = 2
+
+[node name="HeaderMargin" type="MarginContainer" parent="MainPanel/MainVBox" unique_id=379201641]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_rtefb")
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 30
+
+[node name="HeaderLabel" type="Label" parent="MainPanel/MainVBox/HeaderMargin" unique_id=1602451314]
+layout_mode = 2
+theme_type_variation = &"InfoHeader"
+text = "Section"
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonMargin" type="MarginContainer" parent="MainPanel/MainVBox" unique_id=677448869]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 50
+
+[node name="ButtonVBox" type="VBoxContainer" parent="MainPanel/MainVBox/ButtonMargin" unique_id=1937222716]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Button" type="Button" parent="MainPanel/MainVBox/ButtonMargin/ButtonVBox" unique_id=731847935]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Controls"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=787430363]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -1080.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="MediaPanel" type="PanelContainer" parent="VBoxContainer" unique_id=1792334399]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 630)
+layout_mode = 2
+offset_transform_enabled = true
+theme = ExtResource("1_rtefb")
+theme_type_variation = &"MediaPanel"
+metadata/_edit_use_anchors_ = true
+
+[node name="DescriptionPanel" type="PanelContainer" parent="VBoxContainer" unique_id=1031682619]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(960, 450)
+layout_mode = 2
+offset_transform_enabled = true
+theme = ExtResource("1_rtefb")
+theme_type_variation = &"DescriptionPanel"
+metadata/_edit_use_anchors_ = true
+
+[node name="DescriptionMargin" type="MarginContainer" parent="VBoxContainer/DescriptionPanel" unique_id=1127100113]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="DescriptionVBox" type="VBoxContainer" parent="VBoxContainer/DescriptionPanel/DescriptionMargin" unique_id=724515666]
+layout_mode = 2
+
+[node name="DescriptionHeader" type="Label" parent="VBoxContainer/DescriptionPanel/DescriptionMargin/DescriptionVBox" unique_id=1118737400]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_rtefb")
+theme_type_variation = &"DescriptionHeader"
+text = "Header"
+
+[node name="DescriptionBody" type="Label" parent="VBoxContainer/DescriptionPanel/DescriptionMargin/DescriptionVBox" unique_id=2074995379]
+custom_minimum_size = Vector2(920, 360)
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"DescriptionText"
+text = "sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text sample text "
+autowrap_mode = 2
+
+[node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("3_qa6yi")]

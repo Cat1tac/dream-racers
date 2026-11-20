@@ -2864,6 +2864,7 @@ offset_right = -2.0
 offset_bottom = 257.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_constants/margin_right = 130
 
 [node name="NextButton" parent="UILayer/TrackSelect/NextButtonMargin" unique_id=204602147 instance=ExtResource("10_ba7qp")]
 layout_mode = 2

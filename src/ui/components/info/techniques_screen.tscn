@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bqcc6f4vpylx0"]
+
+[ext_resource type="PackedScene" uid="uid://byllamuj5kk5i" path="res://src/ui/components/info/info_screen.tscn" id="1_a22hr"]
+[ext_resource type="Script" uid="uid://bfm6tj4hwohuu" path="res://src/ui/scripts/info/techniques_screen.gd" id="2_nymy5"]
+
+[node name="TechniquesScreen" unique_id=1631472116 instance=ExtResource("1_a22hr")]
+script = ExtResource("2_nymy5")
+
+[node name="HeaderLabel" parent="MainPanel/MainVBox/HeaderMargin" parent_id_path=PackedInt32Array(379201641) index="0" unique_id=1602451314]
+text = "Techniques"
+
+[node name="StartBoostButton" type="Button" parent="MainPanel/MainVBox/ButtonMargin/ButtonVBox" parent_id_path=PackedInt32Array(1937222716) index="0" unique_id=277237238]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Start Boost"
+
+[node name="Button" parent="MainPanel/MainVBox/ButtonMargin/ButtonVBox" parent_id_path=PackedInt32Array(1937222716) index="1" unique_id=731847935]
+text = "Gear"
+
+[node name="DriftButton" type="Button" parent="MainPanel/MainVBox/ButtonMargin/ButtonVBox" parent_id_path=PackedInt32Array(1937222716) index="2" unique_id=206723470]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Drift"
+
+[node name="SpinButton" type="Button" parent="MainPanel/MainVBox/ButtonMargin/ButtonVBox" parent_id_path=PackedInt32Array(1937222716) index="3" unique_id=1186249182]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Spin"
+
+[node name="TrickButton" type="Button" parent="MainPanel/MainVBox/ButtonMargin/ButtonVBox" parent_id_path=PackedInt32Array(1937222716) index="4" unique_id=861595724]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Trick
+"
+
+[node name="Button6" type="Button" parent="MainPanel/MainVBox/ButtonMargin/ButtonVBox" parent_id_path=PackedInt32Array(1937222716) index="5" unique_id=1767207858]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="DescriptionMargin" parent="VBoxContainer/DescriptionPanel" parent_id_path=PackedInt32Array(1031682619) index="0" unique_id=1127100113]
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DescriptionHeader" parent="VBoxContainer/DescriptionPanel/DescriptionMargin/DescriptionVBox" parent_id_path=PackedInt32Array(724515666) index="0" unique_id=1118737400]
+unique_name_in_owner = true
+
+[node name="DescriptionBody" parent="VBoxContainer/DescriptionPanel/DescriptionMargin/DescriptionVBox" parent_id_path=PackedInt32Array(724515666) index="1" unique_id=2074995379]
+unique_name_in_owner = true
