@@ -51,6 +51,9 @@ stream_0/volume = 0.0
 stream_1/stream = ExtResource("16_mdkad")
 stream_1/volume = 0.0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qdl3i"]
+size = Vector3(2, 0.5, 2)
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kjyqo"]
 friction = 0.0
 
@@ -204,6 +207,14 @@ stream = ExtResource("21_qdl3i")
 [node name="BigEnergySFX" type="AudioStreamPlayer3D" parent="Center/PlayerSFX" unique_id=1317595081]
 stream = ExtResource("22_rf80d")
 
+[node name="CpuSpinSensor" type="Area3D" parent="Center" unique_id=385500545]
+unique_name_in_owner = true
+collision_mask = 104
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Center/CpuSpinSensor" unique_id=1732046982]
+shape = SubResource("BoxShape3D_qdl3i")
+debug_color = Color(0.67, 0.0066999937, 0.65894485, 0.5372549)
+
 [node name="SecondCamera" type="Marker3D" parent="." unique_id=1667103743]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
@@ -235,14 +246,11 @@ chargeParticles = [NodePath("../Center/VFX/BoostCharge"), NodePath("../Center/VF
 boostParticles = [NodePath("../Center/VFX/BoostExhaust"), NodePath("../Center/VFX/BoostExhaust2")]
 spin_vfx = NodePath("../Center/VFX/SpinVFX")
 hover_vfx = NodePath("../Center/VFX/HoverVFX")
-top_speed = 30.0
-acceleration = 15.0
-trailing_acceleration = 20.0
-ground_resistance = 5
 no_acceleration_input_steering_mulitplier_fast = 1.0
 no_acceleration_input_steering_mulitplier_slow = 1.0
 drift_charge_curve = ExtResource("7_uia4o")
 spin_curve = ExtResource("8_rdc6l")
+boost_acceleration = 40.0
 stale_charge_curve = SubResource("Curve_54vdw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Kart_Sphere" unique_id=199179411]
@@ -260,6 +268,7 @@ script = ExtResource("20_trpe4")
 [connection signal="check_passed" from="Center/LocalLapLogic" to="CPU Controls" method="_on_local_lap_logic_check_passed"]
 [connection signal="player_respawned" from="Center/LocalLapLogic" to="Kart_Sphere" method="_on_local_lap_logic_player_respawned"]
 [connection signal="tree_entered" from="Center/LocalLapLogic" to="Center/LocalLapLogic" method="_on_tree_entered"]
+[connection signal="area_entered" from="Center/CpuSpinSensor" to="CPU Controls" method="_on_cpu_spin_sensor_area_entered"]
 [connection signal="tree_entered" from="CPU Controls" to="CPU Controls" method="_on_tree_entered"]
 
 [editable path="Center/KartModel"]

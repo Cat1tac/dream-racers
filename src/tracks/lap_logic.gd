@@ -7,10 +7,10 @@ class_name LapLogic extends Node
 @export var lap_count : int = 3
 @onready var start_line: Area3D = $StartLine
 
-func get_checkpoints() -> Array:
-	var temp_checkpoint_array : Array
+func get_checkpoints() -> Array[Checkpoint]:
+	var temp_checkpoint_array : Array[Checkpoint]
 	for child : Checkpoint in checkpoints.get_children():
-		temp_checkpoint_array.append(child.box_id)
+		temp_checkpoint_array.append(child)
 	return temp_checkpoint_array
 
 func get_cpu_path_positions() -> Array[Vector3]:

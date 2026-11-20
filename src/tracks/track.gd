@@ -6,9 +6,8 @@ class_name Track extends BaseLevel
 @export var willCountdown: bool = false # set to false to disable race countdown
 
 const MAIN_MENU : String = "uid://dt5xamoe48268"
-var checkpoints: Array
-var cpu_positions: Array[Vector3]
-var cpu_checks: Array
+var checkpoints: Array[Checkpoint]
+var cpu_checks: Array[CPUArea]
 
 var num_players_finished : int
 var delay : int = 10 # frames
@@ -16,10 +15,9 @@ var delay : int = 10 # frames
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	checkpoints = lap_logic.get_checkpoints() 
-	cpu_positions = lap_logic.get_cpu_path_positions()
 	cpu_checks = lap_logic.get_cpu_checks()
 	Events.on_send_checkpoints.emit(checkpoints)
-	Events.on_send_cpu_positions.emit(cpu_positions, cpu_checks)
+	Events.on_send_cpu_positions.emit(cpu_checks)
 	Events.on_get_total_laps.emit(lap_count)
 	Events.on_starting_respawn.emit(lap_logic.respawn_point)
 	Events.players_finished_race.connect(race_over)

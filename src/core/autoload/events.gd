@@ -16,6 +16,7 @@ signal on_countdown_finished
 signal on_placement_update
 signal on_final_placement
 signal on_going_reverse
+signal cpu_check_passed(path: CPUArea)
 
 ## Used to signal a player has joined the game
 signal on_player_added

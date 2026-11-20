@@ -31,7 +31,7 @@ var _current_level : BaseLevel = null
 @onready var world_effects: WorldEffectsSpawner = %"World Effects"
 
 func _ready() -> void:
-	GameManager.fill_cpus(2) # <- SET THIS TO 0 TO DISABLE CPU PLAYERS
+	GameManager.fill_cpus(4) # <- SET THIS TO 0 TO DISABLE CPU PLAYERS
 	_init_players(GameManager.players_connected, GameManager.cpu_count)
 	GameManager.pause_game.connect(pause_game)
 	GameManager.unpause_game.connect(unpause_game)
@@ -79,7 +79,7 @@ func _init_players(playerAmount : int = 1, cpuAmount : int = 0) -> void:
 		players.append(player)
 		local_huds.append(_init_local_hud(i))
 	
-	var cpu_id = playerAmount
+	var cpu_id := playerAmount
 	for i in cpuAmount:
 		var cpu : Player = player_scene.instantiate() as Player
 		cpu.playerId = cpu_id

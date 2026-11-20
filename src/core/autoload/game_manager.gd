@@ -108,7 +108,7 @@ func fill_cpus(max_players: int) -> void:
 	# ADJUST THE NUMBER AFTER randi() FOR EACH CHARACTER THAT EXISTS
 	# AND MAKE SURE TO GIVE THEM A MATCH CASE 
 	for i in range(max_players - players_connected):
-		var _char_id : int = randi() % 2
+		var _char_id : int = randi_range(0,2)
 		var new_cpu : PlayerDefinition = PlayerDefinition.new()
 		new_cpu.id = i + 1
 		match _char_id: # Randomize cpu characters
@@ -116,6 +116,8 @@ func fill_cpus(max_players: int) -> void:
 				new_cpu.selected_character = SelectedCharacter.SERAPHIM
 			1:
 				new_cpu.selected_character = SelectedCharacter.NYX
+			2:
+				new_cpu.selected_character = SelectedCharacter.CHAMBO
 			_:
 				print("ERROR: CPU Character index " + str(_char_id) + " does not exist. Defaulting to Nyx.")
 				new_cpu.selected_character = SelectedCharacter.NYX

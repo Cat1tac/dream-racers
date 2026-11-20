@@ -9,6 +9,7 @@ class_name Player extends Node3D
 @onready var kart_sphere: Kart_Sphere = $Kart_Sphere
 @onready var center: Node3D = %Center
 @onready var camera_3d: Camera3D = %Camera3D
+@onready var cpu_controls: CPU = $"CPU Controls"
 
 var world_effects_spawner : WorldEffectsSpawner
 var current_track : Track
@@ -25,6 +26,8 @@ var base_fov : float
 var playerControlled := true
 
 func _ready() -> void:
+	if playerControlled:
+		cpu_controls.process_mode = cpu_controls.PROCESS_MODE_DISABLED
 	_change_camera($CameraPivot/Camera3D)
 	kart_model_instance = kart_model_scene.instantiate() as Model
 	kart_model_instance.current_state = kart_model_instance.STATE.IN_RACE

@@ -27,14 +27,14 @@ var input_spin : bool
 var drift_direction : float
 
 @export_group("Speed")
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var top_speed := 27.0 # Will be stat adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var top_speed := 30.0 # Will be stat adjustable
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var reverse_top_speed := 10.0
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var acceleration := 8.0 # Will be stat adjustable
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var acceleration := 15.0 # Will be stat adjustable
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var trailing_speed := 10.0
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var trailing_acceleration := 10.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var trailing_acceleration := 20.0
 
 @export var brake_resistance := 15 ## How much resistance there is to forward movement when pressing in the opposite direction of the velocity
-@export var ground_resistance := 6 ## How mcuh resistance there is to forward movement when coasting
+@export var ground_resistance := 5 ## How mcuh resistance there is to forward movement when coasting
 @export var air_resistance := 5.0 ## How fast you lose speed in the air 
 
 @export_group("Steering")
@@ -71,7 +71,7 @@ var drift_direction : float
 @export var trick_window : float = 0.2 ## How long player has to trick after going into air
 
 @export_group("Boost")
-@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var boost_acceleration := 30.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s^2") var boost_acceleration := 35.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var boost_top_speed : = 3.0
 @export var dreamcatcher_speed_multiplier := 3
 @export var dreamcatcher_time := 1.5
@@ -399,15 +399,17 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 	input_steering = move_vector.x
 	
 	if sim_spinInput:
+		sim_spinInput = false
 		if !on_ground():
 			if trick_window_increment > 0 and !tricked:
 				tricked = true
 				_do_trick()
-				sim_spinInput = false
 			pass
 		else:
 			if spin_cooldown_timer <= 0:
 				# resets spins variables and gets speed right before spinning
+				kart_model.do_spin_anim(spin_length)
+				spin_timer_decremented = false
 				spin_hitbox.hit_dreamcatcher = false
 				spin_hurt_box.setIntangiblility(true)
 				var forward := -center.global_basis.z
@@ -415,7 +417,6 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 				#apply_slowdown_force(0.25)
 				input_spin = true
 				audio_player.play_audio(audio_player.SFX.SPIN)
-				sim_spinInput = false
 		
 	if !sim_driftInput:
 		pass
@@ -425,11 +426,12 @@ func simulate_drift_change(isDrifting: bool) -> void:
 	if isDrifting:
 		input_drift = true
 		drift_direction = 0
-		audio_player.play_audio("DRIFT")
+		audio_player.play_audio(audio_player.SFX.DRIFT)
 	else:
 		input_drift = false
 		drift_just_released = true
-		audio_player.stop_audio("DRIFT")
+		audio_player.stop_audio(audio_player.SFX.DRIFT)
+		
 func do_hit_effect(obstacle : HIT_BY) -> void:
 	if spin_hurt_box.invincible:
 		return

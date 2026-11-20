@@ -4,14 +4,14 @@ class_name LocalLapLogic extends Area3D
 signal check_passed(path: int)
 signal player_respawned(id: int)
 
-var key_checkpoints_passed: Array[CheckpointZone] ## Updating array of key checkpoints player has gone past
-var respawn_checkpoints_passed : Dictionary[CheckpointZone, int] ## Updating array of respawn checkpoints player has gone past
+var key_checkpoints_passed: Array[Checkpoint] ## Updating array of key checkpoints player has gone past
+var respawn_checkpoints_passed : Dictionary[Checkpoint, int] ## Updating array of respawn checkpoints player has gone past
 var respawn_checkpoints : Array ##Array of checkpoint player can respawn at (currently all checkpoints)
 var key_checkpoints: Array ## Array of all key checkpoints (progress checkpoints)
 var laps_done: int ## number of laps completed
 
 var race_timer: float = 0.0
-var last_respawn_passed : CheckpointZone
+var last_respawn_passed : Checkpoint
 var respawn_location: Vector3
 var respawn_rotation: Vector3
 
@@ -50,27 +50,27 @@ func complete_lap() -> void:
 		print("LocalLapLogic: Finish Time: " + str(snapped(race_timer, 0.001)))
 
 ## Adds checkpoint to the key_checkpoints_passed array
-func add_checkpoint(checkpoint: CheckpointZone) -> void:
+func add_checkpoint(checkpoint: Checkpoint) -> void:
 	if !checkpoint.is_key_checkpoint:
 		return
 	
 	if len(key_checkpoints) == len(key_checkpoints_passed):
 		return
 	
-	var _next_key_checkpoint = key_checkpoints[key_checkpoints_passed.size()] # This is the value that we are looking for
+	var _next_key_checkpoint : Checkpoint = key_checkpoints[key_checkpoints_passed.size()] # This is the value that we are looking for
 	
 	print("Comparing recieved ID: " + str(checkpoint) + "to the required ID: " + str(_next_key_checkpoint))
-	if checkpoint in _next_key_checkpoint:
+	if checkpoint == _next_key_checkpoint:
 		key_checkpoints_passed.append(checkpoint)
 		print("LocalLapLogic: Checkpoint #" + str(key_checkpoints_passed.size()) + " was crossed.")
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(checkpoint) + " is not a valid checkpoint.")
 
 func add_cpu_zone(zone: CPUArea) -> void:
-	check_passed.emit(zone)
+	check_passed.emit(zone, parent.playerId)
 
 ## Updates respawn point if it comes after the previous respawn point passed
-func update_respawn_point(new_respawn_point : CheckpointZone) -> void:
+func update_respawn_point(new_respawn_point : Checkpoint) -> void:
 	if respawn_checkpoints_passed.has(new_respawn_point): # if point has been logged then return 
 		return
 	
@@ -114,9 +114,9 @@ func _process(delta: float) -> void:
 	#print("LalLogic: " + str(self.global_rotation_degrees))
 
 ##Puts key checkpoints and respawn checkpoints into their own arrays
-func _get_all_checkpoints(checkpoint_array: Array) -> void:
+func _get_all_checkpoints(checkpoint_array: Array[Checkpoint]) -> void:
 	for checkpoint in checkpoint_array:
-		if checkpoint[0].is_key_checkpoint:
+		if checkpoint.is_key_checkpoint:
 			key_checkpoints.append(checkpoint)
 	respawn_checkpoints = checkpoint_array
 	print("LocalLapLogic: kart has received checkpoint info")

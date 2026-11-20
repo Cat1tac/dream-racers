@@ -6,6 +6,8 @@ extends Node3D
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var trick_forward_speed : float = 50.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var normal_forward_speed : float = 40.0
 @export var shortcut_endpoint : Marker3D
+@export var trick_end_point : Marker3D
+@export var marker_end_point : Marker3D
 ## Controls how fast kart will be boosted up on super jump. Should be in frames
 @export_custom(PROPERTY_HINT_NONE, "suffix:frames") var vertical_time : float = 120
 
@@ -21,10 +23,16 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 		var hurt_box : SpinHurtBox = area
 		hurt_box.call_vertical_bounce(bounce_height)
 		if hurt_box.kart_sphere.tricked: # if tricked beforehand, recieve an extra boost of speed
-			hurt_box.kart_sphere.apply_target_forward_speed(trick_forward_speed) #if negative will turn slowdown into boost
+			if trick_end_point:
+				hurt_box.kart_sphere.apply_point_forward_force(trick_end_point.global_position, forward_time, get_physics_process_delta_time())
+			else:
+				hurt_box.kart_sphere.apply_target_forward_speed(trick_forward_speed) #if negative will turn slowdown into boost
 			hurt_box.kart_sphere.execute_boost(1, false)
 		else:
-			hurt_box.kart_sphere.apply_target_forward_speed(normal_forward_speed)
+			if marker_end_point:
+				hurt_box.kart_sphere.apply_point_forward_force(marker_end_point.global_position, forward_time, get_physics_process_delta_time())
+			else:
+				hurt_box.kart_sphere.apply_target_forward_speed(normal_forward_speed)
 		_bounce()
 		hurt_box.reset_trick()
 		

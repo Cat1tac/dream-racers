@@ -14,10 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="10_d1fgb"]
 [ext_resource type="PackedScene" uid="uid://d0qafquu1y2j" path="res://src/gameplay/objects/out_of_bounds.tscn" id="11_fa1el"]
 [ext_resource type="PackedScene" uid="uid://cg1f8wo7jqdr6" path="res://src/Sounds/music_holder.tscn" id="12_fa1el"]
-[ext_resource type="Script" uid="uid://dodgpskpo6lgr" path="res://src/gameplay/objects/checkpoint_zone.gd" id="13_0bx2i"]
 [ext_resource type="AudioStream" uid="uid://d1f2yit8o115y" path="res://src/Sounds/Dream Racers - Yggdrasil v2.mp3" id="13_on71r"]
 [ext_resource type="PackedScene" uid="uid://dcnxsnn2jbfc6" path="res://src/gameplay/local_multiplayer/placement_system.tscn" id="14_acfsq"]
-[ext_resource type="Script" uid="uid://do0nxyiy7s8dc" path="res://src/gameplay/objects/cpu_area.gd" id="14_c20le"]
+[ext_resource type="PackedScene" uid="uid://dkvtoebjwffgy" path="res://src/gameplay/objects/cpu_area.tscn" id="14_cy38x"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0bx2i"]
 noise_type = 5
@@ -343,7 +342,7 @@ shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_4vmrv")
 shader_parameter/high_clouds_density = 0.55000000819566
 shader_parameter/top_color = Color(0.8474744, 0.84747446, 0.84747446, 1)
 shader_parameter/bottom_color = Color(0.8504922, 0.30988398, 0.41530824, 1)
-shader_parameter/sun_scatter = Color(0.5522893, 0.15389475, 0.4031773, 1)
+shader_parameter/sun_scatter = Color(0.78, 0.234, 0.5797999, 1)
 shader_parameter/astro_tint = Color(0, 0, 0, 1)
 shader_parameter/astro_scale = 1.0
 shader_parameter/astro_intensity = 1.0
@@ -402,22 +401,17 @@ albedo_color = Color(0.69803923, 0, 0, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_on71r"]
 size = Vector3(1, 30.63373, 61.588356)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_skbuk"]
-size = Vector3(0.155, 5, 10)
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_skbuk"]
-
 [node name="Dreamy Yggdrasil" type="Node3D" unique_id=2091793635 node_paths=PackedStringArray("player_spawners", "lap_logic")]
 script = ExtResource("1_ldwis")
 player_spawners = [NodePath("P1 Spawn"), NodePath("P2 Spawn"), NodePath("P3 Spawn"), NodePath("P4 Spawn")]
 lap_logic = NodePath("LapLogic")
+lap_count = 1
 willCountdown = true
 
 [node name="Effects" type="Node" parent="." unique_id=1100440505]
 
 [node name="Cloud Bed" type="MeshInstance3D" parent="Effects" unique_id=260015042]
 transform = Transform3D(5000, 0, 0, 0, 500, 0, 0, 0, 5000, -98.5885, -84.47509, -0.23886108)
-visible = false
 layers = 2
 material_override = SubResource("ShaderMaterial_clfou")
 mesh = SubResource("PlaneMesh_guolr")
@@ -749,34 +743,23 @@ surface_material_override/0 = SubResource("StandardMaterial3D_lsb3b")
 
 [node name="DreamyYggdrasil (with Leaves)2" parent="." unique_id=1475172835 instance=ExtResource("10_5tsv1")]
 
-[node name="Trunk" parent="DreamyYggdrasil (with Leaves)2" index="0" unique_id=704974218]
-visible = false
-
-[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=334400901]
+[node name="Road" parent="DreamyYggdrasil (with Leaves)2" index="1" unique_id=314313419]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010043144, 0, -0.02722168)
 
-[node name="Walls" parent="DreamyYggdrasil (with Leaves)2" index="2" unique_id=54502437]
-visible = false
-
-[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=1392426446]
+[node name="Leaves" parent="DreamyYggdrasil (with Leaves)2" index="3" unique_id=157312291]
 transform = Transform3D(-11.27874, 2.742221, 25.541407, 5.8808208, -26.878418, 5.4826603, 25.00598, 7.558031, 10.230846, -89.828445, 37.044, -18.374361)
-visible = false
 surface_material_override/0 = ExtResource("8_ehbii")
 
-[node name="Trunk_col" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=402905241]
-visible = false
+[node name="Trunk_col" parent="DreamyYggdrasil (with Leaves)2" index="4" unique_id=1872040116]
 collision_layer = 4
 
-[node name="Walls_col" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=873323671]
-visible = false
+[node name="Walls_col" parent="DreamyYggdrasil (with Leaves)2" index="5" unique_id=2006387113]
 collision_layer = 4
 
-[node name="Road_col" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=1603539327]
-visible = false
+[node name="Road_col" parent="DreamyYggdrasil (with Leaves)2" index="6" unique_id=349985135]
 collision_layer = 2
 
-[node name="invisible_Walls" parent="DreamyYggdrasil (with Leaves)2" index="7" unique_id=1738943810]
-visible = false
+[node name="invisible_Walls" parent="DreamyYggdrasil (with Leaves)2" index="7" unique_id=1403861938]
 collision_layer = 4
 
 [node name="LapLogic" type="Node" parent="." unique_id=24872241 node_paths=PackedStringArray("track")]
@@ -800,8 +783,14 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 transform = Transform3D(0.99628407, 0, -0.08612797, 0, 1, 0, 0.08612797, 0, 0.99628407, -136.97429, 0.72357845, -22.29158)
 is_key_checkpoint = true
 
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.7031956, 0)
+
 [node name="Checkpoint2" parent="LapLogic/Checkpoints" unique_id=758422375 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.99628407, 0, -0.08612797, 0, 1, 0, 0.08612797, 0, 0.99628407, -83.70315, 5.248028, -22.29158)
+
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint2" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 3.881319, 0)
 
 [node name="Checkpoint3" parent="LapLogic/Checkpoints" unique_id=578925984 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.99628407, 0, -0.08612797, 0, 1, 0, 0.08612797, 0, 0.99628407, -38.589157, 28.11554, -22.29158)
@@ -816,28 +805,52 @@ transform = Transform3D(0.0078042746, 0, 0.99996954, 0, 1, 0, -0.99996954, 0, 0.
 [node name="Checkpoint6" parent="LapLogic/Checkpoints" unique_id=423129681 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.06806581, 0, 0.9976808, 0, 1, 0, -0.9976808, 0, -0.06806581, 11.44433, 34.092804, -88.56868)
 
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint6" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 3.2654762, 0)
+
 [node name="Checkpoint7" parent="LapLogic/Checkpoints" unique_id=396494334 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.6850221, 0, 0.7285222, 0, 1, 0, -0.7285222, 0, 0.6850221, 17.730358, 34.092804, -133.7806)
+
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint7" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.3646317, 0)
 
 [node name="Checkpoint8" parent="LapLogic/Checkpoints" unique_id=1623675684 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.8733315, 0, -0.4871265, 0, 1, 0, 0.4871265, 0, 0.8733315, 71.76734, 34.092804, -142.12465)
 is_key_checkpoint = true
 
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint8" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.5940933, 0)
+
 [node name="Checkpoint9" parent="LapLogic/Checkpoints" unique_id=1300206780 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.8733315, 0, -0.4871265, 0, 1, 0, 0.4871265, 0, 0.8733315, 106.06383, 34.092804, -101.21446)
+
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint9" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.4138718, 0)
 
 [node name="Checkpoint10" parent="LapLogic/Checkpoints" unique_id=1229434874 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.8733315, 0, -0.4871265, 0, 1, 0, 0.4871265, 0, 0.8733315, 170.18854, 34.092804, -77.43802)
 
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint10" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.8920784, 0)
+
 [node name="Checkpoint11" parent="LapLogic/Checkpoints" unique_id=1402117993 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.19261825, 0, -0.98127383, 0, 1, 0, 0.98127383, 0, -0.19261825, 186.621, 34.092804, -51.68051)
+
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint11" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.2004395, 0)
 
 [node name="Checkpoint12" parent="LapLogic/Checkpoints" unique_id=138605799 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.9999965, 0, -0.0026715547, 0, 1, 0, 0.0026715547, 0, -0.9999965, 161.60577, 34.092804, -34.058598)
 is_key_checkpoint = true
 
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint12" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2.2373734, 0)
+
 [node name="Checkpoint13" parent="LapLogic/Checkpoints" unique_id=2009132943 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.9999965, 0, -0.0026715547, 0, 1, 0, 0.0026715547, 0, -0.9999965, 67.760796, 58.434494, -34.058598)
+
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint13" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -5.038536, 0)
 
 [node name="Checkpoint14" parent="LapLogic/Checkpoints" unique_id=105124022 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.9999965, 0, -0.0026715547, 0, 1, 0, 0.0026715547, 0, -0.9999965, 11.257532, 59.297985, -34.058598)
@@ -846,85 +859,13 @@ transform = Transform3D(-0.9999965, 0, -0.0026715547, 0, 1, 0, 0.0026715547, 0, 
 transform = Transform3D(-0.68700564, 0, -0.7266522, 0, 1, 0, 0.7266522, 0, -0.68700564, -21.076315, 55.496105, -26.245607)
 is_split_path = true
 
-[node name="Zone" parent="LapLogic/Checkpoints/Checkpoint15" index="0" unique_id=1325857751]
-transform = Transform3D(0.61, 0, 0, 0, 0.61, 0, 0, 0, 0.61, 0, -1.5553932, 0)
-
-[node name="Zone2" type="Area3D" parent="LapLogic/Checkpoints/Checkpoint15" unique_id=504240916]
-transform = Transform3D(0.5399999, 0, 0, 0, 0.54, 0, 0, 0, 0.5399999, -11.908972, 11.290501, -12.59623)
-script = ExtResource("13_0bx2i")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/Checkpoints/Checkpoint15/Zone2" unique_id=478124641]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0.49, 0)
-shape = SubResource("BoxShape3D_skbuk")
-debug_color = Color(0.6986487, 0.30722323, 1, 1)
-
-[node name="RespawnPoint" type="Marker3D" parent="LapLogic/Checkpoints/Checkpoint15/Zone2" unique_id=1850910329]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-
-[node name="cpuArea" type="Area3D" parent="LapLogic/Checkpoints/Checkpoint15/Zone2" unique_id=1280193955]
-transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 0.9999998, -1.382307, 0, 2.7090225)
-script = ExtResource("14_c20le")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/Checkpoints/Checkpoint15/Zone2/cpuArea" unique_id=1642401447]
-transform = Transform3D(13.11, 0, 0, 0, 13.11, 0, 0, 0, 13.11, 0, 0, 0)
-shape = SubResource("CylinderShape3D_skbuk")
-debug_color = Color(0, 0.5950001, 0.7, 1)
-
 [node name="Checkpoint16" parent="LapLogic/Checkpoints" unique_id=1408930818 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.5231395, 0, -0.8522471, 0, 1, 0, 0.8522471, 0, 0.5231395, -21.076315, 55.496105, 6.2324505)
 is_split_path = true
 
-[node name="Zone" parent="LapLogic/Checkpoints/Checkpoint16" index="0" unique_id=1325857751]
-transform = Transform3D(0.5401139, 0, 0.12767954, 0, 0.555, 0, -0.12767954, 0, 0.5401139, 0, -3.7137146, 0)
-
-[node name="Zone2" type="Area3D" parent="LapLogic/Checkpoints/Checkpoint16" unique_id=1497409935]
-transform = Transform3D(0.515, 0, -1.4901161e-08, 0, 0.515, 0, 1.4901161e-08, 0, 0.515, -4.1189437, 12.141758, -21.811794)
-script = ExtResource("13_0bx2i")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/Checkpoints/Checkpoint16/Zone2" unique_id=1692867860]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0.49, 0)
-shape = SubResource("BoxShape3D_skbuk")
-debug_color = Color(0.6986487, 0.30722323, 1, 1)
-
-[node name="RespawnPoint" type="Marker3D" parent="LapLogic/Checkpoints/Checkpoint16/Zone2" unique_id=88939765]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-
-[node name="cpuArea" type="Area3D" parent="LapLogic/Checkpoints/Checkpoint16/Zone2" unique_id=1100072083]
-transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 0.9999998, -1.382307, 0, 2.7090225)
-script = ExtResource("14_c20le")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/Checkpoints/Checkpoint16/Zone2/cpuArea" unique_id=2088467093]
-transform = Transform3D(13.11, 0, 0, 0, 13.11, 0, 0, 0, 13.11, 0, 0, 0)
-shape = SubResource("CylinderShape3D_skbuk")
-debug_color = Color(0, 0.5950001, 0.7, 1)
-
 [node name="Checkpoint17" parent="LapLogic/Checkpoints" unique_id=960968401 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.5390369, 0, -0.13215213, 0, 0.555, 0, 0.13215213, 0, 0.5390369, 14.035431, 55.496105, 19.94709)
 is_split_path = true
-
-[node name="Zone" parent="LapLogic/Checkpoints/Checkpoint17" index="0" unique_id=1325857751]
-transform = Transform3D(1, 0, 4.4703484e-08, 0, 1, 0, -4.4703484e-08, 0, 1, 0.93133545, -5.382042, 3.7988358)
-
-[node name="Zone2" type="Area3D" parent="LapLogic/Checkpoints/Checkpoint17" unique_id=426583443]
-transform = Transform3D(0.99544024, 0, 0.095383584, 0, 1, 0, -0.095383584, 0, 0.99544024, -7.869356, 20.980812, -32.09837)
-script = ExtResource("13_0bx2i")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/Checkpoints/Checkpoint17/Zone2" unique_id=1903728591]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0.49, 0)
-shape = SubResource("BoxShape3D_skbuk")
-debug_color = Color(0.6986487, 0.30722323, 1, 1)
-
-[node name="RespawnPoint" type="Marker3D" parent="LapLogic/Checkpoints/Checkpoint17/Zone2" unique_id=210233226]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-
-[node name="cpuArea" type="Area3D" parent="LapLogic/Checkpoints/Checkpoint17/Zone2" unique_id=1761447528]
-transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 0.9999998, -1.382307, 0, 2.7090225)
-script = ExtResource("14_c20le")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LapLogic/Checkpoints/Checkpoint17/Zone2/cpuArea" unique_id=500251333]
-transform = Transform3D(13.11, 0, 0, 0, 13.11, 0, 0, 0, 13.11, 0, 0, 0)
-shape = SubResource("CylinderShape3D_skbuk")
-debug_color = Color(0, 0.5950001, 0.7, 1)
 
 [node name="Checkpoint18" parent="LapLogic/Checkpoints" unique_id=552594245 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.9958297, 0, 0.091232985, 0, 1, 0, -0.091232985, 0, 0.9958297, 58.32914, 55.496105, 23.403051)
@@ -943,9 +884,6 @@ transform = Transform3D(-0.03939095, 0, -0.99922395, 0, 1, 0, 0.99922395, 0, -0.
 transform = Transform3D(-0.9985898, 0, 0.05309041, 0, 1, 0, -0.05309041, 0, -0.9985898, 94.416695, 20.321253, 86.758446)
 is_key_checkpoint = true
 
-[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint22/Zone" parent_id_path=PackedInt32Array(835479694, 1325857751) index="1" unique_id=446360075]
-transform = Transform3D(-4.4703484e-08, 0, -0.9999996, 0, 1, 0, 0.9999996, 0, -4.4703484e-08, 12.338959, -4.3161907, -2.273178)
-
 [node name="Checkpoint23" parent="LapLogic/Checkpoints" unique_id=849845828 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.9900726, 0, 0.14055723, 0, 1, 0, -0.14055723, 0, -0.9900726, -0.21574402, 18.363443, 86.758446)
 
@@ -957,6 +895,9 @@ transform = Transform3D(-0.07236476, 0, 0.99737823, 0, 1, 0, -0.99737823, 0, -0.
 
 [node name="Checkpoint26" parent="LapLogic/Checkpoints" unique_id=58346546 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.433416, 0, 0.9011939, 0, 1, 0, -0.9011939, 0, 0.433416, -20.119701, -18.80819, -22.801825)
+
+[node name="CollisionShape3D" parent="LapLogic/Checkpoints/Checkpoint26" index="0" unique_id=445533381]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0.48999977, 0)
 
 [node name="Checkpoint27" parent="LapLogic/Checkpoints" unique_id=1585392526 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.9833311, 0, 0.18182376, 0, 1, 0, -0.18182376, 0, 0.9833311, -3.3105717, -28.13023, -39.61319)
@@ -979,10 +920,175 @@ transform = Transform3D(-0.9954159, 0, 0.09564142, 0, 1, 0, -0.09564142, 0, -0.9
 [node name="Checkpoint33" parent="LapLogic/Checkpoints" unique_id=107256046 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(-0.8865633, 0, 0.46260747, 0, 1, 0, -0.46260747, 0, -0.8865633, -167.14307, -0.67492104, 20.493248)
 
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint33" index="1" unique_id=446360075]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2.8273115, 0)
+
 [node name="Checkpoint34" parent="LapLogic/Checkpoints" unique_id=1525935181 instance=ExtResource("10_d1fgb")]
 transform = Transform3D(0.46210083, 0, 0.88682747, 0, 1, 0, -0.88682747, 0, 0.46210083, -176.71889, -0.67492104, -12.930422)
 
+[node name="RespawnPoint" parent="LapLogic/Checkpoints/Checkpoint34" index="1" unique_id=446360075]
+transform = Transform3D(-2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, -2.9802322e-08, 0, 3.098795, 0)
+
 [node name="CPUPath" type="Node" parent="LapLogic" unique_id=1212312779]
+
+[node name="cpuArea" parent="LapLogic/CPUPath" unique_id=1914431522 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.027643573, 0, -0.9996178, 0, 1, 0, 0.9996178, 0, 0.027643573, -141.43773, 1.8186684, -22.44862)
+
+[node name="cpuArea2" parent="LapLogic/CPUPath" unique_id=1014613657 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.05645376, 0, -0.9984052, 0, 1, 0, 0.9984052, 0, -0.05645376, -104.20907, 1.8186684, -22.44862)
+
+[node name="cpuArea3" parent="LapLogic/CPUPath" unique_id=1093065892 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.042355306, 0, -0.9991026, 0, 1, 0, 0.9991026, 0, -0.042355306, -58.626755, 15.251795, -22.44862)
+
+[node name="cpuArea4" parent="LapLogic/CPUPath" unique_id=658179644 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.0057607368, 0, -0.9999835, 0, 1, 0, 0.9999835, 0, -0.0057607368, -26.491997, 27.35008, -22.44862)
+
+[node name="cpuArea5" parent="LapLogic/CPUPath" unique_id=787926000 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.34225398, 0, -0.93960744, 0, 1, 0, 0.93960744, 0, 0.34225398, 2.4678478, 32.983505, -22.44862)
+
+[node name="cpuArea6" parent="LapLogic/CPUPath" unique_id=1925511981 instance=ExtResource("14_cy38x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.836203, 33.183277, -42.59688)
+
+[node name="cpuArea7" parent="LapLogic/CPUPath" unique_id=1965266283 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.99929386, 0, 0.037573766, 0, 1, 0, -0.037573766, 0, 0.99929386, 11.206167, 33.183277, -90.13452)
+
+[node name="cpuArea8" parent="LapLogic/CPUPath" unique_id=1361776572 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.96484315, 0, -0.2628264, 0, 1, 0, 0.2628264, 0, 0.96484315, 10.305382, 33.183277, -113.6655)
+
+[node name="cpuArea9" parent="LapLogic/CPUPath" unique_id=1812725028 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.5914477, 0, -0.8063433, 0, 1, 0, 0.8063433, 0, 0.5914477, 19.476282, 33.183277, -138.80682)
+
+[node name="cpuArea10" parent="LapLogic/CPUPath" unique_id=1740327376 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.16901726, 0, -0.9856131, 0, 1, 0, 0.9856131, 0, -0.16901726, 39.536816, 33.183277, -151.41318)
+
+[node name="cpuArea11" parent="LapLogic/CPUPath" unique_id=2110988529 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.76479715, 0, -0.6442712, 0, 1, 0, 0.6442712, 0, -0.76479715, 72.4733, 33.183277, -142.95029)
+
+[node name="cpuArea12" parent="LapLogic/CPUPath" unique_id=509318564 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.6403205, 0, -0.7681079, 0, 1, 0, 0.7681079, 0, -0.6403205, 89.10657, 33.183277, -117.58262)
+
+[node name="cpuArea13" parent="LapLogic/CPUPath" unique_id=637083720 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.45195785, 0, -0.8920393, 0, 1, 0, 0.8920393, 0, -0.45195785, 112.56766, 33.183277, -100.22086)
+
+[node name="cpuArea14" parent="LapLogic/CPUPath" unique_id=525044410 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.40560302, 0, -0.9140494, 0, 1, 0, 0.9140494, 0, -0.40560302, 156.90887, 33.183277, -81.71345)
+
+[node name="cpuArea15" parent="LapLogic/CPUPath" unique_id=898969717 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.92738014, 0, -0.37412018, 0, 1, 0, 0.37412018, 0, -0.92738014, 180.99023, 33.183277, -69.78883)
+
+[node name="cpuArea16" parent="LapLogic/CPUPath" unique_id=611328852 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.53649247, 0, 0.84390515, 0, 1, 0, -0.84390515, 0, -0.53649247, 186.18195, 33.183277, -43.97519)
+
+[node name="cpuArea17" parent="LapLogic/CPUPath" unique_id=1973280068 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.026469857, 0, 0.9996497, 0, 1, 0, -0.9996497, 0, -0.026469857, 157.29677, 33.183277, -34.59081)
+
+[node name="cpuArea18" parent="LapLogic/CPUPath" unique_id=614897702 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.020610075, 0, 0.9997877, 0, 1, 0, -0.9997877, 0, 0.020610075, 62.37494, 49.9258, -34.155834)
+
+[node name="cpuArea19" parent="LapLogic/CPUPath" unique_id=1826309219 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.020610075, 0, 0.9997877, 0, 1, 0, -0.9997877, 0, 0.020610075, 23.105022, 52.180576, -34.965363)
+
+[node name="cpuArea20" parent="LapLogic/CPUPath" unique_id=934271903 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.020610075, 0, 0.9997877, 0, 1, 0, -0.9997877, 0, 0.020610075, -1.4975929, 51.777092, -35.47253)
+
+[node name="cpuArea21" parent="LapLogic/CPUPath" unique_id=2016696425 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.7027744, 0, 0.7114129, 0, 1, 0, -0.7114129, 0, -0.7027744, -20.865828, 51.777092, -30.294195)
+
+[node name="cpuArea22" parent="LapLogic/CPUPath" unique_id=919997500 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.843202, 0, -0.537597, 0, 1, 0, 0.537597, 0, -0.843202, -32.669323, 51.777092, -11.142708)
+
+[node name="cpuArea23" parent="LapLogic/CPUPath" unique_id=1121152711 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.45493203, 0, -0.89052624, 0, 1, 0, 0.89052624, 0, -0.45493203, -19.539846, 51.777092, 8.198156)
+
+[node name="cpuArea24" parent="LapLogic/CPUPath" unique_id=1303400190 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.16083652, 0, -0.98698115, 0, 1, 0, 0.98698115, 0, -0.16083652, 5.598879, 51.777092, 21.136395)
+
+[node name="cpuArea25" parent="LapLogic/CPUPath" unique_id=554940157 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.057329506, 0, -0.9983554, 0, 1, 0, 0.9983554, 0, 0.057329506, 42.037945, 47.13763, 26.076515)
+
+[node name="cpuArea26" parent="LapLogic/CPUPath" unique_id=943013971 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.26158634, 0, -0.96518016, 0, 1, 0, 0.96518016, 0, 0.26158634, 75.86767, 42.097725, 22.476173)
+
+[node name="cpuArea27" parent="LapLogic/CPUPath" unique_id=1270356546 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.39025193, 0, -0.9207082, 0, 1, 0, 0.9207082, 0, -0.39025193, 93.92586, 37.668053, 17.94617)
+
+[node name="cpuArea28" parent="LapLogic/CPUPath" unique_id=993975523 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.9472289, 0, -0.3205579, 0, 1, 0, 0.3205579, 0, -0.9472289, 110.587585, 29.503819, 29.49688)
+
+[node name="cpuArea29" parent="LapLogic/CPUPath" unique_id=372458427 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.9992993, 0, -0.037430186, 0, 1, 0, 0.037430186, 0, -0.9992993, 115.66944, 24.449532, 47.28066)
+
+[node name="cpuArea30" parent="LapLogic/CPUPath" unique_id=52935240 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.8950221, 0, 0.4460218, 0, 1, 0, -0.4460218, 0, -0.8950221, 115.891205, 18.259365, 69.9194)
+
+[node name="cpuArea31" parent="LapLogic/CPUPath" unique_id=1083714392 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.06505682, 0, 0.9978815, 0, 1, 0, -0.9978815, 0, -0.06505682, 102.94223, 14.417999, 84.20357)
+
+[node name="cpuArea32" parent="LapLogic/CPUPath" unique_id=1730544713 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.027383365, 0, 0.9996249, 0, 1, 0, -0.9996249, 0, -0.027383365, 70.25989, 9.76409, 86.9852)
+
+[node name="cpuArea33" parent="LapLogic/CPUPath" unique_id=1794047804 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.13243449, 0, 0.9911917, 0, 1, 0, -0.9911917, 0, 0.13243449, 13.917194, 11.03862, 87.42409)
+
+[node name="cpuArea34" parent="LapLogic/CPUPath" unique_id=1317771906 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.6737428, 0, 0.73896587, 0, 1, 0, -0.73896587, 0, 0.6737428, -11.881464, 7.5780563, 82.05414)
+
+[node name="cpuArea35" parent="LapLogic/CPUPath" unique_id=1550433437 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.9674916, 0, 0.25290257, 0, 1, 0, -0.25290257, 0, 0.9674916, -28.119053, 1.1193848, 63.027187)
+
+[node name="cpuArea36" parent="LapLogic/CPUPath" unique_id=153375308 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.9989377, 0, 0.046078295, 0, 1, 0, -0.046078295, 0, 0.9989377, -33.25663, -6.8563156, 35.30447)
+
+[node name="cpuArea37" parent="LapLogic/CPUPath" unique_id=1083787422 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.93802595, 0, -0.34656483, 0, 1, 0, 0.34656483, 0, 0.93802595, -34.493023, -10.038816, 8.500557)
+
+[node name="cpuArea38" parent="LapLogic/CPUPath" unique_id=206527639 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.8879476, 0, -0.4599445, 0, 1, 0, 0.4599445, 0, 0.8879476, -23.405642, -22.759674, -21.696972)
+
+[node name="cpuArea39" parent="LapLogic/CPUPath" unique_id=157197646 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.3931831, 0, -0.91946006, 0, 1, 0, 0.91946006, 0, 0.3931831, -12.031679, -27.857952, -36.733177)
+
+[node name="cpuArea40" parent="LapLogic/CPUPath" unique_id=8332903 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.04317149, 0, -0.99906754, 0, 1, 0, 0.99906754, 0, 0.04317149, 9.863583, -32.6465, -42.05004)
+
+[node name="cpuArea41" parent="LapLogic/CPUPath" unique_id=774684183 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.9061202, 0, -0.42302027, 0, 1, 0, 0.42302027, 0, -0.9061202, 32.119335, -36.96992, -34.189365)
+
+[node name="cpuArea42" parent="LapLogic/CPUPath" unique_id=1145082462 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.9976961, 0, 0.06784071, 0, 1, 0, -0.06784071, 0, -0.9976961, 41.658714, -36.96992, -10.996396)
+
+[node name="cpuArea43" parent="LapLogic/CPUPath" unique_id=595672616 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.5970539, 0, 0.80220103, 0, 1, 0, -0.80220103, 0, -0.5970539, 36.271427, -36.96992, 10.517664)
+
+[node name="cpuArea44" parent="LapLogic/CPUPath" unique_id=1878550824 instance=ExtResource("14_cy38x")]
+transform = Transform3D(-0.17303473, 0, 0.9849156, 0, 1, 0, -0.9849156, 0, -0.17303473, 16.120039, -36.96992, 23.636076)
+
+[node name="cpuArea45" parent="LapLogic/CPUPath" unique_id=374247676 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.0059507936, 0, 0.9999821, 0, 1, 0, -0.9999821, 0, 0.0059507936, -6.5261097, -36.96992, 28.952478)
+
+[node name="cpuArea46" parent="LapLogic/CPUPath" unique_id=1709056590 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.0059507936, 0, 0.9999821, 0, 1, 0, -0.9999821, 0, 0.0059507936, -34.33959, -36.96992, 29.824253)
+
+[node name="cpuArea47" parent="LapLogic/CPUPath" unique_id=2132482452 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.0059507936, 0, 0.9999821, 0, 1, 0, -0.9999821, 0, 0.0059507936, -60.026443, -26.995373, 29.671392)
+
+[node name="cpuArea48" parent="LapLogic/CPUPath" unique_id=1225856117 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.0059507936, 0, 0.9999821, 0, 1, 0, -0.9999821, 0, 0.0059507936, -84.850845, -20.703346, 29.523664)
+
+[node name="cpuArea49" parent="LapLogic/CPUPath" unique_id=1141509475 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.06912821, 0, 0.99760765, 0, 1, 0, -0.99760765, 0, 0.06912821, -111.74083, -12.561701, 27.882174)
+
+[node name="cpuArea50" parent="LapLogic/CPUPath" unique_id=1334477402 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.23032579, 0, 0.9731134, 0, 1, 0, -0.9731134, 0, 0.23032579, -139.7464, -4.784725, 25.946672)
+
+[node name="cpuArea51" parent="LapLogic/CPUPath" unique_id=1109441989 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.6432158, 0, 0.7656847, 0, 1, 0, -0.7656847, 0, 0.6432158, -164.70346, -2.9114103, 19.848898)
+
+[node name="cpuArea52" parent="LapLogic/CPUPath" unique_id=2068257030 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.87171817, 0, -0.49000722, 0, 1, 0, 0.49000722, 0, 0.87171817, -183.02621, 0.13753986, -1.0806348)
+
+[node name="cpuArea53" parent="LapLogic/CPUPath" unique_id=1837166929 instance=ExtResource("14_cy38x")]
+transform = Transform3D(0.07973999, 0, -0.99681556, 0, 1, 0, 0.99681556, 0, 0.07973999, -165.74055, 0.13753986, -22.088886)
 
 [node name="OutOfBounds" parent="." unique_id=2017124765 instance=ExtResource("11_fa1el")]
 transform = Transform3D(30.505, 0, 0, 0, 30.505, 0, 0, 0, 30.505, 15.436226, -81.31001, -6.1447296)
@@ -1007,12 +1113,6 @@ parameters/looping = true
 
 [connection signal="area_entered" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_area_entered"]
 [connection signal="ready" from="LapLogic/StartLine" to="LapLogic" method="_on_start_line_ready"]
-[connection signal="area_entered" from="LapLogic/Checkpoints/Checkpoint15/Zone2" to="LapLogic/Checkpoints/Checkpoint15/Zone2" method="_on_area_entered"]
-[connection signal="area_entered" from="LapLogic/Checkpoints/Checkpoint15/Zone2/cpuArea" to="LapLogic/Checkpoints/Checkpoint15/Zone2/cpuArea" method="_on_area_entered"]
-[connection signal="area_entered" from="LapLogic/Checkpoints/Checkpoint16/Zone2" to="LapLogic/Checkpoints/Checkpoint16/Zone2" method="_on_area_entered"]
-[connection signal="area_entered" from="LapLogic/Checkpoints/Checkpoint16/Zone2/cpuArea" to="LapLogic/Checkpoints/Checkpoint16/Zone2/cpuArea" method="_on_area_entered"]
-[connection signal="area_entered" from="LapLogic/Checkpoints/Checkpoint17/Zone2" to="LapLogic/Checkpoints/Checkpoint17/Zone2" method="_on_area_entered"]
-[connection signal="area_entered" from="LapLogic/Checkpoints/Checkpoint17/Zone2/cpuArea" to="LapLogic/Checkpoints/Checkpoint17/Zone2/cpuArea" method="_on_area_entered"]
 
 [editable path="Objects/Arrow2"]
 [editable path="DreamyYggdrasil (with Leaves)2"]
