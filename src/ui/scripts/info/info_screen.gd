@@ -4,6 +4,7 @@ class_name InfoScreen extends Control
 @onready var media_panel: PanelContainer = %MediaPanel
 @onready var sfx: Node = $SFX
 
+var _exit_started : bool = false
 signal screen_return
 var tween : Tween
 
@@ -16,8 +17,9 @@ func _input(event: InputEvent) -> void:
 	for player : PlayerDefinition in GameManager.player_list:
 		if player.is_cpu:
 			return
-		if Input.is_action_just_pressed(player.controls.actions["backwards"]):
+		if Input.is_action_just_pressed(player.controls.actions["backwards"]) and not _exit_started:
 				_exit_animation()
+				_exit_started = true
 				sfx.play_ui_back()
 				await tween.finished
 				screen_return.emit()

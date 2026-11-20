@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dibqk6plesj4a" path="res://assets/models/characters/Chambo/mouseIconNoBG.png" id="5_718k2"]
 [ext_resource type="Script" uid="uid://c0eob3qgrr2t8" path="res://src/ui/components/menu/info_main_screen.gd" id="6_p13yj"]
 [ext_resource type="Texture2D" uid="uid://c2phkt3oj8vtj" path="res://assets/ui/logos/logo5.png" id="7_v20nb"]
+[ext_resource type="AudioStream" uid="uid://cgkxsqk1u43dq" path="res://assets/audio/music/general/Menu_Theme_V1_3.ogg" id="9_1aoex"]
 [ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="9_es72w"]
 
 [node name="InfoMenu" type="Node" unique_id=2053138599]
@@ -159,3 +160,10 @@ expand_mode = 3
 stretch_mode = 4
 
 [node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("9_es72w")]
+
+[node name="InfoMainMusic" type="AudioStreamPlayer" parent="." unique_id=321326951]
+stream = ExtResource("9_1aoex")
+volume_db = -2.0
+pitch_scale = 0.83
+autoplay = true
+bus = &"Music"

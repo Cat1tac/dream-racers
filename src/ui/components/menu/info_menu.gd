@@ -5,6 +5,7 @@ extends Node
 var tween : Tween
 
 func _ready() -> void:
+	_info_music_bus_sfx()
 	await GameManager.load_finished
 	_reset_tween()
 	
@@ -14,7 +15,11 @@ func _ready() -> void:
 		button.offset_transform_enabled = true
 		button.offset_transform_position_ratio = Vector2(-2, 0)
 		tween.tween_property(button, "offset_transform_position_ratio", Vector2.ZERO, 0.5).set_delay(button.get_index() * 0.1)
-	
+
+func _info_music_bus_sfx() -> void:
+	AudioServer.set_bus_effect_enabled(3, 0, true)
+	AudioServer.set_bus_effect_enabled(3, 1, true)
+
 func _reset_tween() -> void:
 	if tween:
 		tween.kill()
