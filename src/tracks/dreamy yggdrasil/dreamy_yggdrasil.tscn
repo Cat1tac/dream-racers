@@ -405,7 +405,6 @@ size = Vector3(1, 30.63373, 61.588356)
 script = ExtResource("1_ldwis")
 player_spawners = [NodePath("P1 Spawn"), NodePath("P2 Spawn"), NodePath("P3 Spawn"), NodePath("P4 Spawn")]
 lap_logic = NodePath("LapLogic")
-lap_count = 1
 willCountdown = true
 
 [node name="Effects" type="Node" parent="." unique_id=1100440505]

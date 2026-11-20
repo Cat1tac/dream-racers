@@ -911,6 +911,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("PromptMargin:modulate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.0009999999),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_6s7ef"]
 resource_name = "enter_left"
@@ -1070,6 +1082,18 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1.4142134, 1),
 "update": 0,
 "values": [0.79999997976, 0.39999998988]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("PromptMargin:modulate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.16666667, 0.53333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_l5owu"]
@@ -1231,6 +1255,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [0.0, 0.39999998988]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("PromptMargin:modulate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.16666667, 0.56666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_yo02o"]
 resource_name = "exit_left"
@@ -1355,6 +1391,18 @@ tracks/9/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("PromptMargin:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.13333334, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_j4riv"]
 resource_name = "exit_right"
@@ -1478,6 +1526,18 @@ tracks/9/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("PromptMargin:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.06666667, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j4riv"]
@@ -3165,6 +3225,7 @@ stretch_mode = 5
 offscreen_vector_ratio = Vector2(3, 0)
 
 [node name="PromptMargin" type="MarginContainer" parent="UILayer/CharacterSelect" unique_id=149968529]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -3386,8 +3447,8 @@ unique_name_in_owner = true
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="UILayer/TrackSelect" method="_back_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2/TrackButton" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="." method="_track_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="UILayer/TrackSelect" method="_next_button_pressed"]

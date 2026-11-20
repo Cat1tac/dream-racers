@@ -11,6 +11,8 @@ var stats_tweener
 
 ## Removes previous instance of model and adds in new instance
 func set_model_in_viewport(model : Model, id : int) -> void:
+	if !sub_viewport:
+		return
 	remove_model_in_viewport()
 	sub_viewport.add_child(model)
 	model_instance = model
@@ -18,6 +20,8 @@ func set_model_in_viewport(model : Model, id : int) -> void:
 
 ## Removes instance of model in viewport
 func remove_model_in_viewport() -> void:
+	if !sub_viewport:
+		return
 	for child in sub_viewport.get_children():
 		if child is Model:
 			sub_viewport.remove_child(child)

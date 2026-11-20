@@ -846,15 +846,6 @@ transform = Transform3D(-0.9999999, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, 
 [node name="Checkpoint14" parent="LapLogic/Checkpoints" unique_id=304183176 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-1.5530932, 0, 0.07698232, 0, 1.555, 0, -0.07698232, 0, -1.5530932, -10.235568, 9.81329, -284.99704)
 
-[node name="Checkpoint15" parent="LapLogic/Checkpoints" unique_id=1929353936 instance=ExtResource("5_nb2ps")]
-transform = Transform3D(-0.7, 0, -1.0569706e-07, 0, 0.7, 0, 1.0569706e-07, 0, -0.7, -37.774338, 9.81329, -261.4787)
-is_key_checkpoint = true
-is_split_path = true
-
-[node name="Checkpoint16" parent="LapLogic/Checkpoints" unique_id=999227373 instance=ExtResource("5_nb2ps")]
-transform = Transform3D(-0.7049663, 0, -0.0068913177, 0, 0.705, 0, 0.0068913177, 0, -0.7049663, -65.65711, 9.81329, -261.20786)
-is_split_path = true
-
 [node name="Checkpoint17" parent="LapLogic/Checkpoints" unique_id=17563496 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-1.555, 0, -2.3479846e-07, 0, 1.555, 0, 2.3479846e-07, 0, -1.555, -92.44882, 9.81329, -284.2109)
 
@@ -938,11 +929,11 @@ is_key_checkpoint = true
 transform = Transform3D(0.0034177825, 0, -0.999994, 0, 1, 0, 0.999994, 0, 0.0034177825, -262.50674, 59.66235, -233.93994)
 
 [node name="Checkpoint42" parent="LapLogic/Checkpoints" unique_id=506353104 instance=ExtResource("5_nb2ps")]
-transform = Transform3D(0.0019994124, 0, -0.5849966, 0, 0.585, 0, 0.5849966, 0, 0.0019994124, -248.54372, 61.856365, -176.55655)
+transform = Transform3D(0.0048532747, 0, -1.4199916, 0, 1.42, 0, 1.4199916, 0, 0.0048532747, -266.8988, 61.856365, -183.89375)
 is_split_path = true
 
 [node name="Checkpoint43" parent="LapLogic/Checkpoints" unique_id=633105620 instance=ExtResource("5_nb2ps")]
-transform = Transform3D(0.0017430775, 0, -0.509997, 0, 0.51, 0, 0.509997, 0, 0.0017430775, -250.00606, 59.66235, -70.70915)
+transform = Transform3D(0.0034177992, 0, -0.99999416, 0, 1, 0, 0.99999416, 0, 0.0034177992, -265.3435, 59.66235, -50.815536)
 is_split_path = true
 
 [node name="Checkpoint44" parent="LapLogic/Checkpoints" unique_id=1679123475 instance=ExtResource("5_nb2ps")]
@@ -2448,8 +2439,6 @@ parameters/looping = true
 
 [editable path="battleship"]
 [editable path="LapLogic/Checkpoints/Checkpoint14"]
-[editable path="LapLogic/Checkpoints/Checkpoint15"]
-[editable path="LapLogic/Checkpoints/Checkpoint16"]
 [editable path="LapLogic/Checkpoints/Checkpoint17"]
 [editable path="LapLogic/Checkpoints/Checkpoint42"]
 [editable path="LapLogic/Checkpoints/Checkpoint43"]
