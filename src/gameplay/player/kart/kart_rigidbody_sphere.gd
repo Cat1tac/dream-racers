@@ -175,6 +175,7 @@ var isRacing: bool = false
 var sim_turn_vector: float = 0.0
 var sim_move_vector: float = 0.0
 var sim_spinInput: bool = false
+var sim_driftInput: bool = false
 
 #Externals
 var controls : PlayerControls
@@ -415,7 +416,20 @@ func _simulate_input(horizontal: float, vertical: float) -> void:
 				input_spin = true
 				audio_player.play_audio(audio_player.SFX.SPIN)
 				sim_spinInput = false
-	
+		
+	if !sim_driftInput:
+		pass
+
+## Mimics drift start/stop to avoid repeating a "just pressed" input on every frame
+func simulate_drift_change(isDrifting: bool) -> void:
+	if isDrifting:
+		input_drift = true
+		drift_direction = 0
+		audio_player.play_audio("DRIFT")
+	else:
+		input_drift = false
+		drift_just_released = true
+		audio_player.stop_audio("DRIFT")
 func do_hit_effect(obstacle : HIT_BY) -> void:
 	if spin_hurt_box.invincible:
 		return

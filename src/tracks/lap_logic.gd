@@ -2,18 +2,28 @@ class_name LapLogic extends Node
 
 @export var track : Track
 @onready var checkpoints: Node = $Checkpoints
+@onready var cpu_path: Node = $CPUPath
 @onready var respawn_point: Marker3D = $"StartLine/Respawn Point"
 @export var lap_count : int = 3
 @onready var start_line: Area3D = $StartLine
 
-# All print statements from LapLogic scripts are prefaced with "LapLogic: " for easy output reading
-
-func get_checkpoints() -> Array[Checkpoint]:
-	var temp_checkpoint_array : Array[Checkpoint]
+func get_checkpoints() -> Array:
+	var temp_checkpoint_array : Array
 	for child : Checkpoint in checkpoints.get_children():
-		temp_checkpoint_array.append(child)
+		temp_checkpoint_array.append(child.box_id)
 	return temp_checkpoint_array
-		
+
+func get_cpu_path_positions() -> Array[Vector3]:
+	var temp_position_array : Array[Vector3]
+	for child : CPUArea in cpu_path.get_children():
+		temp_position_array.append(child.position)
+	return temp_position_array
+
+func get_cpu_checks() -> Array[CPUArea]:
+	var temp_check_array: Array[CPUArea]
+	for child : CPUArea in cpu_path.get_children():
+		temp_check_array.append(child)
+	return temp_check_array
 
 ## Tells LocalLapLogic to check for lap completion
 func _on_start_line_area_entered(area: Area3D) -> void:
