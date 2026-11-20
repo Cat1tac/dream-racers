@@ -2589,6 +2589,7 @@ color = Color(0, 0, 0, 0.7058824)
 [node name="Stats_Page" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1564476823]
 visible = false
 layout_mode = 2
+theme = ExtResource("1_jlntk")
 color = Color(0.55, 0.55, 0.55, 0.78431374)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/Stats_Page" unique_id=717838410]
@@ -2799,6 +2800,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("6_gucsq")
+track_names = Array[String](["dreamy yggdrasil", "baa baa battleship", "NA", "NA"])
 ui_root = NodePath("../..")
 transition_animations = NodePath("TrackSelectAnimations")
 previous_state = NodePath("../CharacterSelect")
@@ -2850,6 +2852,15 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qemve")
+
+[node name="Track_Nametag" type="Label" parent="UILayer/TrackSelect/VBoxContainer/SelectedTrackView" unique_id=1979751309]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+text = "Track_Nametag"
+horizontal_alignment = 1
 
 [node name="TrackViewMargin" type="MarginContainer" parent="UILayer/TrackSelect/VBoxContainer" unique_id=1889994990]
 layout_mode = 2
