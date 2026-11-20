@@ -1,17 +1,16 @@
 [gd_scene format=3 uid="uid://dp6d5y1bceddg"]
 
-[ext_resource type="Script" uid="uid://bsr46bqkyx0qd" path="res://src/ui/components/menu/info_menu.gd" id="1_2c6gv"]
-[ext_resource type="Theme" uid="uid://d17rcjumxbjua" path="res://src/ui/themes/info_menu.tres" id="1_tg3bk"]
-[ext_resource type="Texture2D" uid="uid://bksmi6psrdomo" path="res://assets/models/characters/Nyx/batQueenIconFullSize.png" id="2_5gmtq"]
-[ext_resource type="Texture2D" uid="uid://cd0x1a6rf01se" path="res://assets/models/characters/Seraphim/seraphim_icon.png" id="2_6tgan"]
-[ext_resource type="Texture2D" uid="uid://dibqk6plesj4a" path="res://assets/models/characters/Chambo/mouseIconNoBG.png" id="3_2c6gv"]
-[ext_resource type="Script" uid="uid://c0eob3qgrr2t8" path="res://src/ui/components/menu/info_main_screen.gd" id="5_eb3xa"]
-[ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="7_eb3xa"]
-[ext_resource type="Texture2D" uid="uid://c2phkt3oj8vtj" path="res://assets/ui/logos/logo5.png" id="8_4740i"]
-[ext_resource type="PackedScene" uid="uid://byllamuj5kk5i" path="res://info_screen.tscn" id="8_ch7dj"]
+[ext_resource type="Script" uid="uid://bsr46bqkyx0qd" path="res://src/ui/components/menu/info_menu.gd" id="1_1aoex"]
+[ext_resource type="Theme" uid="uid://d17rcjumxbjua" path="res://src/ui/themes/info_menu.tres" id="2_o40tf"]
+[ext_resource type="Texture2D" uid="uid://cd0x1a6rf01se" path="res://assets/models/characters/Seraphim/seraphim_icon.png" id="3_piqej"]
+[ext_resource type="Texture2D" uid="uid://bksmi6psrdomo" path="res://assets/models/characters/Nyx/batQueenIconFullSize.png" id="4_2nqgn"]
+[ext_resource type="Texture2D" uid="uid://dibqk6plesj4a" path="res://assets/models/characters/Chambo/mouseIconNoBG.png" id="5_718k2"]
+[ext_resource type="Script" uid="uid://c0eob3qgrr2t8" path="res://src/ui/components/menu/info_main_screen.gd" id="6_p13yj"]
+[ext_resource type="Texture2D" uid="uid://c2phkt3oj8vtj" path="res://assets/ui/logos/logo5.png" id="7_v20nb"]
+[ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="9_es72w"]
 
 [node name="InfoMenu" type="Node" unique_id=2053138599]
-script = ExtResource("1_2c6gv")
+script = ExtResource("1_1aoex")
 
 [node name="MediaPanel" type="PanelContainer" parent="." unique_id=1112189521]
 anchors_preset = 15
@@ -20,7 +19,7 @@ anchor_bottom = 1.0
 offset_left = 958.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_tg3bk")
+theme = ExtResource("2_o40tf")
 
 [node name="ArtRect" type="ColorRect" parent="MediaPanel" unique_id=1433564765]
 layout_mode = 2
@@ -38,7 +37,7 @@ offset_right = -150.0
 offset_bottom = 561.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_6tgan")
+texture = ExtResource("3_piqej")
 expand_mode = 5
 stretch_mode = 6
 metadata/_edit_lock_ = true
@@ -56,7 +55,7 @@ offset_right = 174.0
 offset_bottom = 477.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_5gmtq")
+texture = ExtResource("4_2nqgn")
 expand_mode = 5
 stretch_mode = 6
 metadata/_edit_lock_ = true
@@ -74,28 +73,21 @@ offset_right = 483.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_2c6gv")
+texture = ExtResource("5_718k2")
 expand_mode = 5
 stretch_mode = 6
 metadata/_edit_lock_ = true
 
-[node name="BackgroundColor" type="ColorRect" parent="." unique_id=157352227]
+[node name="MainPanel" type="PanelContainer" parent="." unique_id=1896634806]
 z_index = -1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.58880526, 0.4532014, 0.80330086, 1)
+theme = ExtResource("2_o40tf")
+theme_type_variation = &"MainPanel"
 metadata/_edit_lock_ = true
-
-[node name="ColorRect" type="ColorRect" parent="BackgroundColor" unique_id=1827713870]
-layout_mode = 0
-anchor_top = 0.9324074
-anchor_right = 0.49895832
-anchor_bottom = 0.95
-color = Color(0.40392157, 0.27450982, 0.5882353, 1)
-metadata/_edit_use_anchors_ = true
 
 [node name="InfoMainScreen" type="Control" parent="." unique_id=369549996]
 layout_mode = 3
@@ -105,8 +97,8 @@ anchor_bottom = 1.0
 offset_right = -962.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_tg3bk")
-script = ExtResource("5_eb3xa")
+theme = ExtResource("2_o40tf")
+script = ExtResource("6_p13yj")
 metadata/_edit_lock_ = true
 
 [node name="HeaderMargin" type="MarginContainer" parent="InfoMainScreen" unique_id=1753393719]
@@ -134,7 +126,7 @@ theme_override_constants/margin_left = 160
 [node name="ButtonVBox" type="VBoxContainer" parent="InfoMainScreen/ButtonMargin" unique_id=1168277893]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 93
+theme_override_constants/separation = 110
 
 [node name="ControlsButton" type="Button" parent="InfoMainScreen/ButtonMargin/ButtonVBox" unique_id=1841673706]
 unique_name_in_owner = true
@@ -162,11 +154,8 @@ offset_top = -215.0
 offset_right = 334.5
 offset_bottom = 10.0
 grow_vertical = 0
-texture = ExtResource("8_4740i")
+texture = ExtResource("7_v20nb")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="InfoTab" parent="." unique_id=1631472116 instance=ExtResource("8_ch7dj")]
-visible = false
-
-[node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("7_eb3xa")]
+[node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("9_es72w")]

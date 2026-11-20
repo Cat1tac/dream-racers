@@ -40,7 +40,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0)
 offset_transform_enabled = true
-color = Color(0.5984793, 0.465136, 0.8086269, 1)
+color = Color(0.5399644, 0.39801428, 0.7512821, 1)
 
 [node name="QuestionLabel" type="Label" parent="LoadingScreen/InfoScreen" unique_id=800705121]
 layout_mode = 1

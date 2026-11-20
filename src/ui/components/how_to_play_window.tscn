@@ -13,10 +13,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_3q573")
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 script = ExtResource("1_788uv")
 
 [node name="Controls" type="PanelContainer" parent="." unique_id=151372613]
+visible = false
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 metadata/_tab_index = 0
@@ -34,7 +35,6 @@ texture = ExtResource("3_ioe1w")
 expand_mode = 5
 
 [node name="Actions" type="PanelContainer" parent="." unique_id=1530497468]
-visible = false
 layout_mode = 2
 theme = ExtResource("1_3q573")
 metadata/_tab_index = 1
