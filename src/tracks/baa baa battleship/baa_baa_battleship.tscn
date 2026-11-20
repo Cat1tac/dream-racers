@@ -685,9 +685,8 @@ adjustment_brightness = 1.19
 adjustment_contrast = 1.25
 adjustment_saturation = 1.34
 
-[node name="Baa Baa Battleship" type="Node3D" unique_id=669950304 node_paths=PackedStringArray("player_spawners", "lap_logic")]
+[node name="Baa Baa Battleship" type="Node3D" unique_id=669950304 node_paths=PackedStringArray("lap_logic")]
 script = ExtResource("1_hgstr")
-player_spawners = [NodePath("Spawns/P1 Spawn"), NodePath("Spawns/P2 Spawn"), NodePath("Spawns/P3 Spawn"), NodePath("Spawns/P4 Spawn")]
 lap_logic = NodePath("LapLogic")
 lap_count = 2
 willCountdown = true

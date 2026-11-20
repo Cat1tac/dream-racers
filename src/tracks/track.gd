@@ -36,7 +36,7 @@ func race_over() -> void:
 		GameManager.reset_selections()
 		GameManager.toggle_in_match()
 		GameManager.remove_all_cpus()
-		GameManager.load_into_path(MAIN_MENU)
+		GameManager.load_into_path(MAIN_MENU, 0)
 
 # NOTE DEBUG
 #func _process(_delta: float) -> void:

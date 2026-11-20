@@ -185,18 +185,20 @@ func reset_scoring() -> void:
 #endregion
 
 #region loading functions
-func load_into_path(path: NodePath) -> void:
+## loads into the given path with a set loading screen
+func load_into_path(path : NodePath, screen_type : int) -> void:
 	is_loading = true
 	set_path_to_load(path)
 	
-	var new_loading_screen = loading_layer.instantiate()
-	add_child(new_loading_screen)
+	var new_loading_layer = loading_layer.instantiate()
+	var loading_screen : Control = new_loading_layer.get_child(0)
+	loading_screen.set_loading_screen_type(screen_type)
+	add_child(new_loading_layer)
 	
-	# TODO find prettier way to access first child: new_loading_screen.get_child(0) 
-	load_finished.connect(new_loading_screen.get_child(0).on_loading_finished)
+	load_finished.connect(loading_screen.on_loading_finished)
 	
 	# when loading screen is fully in position, we can start the load request
-	await new_loading_screen.get_child(0).loading_screen_ready
+	await loading_screen.loading_screen_ready
 	start_load(path)
 
 func set_path_to_load(path: NodePath) -> void:
