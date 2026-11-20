@@ -2,6 +2,8 @@ extends UIState
 
 @onready var back_button: NavButton = $BackButtonMargin/BackButton
 @onready var next_button: NavButton = $NextButtonMargin/NextButton
+@onready var track_nametag: Label = $VBoxContainer/SelectedTrackView/Track_Nametag
+@export var track_names: Array[String]
 
 # buttons
 @onready var track_button_1: TextureButton = $VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton
@@ -12,6 +14,7 @@ extends UIState
 @onready var sfx: Node = %SFX
 
 func _ready() -> void:
+	track_nametag.text = track_names[0]
 	self.visibility_changed.connect(_show_back_button)
 	
 	if GameManager.current_track == GameManager.SelectedTrack.NONE:
@@ -30,8 +33,10 @@ func _input(event: InputEvent) -> void:
 	for player : PlayerDefinition in GameManager.player_list:
 		if event.is_action_pressed(player.controls.actions["right"]):
 			sfx.play_ui_up()
+			update_nametag(1)
 		elif event.is_action_pressed(player.controls.actions["left"]):
 			sfx.play_ui_down()
+			update_nametag(-1)
 		
 		if event.is_action_pressed(player.controls.actions["forward"]):
 			sfx.play_ui_select()
@@ -85,3 +90,15 @@ func _show_back_button() -> void:
 func _show_next_button() -> void:
 		next_button.enter()
 		next_button.grab_focus()
+		
+func update_nametag(offset:int = 0) -> void:
+	match get_viewport().gui_get_focus_owner():
+		track_button_1:
+			track_nametag.text = track_names[clamp(0+offset,0,3)]
+		track_button_2:
+			track_nametag.text = track_names[1+offset]
+		track_button_3:
+			track_nametag.text = track_names[2+offset]
+		track_button_4:
+			track_nametag.text = track_names[clamp(3+offset,0,3)]
+	

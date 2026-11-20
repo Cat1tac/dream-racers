@@ -47,7 +47,8 @@ func _input(event: InputEvent) -> void:
 		or event.is_action(player.controls.actions["left"]) 
 		or event.is_action(player.controls.actions["forward"])
 		or event.is_action(player.controls.actions["backwards"])
-		or event.is_action(player.controls.actions["start"])):
+		or event.is_action(player.controls.actions["start"])
+		or event.is_action(player.controls.actions["up"])):
 			_player_behavior_on_character_select(player)
 		
 		if Input.is_action_just_pressed(player.controls.actions["leave"]):
@@ -98,6 +99,11 @@ func _player_behavior_on_character_select(player : PlayerDefinition) -> void:
 			character_buttons[player.character_select_position].selected(player.id) # Puts indicator into selected state
 			GameManager.set_character(character_buttons[player.character_select_position].character_enum, player)
 			GameManager.validate_character_select()
+			
+	# Toggling Stats Page
+	if Input.is_action_just_pressed(player.controls.actions["up"]):
+		print("attemped to toggle")
+		character_views[player.id].toggle_stats()
 		
 	# Deselecting Character
 	if Input.is_action_just_pressed(player.controls.actions["backwards"]) and player.character_select_pressed:
@@ -158,6 +164,16 @@ func _show_character(player : PlayerDefinition, player_added : bool = false) -> 
 		model_instance.selected = true
 	else:
 		model_instance.selected = false
+	
+	#set the stats in the stats page
+	var current_resource : Stats = model_instance.stats
+	if current_resource == null:
+		print("Missing character resource")
+	else:
+		character_views[player.id].set_stats(current_resource)
+	
+	#sets nametag
+	character_views[player.id].set_nametag(character_buttons[player.character_select_position].nametag_name)
 
 ## Changes whether you can see character in character view
 func _character_view_visibility_toggle() -> void:

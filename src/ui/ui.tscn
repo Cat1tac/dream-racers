@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://07uowprv713g" path="res://assets/ui/main menu/gradients/cloud_noise_tex.tres" id="15_tlfe1"]
 [ext_resource type="Texture2D" uid="uid://b146ox7oemdoq" path="res://assets/ui/main menu/gradients/clouds_sunset_gradient.tres" id="16_gq7f2"]
 [ext_resource type="Texture2D" uid="uid://mj7eptgccswt" path="res://assets/models/tracks/Baa Baa Battleship/Counting_Sheep_(8026481405).jpg" id="17_v0hue"]
+[ext_resource type="FontFile" uid="uid://gifu78da0orf" path="res://assets/ui/fonts/KatahdinRound.otf" id="18_2x7qr"]
 [ext_resource type="AudioStream" uid="uid://cgkxsqk1u43dq" path="res://assets/audio/music/general/Menu_Theme_V1_3.ogg" id="21_ba7qp"]
 [ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="29_v0hue"]
 
@@ -1494,6 +1495,18 @@ _data = {
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 0.48235294)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0dve"]
+bg_color = Color(0, 0, 0, 0.7647059)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_size = 1
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2x7qr"]
+bg_color = Color(0, 1, 0.9666667, 1)
+
 [sub_resource type="Animation" id="Animation_wwjrv"]
 length = 0.001
 tracks/0/type = "value"
@@ -2421,7 +2434,6 @@ text = "Press START/SPACE to Join"
 
 [node name="CharacterSelect" type="Control" parent="UILayer" unique_id=1462250579 node_paths=PackedStringArray("character_buttons", "character_views", "ui_root", "transition_animations", "next_state", "previous_state")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2487,6 +2499,7 @@ theme_override_constants/separation = 131
 layout_mode = 2
 character_model = ExtResource("5_1kq2p")
 character_enum = 1
+nametag_name = "Seraphim"
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame1" unique_id=509389241]
 custom_maximum_size = Vector2(250, 250)
@@ -2510,6 +2523,7 @@ layout_mode = 2
 offset_transform_enabled = true
 character_model = ExtResource("8_5kva4")
 character_enum = 2
+nametag_name = "Nyx"
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame2" unique_id=1040517811]
 custom_maximum_size = Vector2(250, 250)
@@ -2531,6 +2545,7 @@ texture = ExtResource("10_lp5l8")
 layout_mode = 2
 character_model = ExtResource("12_f2dn1")
 character_enum = 3
+nametag_name = "Chambo"
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterPortraitMargin/CharacterPortraitHBox/CharFrame3" unique_id=808025807]
 custom_maximum_size = Vector2(250, 250)
@@ -2560,13 +2575,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 72
 
-[node name="CharacterViewP1" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504]
+[node name="CharacterViewP1" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1897565504 node_paths=PackedStringArray("stats_page", "name_tag", "stat_bars")]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
 script = ExtResource("9_5kva4")
+stats_page = NodePath("stats_page")
+name_tag = NodePath("Nametag")
+stat_bars = [NodePath("stats_page/MarginContainer/VBoxContainer/Speed_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Accel_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/handling_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Weight_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Boost_Bar")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=2054640353]
 layout_mode = 2
@@ -2574,7 +2592,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/SubViewportContainer" unique_id=528571801]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/SubViewportContainer/SubViewport" unique_id=330135955]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -0.5876154, 0.849, 1.055)
@@ -2589,18 +2607,122 @@ visible = false
 light_energy = 12.065
 omni_range = 12.599
 
-[node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1878547767]
-custom_minimum_size = Vector2(0, 60)
+[node name="Nametag" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1730578126]
 layout_mode = 2
 size_flags_vertical = 8
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="CharacterViewP2" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=188325276]
+[node name="stats_page" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1651922131]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v0dve")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page" unique_id=1737183806]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer" unique_id=717838410]
+layout_mode = 2
+
+[node name="Speed_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=1255381072]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Speed"
+
+[node name="Speed_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=1163954414]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+value = 0.5
+
+[node name="Accel_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=1318107038]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Acceleration"
+
+[node name="Accel_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=770205211]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Handling_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=582663576]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Handling"
+
+[node name="handling_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=368602143]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Weight_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=491136061]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Weight"
+
+[node name="Weight_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=1556395599]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Boost_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=1414243440]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Boost"
+
+[node name="Boost_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1/stats_page/MarginContainer/VBoxContainer" unique_id=376368007]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="CharacterViewP2" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=188325276 node_paths=PackedStringArray("stats_page", "name_tag", "stat_bars")]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
 script = ExtResource("9_5kva4")
+stats_page = NodePath("stats_page")
+name_tag = NodePath("Nametag")
+stat_bars = [NodePath("stats_page/MarginContainer/VBoxContainer/Speed_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Accel_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/handling_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Weight_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Boost_Bar")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2" unique_id=755607055]
 layout_mode = 2
@@ -2608,7 +2730,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer" unique_id=1737335371]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/SubViewportContainer/SubViewport" unique_id=2119217028]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -3.8998504, 0.849, 1.055)
@@ -2624,18 +2746,122 @@ light_energy = 1.481
 omni_range = 12.599
 omni_attenuation = 0.444
 
-[node name="Frame1" type="ColorRect" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2" unique_id=308756490]
-custom_minimum_size = Vector2(0, 60)
+[node name="Nametag" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2" unique_id=1397087125]
 layout_mode = 2
 size_flags_vertical = 8
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="CharacterViewP3" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1015401988]
+[node name="stats_page" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2" unique_id=1098795947]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v0dve")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page" unique_id=671732915]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer" unique_id=854359831]
+layout_mode = 2
+
+[node name="Speed_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=61298064]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Speed"
+
+[node name="Speed_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=2113820622]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+value = 0.5
+
+[node name="Accel_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=1519347230]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Acceleration"
+
+[node name="Accel_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=1405080477]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Handling_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=1944896668]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Handling"
+
+[node name="handling_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=1335807361]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Weight_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=520541670]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Weight"
+
+[node name="Weight_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=360883433]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Boost_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=14019117]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Boost"
+
+[node name="Boost_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP2/stats_page/MarginContainer/VBoxContainer" unique_id=1729195577]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="CharacterViewP3" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=1015401988 node_paths=PackedStringArray("stats_page", "name_tag", "stat_bars")]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
 script = ExtResource("9_5kva4")
+stats_page = NodePath("stats_page")
+name_tag = NodePath("Nametag")
+stat_bars = [NodePath("stats_page/MarginContainer/VBoxContainer/Speed_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Accel_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/handling_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Weight_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Boost_Bar")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3" unique_id=1448957510]
 layout_mode = 2
@@ -2643,7 +2869,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/SubViewportContainer" unique_id=420985607]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/SubViewportContainer/SubViewport" unique_id=1095231269]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -7.212, 0.849, 1.055)
@@ -2665,13 +2891,122 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="CharacterViewP4" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=690232529]
+[node name="Nametag" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3" unique_id=77169847]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="stats_page" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3" unique_id=1761049841]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v0dve")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page" unique_id=364476444]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer" unique_id=783696418]
+layout_mode = 2
+
+[node name="Speed_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=293911821]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Speed"
+
+[node name="Speed_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=491272700]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+value = 0.5
+
+[node name="Accel_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=1222162753]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Acceleration"
+
+[node name="Accel_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=394364629]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Handling_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=735979602]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Handling"
+
+[node name="handling_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=1875334923]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Weight_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=94770265]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Weight"
+
+[node name="Weight_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=240379648]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Boost_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=666347112]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Boost"
+
+[node name="Boost_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP3/stats_page/MarginContainer/VBoxContainer" unique_id=1514681387]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="CharacterViewP4" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox" unique_id=690232529 node_paths=PackedStringArray("stats_page", "name_tag", "stat_bars")]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pqyqd")
 script = ExtResource("9_5kva4")
+stats_page = NodePath("stats_page")
+name_tag = NodePath("Nametag")
+stat_bars = [NodePath("stats_page/MarginContainer/VBoxContainer/Speed_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Accel_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/handling_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Weight_Bar"), NodePath("stats_page/MarginContainer/VBoxContainer/Boost_Bar")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4" unique_id=162694704]
 layout_mode = 2
@@ -2679,7 +3014,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer" unique_id=1231962504]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/SubViewportContainer/SubViewport" unique_id=1719388882]
 transform = Transform3D(0.9987037, 0.018525904, -0.047410764, -0.009998562, 0.9846695, 0.1741438, 0.04991011, -0.17344402, 0.98357826, -10.524, 0.849, 1.055)
@@ -2700,6 +3035,112 @@ omni_attenuation = 0.444
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 8
+
+[node name="Nametag" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4" unique_id=713230616]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="stats_page" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4" unique_id=118685895]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v0dve")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page" unique_id=1575700570]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer" unique_id=72254368]
+layout_mode = 2
+
+[node name="Speed_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=1469196988]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Speed"
+
+[node name="Speed_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=314896718]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+value = 0.5
+
+[node name="Accel_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=21669128]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Acceleration"
+
+[node name="Accel_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=1386284824]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Handling_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=1881826767]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Handling"
+
+[node name="handling_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=105782829]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Weight_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=1707857179]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Weight"
+
+[node name="Weight_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=1114763192]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
+
+[node name="Boost_Label" type="Label" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=971090677]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+theme_override_font_sizes/font_size = 35
+text = "Boost"
+
+[node name="Boost_Bar" type="ProgressBar" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP4/stats_page/MarginContainer/VBoxContainer" unique_id=1279805495]
+layout_mode = 2
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7qr")
+max_value = 1.0
 
 [node name="NextButtonMargin" type="MarginContainer" parent="UILayer/CharacterSelect" unique_id=1005794077]
 layout_mode = 1
@@ -2723,6 +3164,32 @@ size_flags_vertical = 1
 stretch_mode = 5
 offscreen_vector_ratio = Vector2(3, 0)
 
+[node name="PromptMargin" type="MarginContainer" parent="UILayer/CharacterSelect" unique_id=149968529]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="PromptLabel" type="Label" parent="UILayer/CharacterSelect/PromptMargin" unique_id=2044018740]
+layout_mode = 2
+offset_transform_enabled = true
+theme = ExtResource("1_jlntk")
+theme_override_colors/font_color = Color(0.99999934, 0.9382012, 0.76930594, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2901961)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 9
+theme_override_font_sizes/font_size = 30
+text = "Press Up/Y to view stats"
+
 [node name="TrackSelect" type="Control" parent="UILayer" unique_id=424881822 node_paths=PackedStringArray("ui_root", "transition_animations", "previous_state")]
 unique_name_in_owner = true
 visible = false
@@ -2736,6 +3203,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("6_gucsq")
+track_names = Array[String](["dreamy yggdrasil", "baa baa battleship", "NA", "NA"])
 ui_root = NodePath("../..")
 transition_animations = NodePath("TrackSelectAnimations")
 previous_state = NodePath("../CharacterSelect")
@@ -2787,6 +3255,16 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qemve")
+
+[node name="Track_Nametag" type="Label" parent="UILayer/TrackSelect/VBoxContainer/SelectedTrackView" unique_id=1979751309]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource("1_jlntk")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
+text = "Track_Nametag"
+horizontal_alignment = 1
 
 [node name="TrackViewMargin" type="MarginContainer" parent="UILayer/TrackSelect/VBoxContainer" unique_id=1889994990]
 layout_mode = 2
@@ -2908,8 +3386,8 @@ unique_name_in_owner = true
 [connection signal="pressed" from="UILayer/TrackSelect/BackButtonMargin/BackButton" to="UILayer/TrackSelect" method="_back_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon1/TrackButton" to="UILayer/TrackSelect" method="_track_1_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon2/TrackButton" to="UILayer/TrackSelect" method="_track_2_button_pressed"]
-[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_track_3_button_pressed"]
+[connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon3/TrackButton" to="UILayer/TrackSelect" method="_on_track_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/VBoxContainer/TrackViewMargin/TrackViewHBox/TrackIcon4/TrackButton" to="UILayer/TrackSelect" method="_track_4_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="." method="_track_next_button_pressed"]
 [connection signal="pressed" from="UILayer/TrackSelect/NextButtonMargin/NextButton" to="UILayer/TrackSelect" method="_next_button_pressed"]
