@@ -8,7 +8,8 @@ class_name CPU extends Node
 
 var controls : PlayerControls
 
-var checkpoint_positions: Array
+var checkpoint_positions: Array[Vector3]
+var checkpoints: Array
 var current_checkpoint: int = 0
 
 var cpuTricked: bool = false
@@ -20,7 +21,7 @@ func _ready() -> void:
 	if player.playerId > (GameManager.players_connected - 1):
 		player.playerControlled = false
 		Events.on_countdown_finished.connect(play)
-		Events.on_send_check_positions.connect(get_check_positions)
+		Events.on_send_cpu_positions.connect(get_check_positions)
 
 # Decision Making (Also sometimes called 'Artificial Intelligence' or something)
 func _process(delta: float) -> void:
@@ -105,21 +106,24 @@ func stop_drift() -> void:
 #endregion
 
 ## Updates the checkpoint rotation the CPU refers to
-func _on_local_lap_logic_check_passed(check_index: int) -> void:
+func _on_local_lap_logic_check_passed(check: CPUArea) -> void:
+	var check_index = checkpoints.find(check)
+	
 	if check_index + 1 >= len(checkpoint_positions):
 		current_checkpoint = 0
 	else:
 		current_checkpoint = check_index + 1
 
 ## Gives the CPU the rotation of all checkpoints
-func get_check_positions(arr: Array) -> void:
+func get_check_positions(arr: Array, check_arr: Array) -> void:
 	checkpoint_positions = arr
+	checkpoints = check_arr
+	
 
 func _on_tree_entered() -> void:
 	await Events.on_checkpoints_list_filled # Gives time for TrackInfo to update
 	if !player.current_track:
 		await get_tree().create_timer(0.1).timeout
-		get_check_positions(player.current_track.checkpoint_positions)
+		get_check_positions(player.current_track.checkpoint_positions, player.current_track.cpu_checks)
 	else:
-		get_check_positions(player.current_track.checkpoint_positions)
-	print()
+		get_check_positions(player.current_track.checkpoint_positions, player.current_track.cpu_checks)

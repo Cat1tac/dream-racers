@@ -62,11 +62,8 @@ func add_checkpoint(checkpoint: CheckpointZone) -> void:
 	else:
 		print("LocalLapLogic: Checkpoint ID: " + str(checkpoint) + " is not a valid checkpoint.")
 
-func add_cpu_zone(checkpoint: CheckpointZone) -> void:
-	var _next_key_checkpoint = respawn_checkpoints[key_checkpoints_passed.size()] # This is the value that we are looking for
-	for i in range(len(respawn_checkpoints)):
-		if checkpoint in respawn_checkpoints[i]:
-			check_passed.emit(i)
+func add_cpu_zone(zone: CPUArea) -> void:
+	check_passed.emit(zone)
 
 ## Updates respawn point if it comes after the previous respawn point passed
 func update_respawn_point(new_respawn_point : CheckpointZone) -> void:

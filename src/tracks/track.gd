@@ -7,16 +7,18 @@ class_name Track extends BaseLevel
 
 const MAIN_MENU : String = "uid://dt5xamoe48268"
 var checkpoints: Array
-var checkpoint_positions: Array #is this being used?
+var cpu_positions: Array[Vector3]
+var cpu_checks: Array
 
 var num_players_finished : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	checkpoints = lap_logic.get_checkpoints() 
-	checkpoint_positions = lap_logic.get_checkpoint_positions()
+	cpu_positions = lap_logic.get_cpu_path_positions()
+	cpu_checks = lap_logic.get_cpu_checks()
 	Events.on_send_checkpoints.emit(checkpoints)
-	Events.on_send_check_positions.emit(checkpoint_positions)
+	Events.on_send_cpu_positions.emit(cpu_positions, cpu_checks)
 	Events.on_get_total_laps.emit(lap_count)
 	Events.on_starting_respawn.emit(lap_logic.respawn_point)
 	Events.players_finished_race.connect(race_over)

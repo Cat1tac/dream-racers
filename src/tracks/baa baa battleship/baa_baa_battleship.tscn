@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dfauwcrapsycj" path="res://src/tracks/lap_logic.gd" id="4_ey2j6"]
 [ext_resource type="Script" uid="uid://dodgpskpo6lgr" path="res://src/gameplay/objects/checkpoint_zone.gd" id="5_hvvfl"]
 [ext_resource type="PackedScene" uid="uid://h5g28721p4cg" path="res://src/gameplay/objects/checkpoint.tscn" id="5_nb2ps"]
+[ext_resource type="PackedScene" uid="uid://dkvtoebjwffgy" path="res://src/gameplay/objects/cpu_area.tscn" id="6_5bsj2"]
 [ext_resource type="PackedScene" uid="uid://ors18lntsr0j" path="res://src/gameplay/objects/obstacles/burner.tscn" id="6_nb2ps"]
 [ext_resource type="Script" uid="uid://dyhuwsxaxhemf" path="res://src/tracks/baa baa battleship/cannon_manager.gd" id="7_on4u4"]
 [ext_resource type="PackedScene" uid="uid://6nyspco2aa5a" path="res://src/gameplay/objects/obstacles/cannon_explosion.tscn" id="8_86h7a"]
@@ -1017,6 +1018,74 @@ is_key_checkpoint = true
 [node name="Checkpoint52" parent="LapLogic/Checkpoints" unique_id=994931922 instance=ExtResource("5_nb2ps")]
 transform = Transform3D(-4.3711378e-08, 0, 0.9999999, 0, 0.99999976, 0, -0.99999976, 0, -4.3711385e-08, 29.896057, 2.4237576, 113.41304)
 
+[node name="CPUPath" type="Node" parent="LapLogic" unique_id=1146191273]
+
+[node name="cpuArea" parent="LapLogic/CPUPath" unique_id=1914431522 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.841702, 0, 44.190254)
+
+[node name="cpuArea2" parent="LapLogic/CPUPath" unique_id=1261104583 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.163956, 0, 17.855808)
+
+[node name="cpuArea3" parent="LapLogic/CPUPath" unique_id=1354770352 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.917175, 7.075592, -12.612898)
+
+[node name="cpuArea4" parent="LapLogic/CPUPath" unique_id=132280379 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.258904, 7.075592, -48.490036)
+
+[node name="cpuArea5" parent="LapLogic/CPUPath" unique_id=1454396320 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.617275, 7.075592, -76.51619)
+
+[node name="cpuArea6" parent="LapLogic/CPUPath" unique_id=591556272 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.83106, 7.075592, -76.51619)
+
+[node name="cpuArea7" parent="LapLogic/CPUPath" unique_id=502328094 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.1867, 7.075592, -105.5678)
+
+[node name="cpuArea8" parent="LapLogic/CPUPath" unique_id=1845543075 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.11644, 7.075592, -136.10112)
+
+[node name="cpuArea9" parent="LapLogic/CPUPath" unique_id=894818499 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, 24.97306, 7.075592, -118.13296)
+
+[node name="cpuArea10" parent="LapLogic/CPUPath" unique_id=694961916 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -7.3364487, 7.075592, -128.48254)
+
+[node name="cpuArea11" parent="LapLogic/CPUPath" unique_id=2031145653 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -33.02522, 7.075592, -165.33008)
+
+[node name="cpuArea12" parent="LapLogic/CPUPath" unique_id=580706098 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -5.9226074, 7.075592, -196.62207)
+
+[node name="cpuArea13" parent="LapLogic/CPUPath" unique_id=1390455966 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, 89.35777, 7.075592, -196.62207)
+
+[node name="cpuArea14" parent="LapLogic/CPUPath" unique_id=1296208776 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, 108.464516, 7.075592, -230.694)
+
+[node name="cpuArea15" parent="LapLogic/CPUPath" unique_id=1645608486 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, 108.464516, 7.075592, -261.00705)
+
+[node name="cpuArea16" parent="LapLogic/CPUPath" unique_id=1317990636 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, 72.17803, 7.075592, -284.06146)
+
+[node name="cpuArea17" parent="LapLogic/CPUPath" unique_id=114605764 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, 14.4061165, 7.075592, -284.06146)
+
+[node name="cpuArea18" parent="LapLogic/CPUPath" unique_id=1732632913 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -24.886915, 7.075592, -260.80615)
+
+[node name="cpuArea19" parent="LapLogic/CPUPath" unique_id=519683177 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -60.659557, 7.075592, -260.80615)
+
+[node name="cpuArea20" parent="LapLogic/CPUPath" unique_id=1441103821 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -85.44602, 7.075592, -284.3712)
+
+[node name="cpuArea21" parent="LapLogic/CPUPath" unique_id=359459557 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -85.44602, 7.075592, -284.3712)
+
+[node name="cpuArea22" parent="LapLogic/CPUPath" unique_id=2093564595 instance=ExtResource("6_5bsj2")]
+transform = Transform3D(0.9995453, -0.026461171, -0.014458044, 0.026256783, 0.9995551, -0.014148141, 0.0148259895, 0.013762086, 0.9997954, -241.5987, 7.075592, -284.3712)
+
 [node name="Obstacles" type="Node" parent="." unique_id=559826282]
 
 [node name="Cannon Manager" type="Node3D" parent="Obstacles" unique_id=188941714 node_paths=PackedStringArray("explosions1", "explosions2", "explosionsEnd")]
@@ -1083,7 +1152,7 @@ always_on = true
 [node name="CollisionShape3D" parent="Obstacles/Burners/Burner3/FlameBox" parent_id_path=PackedInt32Array(977023878, 1759877824) index="0" unique_id=1340658995]
 transform = Transform3D(2, -5.9604645e-08, 0, 5.9604645e-08, 2, 0, 0, -3.7252903e-09, 2, -0.1335144, 0.28173828, -10.507408)
 
-[node name="Flame" parent="Obstacles/Burners/Burner3/burner" parent_id_path=PackedInt32Array(977023878, 910642151) index="1" unique_id=1001979250]
+[node name="Flame" parent="Obstacles/Burners/Burner3/burner" parent_id_path=PackedInt32Array(977023878, 910642151) index="1" unique_id=32057220]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner3" index="3" unique_id=790235135]
@@ -1096,7 +1165,7 @@ spot_angle = 54.88
 transform = Transform3D(0.7585542, 0.64872897, 0.06121351, 0.030709842, 0.058245502, -0.9978301, -0.6508866, 0.7587876, 0.024259984, -269.15305, 19.890285, -369.68292)
 always_on = true
 
-[node name="Flame" parent="Obstacles/Burners/Burner4/burner" parent_id_path=PackedInt32Array(1967368030, 910642151) index="1" unique_id=1001979250]
+[node name="Flame" parent="Obstacles/Burners/Burner4/burner" parent_id_path=PackedInt32Array(1967368030, 910642151) index="1" unique_id=32057220]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner4" index="3" unique_id=790235135]
@@ -1109,7 +1178,7 @@ spot_angle = 54.88
 transform = Transform3D(0.7585014, 0.6513228, -0.021332394, -0.0319879, 0.004516228, -0.99947834, -0.6508866, 0.7587876, 0.024259984, -316.02948, 30.919582, -282.50034)
 always_on = true
 
-[node name="Flame" parent="Obstacles/Burners/Burner5/burner" parent_id_path=PackedInt32Array(532866762, 910642151) index="1" unique_id=1001979250]
+[node name="Flame" parent="Obstacles/Burners/Burner5/burner" parent_id_path=PackedInt32Array(532866762, 910642151) index="1" unique_id=32057220]
 transform = Transform3D(1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, -1.8626451e-09, 1, 0, 0, 0)
 
 [node name="SpotLight3D" parent="Obstacles/Burners/Burner5" index="3" unique_id=790235135]
