@@ -2588,6 +2588,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="stats_page" type="PanelContainer" parent="UILayer/CharacterSelect/VBoxContainer/CharacterViewMargin/CharacterViewHBox/CharacterViewP1" unique_id=1651922131]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v0dve")
 
@@ -3228,6 +3229,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme = ExtResource("1_jlntk")
 theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("18_2x7qr")
 text = "Track_Nametag"
 horizontal_alignment = 1
 
