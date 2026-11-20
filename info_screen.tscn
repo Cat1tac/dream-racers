@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://byllamuj5kk5i"]
+
+[ext_resource type="Theme" uid="uid://d17rcjumxbjua" path="res://src/ui/themes/info_menu.tres" id="1_rtefb"]
+
+[node name="InfoTab" type="Control" unique_id=1631472116]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainPanel" type="PanelContainer" parent="." unique_id=491725127]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 960.0
+grow_vertical = 2
+theme = ExtResource("1_rtefb")
+theme_type_variation = &"MainPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel" unique_id=1531967798]
+layout_mode = 2
+
+[node name="HeaderMargin" type="MarginContainer" parent="MainPanel/VBoxContainer" unique_id=379201641]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_rtefb")
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 30
+
+[node name="HeaderLabel" type="Label" parent="MainPanel/VBoxContainer/HeaderMargin" unique_id=1602451314]
+layout_mode = 2
+theme_type_variation = &"InfoHeader"
+text = "Section"
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonMargin" type="MarginContainer" parent="MainPanel/VBoxContainer" unique_id=677448869]
+layout_mode = 2
+size_flags_horizontal = 0
+offset_transform_enabled = true
+theme_override_constants/margin_left = 160
+theme_override_constants/margin_top = 100
+
+[node name="ButtonVBox" type="VBoxContainer" parent="MainPanel/VBoxContainer/ButtonMargin" unique_id=1937222716]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+
+[node name="ControlsButton" type="Button" parent="MainPanel/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=731847935]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Controls"
+
+[node name="ControlsButton2" type="Button" parent="MainPanel/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=291373179]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Controls"
+
+[node name="ControlsButton3" type="Button" parent="MainPanel/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=814410183]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Controls"
+
+[node name="ControlsButton4" type="Button" parent="MainPanel/VBoxContainer/ButtonMargin/ButtonVBox" unique_id=442054710]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Controls"
+
+[node name="DescriptionPanel" type="PanelContainer" parent="." unique_id=1031682619]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.6537037
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_rtefb")
+theme_type_variation = &"DescriptionPanel"
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DescriptionPanel" unique_id=724515666]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DescriptionPanel/VBoxContainer" unique_id=1118737400]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"DescriptionText"
+text = "Header"
+
+[node name="DescriptionLabel" type="Label" parent="DescriptionPanel/VBoxContainer" unique_id=2074995379]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"DescriptionText"
+text = "sample text"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1792334399]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.6537037
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true

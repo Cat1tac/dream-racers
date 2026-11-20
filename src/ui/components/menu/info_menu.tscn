@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dibqk6plesj4a" path="res://assets/models/characters/Chambo/mouseIconNoBG.png" id="3_2c6gv"]
 [ext_resource type="Script" uid="uid://c0eob3qgrr2t8" path="res://src/ui/components/menu/info_main_screen.gd" id="5_eb3xa"]
 [ext_resource type="PackedScene" uid="uid://casijrb5yn3uj" path="res://src/ui/UIAudio.tscn" id="7_eb3xa"]
+[ext_resource type="Texture2D" uid="uid://c2phkt3oj8vtj" path="res://assets/ui/logos/logo5.png" id="8_4740i"]
+[ext_resource type="PackedScene" uid="uid://byllamuj5kk5i" path="res://info_screen.tscn" id="8_ch7dj"]
 
 [node name="InfoMenu" type="Node" unique_id=2053138599]
 script = ExtResource("1_2c6gv")
@@ -148,5 +150,23 @@ text = "Driving techniques"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Interactables"
+
+[node name="Logo" type="TextureRect" parent="InfoMainScreen" unique_id=1115618360]
+modulate = Color(1, 1, 1, 0.7764706)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -215.0
+offset_right = 334.5
+offset_bottom = 10.0
+grow_vertical = 0
+texture = ExtResource("8_4740i")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="InfoTab" parent="." unique_id=1631472116 instance=ExtResource("8_ch7dj")]
+visible = false
 
 [node name="SFX" parent="." unique_id=2048488839 instance=ExtResource("7_eb3xa")]
