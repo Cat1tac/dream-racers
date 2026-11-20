@@ -2,7 +2,6 @@ class_name CharacterButton extends TextureRect
 @export var indicators : Array[TextureRect]
 @export var character_model : PackedScene
 @export var character_enum : GameManager.SelectedCharacter
-@export var character_resource : Stats
 @export var nametag_name : String
 
 var player_ids_on_box : Array[int]

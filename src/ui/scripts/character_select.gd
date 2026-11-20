@@ -167,7 +167,7 @@ func _show_character(player : PlayerDefinition, player_added : bool = false) -> 
 		model_instance.selected = false
 	
 	#set the stats in the stats page
-	var current_resource : Stats = character_buttons[player.character_select_position].character_resource
+	var current_resource : Stats = model_instance.stats
 	if current_resource == null:
 		print("Missing character resource")
 	else:
