@@ -25,6 +25,7 @@ buses/default_bus_layout="uid://d1q4g6kl2l6mq"
 Events="*uid://mecg2e26jov8"
 DebugDraw="*uid://5h3n3kvnlr7n"
 GameManager="*uid://cmkc1rp7kwynn"
+Screenshot="*uid://cf6fvkgjfpsn0"
 
 [debug]
 
@@ -38,7 +39,6 @@ gdscript/warnings/unsafe_call_argument=1
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/size/window_width_override=960
 window/size/window_height_override=540
 window/stretch/mode="canvas_items"
@@ -171,6 +171,11 @@ controller_leave={
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":7,"button_index":4,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+screenshot={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194311,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
 
 [layer_names]
 
@@ -198,3 +203,26 @@ lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=5
 anti_aliasing/quality/screen_space_aa=1
 lights_and_shadows/positional_shadow/atlas_size=256
+
+[shader_globals]
+
+wind_noise={
+"type": "sampler2D",
+"value": "res://assets/animations/wind_noise_tex.tres"
+}
+wind_scale={
+"type": "float",
+"value": 0.5
+}
+wind_speed={
+"type": "float",
+"value": 0.45
+}
+wind_strength={
+"type": "float",
+"value": 0.45
+}
+wind_direction={
+"type": "vec3",
+"value": Vector3(1, 1, 1)
+}
